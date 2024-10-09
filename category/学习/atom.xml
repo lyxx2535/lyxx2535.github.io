@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+    <id>https://lyxx2535.github.io</id>
+    <title>Hexo • Posts by &#34;学习&#34; category</title>
+    <link href="https://lyxx2535.github.io" />
+    <updated>2024-10-05T13:42:05.000Z</updated>
+    <category term="技术" />
+    <entry>
+        <id>https://lyxx2535.github.io/2024/10/05/%E5%8D%9A%E5%AE%A2%E4%BC%98%E5%8C%96%E6%97%A5%E5%BF%97/</id>
+        <title>博客优化日志</title>
+        <link rel="alternate" href="https://lyxx2535.github.io/2024/10/05/%E5%8D%9A%E5%AE%A2%E4%BC%98%E5%8C%96%E6%97%A5%E5%BF%97/"/>
+        <content type="html">&lt;p&gt;2024&amp;#x2F;10&amp;#x2F;5：&lt;/p&gt;
+&lt;p&gt;参考&lt;a href=&#34;https://zhuanlan.zhihu.com/p/60578464&#34;&gt;使用 Hexo+GitHub 搭建个人免费博客教程（小白向）&lt;/a&gt;创建hexo博客并选择主题，三个bug：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;给nodejs文件夹设置当前用户的权限修改，不然npm&amp;#x2F;cnpm有误；&lt;/li&gt;
+&lt;li&gt;修改_config.yaml中的url为github.io&lt;/li&gt;
+&lt;li&gt;修改_config.yaml中的branch为main而非master。&lt;/li&gt;
+&lt;/ol&gt;
+</content>
+        <category term="技术" />
+        <updated>2024-10-05T13:42:05.000Z</updated>
+    </entry>
+</feed>

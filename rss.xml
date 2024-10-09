@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<rss version="2.0">
+    <channel>
+        <title>Hexo</title>
+        <link>https://lyxx2535.github.io</link>
+        <description></description>
+        <language>en</language>
+        <pubDate>Sat, 05 Oct 2024 21:42:05 +0800</pubDate>
+        <lastBuildDate>Sat, 05 Oct 2024 21:42:05 +0800</lastBuildDate>
+        <category>技术</category>
+        <item>
+            <guid isPermalink="true">https://lyxx2535.github.io/2024/10/05/%E5%8D%9A%E5%AE%A2%E4%BC%98%E5%8C%96%E6%97%A5%E5%BF%97/</guid>
+            <title>博客优化日志</title>
+            <link>https://lyxx2535.github.io/2024/10/05/%E5%8D%9A%E5%AE%A2%E4%BC%98%E5%8C%96%E6%97%A5%E5%BF%97/</link>
+            <category>技术</category>
+            <pubDate>Sat, 05 Oct 2024 21:42:05 +0800</pubDate>
+            <description><![CDATA[ &lt;p&gt;2024&amp;#x2F;10&amp;#x2F;5：&lt;/p&gt;
+&lt;p&gt;参考&lt;a href=&#34;https://zhuanlan.zhihu.com/p/60578464&#34;&gt;使用 Hexo+GitHub 搭建个人免费博客教程（小白向）&lt;/a&gt;创建hexo博客并选择主题，三个bug：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;给nodejs文件夹设置当前用户的权限修改，不然npm&amp;#x2F;cnpm有误；&lt;/li&gt;
+&lt;li&gt;修改_config.yaml中的url为github.io&lt;/li&gt;
+&lt;li&gt;修改_config.yaml中的branch为main而非master。&lt;/li&gt;
+&lt;/ol&gt;
+ ]]></description>
+        </item>
+    </channel>
+</rss>

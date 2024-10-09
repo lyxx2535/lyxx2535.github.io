@@ -1,0 +1,18 @@
+{
+    "version": "https://jsonfeed.org/version/1",
+    "title": "Hexo • All posts by \"技术\" tag",
+    "description": "",
+    "home_page_url": "https://lyxx2535.github.io",
+    "items": [
+        {
+            "id": "https://lyxx2535.github.io/2024/10/05/%E5%8D%9A%E5%AE%A2%E4%BC%98%E5%8C%96%E6%97%A5%E5%BF%97/",
+            "url": "https://lyxx2535.github.io/2024/10/05/%E5%8D%9A%E5%AE%A2%E4%BC%98%E5%8C%96%E6%97%A5%E5%BF%97/",
+            "title": "博客优化日志",
+            "date_published": "2024-10-05T13:42:05.000Z",
+            "content_html": "<p>2024&#x2F;10&#x2F;5：</p>\n<p>参考<a href=\"https://zhuanlan.zhihu.com/p/60578464\">使用 Hexo+GitHub 搭建个人免费博客教程（小白向）</a>创建hexo博客并选择主题，三个bug：</p>\n<ol>\n<li>给nodejs文件夹设置当前用户的权限修改，不然npm&#x2F;cnpm有误；</li>\n<li>修改_config.yaml中的url为github.io</li>\n<li>修改_config.yaml中的branch为main而非master。</li>\n</ol>\n",
+            "tags": [
+                "技术"
+            ]
+        }
+    ]
+}
