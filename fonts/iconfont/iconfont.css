@@ -7,10 +7,7 @@
   url('iconfont.svg?t=1585328536727#iconfont') format('svg'), /* iOS 4.1- */
   url('iconfont.woff2?t=1728653773800') format('woff2'),
   url('iconfont.woff?t=1728653773800') format('woff'),
-  url('iconfont.ttf?t=1728653773800') format('truetype'),
-  url('iconfont.woff2?t=1728653930189') format('woff2'),
-  url('iconfont.woff?t=1728653930189') format('woff'),
-  url('iconfont.ttf?t=1728653930189') format('truetype');
+  url('iconfont.ttf?t=1728653773800') format('truetype');
 }
 
 .iconfont {
@@ -23,10 +20,6 @@
 
 .icon-bilibili-fill:before {
   content: "\ea95";
-}
-
-.icon-csdn1-copy:before {
-  content: "\e600";
 }
 
 .icon-publish:before {
