@@ -5,9 +5,9 @@
   url('iconfont.woff?t=1585328536727') format('woff'),
   url('iconfont.ttf?t=1585328536727') format('truetype'), /* chrome, firefox, opera, Safari, Android, iOS 4.2+ */
   url('iconfont.svg?t=1585328536727#iconfont') format('svg'), /* iOS 4.1- */
-  url('//at.alicdn.com/t/c/font_4707932_lyv5tpo61h.woff2?t=1728653489254') format('woff2'),
-  url('//at.alicdn.com/t/c/font_4707932_lyv5tpo61h.woff?t=1728653489254') format('woff'),
-  url('//at.alicdn.com/t/c/font_4707932_lyv5tpo61h.ttf?t=1728653489254') format('truetype');
+  url('iconfont.woff2?t=1728653773800') format('woff2'),
+  url('iconfont.woff?t=1728653773800') format('woff'),
+  url('iconfont.ttf?t=1728653773800') format('truetype');
 }
 
 .iconfont {
