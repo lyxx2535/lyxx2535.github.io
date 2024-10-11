@@ -93,7 +93,7 @@
                 <div>
                     <a href="/">Lapsey&#39;s Blog</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
                 </div>
-                <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; 菜单</div>
             </div>
             <div class="menu" id="mobile-menu">
                 
@@ -135,17 +135,17 @@
             
                 <div class="post-meta">
                     
-                        Author: <a itemprop="author" rel="author" href="/">Lapsey</a>
+                        作者: <a itemprop="author" rel="author" href="/">Lapsey</a>
                     
 
                     
                         <span class="post-time">
-                        Date: <a href="#">October 5, 2024&nbsp;&nbsp;21:42:05</a>
+                        日期: <a href="#">October 5, 2024&nbsp;&nbsp;21:42:05</a>
                         </span>
                     
                     
                         <span class="post-category">
-                    Category:
+                        分类:
                             
                                 <a href="/categories/%E8%BD%AF%E4%BB%B6/">软件</a>
                             
@@ -165,6 +165,21 @@
 </ol>
 <p> 常用命令：</p>
 <figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">hexo new &quot;name&quot;       # 新建文章</span><br><span class="line">hexo new page &quot;name&quot;  # 新建页面</span><br><span class="line">hexo g                # 生成页面</span><br><span class="line">hexo d                # 部署</span><br><span class="line">hexo g -d             # 生成页面并部署</span><br><span class="line">hexo s                # 本地预览</span><br><span class="line">hexo clean            # 清除缓存和已生成的静态文件</span><br><span class="line">hexo help             # 帮助</span><br></pre></td></tr></table></figure>
+<p>2024&#x2F;10&#x2F;11：</p>
+<p>配置<a target="_blank" rel="noopener" href="https://github.com/Siricee/hexo-theme-Chic">Chic</a>主题</p>
+<p>参考<a target="_blank" rel="noopener" href="https://yuanlichenai.cn/2020/02/02/chic/#%E8%87%AA%E5%AE%9A%E4%B9%89%E9%A6%96%E9%A1%B5%E9%93%BE%E6%8E%A5%E5%9B%BE%E6%A0%87">博客</a>进行:</p>
+<ol>
+<li>样式中的一些英文改为中文</li>
+<li>修改部分css格式，改在<code>custom.styl</code>。图标来源于<a target="_blank" rel="noopener" href="https://www.iconfont.cn/">阿里iconfont</a></li>
+<li>修改字体，使用微软雅黑，放在<code>$font-family</code>的最前面</li>
+<li>增加站点浏览统计</li>
+<li>增加博客年份</li>
+<li>自定义测试</li>
+</ol>
+<p>一些问题与解决方法：</p>
+<ol>
+<li>内容更新了，<code>hexo s</code>预览时成功变化，但部署不成功：首先<code>hexo clean</code>+<code>hexo d -g</code>，然后在github.io网页使用<code>ctrl+F5</code>刷新。</li>
+</ol>
 
         </div>
 
@@ -179,7 +194,7 @@
         
         <section class="post-tags">
             <div>
-                <span>Tag(s):</span>
+                <span>标签:</span>
                 <span class="tag">
                     
                     
@@ -189,9 +204,9 @@
                 </span>
             </div>
             <div>
-                <a href="javascript:window.history.back();">back</a>
+                <a href="javascript:window.history.back();">返回</a>
                 <span>· </span>
-                <a href="/">home</a>
+                <a href="/">主页</a>
             </div>
         </section>
         <section class="post-nav">
