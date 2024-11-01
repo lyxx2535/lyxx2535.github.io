@@ -1,0 +1,659 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <meta name="author" content="Lapsey">
+
+
+
+
+
+<title>数据学习课程笔记 | Lapsey&#39;s Blog</title>
+
+
+
+    <link rel="icon" href="/favicon.ico">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+    <script src="/js/tocbot.min.js"></script>
+    
+
+
+
+    
+    
+        
+    
+
+
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+<body>
+    <script>
+        // this function is used to check current theme before page loaded.
+        (() => {
+            const currentTheme = window.localStorage && window.localStorage.getItem('theme') || '';
+            const isDark = currentTheme === 'dark';
+            const pagebody = document.getElementsByTagName('body')[0]
+            if (isDark) {
+                pagebody.classList.add('dark-theme');
+                // mobile
+                document.getElementById("mobile-toggle-theme").innerText = "· Dark"
+            } else {
+                pagebody.classList.remove('dark-theme');
+                // mobile
+                document.getElementById("mobile-toggle-theme").innerText = "· Light"
+            }
+        })();
+    </script>
+
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">Lapsey&#39;s Blog</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default">
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+        </div>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">Lapsey&#39;s Blog</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; 菜单</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+            <div class="main">
+                <div class="container">
+    
+    
+        <div class="post-toc">
+    <div class="tocbot-list">
+    </div>
+    <div class="tocbot-list-menu">
+        <a class="tocbot-toc-expand" onclick="expand_toc()">全部展开</a>
+        <a onclick="go_top()">回到顶部</a>
+        <a onclick="go_bottom()">前往底部</a>
+    </div>
+</div>
+
+<script>
+    var tocbot_timer;
+    var DEPTH_MAX = 6; // 为 6 时展开所有
+    var tocbot_default_config = {
+        tocSelector: '.tocbot-list',
+        contentSelector: '.post-content',
+        headingSelector: 'h1, h2, h3, h4, h5',
+        orderedList: false,
+        scrollSmooth: true,
+        onClick: extend_click,
+    };
+
+    function extend_click() {
+        clearTimeout(tocbot_timer);
+        tocbot_timer = setTimeout(function() {
+            tocbot.refresh(obj_merge(tocbot_default_config, {
+                hasInnerContainers: true
+            }));
+        }, 420); // 这个值是由 tocbot 源码里定义的 scrollSmoothDuration 得来的
+    }
+
+    document.ready(function() {
+        tocbot.init(obj_merge(tocbot_default_config, {
+            collapseDepth: 1
+        }));
+    });
+
+    function expand_toc() {
+        var b = document.querySelector('.tocbot-toc-expand');
+        var expanded = b.getAttribute('data-expanded');
+        expanded ? b.removeAttribute('data-expanded') : b.setAttribute('data-expanded', true);
+        tocbot.refresh(obj_merge(tocbot_default_config, {
+            collapseDepth: expanded ? 1 : DEPTH_MAX
+        }));
+        b.innerText = expanded ? 'Expand all' : 'Collapse all';
+    }
+
+    function go_top() {
+        window.scrollTo(0, 0);
+    }
+
+    function go_bottom() {
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+
+    function obj_merge(target, source) {
+        for (var item in source) {
+            if (source.hasOwnProperty(item)) {
+                target[item] = source[item];
+            }
+        }
+        return target;
+    }
+</script>
+    
+
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">数据学习课程笔记</h1>
+            
+                <div class="post-meta">
+                    
+                        作者: <a itemprop="author" rel="author" href="/">Lapsey</a>
+                    
+
+                    
+                        <span class="post-time">
+                        日期: <a href="#">November 1, 2024&nbsp;&nbsp;21:54:05</a>
+                        </span>
+                    
+                    
+                        <span class="post-category">
+                        分类:
+                            
+                                <a href="/categories/%E7%A0%94%E7%A9%B6%E7%94%9F%E8%AF%BE%E7%A8%8B/">研究生课程</a>
+                            
+                        </span>
+                    
+                </div>
+            
+        </header>
+
+        <div class="post-content">
+            <h1 id="lec1-介绍"><a href="#lec1-介绍" class="headerlink" title="lec1 介绍"></a>lec1 介绍</h1><h2 id="机器学习任务"><a href="#机器学习任务" class="headerlink" title="机器学习任务"></a>机器学习任务</h2><ul>
+<li>分类（classification）: 将实例数据划分到合适的类别中。例如 判断网站是否被黑客入侵（二分类 ），手写数字的自动识别（多分类），多目标分类（多分类）。</li>
+<li>回归（regression）: 主要用于预测数值型数据。例如: 股票价格波动的预测，房屋价格的预测等。建模和分析变量之间的关系。找函数，将输入转为数值输出就是回归。</li>
+<li>识别：如把语音识别成文字</li>
+<li>图片降噪</li>
+<li>anomaly detection异常检测：如发现网络活动中的异常操作</li>
+<li>generation：生成</li>
+<li>decision making：机器人做什么反应和动作</li>
+</ul>
+<h2 id="性能评估"><a href="#性能评估" class="headerlink" title="性能评估"></a>性能评估</h2><p>这里MAE其实就是|y-f(x)|实际值与预测值差的绝对值，只有不相等时为1</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202410292225058.png" alt="image-20241029222508023"></p>
+<h2 id="学习的种类"><a href="#学习的种类" class="headerlink" title="学习的种类"></a>学习的种类</h2><ol>
+<li>有监督学习：给输入x，经过f，输出y <ol>
+<li>分类：y是离散的</li>
+<li>回归：y是连续的（预测股市收盘价，image2text，video2text）</li>
+</ol>
+</li>
+<li>无监督学习：没有先验标签，自己找数据中潜在的模式和结构<ol>
+<li>数据聚类：将数据集中的样本划分为若干个不重叠的子集或“簇”，使得同一个簇内的样本在某种意义上更相似，而不同簇之间的样本则相对较不相似。可以帮助理解数据的分布和结构，为进一步的分析和决策提供支持。</li>
+<li>异常检测：识别数据集中不符合预期模式或与其他数据显著不同的数据点（异常值或离群点）的方法。关键挑战是如何平衡误报率和漏报率。</li>
+</ol>
+</li>
+<li>强化学习：动态环境中学习，agent做连续决策（根据反馈的reward）</li>
+</ol>
+<h2 id="Inference推理-VS-Prediction预测"><a href="#Inference推理-VS-Prediction预测" class="headerlink" title="Inference推理 VS Prediction预测"></a>Inference推理 VS Prediction预测</h2><ul>
+<li>前者知道f的结构，找好的模型描述f（关注统计，数据分布，寻找统计模型的参数）</li>
+<li>后者给未来的数据，预测使用f的输出y（关注ML）</li>
+</ul>
+<h2 id="ML历史"><a href="#ML历史" class="headerlink" title="ML历史"></a>ML历史</h2><blockquote>
+<p>年份肯定不会考，其他模型的特点啥的可以看看</p>
+</blockquote>
+<p>在高维空间中，可能的配置x的数量远大于训练样本的数量。（数据点可能的排列组合方式非常多，而实际可用的训练样本数量相比之下则显得非常少。）</p>
+<ul>
+<li>半监督学习：从少量标记数据和大量未标记数据中学习</li>
+<li>主动学习：一种半监督学习类型，通过与用户交互式查询来获取新数据点的标签。</li>
+<li>自监督学习：利用输入数据中的固有结构或关系来创建有意义的特征。标签是从数据本身学来的</li>
+</ul>
+<p>异构学习：涉及不同数据类型、设备、模型的异构性</p>
+<h1 id="Lec2-1-线性回归"><a href="#Lec2-1-线性回归" class="headerlink" title="Lec2.1 线性回归"></a>Lec2.1 线性回归</h1><blockquote>
+<p>可以推导到非线性最小二乘</p>
+<p>超平面和wt向量是垂直的</p>
+</blockquote>
+<p>复习有监督学习：找f建模X-&gt;Y</p>
+<h2 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h2><p>两种写法：一种是用θ覆盖w&#x2F;b，一种是w&#x2F;b单列</p>
+<p>都是线性</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202410301304161.png" alt="image-20241030130417094"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202410301304844.png" alt="image-20241030130443817"></p>
+<h2 id="两种参数预测方式"><a href="#两种参数预测方式" class="headerlink" title="两种参数预测方式"></a>两种参数预测方式</h2><h3 id="最小二乘LSE"><a href="#最小二乘LSE" class="headerlink" title="最小二乘LSE"></a>最小二乘LSE</h3><p>几何方法</p>
+<p>需要最小化损失函数：<img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202410301310288.png" alt="image-20241030131016261" style="zoom:50%;" /></p>
+<h4 id="数值解"><a href="#数值解" class="headerlink" title="数值解"></a>数值解</h4><h5 id="1-梯度下降"><a href="#1-梯度下降" class="headerlink" title="1. 梯度下降"></a>1. 梯度下降</h5><p>分为BGD和SGD</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202410301313121.png" alt="image-20241030131351075"></p>
+<p>因为发现J(θ)是凸函数（二阶导&gt;&#x3D;0），所以可以用梯度下降</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202410301318301.png" alt="image-20241030131821260"></p>
+<h6 id="BGD批量梯度下降"><a href="#BGD批量梯度下降" class="headerlink" title="BGD批量梯度下降"></a>BGD批量梯度下降</h6><p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202410301323821.png" alt="image-20241030132301790"></p>
+<p>θ在使用m个训练样本后才会被更新</p>
+<h6 id="SGD随机梯度下降"><a href="#SGD随机梯度下降" class="headerlink" title="SGD随机梯度下降"></a>SGD随机梯度下降</h6><p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202410301323059.png" alt="image-20241030132359029"></p>
+<p>每次读取一个样本都会更新一次</p>
+<ol>
+<li>随机梯度下降使θ接近最小更快</li>
+<li>有利于大数据回归</li>
+</ol>
+<h5 id="2-牛顿法"><a href="#2-牛顿法" class="headerlink" title="2. 牛顿法"></a>2. 牛顿法</h5><p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202410301417527.png" alt="image-20241030141710430"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202410301415543.png" alt="image-20241030141538523"></p>
+<p>牛顿方法的性能：</p>
+<ul>
+<li>相比批量梯度下降需要更少的迭代次数</li>
+<li>计算H^−1是耗时的</li>
+<li>n很小时在实践中更快</li>
+</ul>
+<h4 id="分析解：-正规方程"><a href="#分析解：-正规方程" class="headerlink" title="分析解： 正规方程"></a>分析解： 正规方程</h4><p>利用设计矩阵X和向量y（大写为矩阵，小写为向量，下图X写的不标准）</p>
+<p>属于闭合解（与数值解相对，是公式解得的）</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202410301352653.png" alt="image-20241030135254548"></p>
+<p>X^TX可逆的条件是矩阵满秩，即行列式为0</p>
+<h4 id="梯度下降VS正规方程"><a href="#梯度下降VS正规方程" class="headerlink" title="梯度下降VS正规方程"></a>梯度下降VS正规方程</h4><table>
+<thead>
+<tr>
+<th>梯度下降</th>
+<th>正规方程</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>迭代解</td>
+<td>精确解</td>
+</tr>
+<tr>
+<td>代价函数需要选择合适的学习参数α来收敛</td>
+<td>当X是病态时，数值不稳定。例如，特征是高度相关的，X^TX行列式接近0</td>
+</tr>
+<tr>
+<td>适用于大量样本m</td>
+<td>当m较大时，求解方程的速度较慢</td>
+</tr>
+</tbody></table>
+<p>现在DL的数据集很大，所以用GD而不是分析解</p>
+<h3 id="极大似然MLE"><a href="#极大似然MLE" class="headerlink" title="极大似然MLE"></a>极大似然MLE</h3><p>概率方法，认为ε是噪声，人为建模ε是对高斯分布N(0,σ^2)的独立同分布。在该对ε的假设下，θ的最小二乘对应着极大似然。</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202410301457193.png" alt="image-20241030145714137"></p>
+<h1 id="Lec2-2-逻辑回归"><a href="#Lec2-2-逻辑回归" class="headerlink" title="Lec2.2 逻辑回归"></a>Lec2.2 逻辑回归</h1><h2 id="定义-1"><a href="#定义-1" class="headerlink" title="定义"></a>定义</h2><p>传统形式也是用于二分类，相比线性回归增加了sigmoid函数，进行归一化（如把像素映射到[0,1]）</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202410301503464.png" alt="image-20241030150343440"></p>
+<h2 id="参数预测"><a href="#参数预测" class="headerlink" title="参数预测"></a>参数预测</h2><p>假设y|x符合伯努利分布：</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202410301513664.png" alt="image-20241030151326630"></p>
+<p>希望l(θ)最大，因为是凹函数取导数&#x3D;0，使用梯度上升：<img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202410301547530.png" alt="image-20241030154747496"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202410301547587.png" alt="image-20241030154740492"></p>
+<h1 id="Lec2-3-多分类"><a href="#Lec2-3-多分类" class="headerlink" title="Lec2.3 多分类"></a>Lec2.3 多分类</h1><h2 id="One-vs-Rest：从类别入手"><a href="#One-vs-Rest：从类别入手" class="headerlink" title="One vs Rest：从类别入手"></a>One vs Rest：从类别入手</h2><p>k个类别，学习k种模型，变成k个二分类问题，选概率最大的即可</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202410301612633.png" alt="image-20241030161232593"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202410301612146.png" alt="image-20241030161254111"></p>
+<h3 id="缺点"><a href="#缺点" class="headerlink" title="缺点"></a>缺点</h3><ol>
+<li>类不平衡：负样本比正样本多</li>
+<li>不同的分类器可能有不同的置信度（决策边界不同）</li>
+</ol>
+<p>为了改善这个缺点，我们希望为所有类学一个模型——Softmax</p>
+<h2 id="Softmax：从算法入手"><a href="#Softmax：从算法入手" class="headerlink" title="Softmax：从算法入手"></a>Softmax：从算法入手</h2><p>多项式分布用于模拟一个k面的骰子（或任何有k个可能结果的实验）被掷m次的结果。</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202410301632242.png" alt="image-20241030163211208"></p>
+<h3 id="参数预测-1"><a href="#参数预测-1" class="headerlink" title="参数预测"></a>参数预测</h3><p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202410301635710.png" alt="image-20241030163558676"></p>
+<p>求导过程看起来很复杂，老师上课没讲，就这里带过：</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202410301647856.png" alt="image-20241030164725826"></p>
+<h3 id="性质"><a href="#性质" class="headerlink" title="性质"></a>性质</h3><ol>
+<li>标量加法的不变性：<img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202410301649409.png" alt="image-20241030164939389" style="zoom:50%;" /></li>
+<li>k&#x3D;2时为逻辑回归，可写作sigmoid：<img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202410301653992.png" alt="image-20241030165342955"></li>
+</ol>
+<h2 id="比较"><a href="#比较" class="headerlink" title="比较"></a>比较</h2><p>当类是互斥的：使用Softmax</p>
+<p>不互斥：多个二进制分类器可能更好</p>
+<h1 id="Lec2-4-广义线性模型GLM"><a href="#Lec2-4-广义线性模型GLM" class="headerlink" title="Lec2.4 广义线性模型GLM"></a>Lec2.4 广义线性模型GLM</h1><h2 id="标准形式"><a href="#标准形式" class="headerlink" title="标准形式"></a>标准形式</h2><p>y|x; θ来自一个指数族</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202410301703363.png" alt="image-20241030170358333"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202410301712216.png" alt="image-20241030171213169"></p>
+<p>T,a,b确定一种分布，η是该分布的参数</p>
+<p><em>a</em>(<em>η</em>) 是对数划分函数，确保概率归一化，所以有以下和为1的性质：</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202410301717422.png" alt="image-20241030171713378"></p>
+<p>优点：是线性回归模型的扩展，可以非线性</p>
+<ol>
+<li>广义线性模型允许目标变量服从<strong>指数族分布</strong>，而不仅仅是正态分布。这使得广义线性模型能够处理二元数据（例如逻辑回归）、计数数据（例如泊松回归）</li>
+<li>通过引入连接函数，广义线性模型可以捕捉变量之间的<strong>非线性关系</strong>。例如，逻辑回归使用对数几率连接函数来处理二元分类问题中的非线性关系。</li>
+</ol>
+<h3 id="化解步骤"><a href="#化解步骤" class="headerlink" title="化解步骤"></a>化解步骤</h3><p>如何化成标准形式？</p>
+<ol>
+<li>如果式子没有exp可以取对数再还原成exp</li>
+<li>有exp后，分离出含有y的部分（合并同类项）</li>
+</ol>
+<p>例1：高斯分布</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202410301932001.png" alt="image-20241030193210954"></p>
+<p>例2：伯努利分布</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202410301931676.png" alt="image-20241030193149617"></p>
+<p>例3：多分类</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202410302059795.png" alt="img"></p>
+<p><img src="https://pic1.zhimg.com/v2-56e1db0295fbc17fe72c1526e9f27510_b.png" alt="img"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202410302112836.png" alt="img"></p>
+<p><img src="https://picx.zhimg.com/v2-35f524d590d0107aee2335ba549e7803_b.png" alt="img"></p>
+<p><img src="https://pic3.zhimg.com/v2-5c20bc10f029f30e5f3183b8719ac742_b.png" alt="img"></p>
+<p><img src="https://picx.zhimg.com/v2-d596b3f56a582983a57b44c69a5d6cd3_b.png" alt="img"></p>
+<h2 id="建模步骤"><a href="#建模步骤" class="headerlink" title="建模步骤"></a>建模步骤</h2><ol>
+<li>定义y|x;θ属于的指数分布族</li>
+<li>求解假设函数h(x)&#x3D;E[T(y)|x]。其中T(y)大部分时候为y</li>
+<li>自然参数η和x是线性关系，η&#x3D;θ^T x</li>
+<li>response function：g(η)&#x3D;E[T(y)|x]</li>
+<li>link function：η&#x3D;g^-1(E[T(y)|x])</li>
+</ol>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202410302054647.png" alt="image-20241030205412589"></p>
+<p>例1：线性回归</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202410302101204.png" alt="image-20241030210148139"></p>
+<p>例2：伯努利分布</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202410302104541.png" alt="image-20241030210417478"></p>
+<p>例3：多分类</p>
+<p><img src="https://pic1.zhimg.com/v2-eb28bdcea76b56ba707376cd7a7ef1f6_b.png" alt="img"></p>
+<p>response和link：</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202410302113872.png" alt="image-20241030211354821"></p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>y是种类</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202410302114143.png" alt="image-20241030211442101"></p>
+<h1 id="Lec3-生成式学习算法"><a href="#Lec3-生成式学习算法" class="headerlink" title="Lec3 生成式学习算法"></a>Lec3 生成式学习算法</h1><p>GDA和NB是两个生成学习的例子</p>
+<h2 id="判别式vs生成式"><a href="#判别式vs生成式" class="headerlink" title="判别式vs生成式"></a>判别式vs生成式</h2><p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202410302125249.png" alt="image-20241030212517190"></p>
+<ul>
+<li>discriminative判别式：学习p(y|x)，区分数据点的类别<ul>
+<li>如线性回归，逻辑回归，k-最近邻，神经网络，SVM，决策树，softmax（多分类）</li>
+<li>GLM建模的是p(y|x;θ)，所以是判别式模型</li>
+<li>极大似然估计的对象L(θ)&#x3D;p(y|x)的连乘</li>
+</ul>
+</li>
+<li>generative生成式：学习p(x,y)<ul>
+<li>其实就是学习p(x|y)和p(y)，然后用贝叶斯</li>
+<li>p(y)是类先验</li>
+<li>极大似然估计的对象L(θ)&#x3D;p(x,y)的连乘</li>
+<li>如高斯判别分析（连续输入下），朴素贝叶斯（离散输入下），隐马尔可夫模型</li>
+</ul>
+</li>
+</ul>
+<h2 id="高斯判别分析GDA-LDA"><a href="#高斯判别分析GDA-LDA" class="headerlink" title="高斯判别分析GDA&#x2F;LDA"></a>高斯判别分析GDA&#x2F;LDA</h2><ol>
+<li>选择一个数据生成分布：假设p(x|y)和p(y)</li>
+<li>估计4个参数</li>
+<li>计算p(y|x)来预测新输入样本x’的输出label</li>
+</ol>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202410302129454.png" alt="image-20241030212922415"></p>
+<h3 id="前置知识：多元正态分布"><a href="#前置知识：多元正态分布" class="headerlink" title="前置知识：多元正态分布"></a>前置知识：多元正态分布</h3><p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202410302131743.png" alt="image-20241030213142683"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202410302131091.png" alt="image-20241030213154061"></p>
+<p>Σ控制着分布的扩散：</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202410302135495.png" alt="image-20241030213503434"></p>
+<p>当Σ的非对角线项非零时，分布不再沿轴定向：</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202410302135185.png" alt="image-20241030213535131"></p>
+<h3 id="定义-2"><a href="#定义-2" class="headerlink" title="定义"></a>定义</h3><ol>
+<li><p>建模P(y)，P(x|y)<img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202410302137539.png" alt="image-20241030213706479"></p>
+</li>
+<li><p>使用极大似然估计求4个参数的值<img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202410302137872.png" alt="image-20241030213737820"></p>
+</li>
+<li><p>计算p(y|x)来预测label，发现此时的p(y|x)是逻辑函数<img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202410302141354.png" alt="image-20241030214109304"></p>
+</li>
+</ol>
+<p>通过极大似然得到的后验概率有p(y&#x3D;1|x)&#x3D;p(y&#x3D;0|x)&#x3D;0.5，即θ^Tx&#x3D;0，它最大化了类间分离【是线性模型】</p>
+<h3 id="与判别式逻辑回归对比"><a href="#与判别式逻辑回归对比" class="headerlink" title="与判别式逻辑回归对比"></a>与判别式逻辑回归对比</h3><p>GDA：</p>
+<ul>
+<li>最大化p(x,y)</li>
+<li>建模p(x|y),p(y)</li>
+<li>当模型假设正确时，GDA是渐近有效和数据有效的。这意味着随着样本量的增加，GDA的参数估计将收敛到真实的参数值，并且它可以使用较少的数据达到相同的估计精度。</li>
+</ul>
+<p>LR：</p>
+<ul>
+<li>最大化p(y|x)</li>
+<li>建模p(y|x)。和GDA不同，对p(x)没有限制。</li>
+<li>对不正确的建模假设更健壮和更不敏感</li>
+</ul>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202410302205712.png" alt="image-20241030220509664"></p>
+<h2 id="朴素贝叶斯NB"><a href="#朴素贝叶斯NB" class="headerlink" title="朴素贝叶斯NB"></a>朴素贝叶斯NB</h2><p>一个简单的离散输入变量生成学习算法例子：</p>
+<ul>
+<li>垃圾邮件过滤器（文档分类）将电子邮件消息x分类为垃圾邮件（y &#x3D; 1）和非垃圾邮件（y &#x3D; 0）类。</li>
+<li>二进制文本特征：给定一个大小为n的字典，表示一个由字典单词组成的消息，如x∈{0,1}^n。如果某一位为1，所以字典中的第i个单词在这个消息中。</li>
+</ul>
+<h3 id="定义-3"><a href="#定义-3" class="headerlink" title="定义"></a>定义</h3><p>假设在给定类别y的情况下，各个特征xi是条件独立的（朴素就是指的条件独立）。<img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202410302308325.png" alt="image-20241030230806277"></p>
+<p>多元伯努利事件模型x|y是由个独立的伯努利试验生成的。模型的参数是人为假设的，让y和x|y满足伯努利分布。【注意】伯努利只是一种NB，适用于二元随机变量分布，这里举例来求参数，并不是一定符合。生成式学习算法的逻辑依然符合：</p>
+<ol>
+<li><p>建模P(y)，P(x|y)<img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202410302314418.png" alt="image-20241030231426370"></p>
+</li>
+<li><p>计算参数（极大似然p(x,y)）<img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202410302327328.png"></p>
+</li>
+<li><p>计算p(y|x)来预测label，T是判断类的阈值</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202410302333099.png" alt="image-20241030233314051"></p>
+</li>
+</ol>
+<h2 id="拉普拉斯平滑"><a href="#拉普拉斯平滑" class="headerlink" title="拉普拉斯平滑"></a>拉普拉斯平滑</h2><p>朴素贝叶斯中，如果某个单词x_j在训练数据中从未出现过（没观察到），那么概率都为0，会有分母为0，所以在分子分母做处理</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202410311508637.png" alt="image-20241031150802542"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202410311536317.png" alt="image-20241031153608270"></p>
+<p>上面介绍了<strong>Multi-variate Bernoulli model</strong>，下面是<strong>Multinomial event model</strong>，区别是上面的x|y服从伯努利，下面的服从多项式</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202410311554859.png" alt="image-20241031155403806"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202410311554093.png" alt="image-20241031155410045"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202410311554602.png" alt="image-20241031155417565"></p>
+<h1 id="Lec4-SVM"><a href="#Lec4-SVM" class="headerlink" title="Lec4 SVM"></a>Lec4 SVM</h1><p>SVM是判别式模型</p>
+<p>线性模型：LR，岭回归，逻辑回归，GDA</p>
+<p>非线性模型：多项式回归softmax，SVM，神经网络</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202410311619350.png" alt="image-20241031161924312"></p>
+<p>前面方法的问题：</p>
+<ul>
+<li>模型的选择影响模型性能；容易导致模型不匹配。</li>
+<li>数据往往采样不均匀，在高维输入空间中形成稀疏分布。这导致了一些感觉不舒服的问题</li>
+</ul>
+<p>可能的方法：</p>
+<ul>
+<li>正则化</li>
+<li>稀疏核方法</li>
+</ul>
+<h2 id="Linear-SVM"><a href="#Linear-SVM" class="headerlink" title="Linear SVM"></a>Linear SVM</h2><p>Margin边际：决策边界与任何样本之间的最小距离（边际也表示分类置信度）</p>
+<p>如何确定边际？</p>
+<h3 id="functionally"><a href="#functionally" class="headerlink" title="functionally"></a>functionally</h3><p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202410311629092.png" alt="image-20241031162906046"></p>
+<p>当前方式的问题是与w&#x2F;b有关，如果 w′&#x3D;2w和 b′&#x3D;2b，那么决策边界（即分类边界）保持不变，但是边际表达式会改变，所以使用geometric方法进行归一化</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202410311645785.png" alt="image-20241031164555726"></p>
+<h3 id="geometrically"><a href="#geometrically" class="headerlink" title="geometrically"></a>geometrically</h3><p>括号内的正好是样本点到超平面的距离</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202410311658282.png" alt="image-20241031165827226"></p>
+<p>目标是最大化γ。令函数边际γ_hat固定为1，最终化为min</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202410311701840.png" alt="image-20241031170141780"></p>
+<h2 id="KKT条件"><a href="#KKT条件" class="headerlink" title="KKT条件"></a>KKT条件</h2><p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202410311709834.png" alt="image-20241031170912777"></p>
+<p>拉格朗日对偶性（Lagrange Duality）：指出f和所有gi都是凸的，hi都是仿射的（x-&gt;Ax+b），并存在某个 w 使得 gi(w)&lt;0对所有 i 成立（严格可行），那么存在 w∗,α∗,β使得 w∗ 是原始问题的解，而 α∗,β 是对偶问题的解，并且：<em>p</em>∗&#x3D;<em>d</em>∗&#x3D;<em>L</em>(<em>w</em>∗,<em>α</em>∗,<em>β</em>∗)</p>
+<ul>
+<li>注意max min&lt;&#x3D;min max</li>
+</ul>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202410311712882.png" alt="image-20241031171257812"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202410311711929.png" alt="image-20241031171102867"></p>
+<h2 id="参数预测-2"><a href="#参数预测-2" class="headerlink" title="参数预测"></a>参数预测</h2><p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202410311801698.png" alt="image-20241031180140584"></p>
+<h2 id="Soft-Margin-SVM"><a href="#Soft-Margin-SVM" class="headerlink" title="Soft Margin SVM"></a>Soft Margin SVM</h2><p>linear svm无法处理极端值和非线性情况，而soft引入松弛向量，允许一些数据点分类错误。C代表误分类的惩罚程度</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202410311957164.png" alt="image-20241031195735094"></p>
+<p>当使用线性核，soft仍然是线性；使用kernel trick可以扩展到非线性</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202410311958854.png" alt="image-20241031195832795"></p>
+<p>图里的λ就是r</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202410222223073.png" alt="image-20241022222347998"></p>
+<p>依然是先算α再算w&#x2F;b</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202410312000861.png" alt="image-20241031200005817"></p>
+<p>就像线性中满足wx+b&#x3D;1的是sv，这里满足1-ε&#x3D;wx+b的是sv（边界上+违反约束在边界内的错误分类点）TODO：还是不懂下面的λ和ξ的推导逻辑</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202410222220339.png" alt="image-20241022222052235"></p>
+<h2 id="kernel-svm非线性"><a href="#kernel-svm非线性" class="headerlink" title="kernel svm非线性"></a>kernel svm非线性</h2><p>将不可分离的数据映射到高维就可分离了</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202410312023562.png" alt="image-20241031202304481"></p>
+<p>在优化参数时不用算w：</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202410312024992.png" alt="image-20241031202427924"></p>
+<p>不是所有函数都能当核函数，要满足mercer定理</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202410312027297.png" alt="image-20241031202737207"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202410312031949.png" alt="image-20241031203147900"></p>
+<p>计算过程：</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202410312032727.png" alt="image-20241031203242672"></p>
+<h1 id="Lec5-DNN"><a href="#Lec5-DNN" class="headerlink" title="Lec5 DNN"></a>Lec5 DNN</h1><p>阈值函数&#x2F;激活函数</p>
+<p>单个神经元是一个（线性）二值分类器：</p>
+<ul>
+<li>当f是sigmoid函数，等价于二值softmax(1&#x2F;1+e^-x)</li>
+<li>当f是sign函数，等价于感知器</li>
+</ul>
+<p>DNN的目标是建模f(x)，定义测量f的预测误差的误差函数：例如，在分类中使用的一个常见的误差函数是对数损失a.k.a.交叉熵损失：<img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202410312147840.png" alt="image-20241031214716810"></p>
+<h2 id="前向传播"><a href="#前向传播" class="headerlink" title="前向传播"></a>前向传播</h2><p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202410312148662.png" alt="image-20241031214858578"></p>
+<p>至少有一层hidden layer。不同的w有不同的线性模型</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202410312157562.png" alt="image-20241031215701509"></p>
+<h2 id="反向传播"><a href="#反向传播" class="headerlink" title="反向传播"></a>反向传播</h2><p>a是hidden层激活的结果变成当前节点，赋予w权重，以及加上b，得到的中间变量；h(x)是对a赋予激活函数的结果。最后的输出是最后的h<img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202410312210818.png" alt="image-20241031221017724"></p>
+<p>参数选择就是想最小化损失函数</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202410312246657.png" alt="image-20241031224648585"></p>
+<p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/40378224">反向传播</a>就是使输出值和目标值的差距尽可能小，反复使用链式法则，返回梯度下降</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202411010002627.png" alt="image-20241101000233543"></p>
+<p>ppt中把dL&#x2F;dy认为是1，再进行求解，其实是一种简略的写法</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202411010041823.png" alt="image-20241101004153730"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202411010058475.png" alt="image-20241101005816380"></p>
+<h2 id="过拟合"><a href="#过拟合" class="headerlink" title="过拟合"></a>过拟合</h2><p>相比增加width，增加神经网络的depth更有效（增大容量）会过拟合</p>
+<p>用正则化避免：<img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202410312204642.png" alt="image-20241031220444553"></p>
+<h1 id="Lec6-模型选择"><a href="#Lec6-模型选择" class="headerlink" title="Lec6 模型选择"></a>Lec6 模型选择</h1><h2 id="误差分类"><a href="#误差分类" class="headerlink" title="误差分类"></a>误差分类</h2><p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202411010118364.png" alt="image-20241101011813312">泛化&#x2F;测试误差：不在训练集上测</p>
+<p>分类：y是离散的；回归：y是连续的</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202411010119842.png" alt="image-20241101011926693"></p>
+<h2 id="性质-1"><a href="#性质-1" class="headerlink" title="性质"></a>性质</h2><p>bias&amp;variance:h_hat是错误的假设函数，h是真实的假设函数（不是具体的sample，可以理解为理想的模型oracle）</p>
+<ul>
+<li>bias：针对单个模型的偏差，错误假设bias大，描述对本训练集的拟合程度</li>
+<li>variance：针对多个模型，描述 不同数据集的模型输出差异，刻画数据扰动对模型的影响。过拟合时var大，注意与h(x)无关，所以从0开始</li>
+</ul>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202411010131845.png" alt="image-20241101012602167"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202411010131973.png" alt="image-20241101013123907"></p>
+<p>complexity</p>
+<p>capacity：和特征&#x2F;参数数量相关</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202411010122339.png" alt="image-20241101012204270"></p>
+<h2 id="交叉验证"><a href="#交叉验证" class="headerlink" title="交叉验证"></a>交叉验证</h2><ol>
+<li>hold-out：随机分训练集和验证集</li>
+<li>k折交叉验证</li>
+<li>leave-one-out</li>
+</ol>
+<h2 id="正则化"><a href="#正则化" class="headerlink" title="正则化"></a>正则化</h2><p>减小泛化误差</p>
+<p>添加到loss function</p>
+<h3 id="l2-ridge回归"><a href="#l2-ridge回归" class="headerlink" title="l2&#x2F;ridge回归"></a>l2&#x2F;ridge回归</h3><p>老师讲的l2一直是不开根号的</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202411010152378.png" alt="image-20241101015254323"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202410121325983.png" alt="img"></p>
+<h3 id="l1-lasso回归"><a href="#l1-lasso回归" class="headerlink" title="l1&#x2F;lasso回归"></a>l1&#x2F;lasso回归</h3><p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202411010154035.png" alt="image-20241101015413976"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202411010204671.png" alt="image-20241101020448640"></p>
+<h2 id="贝叶斯统计-MAP"><a href="#贝叶斯统计-MAP" class="headerlink" title="贝叶斯统计&#x2F;MAP"></a>贝叶斯统计&#x2F;MAP</h2><p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202411010816251.png" alt="image-20241101081604189"></p>
+<p>下面是加入l2正则项</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202411010822278.png" alt="image-20241101082206212"></p>
+<p>与MLE相比，考虑了先验分布</p>
+<h1 id=""><a href="#" class="headerlink" title=""></a><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202411010816654.png" alt="image-20241101081655600"></h1><h1 id="期中复盘"><a href="#期中复盘" class="headerlink" title="期中复盘"></a>期中复盘</h1><ol>
+<li>mercer的定义，如何证明两个kernel之和仍然为kernel（没认真看，哭死）</li>
+<li>证明LDA是线性函数，作业WA2有过程。我不知道直接写p&#x3D;0.5了行不行（感觉不太行xs）</li>
+<li>θmap和θmle在θ为Uniform（均匀）时相等（没复习到）</li>
+<li>反向传播考了max，画图没写箭头<img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202411011419460.png" alt="959633fda875456e403c4c6327c5b74"></li>
+<li>以后如果带纸的考试一定要用ppt截图，不要手抄公式很慢容易出错，此外注意重点</li>
+</ol>
+
+        </div>
+
+        
+            <section class="post-copyright">
+                
+                
+                
+                
+
+            </section>
+        
+        <section class="post-tags">
+            <div>
+                <span>标签:</span>
+                <span class="tag">
+                    
+                    
+                        <a href="/tags/%E8%AF%BE%E7%A8%8B/"># 课程</a>
+                    
+                        
+                </span>
+            </div>
+            <div>
+                <a href="javascript:window.history.back();">返回</a>
+                <span>· </span>
+                <a href="/">主页</a>
+            </div>
+        </section>
+        <section class="post-nav">
+            
+            
+            <a class="next" rel="next" href="/2024/11/01/%E4%BF%A1%E6%81%AF%E8%AE%BA%E8%AF%BE%E7%A8%8B%E7%AC%94%E8%AE%B0/">信息论课程笔记</a>
+            
+        </section>
+
+
+    </article>
+</div>
+
+
+    <div id="gitalk-container"></div>
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.css">
+<script src="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.min.js"></script>
+<script src="//cdn.bootcss.com/blueimp-md5/2.10.0/js/md5.js"></script>
+<div id="gitalk-container"></div>
+<script type="text/javascript">
+      var gitalk = new Gitalk({
+        clientID: '',
+        clientSecret: '',
+        repo: 'blog_comment',
+        owner: 'lyxx2535',
+        admin: 'lyxx2535',
+        id: md5(location.pathname),
+        labels: 'Gitalk'.split(',').filter(l => l),
+        perPage: 10,
+        pagerDirection: 'last',
+        createIssueManually: true,
+        distractionFreeMode: false
+      })
+      gitalk.render('gitalk-container')
+</script>
+
+            </div>
+            <footer id="footer" class="footer">
+    <div class="copyright">
+        <span>© Lapsey | Powered by <a href="https://hexo.io" target="_blank">Hexo</a> & <a href="https://github.com/Siricee/hexo-theme-Chic" target="_blank">Chic</a> | 2020 - 2024
+            <br>
+            <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+<span class="site-uv">
+    Total visitors:
+    <i class="busuanzi-value" id="busuanzi_value_site_uv"></i>
+</span>&nbsp;|&nbsp;
+
+
+<span class="site-pv">
+    Total views:
+    <i class="busuanzi-value" id="busuanzi_value_site_pv"></i>
+</span>
+
+          </span>
+    </div>
+</footer>
+
+    </div>
+</body>
+
+</html>
