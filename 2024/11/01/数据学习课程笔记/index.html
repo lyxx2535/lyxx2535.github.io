@@ -567,6 +567,213 @@
 <li>反向传播考了max，画图没写箭头<img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202411011419460.png" alt="959633fda875456e403c4c6327c5b74"></li>
 <li>以后如果带纸的考试一定要用ppt截图，不要手抄公式很慢容易出错，此外注意重点</li>
 </ol>
+<h1 id="Lec7"><a href="#Lec7" class="headerlink" title="Lec7"></a>Lec7</h1><p>capacity：拟合不同种类函数的能力</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202411081006496.png" alt="image-20241108100554275"></p>
+<p>用y&#x3D;h(x)+ε来formalize</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202411081008634.png" alt="image-20241108100842505"></p>
+<p>bias反映training data，variance反映testing data</p>
+<h2 id="经验风险误差ERM"><a href="#经验风险误差ERM" class="headerlink" title="经验风险误差ERM"></a>经验风险误差ERM</h2><p>在理论研究前做一些约束：</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202411081019483.png" alt="image-20241108101909407">只知道训练数据和测试数据都从分布D来，但不知道分布D具体是什么，后面通过计算找差异</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202411081030024.png" alt="image-20241108103047888"></p>
+<h3 id="有限"><a href="#有限" class="headerlink" title="有限"></a>有限</h3><p>case1：假设有限的情况：</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202411081030603.png" alt="image-20241108103032456"></p>
+<p>两个著名的不等式：</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202411081033578.png" alt="image-20241108103300517"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202411081045646.png" alt="image-20241108104543590"></p>
+<p>左边&#x3D;1，&lt;&#x3D;2ke^{}，所以&gt;&#x3D;1-2ke^{}</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202411081054880.png" alt="image-20241108105424813"></p>
+<h3 id="无限"><a href="#无限" class="headerlink" title="无限"></a>无限</h3><p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202411081127284.png" alt="image-20241108112701196"></p>
+<p>为了学好（即达到上述的误差保证），所需的样本数量必须与参数的维度 d<em>d</em> 成线性关系。这意味着，随着参数数量的增加，我们需要的样本数量也会线性增加。</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202411081147146.png" alt="image-20241108114708090"></p>
+<p>尽管两个假设的参数数量不同，但它们实际上是等价的。</p>
+<p>所以需要一个与参数化选择无关的复杂度度量，以便更准确地评估假设空间的复杂度</p>
+<h4 id="VC-Dimension"><a href="#VC-Dimension" class="headerlink" title="VC Dimension"></a>VC Dimension</h4><p>用来衡量一个模型的复杂度，定义为：在该模型对应的空间中随机撒x点，然后对其中的每个点随机分配一个2类标签，使用你的模型来分类，并且要分对，请问x至多是多少。这个x就是VC维。</p>
+<p>1.线性函数</p>
+<p>如果选用二维空间中的直线作为判别函数，该分类模型的VC维是多少？<br>答案：3<br>解释：如果是3个点，无论如何随机的打标签，都存在一条直线都可以将两类样本分开。<br>如果是4个点，就可能会出现一种标签序列，使得不存在一条直线将两类样本分开。如下图。<br><img src="https://i-blog.csdnimg.cn/blog_migrate/263b69a231817e06f211089af7232e4d.png" alt="在这里插入图片描述"></p>
+<p>如果选用三维空间中的直线作为判别函数，该分类模型的VC维是多少？<br>答案：4<br>总结：<br><img src="https://i-blog.csdnimg.cn/blog_migrate/8f0561c46678a4092f779b00bae5a0e0.png" alt="在这里插入图片描述"></p>
+<p>用VC维度，即可知道无限H的上界</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202411081155182.png" alt="image-20241108115549092"></p>
+<p>DNN中对于size相同（权重的数量相同），层数越多，VC维越大</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202411081200861.png" alt="image-20241108120039783"></p>
+<p>总结内容：</p>
+<ol>
+<li><strong>控制泛化能力</strong>：我们可以通过调整假设 H 的复杂度来控制模型的泛化能力。</li>
+<li><strong>VC维度作为复杂度的度量</strong>：VC维度是一个有用的复杂度度量工具。</li>
+<li><strong>学习算法性能的界限</strong>：我们可以根据VC维度 VC(H) 和我们拥有的数据量来界定学习算法的性能。</li>
+</ol>
+<p>VC维度的局限性：</p>
+<ol>
+<li><strong>界限不够紧密</strong>：由于VC维度与数据分布无关，所以它提供的界限可能不够紧密。</li>
+<li><strong>仅适用于二元分类</strong>：VC维度的定义仅适用于<strong>二元分类问题</strong>。</li>
+</ol>
+<p><strong>作业</strong></p>
+<p>将每个点分配2类标签，看有多少种可能性，概念类能否把每种可能性都表示出来</p>
+<h2 id="Rademacher-Complexity"><a href="#Rademacher-Complexity" class="headerlink" title="Rademacher  Complexity"></a>Rademacher  Complexity</h2><p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202411081204370.png" alt="image-20241108120412275"></p>
+<p>衡量一个函数类（假设类）对随机噪声拟合能力的度量。如果一个假设类F能很好地拟合随机噪声（比如随机取值为 +1或 -1 的数据），那么它的 Rademacher Complexity 较高。</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202411231649307.png" alt="image-20241123164937204"></p>
+<p>S是抽取的固定样本，样本S是从分布D中独立抽取的m个样本</p>
+<p>R_s是单个样本集S的复杂度度量，R_m是所有可能的样本集S进行期望的结果</p>
+<p>sup是选最小上界，大部分时候可以理解为最大值</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202411231733934.png" alt="image-20241123173310870"></p>
+<p>sup操作关注的是最大幅度，与符号无关。</p>
+<p>它描述的是函数类 F 的拟合能力，数值大小反映了函数类的复杂性，越复杂的函数类，Rademacher Complexity 越大，但永远不会小于 0。所以有a的绝对值。</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202411231835641.png"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202411232028617.png" alt="image-20241123202822556"></p>
+<p>在R(H)中y_i因为取正负1，所以可以多乘以y。（感觉在这里正符号不用管）</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202411232032216.png" alt="image-20241123203227160"></p>
+<h1 id="Lec8-无监督学习"><a href="#Lec8-无监督学习" class="headerlink" title="Lec8 无监督学习"></a>Lec8 无监督学习</h1><p>良好表示的特点：低维、稀疏表示（更好的可解释性）、独立表示</p>
+<h2 id="K-means"><a href="#K-means" class="headerlink" title="K-means"></a>K-means</h2><p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202411232141048.png" alt="image-20241123214122995"></p>
+<h2 id="Spectral-Clustering"><a href="#Spectral-Clustering" class="headerlink" title="Spectral Clustering"></a>Spectral Clustering</h2><blockquote>
+<p>我的理解是用图论知识做聚类</p>
+</blockquote>
+<p>degree：看wij的和</p>
+<p>ratleigh-ritz定理：用拉格朗日乘子法</p>
+<h3 id="RatioCut和NCut"><a href="#RatioCut和NCut" class="headerlink" title="RatioCut和NCut"></a>RatioCut和NCut</h3><p>为了避免最小切图导致的切图效果不佳，我们需要对每个子图的规模做出限定，一般来说，有两种切图方式，第一种是RatioCut，第二种是Ncut。</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202411241521132.png" alt="image-20241124152059032"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202411241528644.png" alt="image-20241124152842584"></p>
+<p>选cut值小的，意味着这种划分在考虑节点度的情况下，<strong>两个子集之间的连接更稀疏</strong>。</p>
+<ul>
+<li>图中提到这些切割问题都是 NP - hard 的，即很难在多项式时间内找到最优解。</li>
+<li>谱聚类（Spectral clustering）是解决这些问题的一种松弛方法，它通过将问题转化为特征向量和特征值的计算来近似求解。（比割和归一化割都可以用光谱法进行近似。）</li>
+</ul>
+<h3 id="Unnormalized-Spectral-Clustering算法"><a href="#Unnormalized-Spectral-Clustering算法" class="headerlink" title="Unnormalized Spectral Clustering算法"></a>Unnormalized Spectral Clustering算法</h3><p>算法输入：样本相似矩阵S和要聚类的类别数K。</p>
+<ul>
+<li>根据矩阵S建立权重矩阵W、三角矩阵D；</li>
+<li>建立Laplacian矩阵L；</li>
+<li>求矩阵L的（除0外）前K小个特征值及其对应的特征向量；</li>
+<li>以这K组特征向量组成新的矩阵，其行数为样本数，列数为K，这里就是做了降维操作，从N维降到K维；</li>
+<li>使用k-means<strong>等其它聚类算法</strong>进行聚类，得到K个Cluster。</li>
+</ul>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202411241717310.png" alt="image-20241124171702269"></p>
+<h3 id="Normalized-spectral-clustering"><a href="#Normalized-spectral-clustering" class="headerlink" title="Normalized spectral clustering"></a>Normalized spectral clustering</h3><p>算法输入：样本相似矩阵S和要聚类的类别数K。</p>
+<ul>
+<li>根据矩阵S建立权重矩阵W、三角矩阵D；</li>
+<li>建立Laplacian矩阵L以及L’ &#x3D; D-1L ；<ul>
+<li>注意ppt用的不是对称归一化拉普拉斯矩阵，而是随机游走归一化拉普拉斯矩阵<img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202411242015143.png" alt="image-20241124201546113"></li>
+</ul>
+</li>
+<li>求矩阵L’的前K小个特征值及其对应的特征向量；<ul>
+<li>注意这里最小的特征值为0，所以有人在下一步会选第二小的特征值对应的特征向量进行聚类</li>
+</ul>
+</li>
+<li>利用q’ &#x3D; D1&#x2F;2q求得对应的K个q；（q不是L的特征向量）</li>
+<li>以这K组特征向量组成新的矩阵，其行数为样本数N，列数为K；</li>
+<li>使用k-means<strong>等其它聚类算法</strong>进行聚类，得到K个Cluster。</li>
+</ul>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202411241717582.png" alt="image-20241124171714538"></p>
+<p>这里Lv&#x3D;λDv其实就是D^{-1}Lv&#x3D;λv，即对归一化的L_rw求特征值</p>
+<h1 id="Lec9-PCA"><a href="#Lec9-PCA" class="headerlink" title="Lec9 PCA"></a>Lec9 PCA</h1><p>动机：输入特性包含大量的冗余性</p>
+<p>主成分分析：将n维特征映射到k维上，这k维是全新的正交特征也被称为主成分（是原始数据的线性组合），是在原有n维特征的基础上重新构造出来的k维特征。这对于数据压缩和降维非常有用。</p>
+<ul>
+<li>只关注主成分向量方向，而不是大小，所以认为正交特征的l2范数为1</li>
+</ul>
+<p>步骤：</p>
+<ol>
+<li><strong>数据标准化</strong>：对数据进行标准化处理，使得每个特征的均值（Mean⁡(x)）为0，方差（Var⁡(x_j)）为1<ol>
+<li>中心化：减去均值</li>
+<li>缩放：除以标准差<img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202412082008695.png" alt="image-20241208200843578"></li>
+</ol>
+</li>
+<li><strong>找到第一个主成分</strong>：在标准化后的数据上，找到第一个主成分 u1，它是原始数据 x 的一个投影，具有最大的方差。<ol>
+<li>投影长度是x^(i)Tu（这是一个标量，表示x^(i)在u方向上的分量的大小），所以目标是找到一个单位向量u，使得 uTΣu最大化<img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202412082016713.png" alt="image-20241208201629651"></li>
+<li>虽然可以用优化工具来解决，但有个有效的解决方案：<em>u</em>1 是协方差矩阵Σ 的最大特征向量，选择最大的特征值 λ1 对应的特征向量 v1<img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202412082019018.png" alt="image-20241208201957940"></li>
+</ol>
+</li>
+<li><strong>迭代找到其他主成分</strong>：对于 j&#x3D;2,…,n，依次找到其他的主成分 u_j。每个新的主成分都是数据x的一个投影，且具有最大的方差，同时要求这个主成分与之前找到的所有主成分（u1,…,uj−1）<strong>正交</strong>。<ol>
+<li>第 j个主成分 uj 是协方差矩阵 Σ的第 j 大的特征向量。通过对L(u)求导证明<img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202412082029004.png" alt="image-20241208202935924"></li>
+</ol>
+</li>
+</ol>
+<p>所以过程可以分为：标准化数据-&gt;计算协方差矩阵Σ-&gt;特征值分解找到主成分u1,…,un。协方差矩阵Σ可以分解为Σ&#x3D;UΛUT，其中U是一个正交矩阵，其列向量是协方差矩阵的特征向量，Λ是一个对角矩阵，其对角线上的元素是对应的特征值。</p>
+<p>PCA的另一种解释：基于投影残差最小化。假设有m个样本，尝试使用这些投影或图像向量来表示原始数据（投影是最能代表原始数据的方向（主成分））。在真实数据和它们的表示（投影残差）之间会存在误差，我们自然希望最小化这些误差。</p>
+<h1 id="Lec10-强化学习-深度Q算法"><a href="#Lec10-强化学习-深度Q算法" class="headerlink" title="Lec10 强化学习&#x2F;深度Q算法"></a>Lec10 强化学习&#x2F;深度Q算法</h1><p>在课堂上，我们学习了强化学习。在本次作业中，你需要设计一个深度 Q 学习网络来玩 <em>CartPole</em> 游戏。我们的实验包含三个部分：</p>
+<p>如果你想在代码执行时看到动画，你可以：</p>
+<ol>
+<li><strong>重启内核</strong>：这可以清除任何可能的错误或缓存，确保从干净的状态开始。</li>
+<li><strong>根据最后一个代码块中的注释修改代码</strong>：通常代码块会给出如何启用或调整动画显示的提示，按照这些建议修改代码。</li>
+</ol>
+<p>由于制作动画通常非常耗时，因此建议你在渲染动画之前，确保你的代码没有错误并且运行正确。这样可以节省时间，避免因为错误代码而浪费渲染资源。</p>
+<p><a target="_blank" rel="noopener" href="https://www.gymlibrary.dev/environments/classic_control/cart_pole/">CartPole</a> 是一个经典的强化学习环境，来自 <a target="_blank" rel="noopener" href="https://gym.openai.com/">gym</a> 包，由 <a target="_blank" rel="noopener" href="https://openai.com/">OpenAI</a> 设计。在 CartPole 环境中，一个杆子通过一个无驱动的关节连接到一个小车上，小车可以沿着无摩擦的轨道移动。如果小车不移动，杆子会因为重力而倒下。</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202412052246786.png" alt="image-20241205224352765"></p>
+<p>在这个环境中，目标是控制小车的运动，以保持杆子竖直不倒。强化学习算法（如 Q 学习）通常用于解决这一类平衡控制问题。在 CartPole 中，智能体需要通过不断调整小车的方向，来平衡杆子，避免其倒下。</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202412052246796.png" alt="image-20241205224613210"></p>
+<p>深度Q算法：让期望回报最大</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202412061136305.png" alt="image-20241206113632181"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202412061136986.png" alt="image-20241206113650874"></p>
+<ul>
+<li>回放记忆D：用于存储智能体与环境交互时的经验（即状态、动作、奖励、下一个状态），容量设为N，用于从中随机采样训练数据。</li>
+<li>Q值模型：使用一个神经网络（参数为θ）来近似表示Q-值函数。即预测未来的累计奖励。</li>
+<li>训练过程：<ul>
+<li>回合：每次智能体与环境交互，经历一个完整的学习过程。每个回合从环境中获取一个初始状态s1开始。</li>
+<li>时间步：每个回合中，智能体按照以下步骤进行决策和学习，直到回合结束<ul>
+<li><strong>选择动作</strong>：基于当前的状态s_t，智能体以概率ϵ选择一个随机动作a_t（探索）；否则，选择一个使得Qθ(st,at)最大的动作a_t（利用当前的Q值，选择最优动作）。这个策略是ϵ-贪婪策略，<strong>平衡了探索和利用</strong>。<ul>
+<li>局部最优不一定是全局最优，所以需要随机</li>
+</ul>
+</li>
+<li><strong>执行动作并获得反馈</strong>：执行选择的动作at，环境返回奖励rt和下一个状态st+1。这些数据存储在回放记忆D中。</li>
+<li><strong>存储转移</strong>：将当前的转移信息（即当前状态、所选动作、奖励、下一个状态）存储到回放记忆中。</li>
+<li><strong>从回放记忆中采样</strong>：从回放记忆D中随机采样一个小批量的转移数据Ω。这有助于打破数据间的相关性，提升训练稳定性。<ul>
+<li>称为“经验回放”。</li>
+</ul>
+</li>
+<li><strong>计算目标值 yj</strong>：目标值就是最大化后的奖励。使用上面采样的转移数据，对模型进行更新。<ul>
+<li>输入：经验回放记忆D，网络模型Q，批量大小batch_size，输出：更新后的网络模型Q</li>
+<li>SGD：0.0005；BGD：0.001<img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202412061402119.png" alt="image-20241206140203058"></li>
+</ul>
+</li>
+<li><strong>更新 Q 值模型</strong>：我们知道奖励机制，所以根据实际的奖励调整Q模型。MSE loss（平方差的和&#x2F;数量）<img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202412061407586.png" alt="image-20241206140728546"></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><strong>迭代训练</strong>：这个过程会在多个回合和时间步中重复进行。随着训练的进行，Q-值模型会不断地调整，智能体能够根据环境的反馈逐渐学习到最优策略，从而在给定状态下选择最佳动作。</li>
+</ul>
+<p>我们将使用一个 <code>deque</code>（双端队列）对象作为记忆 来存储转移过程。在这里，我们打算复用在编程作业 3（PA3）中构建的简单神经网络 <code>SimpleNN</code>，为深度 学习构建一个 <strong>模型</strong>。现在提供给你一个名为 <code>nn.py</code> 的 Python 文件，所以你无需从编程作业 3 中复制代码了。现在，让我们导入 <code>nn</code> 和 <code>deque</code>，以便能够使用它们。</p>
+<p>由于只有两个可能的动作（0或1，表示小车向左或者向右），我们可以直接预测在某个状态下执行这两个动作的Q值，而不需要将动作作为输入特征的一部分：</p>
+<p>为了实现这一点，我们只需将输出维度设置为2。Q模型以状态作为输入，因此输入维度设置为4。其他部分可以保持与PA3相同，因此我们的Q模型包含以下层：</p>
+<p>L0，输入层（形状：$N \times 4$），其中$N$是批量大小。</p>
+<ul>
+<li>这里的连续状态空间（位置、速度、角度、角速度）(x,θ,x.,θ.)</li>
+</ul>
+<p>L1，线性层（形状：$4 \times 80$）</p>
+<ul>
+<li>输入维度是4，输出维度是80。说明W是4×80的矩阵，b是一个80维的偏置向量。</li>
+</ul>
+<p>L2，ReLU层</p>
+<p>L3，线性层（形状：$80 \times 80$）</p>
+<p>L4，ReLU层</p>
+<p>L5，输出层（线性层，形状：$80 \times 2$）</p>
+<ul>
+<li>动作空间只有两个可能的动作：向左推（0）和向右推（1）</li>
+<li>输出2个Q值，选择奖励大的动作就行</li>
+</ul>
+<p>然后跟随机策略进行对比，发现Q算法让平衡时间增长（time回合数增加），因为停止就不平衡了，让不停止时reward增加</p>
+<p>Q3：在这个实验中，当智能体选择动作时我们采用了动态探索率epsilon。请解释代码中是如何控制探索率的，以及为什么这种方式是有效的？</p>
+<p>在每个episode结束后，如果epsilon大于最小值，就乘以epsilon_decay进行衰减，这种方式实现了探索和利用的平衡，帮助智能体从广泛探索状态空间逐渐转向利用已学到的经验，避免陷入局部最优解。</p>
+<h1 id="Lec11-ICA"><a href="#Lec11-ICA" class="headerlink" title="Lec11 ICA"></a>Lec11 ICA</h1><h2 id="动机"><a href="#动机" class="headerlink" title="动机"></a>动机</h2><ol>
+<li><p>鸡尾酒会问题：图中展示了一个场景，在一个房间里有多个声音源（Sources），并且在房间的不同位置放置了多个麦克风（Microphones）。每个麦克风都会记录下多个声音源混合在一起的声音（Mixtures）。问题的关键在于如何从这些混合的声音中分离出各个独立的声音源（Separated Sources）。<img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202412092037060.png" alt="image-20241209203707898"></p>
+</li>
+<li><p>脑电分析：常见的去除伪迹方法包括：ICA、滤波、手动校正<img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202412092050819.png" alt="image-20241209205053705"></p>
+</li>
+<li><p>脑部成像<img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202412092053962.png" alt="image-20241209205355849"></p>
+</li>
+</ol>
+<h2 id="ICA"><a href="#ICA" class="headerlink" title="ICA"></a>ICA</h2><p>建模成盲源分离问题：</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202412092107159.png" alt="image-20241209210703094"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202412092127036.png" alt="image-20241209212739985"></p>
+<p>ICA的模糊性：</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202412092131275.png" alt="image-20241209213116197"></p>
+<p>一个关于密度和线性变换的定理（Theorem 1）（概率密度函数给出了随机变量在某个区间内取值的概率）<img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202412092202206.png" alt="image-20241209220225165"></p>
+<p>算法：迭代优化：初始化W，假设Ps，然后迭代更新W直到收敛，估计出s？这里|W|代表行列式</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202412092209755.png" alt="image-20241209220925678"></p>
+<p>目标是通过最大化对数似然函数来估计解混矩阵W，从而实现对源信号的分离<img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202412092230608.png" alt="image-20241209223026548"></p>
+<p>ICA等价于学习投影方向(w_1, …, w_n)，在这些投影方向上满足以下条件：  </p>
+<ul>
+<li><strong>最大化投影信号的非高斯性总和</strong>    - 非高斯性是ICA的一个关键特性。由于高斯分布的旋转不变性，ICA通过寻找非高斯性来分离信号。  </li>
+<li><strong>最小化投影信号的互信息</strong>    - 互信息（mutual information）是衡量两个随机变量之间相关性的指标。在ICA中，通过最小化投影信号之间的互信息来确保它们尽可能独立。 </li>
+<li><strong>约束条件</strong>    - 约束条件是投影后的信号(w_1^T x, …, w_n^T x)是不相关的。这意味着在这些投影方向上，信号之间没有线性相关性。</li>
+</ul>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202412092241711.png" alt="image-20241209224131592"></p>
 
         </div>
 
