@@ -1,0 +1,1217 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <meta name="author" content="Annie">
+
+
+
+
+
+<title>书生大模型第四期笔记与实践 | Annie&#39;s Blog</title>
+
+
+
+    <link rel="icon" href="/favicon.ico">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+    <script src="/js/tocbot.min.js"></script>
+    
+
+
+
+    
+    
+        
+    
+
+
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+<body>
+    <script>
+        // this function is used to check current theme before page loaded.
+        (() => {
+            const currentTheme = window.localStorage && window.localStorage.getItem('theme') || '';
+            const isDark = currentTheme === 'dark';
+            const pagebody = document.getElementsByTagName('body')[0]
+            if (isDark) {
+                pagebody.classList.add('dark-theme');
+                // mobile
+                document.getElementById("mobile-toggle-theme").innerText = "· Dark"
+            } else {
+                pagebody.classList.remove('dark-theme');
+                // mobile
+                document.getElementById("mobile-toggle-theme").innerText = "· Light"
+            }
+        })();
+    </script>
+
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">Lapsey&#39;s Blog</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default">
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+        </div>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">Lapsey&#39;s Blog</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; 菜单</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+            <div class="main">
+                <div class="container">
+    
+    
+        <div class="post-toc">
+    <div class="tocbot-list">
+    </div>
+    <div class="tocbot-list-menu">
+        <a class="tocbot-toc-expand" onclick="expand_toc()">全部展开</a>
+        <a onclick="go_top()">回到顶部</a>
+        <a onclick="go_bottom()">前往底部</a>
+    </div>
+</div>
+
+<script>
+    var tocbot_timer;
+    var DEPTH_MAX = 6; // 为 6 时展开所有
+    var tocbot_default_config = {
+        tocSelector: '.tocbot-list',
+        contentSelector: '.post-content',
+        headingSelector: 'h1, h2, h3, h4, h5',
+        orderedList: false,
+        scrollSmooth: true,
+        onClick: extend_click,
+    };
+
+    function extend_click() {
+        clearTimeout(tocbot_timer);
+        tocbot_timer = setTimeout(function() {
+            tocbot.refresh(obj_merge(tocbot_default_config, {
+                hasInnerContainers: true
+            }));
+        }, 420); // 这个值是由 tocbot 源码里定义的 scrollSmoothDuration 得来的
+    }
+
+    document.ready(function() {
+        tocbot.init(obj_merge(tocbot_default_config, {
+            collapseDepth: 1
+        }));
+    });
+
+    function expand_toc() {
+        var b = document.querySelector('.tocbot-toc-expand');
+        var expanded = b.getAttribute('data-expanded');
+        expanded ? b.removeAttribute('data-expanded') : b.setAttribute('data-expanded', true);
+        tocbot.refresh(obj_merge(tocbot_default_config, {
+            collapseDepth: expanded ? 1 : DEPTH_MAX
+        }));
+        b.innerText = expanded ? 'Expand all' : 'Collapse all';
+    }
+
+    function go_top() {
+        window.scrollTo(0, 0);
+    }
+
+    function go_bottom() {
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+
+    function obj_merge(target, source) {
+        for (var item in source) {
+            if (source.hasOwnProperty(item)) {
+                target[item] = source[item];
+            }
+        }
+        return target;
+    }
+</script>
+    
+
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">书生大模型第四期笔记与实践</h1>
+            
+                <div class="post-meta">
+                    
+                        作者: <a itemprop="author" rel="author" href="/">Annie</a>
+                    
+
+                    
+                        <span class="post-time">
+                        日期: <a href="#">January 3, 2025&nbsp;&nbsp;20:52:20</a>
+                        </span>
+                    
+                    
+                        <span class="post-category">
+                        分类:
+                            
+                                <a href="/categories/%E7%AE%97%E6%B3%95/">算法</a>
+                            
+                        </span>
+                    
+                </div>
+            
+        </header>
+
+        <div class="post-content">
+            <h1 id="入门岛"><a href="#入门岛" class="headerlink" title="入门岛"></a>入门岛</h1><h2 id="第一关-Linux"><a href="#第一关-Linux" class="headerlink" title="第一关 Linux"></a>第一关 Linux</h2><h3 id="闯关任务：完成SSH连接与端口映射并运行hello-world-py"><a href="#闯关任务：完成SSH连接与端口映射并运行hello-world-py" class="headerlink" title="闯关任务：完成SSH连接与端口映射并运行hello_world.py"></a>闯关任务：完成SSH连接与端口映射并运行hello_world.py</h3><p>ssh连接：打开powershell，复制登录命令。使用hostname查看开发机名称，使用uname -a查看开发机内核信息，使用lsb_release -a查看开发机版本信息，使用nvidia-smi查看GPU的信息<br><img src="https://i-blog.csdnimg.cn/direct/a01bcd733e92464e8261e0e37370b36b.png" alt="在这里插入图片描述"><br>后续使用cursor进行ssh和端口映射，成功运行hello_world.py</p>
+<h3 id="笔记与过程"><a href="#笔记与过程" class="headerlink" title="笔记与过程"></a>笔记与过程</h3><h4 id="SSH"><a href="#SSH" class="headerlink" title="SSH"></a>SSH</h4><p>cursor安装Remote-SSH</p>
+<p>创建开发机</p>
+<p><strong>SSH</strong>全称Secure Shell，中文翻译为安全外壳，它是一种<strong>网络安全协议</strong>，通过加密和认证机制实现安全的访问和文件传输等业务。SSH 协议通过对网络数据进行加密和验证，在不安全的网络环境中提供了安全的网络服务。</p>
+<p>SSH 是（C&#x2F;S架构）由<strong>服务器</strong>和<strong>客户端</strong>组成，为建立安全的 SSH 通道，双方需要先建立 TCP 连接，然后协商使用的版本号和各类算法，并生成相同的<strong>会话密钥</strong>用于后续的对称加密。在完成用户认证后，双方即可建立会话进行数据交互。</p>
+<p>那在后面的实践中我们会<strong>配置SSH密钥</strong>，配置密钥是为了当我们远程连接开发机时不用重复的输入密码，那<strong>为什么要进行远程连接呢</strong>？</p>
+<p>远程连接的好处就是，如果你使用的是远程办公，你可以通过SSH远程连接开发机，这样就可以在本地进行开发。而且如果你需要跑一些本地的代码，又没有环境，那么远程连接就非常有必要了。</p>
+<p>命令：<code>ssh -p 38267 root@ssh.intern-ai.org.cn -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null</code></p>
+<h4 id="端口映射"><a href="#端口映射" class="headerlink" title="端口映射"></a>端口映射</h4><p><strong>端口映射</strong>是一种网络技术，它可以将外网中的任意端口映射到内网中的相应端口，实现内网与外网之间的通信。通过端口映射，可以在外网访问内网中的服务或应用，实现跨越网络的便捷通信。</p>
+<p>那么我们使用开发机为什么要进行端口映射呢？</p>
+<p>因为在后续的课程中我们会进行模型<strong>web_demo</strong>的部署实践，那在这个过程中，很有可能遇到web ui加载不全的问题。这是因为开发机Web IDE中运行web_demo时，直接访问开发机内 http&#x2F;https 服务可能会遇到代理问题，外网链接的<strong>ui资源</strong>没有被加载完全。</p>
+<p>所以为了解决这个问题，我们需要对运行web_demo的连接进行端口映射，将<strong>外网链接映射到我们本地主机</strong>，我们使用本地连接访问，解决这个代理问题。下面让我们实践一下。</p>
+<p><code>ssh -p 38267 root@ssh.intern-ai.org.cn -CNg -L 7860:127.0.0.1:7860 -o StrictHostKeyChecking=no</code></p>
+<p>这条命令会通过开发机 SSH 通道将开发机内的 {开发机_PORT} 转发到您本地机器的 (本地机器_PORT}，这个过程可能会要求你输入 SSH 链接的密码。</p>
+<h4 id="linux文件管理命令"><a href="#linux文件管理命令" class="headerlink" title="linux文件管理命令"></a>linux文件管理命令</h4><p>在 Linux 中，常见的文件管理操作包括：</p>
+<ul>
+<li><strong>创建文件</strong>：可以使用 <code>touch</code> 命令创建空文件。</li>
+<li><strong>创建目录</strong>：使用 <code>mkdir</code> 命令。</li>
+<li><strong>目录切换</strong>：使用<code>cd</code>命令。</li>
+<li><strong>显示所在目录</strong>：使用<code>pwd</code>命令。</li>
+<li><strong>查看文件内容</strong>：如使用 <code>cat</code> 直接显示文件全部内容，<code>more</code> 和 <code>less</code> 可以分页查看。</li>
+<li><strong>编辑文件</strong>：如 <code>vi</code> 或 <code>vim</code> 等编辑器。</li>
+<li><strong>复制文件</strong>：用 <code>cp</code> 命令。</li>
+<li><strong>创建文件链接</strong>：用<code>ln</code>命令。</li>
+<li><strong>移动文件</strong>：通过 <code>mv</code> 命令。</li>
+<li><strong>删除文件</strong>：使用 <code>rm</code> 命令。</li>
+<li><strong>删除目录</strong>：<code>rmdir</code>（只能删除空目录）或 <code>rm -r</code>（可删除非空目录）。</li>
+<li><strong>查找文件</strong>：可以用 <code>find</code> 命令。</li>
+<li><strong>查看文件或目录的详细信息</strong>：使用<code>ls</code>命令，如使用 <code>ls -l</code>查看目录下文件的详细信息。</li>
+<li><strong>处理文件</strong>：进行复杂的文件操作，可以使用<code>sed</code>命令。</li>
+</ul>
+<h4 id="linux进程管理命令"><a href="#linux进程管理命令" class="headerlink" title="linux进程管理命令"></a>linux进程管理命令</h4><p><strong>进程管理</strong>命令是进行系统监控和进程管理时的重要工具，常用的进程管理命令有以下几种：</p>
+<ul>
+<li><strong>ps</strong>：查看正在运行的进程</li>
+<li><strong>top</strong>：动态显示正在运行的进程</li>
+<li><strong>pstree</strong>：树状查看正在运行的进程</li>
+<li><strong>pgrep</strong>：用于查找进程</li>
+<li><strong>nice</strong>：更改进程的优先级</li>
+<li><strong>jobs</strong>：显示进程的相关信息</li>
+<li><strong>bg 和 fg</strong>：将进程调入后台</li>
+<li><strong>kill</strong>：杀死进程</li>
+</ul>
+<h2 id="第二关-Python"><a href="#第二关-Python" class="headerlink" title="第二关 Python"></a>第二关 Python</h2><h3 id="闯关任务：Leetcode-383-笔记中提交代码与leetcode提交通过截图"><a href="#闯关任务：Leetcode-383-笔记中提交代码与leetcode提交通过截图" class="headerlink" title="闯关任务：Leetcode 383(笔记中提交代码与leetcode提交通过截图)"></a>闯关任务：Leetcode 383(笔记中提交代码与leetcode提交通过截图)</h3><p>代码：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">canConstruct</span>(<span class="params">self, ransomNote: <span class="built_in">str</span>, magazine: <span class="built_in">str</span></span>) -&gt; <span class="built_in">bool</span>:</span><br><span class="line">        a = Counter(ransomNote) </span><br><span class="line">        b = Counter(magazine)</span><br><span class="line">        <span class="keyword">return</span> (a &amp; b) == a</span><br></pre></td></tr></table></figure>
+<p>通过截图：<br><img src="https://i-blog.csdnimg.cn/direct/a4ecf2f0318f44e38af430b023855ad4.png" alt="在这里插入图片描述"><br>思路：一开始的想法是用map统计每个字母的出现次数，保证magazine中每个字母的统计次数&gt;&#x3D;ransomNote中的；python3正好有很方便的库Collection用来跟踪值出现的次数，常见操作如下，用交集就可以满足该题的要求。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span>c = Counter(<span class="string">&quot;abcdcba&quot;</span>)</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>c</span><br><span class="line">Counter(&#123;<span class="string">&#x27;a&#x27;</span>: <span class="number">2</span>, <span class="string">&#x27;c&#x27;</span>: <span class="number">2</span>, <span class="string">&#x27;b&#x27;</span>: <span class="number">2</span>, <span class="string">&#x27;d&#x27;</span>: <span class="number">1</span>&#125;)</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>c = Counter(<span class="string">&quot;abcdefgab&quot;</span>)</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>c[<span class="string">&quot;a&quot;</span>]</span><br><span class="line"><span class="number">2</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>c[<span class="string">&quot;c&quot;</span>]</span><br><span class="line"><span class="number">1</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>c[<span class="string">&quot;h&quot;</span>]</span><br><span class="line"><span class="number">0</span></span><br><span class="line"><span class="built_in">sum</span>(c.values())  <span class="comment"># 所有计数的总数</span></span><br><span class="line">c.clear()  <span class="comment"># 重置Counter对象，注意不是删除</span></span><br><span class="line"><span class="built_in">list</span>(c)  <span class="comment"># 将c中的键转为列表</span></span><br><span class="line"><span class="built_in">set</span>(c)  <span class="comment"># 将c中的键转为set</span></span><br><span class="line"><span class="built_in">dict</span>(c)  <span class="comment"># 将c中的键值对转为字典</span></span><br><span class="line">c.items()  <span class="comment"># 转为(elem, cnt)格式的列表</span></span><br><span class="line">Counter(<span class="built_in">dict</span>(list_of_pairs))  <span class="comment"># 从(elem, cnt)格式的列表转换为Counter类对象</span></span><br><span class="line">c.most_common()[:-n:-<span class="number">1</span>]  <span class="comment"># 取出计数最少的n-1个元素</span></span><br><span class="line">c += Counter()  <span class="comment"># 移除0和负值</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="闯关任务：Vscode连接InternStudio-debug笔记"><a href="#闯关任务：Vscode连接InternStudio-debug笔记" class="headerlink" title="闯关任务：Vscode连接InternStudio debug笔记"></a>闯关任务：Vscode连接InternStudio debug笔记</h3><p>pip下载openai环境，运行后发现有bug<br><img src="https://i-blog.csdnimg.cn/direct/7943bc6287c04bf3ac939484bac68b0b.png" alt="在这里插入图片描述"><br>打断点排查，发现json.loads理应处理的json字符串res有一些多余的字符：<br><img src="https://i-blog.csdnimg.cn/direct/204c22369a1844bdbdd46ff8917181aa.png" alt="在这里插入图片描述"><br>使用res.strip()去除后即可顺利运行：<br><img src="https://i-blog.csdnimg.cn/direct/39f91255456a403daecec06beacd9d8a.png" alt="在这里插入图片描述"><br>完整代码：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> openai <span class="keyword">import</span> OpenAI<span class="comment">#调用书生浦语API实现将非结构化文本转化成结构化json的例子</span></span><br><span class="line"><span class="keyword">import</span> json</span><br><span class="line"><span class="keyword">def</span> <span class="title function_">internlm_gen</span>(<span class="params">prompt,client</span>):</span><br><span class="line">    <span class="string">&#x27;&#x27;&#x27;</span></span><br><span class="line"><span class="string">    LLM生成函数</span></span><br><span class="line"><span class="string">    Param prompt: prompt string</span></span><br><span class="line"><span class="string">    Param client: OpenAI client </span></span><br><span class="line"><span class="string">    &#x27;&#x27;&#x27;</span></span><br><span class="line">    response = client.chat.completions.create(</span><br><span class="line">        model=<span class="string">&quot;internlm2.5-latest&quot;</span>,</span><br><span class="line">        messages=[</span><br><span class="line">            &#123;<span class="string">&quot;role&quot;</span>: <span class="string">&quot;user&quot;</span>, <span class="string">&quot;content&quot;</span>: prompt&#125;,</span><br><span class="line">      ],</span><br><span class="line">        stream=<span class="literal">False</span></span><br><span class="line">    )</span><br><span class="line">    <span class="keyword">return</span> response.choices[<span class="number">0</span>].message.content</span><br><span class="line"></span><br><span class="line">api_key = <span class="string">&#x27;&#x27;</span></span><br><span class="line">client = OpenAI(base_url=<span class="string">&quot;https://internlm-chat.intern-ai.org.cn/puyu/api/v1/&quot;</span>,api_key=api_key)</span><br><span class="line"></span><br><span class="line">content = <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">书生浦语InternLM2.5是上海人工智能实验室于2024年7月推出的新一代大语言模型，提供1.8B、7B和20B三种参数版本，以适应不同需求。</span></span><br><span class="line"><span class="string">该模型在复杂场景下的推理能力得到全面增强，支持1M超长上下文，能自主进行互联网搜索并整合信息。</span></span><br><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br><span class="line">prompt = <span class="string">f&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">请帮我从以下``内的这段模型介绍文字中提取关于该模型的信息，要求包含模型名字、开发机构、提供参数版本、上下文长度四个内容，以json格式返回。</span></span><br><span class="line"><span class="string">`<span class="subst">&#123;content&#125;</span>`</span></span><br><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br><span class="line">res = internlm_gen(prompt,client)</span><br><span class="line">trimmed_res = res.strip()[<span class="number">7</span>:-<span class="number">3</span>]</span><br><span class="line">res_json = json.loads(trimmed_res)</span><br><span class="line"><span class="built_in">print</span>(res_json)</span><br></pre></td></tr></table></figure>
+
+<h3 id="笔记与过程-1"><a href="#笔记与过程-1" class="headerlink" title="笔记与过程"></a>笔记与过程</h3><h4 id="conda虚拟环境"><a href="#conda虚拟环境" class="headerlink" title="conda虚拟环境"></a>conda虚拟环境</h4><p>虚拟环境是Python开发中不可或缺的一部分，它允许你在不同的项目中使用不同版本的库，避免依赖冲突。Conda是一个强大的包管理器和环境管理器。</p>
+<p>pip只管理python包，conda</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">conda create --name myenv python=3.9</span><br><span class="line">conda activate myenv</span><br><span class="line">conda deactivate</span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">查看当前设备上所有的虚拟环境</span></span><br><span class="line">conda env list</span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">查看当前环境中安装了的所有包</span></span><br><span class="line">conda list</span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">删除环境（比如要删除myenv）</span></span><br><span class="line">conda env remove myenv</span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">安装虚拟环境到指定目录 方便共享</span></span><br><span class="line">conda create --prefix /root/envs/myenv python=3.9</span><br></pre></td></tr></table></figure>
+
+<h4 id="pip安装"><a href="#pip安装" class="headerlink" title="pip安装"></a>pip安装</h4><p><code>pip install -r requirements.txt</code></p>
+<p>为了节省大家的存储空间，本次实战营可以直接使用share目录下的conda环境，但share目录只有读权限，所以要安装额外的包时我们不能直接使用pip将包安装到对应环境中，需要安装到我们自己的目录下。</p>
+<p>这里我们用本次实战营最常用的环境<code>/root/share/pre_envs/pytorch2.1.2cu12.1</code>来举例。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"># 首先激活环境</span><br><span class="line">conda activate /root/share/pre_envs/pytorch2.1.2cu12.1</span><br><span class="line"></span><br><span class="line"># 创建一个目录/root/myenvs，并将包安装到这个目录下</span><br><span class="line">mkdir -p /root/myenvs</span><br><span class="line">pip install &lt;somepackage&gt; --target /root/myenvs</span><br><span class="line"></span><br><span class="line"># 注意这里也可以使用-r来安装requirements.txt</span><br><span class="line">pip install -r requirements.txt --target /root/myenvs</span><br></pre></td></tr></table></figure>
+
+<p>要使用安装在指定目录的python包，可以在python脚本开头临时动态地将该路径加入python环境变量中去</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">import sys  </span><br><span class="line">  </span><br><span class="line"># 你要添加的目录路径  </span><br><span class="line">your_directory = &#x27;/root/myenvs&#x27;  </span><br><span class="line">  </span><br><span class="line"># 检查该目录是否已经在 sys.path 中  </span><br><span class="line">if your_directory not in sys.path:  </span><br><span class="line">    # 将目录添加到 sys.path  </span><br><span class="line">    sys.path.append(your_directory)  </span><br><span class="line">  </span><br><span class="line"># 现在你可以直接导入该目录中的模块了  </span><br><span class="line"># 例如：import your_module</span><br></pre></td></tr></table></figure>
+
+<h4 id="配debug环境"><a href="#配debug环境" class="headerlink" title="配debug环境"></a>配debug环境</h4><p>下载python插件，首次debug需要配置以下，点击“create a launch.json file”，选择python debugger后选择“Python File” config。</p>
+<h2 id="第三关-git"><a href="#第三关-git" class="headerlink" title="第三关 git"></a>第三关 git</h2><h3 id="任务1-破冰活动：自我介绍"><a href="#任务1-破冰活动：自我介绍" class="headerlink" title="任务1: 破冰活动：自我介绍"></a>任务1: 破冰活动：自我介绍</h3><p>fork后下载有一些问题，是网络，多试几次</p>
+<p><img src="https://i-blog.csdnimg.cn/direct/76186caa217342dba2d72e1e20718283.png" alt="在这里插入图片描述"><br>写自我介绍文件并提交到本地仓库<img src="https://i-blog.csdnimg.cn/direct/2c1311f6f9d8416ab75735539f972b5f.png" alt="在这里插入图片描述"><br>提交pr。pr链接：<a target="_blank" rel="noopener" href="https://github.com/InternLM/Tutorial/pull/2517">https://github.com/InternLM/Tutorial/pull/2517</a><br><img src="https://i-blog.csdnimg.cn/direct/3a73d28e554841db8c4b91136f2677a0.png" alt="在这里插入图片描述"></p>
+<h3 id="任务2-实践项目：构建个人项目"><a href="#任务2-实践项目：构建个人项目" class="headerlink" title="任务2: 实践项目：构建个人项目"></a>任务2: 实践项目：构建个人项目</h3><p>因为github经常出现网络问题，使用gitee平台，在其上上传了深度学习相关的个人毕设项目（因为暂无大模型项目），并将书生大模型的超链接加入readme：<a target="_blank" rel="noopener" href="https://gitee.com/sammmmy/cfg-gnn">https://gitee.com/sammmmy/cfg-gnn</a><br>因为个人时间和能力有限，以及主题不相关，不报名第四期实战营项目。</p>
+<h3 id="笔记与过程-2"><a href="#笔记与过程-2" class="headerlink" title="笔记与过程"></a>笔记与过程</h3><h4 id="工作区、暂存区和-Git-仓库区"><a href="#工作区、暂存区和-Git-仓库区" class="headerlink" title="工作区、暂存区和 Git 仓库区"></a><strong>工作区、暂存区和 Git 仓库区</strong></h4><ul>
+<li>工作区（Working Directory）： 当我们在本地创建一个 Git 项目，或者从 GitHub 上 clone 代码到本地后，项目所在的这个目录就是“工作区”。这里是我们对项目文件进行编辑和使用的地方。</li>
+<li>暂存区（Staging Area）： 暂存区是 Git 中独有的一个概念，位于 .git 目录中的一个索引文件，记录了下一次提交时将要存入仓库区的文件列表信息。使用 git add 指令可以将工作区的改动放入暂存区。</li>
+<li>仓库区 &#x2F; 本地仓库（Repository）： 在项目目录中，.git 隐藏目录不属于工作区，而是 Git 的版本仓库。这个仓库区包含了所有历史版本的完整信息，是 Git 项目的“本体”。</li>
+</ul>
+<h4 id="常用指令"><a href="#常用指令" class="headerlink" title="常用指令"></a>常用指令</h4><p><strong>常用指令</strong></p>
+<table>
+<thead>
+<tr>
+<th>指令</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>git config</code></td>
+<td>配置用户信息和偏好设置</td>
+</tr>
+<tr>
+<td><code>git init</code></td>
+<td>初始化一个新的 Git 仓库</td>
+</tr>
+<tr>
+<td><code>git clone</code></td>
+<td>克隆一个远程仓库到本地</td>
+</tr>
+<tr>
+<td><code>git status</code></td>
+<td>查看仓库当前的状态，显示有变更的文件</td>
+</tr>
+<tr>
+<td><code>git add</code></td>
+<td>将文件更改添加到暂存区</td>
+</tr>
+<tr>
+<td><code>git commit</code></td>
+<td>提交暂存区到仓库区</td>
+</tr>
+<tr>
+<td><code>git branch</code></td>
+<td>列出、创建或删除分支</td>
+</tr>
+<tr>
+<td><code>git checkout</code></td>
+<td>切换分支或恢复工作树文件</td>
+</tr>
+<tr>
+<td><code>git merge</code></td>
+<td>合并两个或更多的开发历史</td>
+</tr>
+<tr>
+<td><code>git pull</code></td>
+<td>从另一仓库获取并合并本地的版本</td>
+</tr>
+<tr>
+<td><code>git push</code></td>
+<td>更新远程引用和相关的对象</td>
+</tr>
+<tr>
+<td><code>git remote</code></td>
+<td>管理跟踪远程仓库的命令</td>
+</tr>
+<tr>
+<td><code>git fetch</code></td>
+<td>从远程仓库获取数据到本地仓库，但不自动合并</td>
+</tr>
+</tbody></table>
+<p><strong>进阶指令</strong></p>
+<table>
+<thead>
+<tr>
+<th>指令</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>git stash</code></td>
+<td>暂存当前工作目录的修改，以便可以切换分支</td>
+</tr>
+<tr>
+<td><code>git cherry-pick</code></td>
+<td>选择一个提交，将其作为新的提交引入</td>
+</tr>
+<tr>
+<td><code>git rebase</code></td>
+<td>将提交从一个分支移动到另一个分支</td>
+</tr>
+<tr>
+<td><code>git reset</code></td>
+<td>重设当前 HEAD 到指定状态，可选修改工作区和暂存区</td>
+</tr>
+<tr>
+<td><code>git revert</code></td>
+<td>通过创建一个新的提交来撤销之前的提交</td>
+</tr>
+<tr>
+<td><code>git mv</code></td>
+<td>移动或重命名一个文件、目录或符号链接，并自动更新索引</td>
+</tr>
+<tr>
+<td><code>git rm</code></td>
+<td>从工作区和索引中删除文件</td>
+</tr>
+</tbody></table>
+<h2 id="第四关-玩转HF-魔搭-魔乐社区"><a href="#第四关-玩转HF-魔搭-魔乐社区" class="headerlink" title="第四关 玩转HF&#x2F;魔搭&#x2F;魔乐社区"></a>第四关 玩转HF&#x2F;魔搭&#x2F;魔乐社区</h2><h3 id="HF平台使用过程"><a href="#HF平台使用过程" class="headerlink" title="HF平台使用过程"></a>HF平台使用过程</h3><p>Hugging Face Spaces 是一个允许我们轻松地托管、分享和发现基于机器学习模型的应用的平台。Spaces 使得开发者可以快速将我们的模型部署为可交互的 web 应用，且无需担心后端基础设施或部署的复杂性。 </p>
+<h1 id="基础岛"><a href="#基础岛" class="headerlink" title="基础岛"></a>基础岛</h1><h2 id="第一关-书生大模型全链路开源体系"><a href="#第一关-书生大模型全链路开源体系" class="headerlink" title="第一关  书生大模型全链路开源体系"></a>第一关  书生大模型全链路开源体系</h2><p>InternLM开源一周年</p>
+<p>性能天梯：与GPT靠近</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202411261850545.png" alt="image-20241126185047421"></p>
+<p>推理能力：指原生的推理性能，不包括agent等自定义逻辑</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202411261851082.png" alt="image-20241126185138998"></p>
+<p>核心技术思路：迭代，数据质量驱动（基于规则、模型、反馈）</p>
+<p>100万token上下文：大海捞针实验（给很长的信息，看能否定位任何位置的任何信息）</p>
+<ul>
+<li>以前要RAG：拆分、向量化、匹配分块</li>
+</ul>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202411261855716.png" alt="image-20241126185532619"></p>
+<p>7B感觉还是在检索信息，20B开始有思考的感觉</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202411261856267.png" alt="image-20241126185625142"></p>
+<ul>
+<li>预训练：迁移</li>
+<li>微调：常用的框架，企业经常使用</li>
+</ul>
+<h3 id="数据"><a href="#数据" class="headerlink" title="数据"></a>数据</h3><p><img src="/../../../AppData/Roaming/Typora/typora-user-images/image-20241126185803184.png" alt="image-20241126185803184"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202411261858985.png" alt="image-20241126185818852"></p>
+<p>Miner U：可以解析PDF的文字内容 </p>
+<p>Label：支持标注数据</p>
+<h3 id="预训练"><a href="#预训练" class="headerlink" title="预训练"></a>预训练</h3><p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202411261858677.png" alt="image-20241126185857564"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202411261859753.png" alt="image-20241126185912612"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202411261900814.png" alt="image-20241126190012708"></p>
+<p>帮助降低硬件要求</p>
+<p>全量微调个人计算机跑不起来</p>
+<p>XTuner可以节约显存 </p>
+<h3 id="评测"><a href="#评测" class="headerlink" title="评测"></a>评测</h3><p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202411261900638.png" alt="image-20241126190040487"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202411261900785.png" alt="image-20241126190051686"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202411261901073.png" alt="image-20241126190132949"></p>
+<h3 id="部署"><a href="#部署" class="headerlink" title="部署"></a>部署</h3><p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202411261901388.png" alt="image-20241126190144270"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202411261902483.png" alt="image-20241126190205433"></p>
+<p>领先VLLM</p>
+<h3 id="应用"><a href="#应用" class="headerlink" title="应用"></a>应用</h3><h4 id="智能体"><a href="#智能体" class="headerlink" title="智能体"></a>智能体</h4><p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202411261902546.png" alt="image-20241126190241466"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202411261902911.png" alt="image-20241126190256821"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202411261903928.png" alt="image-20241126190305865"></p>
+<p>与外部进行交互：Lagent框架</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202411261903145.png" alt="image-20241126190338066"></p>
+<p>会显示每一步的思路（可视化人脑的思考路径）</p>
+<h4 id="知识库"><a href="#知识库" class="headerlink" title="知识库"></a>知识库</h4><p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202411261904511.png" alt="image-20241126190437418"></p>
+<p>知识图谱和RAG都支持</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202411261904265.png" alt="image-20241126190450185"></p>
+<h2 id="第二关-玩转书生「多模态对话」与「AI搜索」产品"><a href="#第二关-玩转书生「多模态对话」与「AI搜索」产品" class="headerlink" title="第二关 玩转书生「多模态对话」与「AI搜索」产品"></a>第二关 玩转书生「多模态对话」与「AI搜索」产品</h2><h3 id="基础任务"><a href="#基础任务" class="headerlink" title="基础任务"></a>基础任务</h3><ol>
+<li>MindSearch：点击子节点可以看到学术界或工业界的答案<img src="https://i-blog.csdnimg.cn/direct/d35315e6306245f1b8ae06fb03a7cd4a.png" alt="在这里插入图片描述"></li>
+<li>书生浦语：翻译任务<img src="https://i-blog.csdnimg.cn/direct/f984697f280f49c8b114bcad8f991f3d.png" alt="在这里插入图片描述"></li>
+<li>InternVL：图片OCR+内容理解<img src="https://i-blog.csdnimg.cn/direct/e66528fe3a074528a5ef11295250726f.png" alt="在这里插入图片描述"></li>
+</ol>
+<p>书生浦语：提供API控制台，20B版本，可以申请tokens</p>
+<p>MindSearch：可以看思考过程、拆解问题、点击思维导图</p>
+<p>文档助手：可以阅读长论文</p>
+<h2 id="第三关-浦语提示词工程实践"><a href="#第三关-浦语提示词工程实践" class="headerlink" title="第三关 浦语提示词工程实践"></a>第三关 浦语提示词工程实践</h2><h3 id="基础任务-1"><a href="#基础任务-1" class="headerlink" title="基础任务"></a>基础任务</h3><p>很容易回答错误成2次，所在的位置也不对，所以引导输出每一位的字母并与r比较<br><img src="https://i-blog.csdnimg.cn/direct/c04c62e863814009b76946c569cbe107.png" alt="在这里插入图片描述"></p>
+<h3 id="笔记与过程-3"><a href="#笔记与过程-3" class="headerlink" title="笔记与过程"></a>笔记与过程</h3><h4 id="Prompt"><a href="#Prompt" class="headerlink" title="Prompt"></a>Prompt</h4><p>Prompt是一种用于指导以大语言模型为代表的<strong>生成式人工智能</strong>生成内容(文本、图像、视频等)的输入方式。它通常是一个简短的文本或问题，用于描述任务和要求。</p>
+<p>作用：引导AI模型生成特定的输出</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202411262220643.png" alt="image-20241126222043520"></p>
+<p>基本原理：获取文本（prompt）-&gt;处理特征-&gt;预测之后的文本。可类比输入法。多轮对话中上一次的输出作为下一次的输入。</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202411262222666.png" alt="image-20241126222250563"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202411262224883.png" alt="image-20241126222456823"></p>
+<p>五层：</p>
+<ul>
+<li>提示词模板：可以修改，最靠近模型层</li>
+<li>链：又称AI工作流，一系列对模型的调用</li>
+</ul>
+<h4 id="提示工程"><a href="#提示工程" class="headerlink" title="提示工程"></a>提示工程</h4><p>提示工程是一种通过设计和调整输入(Prompts)来改善模型性能或控制其输出结果的技术。</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202411262229298.png" alt="image-20241126222911225"></p>
+<p>提示工程是模型性能优化的基石，有以下六大基本原则：</p>
+<ul>
+<li>指令要清晰：细节描述</li>
+<li>提供参考内容</li>
+<li>复杂的任务拆分成子任务</li>
+<li>给 LLM“思考”时间(给出过程)</li>
+<li>使用外部工具</li>
+<li>系统性测试变化</li>
+</ul>
+<p>技巧：</p>
+<ol>
+<li>描述清晰</li>
+<li>角色扮演，想象你是翻译大师，有的模型有用</li>
+<li>提供示例：比如仿写句子，提供2-3个高质量示例</li>
+<li>复杂任务分解：思维链CoT。在指令后加上“请一步步思考，给出推理依据”即可</li>
+<li>使用格式符区分语义：比如对翻译内容用##符号标识，引号不一定有用</li>
+<li>情感和物质激励。比如加上“这对我的事业很重要”，“给你200小费”</li>
+<li>使用更专业的术语：比如用英文的专业术语，而不是翻译后的</li>
+</ol>
+<h4 id="提示词框架"><a href="#提示词框架" class="headerlink" title="提示词框架"></a>提示词框架</h4><h5 id="CRISPE"><a href="#CRISPE" class="headerlink" title="CRISPE"></a>CRISPE</h5><p>要求写5个方面的内容</p>
+<p>CRISPE，参考：<a target="_blank" rel="noopener" href="https://github.com/mattnigh/ChatGPT3-Free-Prompt-List">https://github.com/mattnigh/ChatGPT3-Free-Prompt-List</a></p>
+<ul>
+<li><strong>C</strong>apacity and <strong>R</strong>ole (能力与角色)：希望 ChatGPT 扮演怎样的角色。</li>
+<li><strong>I</strong>nsight (洞察力)：背景信息和上下文(坦率说来我觉得用 Context 更好)</li>
+<li><strong>S</strong>tatement (指令)：希望 ChatGPT 做什么。</li>
+<li><strong>P</strong>ersonality (个性)：希望 ChatGPT 以什么风格或方式回答你。</li>
+<li><strong>E</strong>xperiment (尝试)：要求 ChatGPT 提供多个答案。</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Act as an expert on software development on the topic of machine learning frameworks, and an expert blog writer. The audience for this blog is technical professionals who are interested in learning about the latest advancements in machine learning. Provide a comprehensive overview of the most popular machine learning frameworks, including their strengths and weaknesses. Include real-life examples and case studies to illustrate how these frameworks have been successfully used in various industries. When responding, use a mix of the writing styles of Andrej Karpathy, Francois Chollet, Jeremy Howard, and Yann LeCun.</span><br></pre></td></tr></table></figure>
+
+<h5 id="CO-STAR"><a href="#CO-STAR" class="headerlink" title="CO-STAR"></a>CO-STAR</h5><ul>
+<li><strong>C</strong>ontext (背景): 提供任务背景信息</li>
+<li><strong>O</strong>bjective (目标): 定义需要LLM执行的任务</li>
+<li><strong>S</strong>tyle (风格): 指定希望LLM具备的写作风格</li>
+<li><strong>T</strong>one (语气): 设定LLM回复的情感基调</li>
+<li><strong>A</strong>udience (观众): 表明回复的对象</li>
+<li><strong>R</strong>esponse (回复): 提供回复格式</li>
+</ul>
+<p>观众和回复是区别于CRISPE的地方</p>
+<p>CRISPE可能更适合任务类，CO-STAR适合角色类（如虚拟陪伴）</p>
+<p>例如我们设计一个解决方案专家，用于把目标拆解为可执行的计划，完成的提示词如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"># CONTEXT # </span><br><span class="line">我是一名个人生产力开发者。在个人发展和生产力领域,人们越来越需要这样的系统:不仅能帮助个人设定目标,还能将这些目标转化为可行的步骤。许多人在将抱负转化为具体行动时遇到困难,凸显出需要一个有效的目标到系统的转换过程。</span><br><span class="line"></span><br><span class="line">#########</span><br><span class="line"></span><br><span class="line"># OBJECTIVE #</span><br><span class="line">您的任务是指导我创建一个全面的系统转换器。这涉及将过程分解为不同的步骤,包括识别目标、运用5个为什么技巧、学习核心行动、设定意图以及进行定期回顾。目的是提供一个逐步指南,以无缝地将目标转化为可行的计划。</span><br><span class="line"></span><br><span class="line">#########</span><br><span class="line"></span><br><span class="line"># STYLE #</span><br><span class="line">以富有信息性和教育性的风格写作,类似于个人发展指南。确保每个步骤的呈现都清晰连贯,迎合那些渴望提高生产力和实现目标技能的受众。</span><br><span class="line"></span><br><span class="line">#########</span><br><span class="line"></span><br><span class="line"># Tone #</span><br><span class="line">始终保持积极和鼓舞人心的语气,培养一种赋权和鼓励的感觉。应该感觉像是一位友好的向导在提供宝贵的见解。</span><br><span class="line"></span><br><span class="line"># AUDIENCE #</span><br><span class="line">目标受众是对个人发展和提高生产力感兴趣的个人。假设读者寻求实用建议和可行步骤,以将他们的目标转化为切实的成果。</span><br><span class="line"></span><br><span class="line">#########</span><br><span class="line"></span><br><span class="line"># RESPONSE FORMAT #</span><br><span class="line">提供一个结构化的目标到系统转换过程步骤列表。每个步骤都应该清晰定义,整体格式应易于遵循以便快速实施。</span><br><span class="line"></span><br><span class="line">#############</span><br><span class="line"></span><br><span class="line"># START ANALYSIS #</span><br><span class="line">如果您理解了,请询问我的目标。</span><br></pre></td></tr></table></figure>
+
+<h4 id="LangGPT结构化提示词"><a href="#LangGPT结构化提示词" class="headerlink" title="LangGPT结构化提示词"></a>LangGPT结构化提示词</h4><p>类似CO-STAR(但Lang提出更早)</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202411262245690.png" alt="image-20241126224542577"></p>
+<p>结构化就像把作文题变成填空题</p>
+<p>LangGPT是面向对象的，包含<strong>模块-内部元素</strong>两级，针对不同的场景可以修改不同的模块。模块表示要求或提示LLM的方面，例如：背景信息、建议、约束等。内部元素为模块的组成部分，是归属某一方面的具体要求或辅助信息，分为赋值型和方法型。</p>
+<p><a target="_blank" rel="noopener" href="https://camo.githubusercontent.com/7516f0b908c7746972cfd210675d5ff471b6fa79429e00efcf12810432d9efb1/68747470733a2f2f66696c65732e6d646e6963652e636f6d2f757365722f35363330362f39316331646666652d303131642d343933322d623662322d3138373238346130616439312e706e67"><img src="https://camo.githubusercontent.com/7516f0b908c7746972cfd210675d5ff471b6fa79429e00efcf12810432d9efb1/68747470733a2f2f66696c65732e6d646e6963652e636f6d2f757365722f35363330362f39316331646666652d303131642d343933322d623662322d3138373238346130616439312e706e67" alt="img"></a></p>
+<p><strong>编写技巧：</strong></p>
+<ol>
+<li>构建全局思维链CoT。Role (角色) -&gt; Profile（角色简介）—&gt; Profile 下的 skill (角色技能) -&gt; Rules (角色要遵守的规则) -&gt; Workflow (满足上述条件的角色的工作流程) -&gt; Initialization (进行正式开始工作的初始化准备) -&gt; 开始实际使用</li>
+<li>保持上下文语义一致性（内容和格式）</li>
+<li>有机结合其他 Prompt 技巧<ol>
+<li>细节法：给出更清晰的指令，包含更多具体的细节</li>
+<li>分解法：将复杂的任务分解为更简单的子任务 （Let’s think step by step, CoT，LangChain等思想）</li>
+<li>记忆法：构建指令使模型时刻记住任务，确保不偏离任务解决路径（system 级 prompt）</li>
+<li>解释法：让模型在回答之前进行解释，说明理由 （CoT 等方法）</li>
+<li>投票法：让模型给出多个结果，然后使用模型选择最佳结果 （ToT 等方法）</li>
+<li>示例法：提供一个或多个具体例子，提供输入输出示例 （one-shot, few-shot 等方法）</li>
+</ol>
+</li>
+</ol>
+<p><strong>常见的提示词模块</strong></p>
+<ul>
+<li>Attention：需重点强调的要点</li>
+<li>Background：提示词的需求背景</li>
+<li>Constraints：限制条件</li>
+<li>Command：用于定义大模型指令</li>
+<li>Definition：名词定义</li>
+<li>Example：提示词中的示例few-shots</li>
+<li>Fail：处理失败时对应的兜底逻辑</li>
+<li>Goal：提示词要实现的目标</li>
+<li>Hack：防止被攻击的防护词</li>
+<li>In-depth：一步步思考，持续深入</li>
+<li>Job：需求任务描述</li>
+<li>Knowledge：知识库文件</li>
+<li>Lawful：合法合规，安全行驶的限制</li>
+<li>Memory：记忆关键信息，缓解模型遗忘问题</li>
+<li>Merge：是否使用多角色，最终合并投票输出结果</li>
+<li>Neglect：明确忽略哪些内容</li>
+<li>Odd：偶尔 （俏皮，愤怒，严肃） 一下</li>
+<li>OutputFormat：模型输出格式</li>
+<li>Pardon：当用户回复信息不详细时，持续追问</li>
+<li>Quote：引用知识库信息时，给出原文引用链接</li>
+<li>Role：大模型的角色设定</li>
+<li>RAG：外挂知识库</li>
+<li>Skills：擅长的技能项</li>
+<li>Tone：回复使用的语气风格</li>
+<li>Unsure：引入评判者视角，当判定低于阈值时，回复安全词</li>
+<li>Vaule：Prompt模仿人格的价值观</li>
+<li>Workflow：工作流程</li>
+<li>X-factor：用户使用本提示词最为重要的内核要素</li>
+<li>Yeow：提示词开场白设计</li>
+<li>Zig：无厘头式提示词，如[答案之书]</li>
+</ul>
+<h4 id="三个实践"><a href="#三个实践" class="headerlink" title="三个实践"></a>三个实践</h4><ol>
+<li>写一段话介绍AI大模型实战营，添加emoji表情，添加结构化模板</li>
+</ol>
+<ul>
+<li>输出是md格式</li>
+</ul>
+<ol start="2">
+<li>提示词可以作为系统提示（推荐），也可以直接作为交互对话的输入</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">你是提示词专家，根据用户的输入设计用于生成**高质量（清晰准确）**的大语言模型提示词。</span><br><span class="line">- 技能：</span><br><span class="line">- 📊 分析、写作、编码</span><br><span class="line">- 🚀 自动执行任务</span><br><span class="line">- ✍ 遵循提示工程的行业最佳实践并生成提示词</span><br><span class="line"># 输出要求：</span><br><span class="line">- 结构化输出内容。</span><br><span class="line">- 为代码或文章提供**详细、准确和深入**的内容。</span><br><span class="line"># 📝 提示词模板（使用代码块展示提示内容）：</span><br><span class="line">你是xxx（描述角色和角色任务）</span><br><span class="line">- 技能：</span><br><span class="line">- 📊 分析、写作、编码</span><br><span class="line">- 🚀 自动执行任务</span><br><span class="line"># 💬 输出要求：</span><br><span class="line">- 结构化输出内容。</span><br><span class="line">- 为代码或文章提供**详细、准确和深入**的内容。</span><br><span class="line">-（其他基本输出要求）</span><br><span class="line"># 🔧 工作流程：</span><br><span class="line">- 仔细深入地思考和分析用户的内容和意图。</span><br><span class="line">- 逐步工作并提供专业和深入的回答。</span><br><span class="line">-（其他基本对话工作流程）</span><br><span class="line"># 🌱 初始化：</span><br><span class="line">欢迎用户，友好的介绍自己并引导用户使用。</span><br><span class="line">**你的任务是帮助用户设计高质量提示词。**</span><br><span class="line">开始请打招呼：“您好！我是您的提示词专家助手，请随时告诉我您需要设计什么用途的提示词吧。</span><br></pre></td></tr></table></figure>
+
+<p>可以帮忙创建很多需求，如商业邮件，把回复再作为新的输入即可。</p>
+<h5 id="AI一键写书功能"><a href="#AI一键写书功能" class="headerlink" title="AI一键写书功能"></a>AI一键写书功能</h5><p><a target="_blank" rel="noopener" href="https://github.com/InternLM/Tutorial/blob/camp4/docs/L1/Prompt/practice.md">https://github.com/InternLM/Tutorial/blob/camp4/docs/L1/Prompt/practice.md</a></p>
+<p>直接的聊天窗口只有大纲，但部署后可以直接用</p>
+<p>BookAI项目分析（在intern_studio开发机上做的）</p>
+<ul>
+<li>books：生成的书籍存在这里（并不是示例）配了图但没有图所以不显示。F1公式之类的都有</li>
+<li>prompts：<ul>
+<li>title：帮助用户为书籍创建有吸引力的标题和简介，确保书名与书籍内容相符，简介清晰传达书籍核心主题</li>
+<li>outline：帮助用户根据书籍的标题和简介，设计出完整的书籍大纲，确保结构清晰，逻辑合理，并符合书籍的主题和风格。</li>
+<li>chapter：帮助用户根据提供的书籍标题、简介和章节大纲，撰写每一章的具体内容，确保语言风格符合书籍定位，内容连贯、专业、正式。</li>
+</ul>
+</li>
+</ul>
+<p>总结：一本书写不完-&gt;拆解为一章章写-&gt;但连贯性如何保证？写大纲-&gt;大纲根据标题和简介写。控制格式、连贯性、并行性</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br><span class="line">201</span><br><span class="line">202</span><br><span class="line">203</span><br><span class="line">204</span><br><span class="line">205</span><br><span class="line">206</span><br><span class="line">207</span><br><span class="line">208</span><br><span class="line">209</span><br><span class="line">210</span><br><span class="line">211</span><br><span class="line">212</span><br><span class="line">213</span><br><span class="line">214</span><br><span class="line">215</span><br><span class="line">216</span><br><span class="line">217</span><br><span class="line">218</span><br><span class="line">219</span><br><span class="line">220</span><br><span class="line">221</span><br><span class="line">222</span><br><span class="line">223</span><br><span class="line">224</span><br><span class="line">225</span><br><span class="line">226</span><br><span class="line">227</span><br><span class="line">228</span><br><span class="line">229</span><br><span class="line">230</span><br><span class="line">231</span><br><span class="line">232</span><br><span class="line">233</span><br><span class="line">234</span><br><span class="line">235</span><br><span class="line">236</span><br><span class="line">237</span><br><span class="line">238</span><br><span class="line">239</span><br><span class="line">240</span><br><span class="line">241</span><br><span class="line">242</span><br><span class="line">243</span><br><span class="line">244</span><br><span class="line">245</span><br><span class="line">246</span><br><span class="line">247</span><br><span class="line">248</span><br><span class="line">249</span><br><span class="line">250</span><br><span class="line">251</span><br><span class="line">252</span><br><span class="line">253</span><br><span class="line">254</span><br><span class="line">255</span><br><span class="line">256</span><br><span class="line">257</span><br><span class="line">258</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> os</span><br><span class="line"><span class="keyword">import</span> re</span><br><span class="line"><span class="keyword">import</span> json</span><br><span class="line"><span class="keyword">from</span> typing <span class="keyword">import</span> <span class="type">List</span>, <span class="type">Dict</span>, <span class="type">Optional</span>, <span class="type">Tuple</span></span><br><span class="line"><span class="keyword">from</span> concurrent.futures <span class="keyword">import</span> ThreadPoolExecutor</span><br><span class="line"><span class="keyword">from</span> dotenv <span class="keyword">import</span> load_dotenv</span><br><span class="line"><span class="keyword">import</span> openai</span><br><span class="line"><span class="keyword">from</span> phi.assistant <span class="keyword">import</span> Assistant</span><br><span class="line"><span class="keyword">from</span> phi.llm.openai <span class="keyword">import</span> OpenAIChat</span><br><span class="line"></span><br><span class="line"><span class="comment"># 加载 .env 文件</span></span><br><span class="line">load_dotenv()</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">read_prompt</span>(<span class="params">prompt_file: <span class="built_in">str</span>, replacements: <span class="type">Dict</span>[<span class="built_in">str</span>, <span class="built_in">str</span>]</span>) -&gt; <span class="built_in">str</span>:</span><br><span class="line">    <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">    读取提示文件并替换占位符</span></span><br><span class="line"><span class="string">    &quot;&quot;&quot;</span></span><br><span class="line">    <span class="keyword">with</span> <span class="built_in">open</span>(prompt_file, <span class="string">&#x27;r&#x27;</span>, encoding=<span class="string">&#x27;utf-8&#x27;</span>) <span class="keyword">as</span> file:</span><br><span class="line">        prompt = file.read()</span><br><span class="line">    <span class="keyword">for</span> key, value <span class="keyword">in</span> replacements.items():</span><br><span class="line">        prompt = prompt.replace(<span class="string">f&quot;&#123;&#123;<span class="subst">&#123;key&#125;</span>&#125;&#125;&quot;</span>, value)</span><br><span class="line">    <span class="keyword">return</span> prompt</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">PuyuAPIClient</span>:</span><br><span class="line">    <span class="string">&quot;&quot;&quot;处理与AI API的所有交互。&quot;&quot;&quot;</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self, api_key, base_url, model_name</span>):</span><br><span class="line">        <span class="string">&quot;&quot;&quot;初始化APIClient。&quot;&quot;&quot;</span></span><br><span class="line">        api_key = os.getenv(<span class="string">&quot;PUYU_API_KEY&quot;</span>)</span><br><span class="line">        base_url = os.getenv(<span class="string">&quot;PUYU_BASE_URL&quot;</span>)</span><br><span class="line">        model_name = os.getenv(<span class="string">&quot;PUYU_MODEL_NAME&quot;</span>)</span><br><span class="line">        <span class="variable language_">self</span>.api_key = api_key</span><br><span class="line">        <span class="variable language_">self</span>.api_url = base_url</span><br><span class="line">        <span class="variable language_">self</span>.model_name = model_name</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">call_api</span>(<span class="params">self, messages: <span class="type">List</span>[<span class="type">Dict</span>[<span class="built_in">str</span>, <span class="built_in">str</span>]], max_tokens: <span class="built_in">int</span> = <span class="number">4096</span></span>) -&gt; <span class="built_in">str</span>:</span><br><span class="line">        <span class="string">&quot;&quot;&quot;调用AI API并返回生成的文本。</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">        Args:</span></span><br><span class="line"><span class="string">            messages: 要发送给API的消息列表。</span></span><br><span class="line"><span class="string">            max_tokens: 响应中的最大标记数。</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">        Returns:</span></span><br><span class="line"><span class="string">            API返回的生成文本。</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">        Raises:</span></span><br><span class="line"><span class="string">            requests.RequestException: 如果API调用失败。</span></span><br><span class="line"><span class="string">        &quot;&quot;&quot;</span></span><br><span class="line">        client = openai.OpenAI(api_key=<span class="variable language_">self</span>.api_key, base_url=<span class="variable language_">self</span>.api_url)</span><br><span class="line"></span><br><span class="line">        <span class="keyword">try</span>:</span><br><span class="line">            response = client.chat.completions.create(</span><br><span class="line">                model=<span class="variable language_">self</span>.model_name,</span><br><span class="line">                messages=messages,</span><br><span class="line">                max_tokens=max_tokens,</span><br><span class="line">                temperature=<span class="number">0.7</span>,</span><br><span class="line">                top_p=<span class="number">0.7</span>,</span><br><span class="line">                frequency_penalty=<span class="number">0.5</span>,</span><br><span class="line">                n=<span class="number">1</span></span><br><span class="line">            )</span><br><span class="line"></span><br><span class="line">            <span class="keyword">for</span> choice <span class="keyword">in</span> response.choices:</span><br><span class="line">                <span class="keyword">return</span> choice.message.content.strip()</span><br><span class="line"></span><br><span class="line">        <span class="keyword">except</span> openai.OpenAIError <span class="keyword">as</span> e:</span><br><span class="line">            <span class="built_in">print</span>(<span class="string">f&quot;API调用失败: <span class="subst">&#123;e&#125;</span>&quot;</span>)</span><br><span class="line">            <span class="keyword">raise</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">convert_latex_to_markdown</span>(<span class="params">text</span>):</span><br><span class="line">    <span class="comment"># 使用正则表达式替换公式开始和结束的 \[ 和 \]，但不替换公式内部的</span></span><br><span class="line">    pattern = <span class="string">r&#x27;(?&lt;!\\)\\\[((?:\\.|[^\\\]])*?)(?&lt;!\\)\\\]&#x27;</span></span><br><span class="line">    <span class="keyword">return</span> re.sub(pattern, <span class="string">r&#x27;$$\1$$&#x27;</span>, text)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">BookWriter</span>:</span><br><span class="line">    <span class="string">&quot;&quot;&quot;管理书籍生成过程的主类。&quot;&quot;&quot;</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self, api_key: <span class="built_in">str</span>, base_url: <span class="built_in">str</span>, model_name: <span class="built_in">str</span>, system_prompt=<span class="literal">None</span></span>):</span><br><span class="line">        <span class="string">&quot;&quot;&quot;初始化BookWriter。&quot;&quot;&quot;</span></span><br><span class="line">        <span class="comment"># 使用openai的接口调用书生浦语模型</span></span><br><span class="line"></span><br><span class="line">        <span class="variable language_">self</span>.api_key = os.getenv(<span class="string">&quot;API_KEY&quot;</span>) <span class="keyword">if</span> api_key <span class="keyword">is</span> <span class="literal">None</span> <span class="keyword">else</span> api_key</span><br><span class="line">        <span class="variable language_">self</span>.base_url = os.getenv(<span class="string">&quot;BASE_URL&quot;</span>) <span class="keyword">if</span> base_url <span class="keyword">is</span> <span class="literal">None</span> <span class="keyword">else</span> base_url</span><br><span class="line">        <span class="variable language_">self</span>.model_name = os.getenv(<span class="string">&quot;MODEL_NAME&quot;</span>) <span class="keyword">if</span> model_name <span class="keyword">is</span> <span class="literal">None</span> <span class="keyword">else</span> model_name</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> system_prompt <span class="keyword">is</span> <span class="literal">None</span>:</span><br><span class="line">            system_prompt = <span class="string">&quot;你是一个专业的写作助手，正在帮助用户写一本书。&quot;</span></span><br><span class="line">        <span class="variable language_">self</span>.assistant = <span class="variable language_">self</span>.create_assistant(<span class="variable language_">self</span>.model_name, <span class="variable language_">self</span>.api_key, <span class="variable language_">self</span>.base_url, system_prompt)</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">create_assistant</span>(<span class="params">self, </span></span><br><span class="line"><span class="params">                        model_name: <span class="built_in">str</span>, </span></span><br><span class="line"><span class="params">                        api_key: <span class="built_in">str</span>, </span></span><br><span class="line"><span class="params">                        base_url: <span class="built_in">str</span>, </span></span><br><span class="line"><span class="params">                        system_prompt: <span class="built_in">str</span></span>) -&gt; <span class="built_in">str</span>:</span><br><span class="line">        <span class="comment"># 润色文本</span></span><br><span class="line">        <span class="variable language_">self</span>.assistant = Assistant(</span><br><span class="line">            llm=OpenAIChat(model=model_name,</span><br><span class="line">                        api_key=api_key,</span><br><span class="line">                        base_url=base_url,</span><br><span class="line">                        max_tokens=<span class="number">4096</span>,  <span class="comment"># make it longer to get more context</span></span><br><span class="line">                        ),</span><br><span class="line">            system_prompt=system_prompt,</span><br><span class="line">            prevent_prompt_injection=<span class="literal">True</span>,</span><br><span class="line">            prevent_hallucinations=<span class="literal">False</span>,</span><br><span class="line">            <span class="comment"># Add functions or Toolkits</span></span><br><span class="line">            <span class="comment">#tools=[...],</span></span><br><span class="line">            <span class="comment"># Show tool calls in LLM response.</span></span><br><span class="line">            <span class="comment"># show_tool_calls=True</span></span><br><span class="line">        )</span><br><span class="line">        <span class="keyword">return</span> <span class="variable language_">self</span>.assistant</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">generate_title_and_intro</span>(<span class="params">self, book_theme, prompt_file = <span class="string">&quot;prompts/title_writer.txt&quot;</span></span>) -&gt; <span class="type">Tuple</span>[<span class="built_in">str</span>, <span class="built_in">str</span>]:</span><br><span class="line">        <span class="string">&quot;&quot;&quot;生成书籍标题和主要内容介绍。</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">        Args:</span></span><br><span class="line"><span class="string">            prompt: 用于生成标题和介绍的提示。</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">        Returns:</span></span><br><span class="line"><span class="string">            包含生成的标题和介绍的元组。</span></span><br><span class="line"><span class="string">        &quot;&quot;&quot;</span></span><br><span class="line">        prompt_args = &#123;<span class="string">&quot;theme&quot;</span>: book_theme&#125;</span><br><span class="line">        prompt = read_prompt(prompt_file, prompt_args)</span><br><span class="line">        <span class="comment">#print(prompt)</span></span><br><span class="line">        <span class="keyword">for</span> attempt <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">3</span>):</span><br><span class="line">            <span class="keyword">try</span>:</span><br><span class="line">                response = <span class="variable language_">self</span>.assistant.run(prompt, stream=<span class="literal">False</span>)</span><br><span class="line">                <span class="comment"># convert to json</span></span><br><span class="line">                response = response.strip()</span><br><span class="line">                <span class="keyword">if</span> <span class="keyword">not</span> response.startswith(<span class="string">&#x27;&#123;&#x27;</span>):</span><br><span class="line">                    response = <span class="string">&#x27;&#123;&#x27;</span> + response.split(<span class="string">&#x27;&#123;&#x27;</span>, <span class="number">1</span>)[<span class="number">1</span>]</span><br><span class="line">                <span class="keyword">if</span> <span class="keyword">not</span> response.endswith(<span class="string">&#x27;&#125;&#x27;</span>):</span><br><span class="line">                    response = response.split(<span class="string">&#x27;&#125;&#x27;</span>, <span class="number">1</span>)[<span class="number">0</span>] + <span class="string">&#x27;&#125;&#x27;</span></span><br><span class="line"></span><br><span class="line">                book_title_and_intro = json.loads(response)</span><br><span class="line"></span><br><span class="line">                <span class="comment">#print(book_title_and_intro)</span></span><br><span class="line"></span><br><span class="line">                <span class="keyword">return</span> book_title_and_intro</span><br><span class="line">            <span class="keyword">except</span> Exception <span class="keyword">as</span> e:</span><br><span class="line">                <span class="built_in">print</span>(<span class="string">f&quot;Attempt <span class="subst">&#123;attempt + <span class="number">1</span>&#125;</span> failed: <span class="subst">&#123;e&#125;</span>&quot;</span>)</span><br><span class="line">        <span class="keyword">return</span> response</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">generate_outline</span>(<span class="params">self, book_theme, book_title_and_intro: <span class="built_in">str</span>, prompt_file= <span class="string">&quot;prompts/outline_writer.txt&quot;</span></span>) -&gt; <span class="type">List</span>[<span class="built_in">str</span>]:</span><br><span class="line">        <span class="string">&quot;&quot;&quot;生成书籍章节大纲。</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">        Args:</span></span><br><span class="line"><span class="string">            prompt: 用于生成大纲的提示。</span></span><br><span class="line"><span class="string">            title: 书籍标题。</span></span><br><span class="line"><span class="string">            intro: 书籍介绍。</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">        Returns:</span></span><br><span class="line"><span class="string">            章节标题列表。</span></span><br><span class="line"><span class="string">        &quot;&quot;&quot;</span></span><br><span class="line">        prompt_args = &#123;<span class="string">&quot;theme&quot;</span>: book_theme, <span class="string">&quot;intro&quot;</span>: <span class="built_in">str</span>(book_title_and_intro)&#125;</span><br><span class="line">        prompt = read_prompt(prompt_file, prompt_args)</span><br><span class="line">        <span class="keyword">for</span> attempt <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">3</span>):</span><br><span class="line">            <span class="keyword">try</span>:</span><br><span class="line">                response = <span class="variable language_">self</span>.assistant.run(prompt, stream=<span class="literal">False</span>)</span><br><span class="line">                <span class="comment">#print(response)</span></span><br><span class="line">                <span class="comment"># convert to json</span></span><br><span class="line">                response = response.strip()</span><br><span class="line">                <span class="keyword">if</span> <span class="keyword">not</span> response.startswith(<span class="string">&#x27;[&#x27;</span>):</span><br><span class="line">                    response = <span class="string">&#x27;[&#x27;</span> + response.split(<span class="string">&#x27;[&#x27;</span>, <span class="number">1</span>)[<span class="number">1</span>]</span><br><span class="line">                <span class="keyword">if</span> <span class="keyword">not</span> response.endswith(<span class="string">&#x27;]&#x27;</span>):</span><br><span class="line">                    response = response.split(<span class="string">&#x27;]&#x27;</span>, <span class="number">1</span>)[<span class="number">0</span>] + <span class="string">&#x27;]&#x27;</span></span><br><span class="line">                chapters = json.loads(response.strip())</span><br><span class="line">                <span class="comment">#print(chapters)</span></span><br><span class="line">                <span class="keyword">return</span> chapters</span><br><span class="line">            <span class="keyword">except</span> Exception <span class="keyword">as</span> e:</span><br><span class="line">                <span class="built_in">print</span>(<span class="string">f&quot;Attempt <span class="subst">&#123;attempt + <span class="number">1</span>&#125;</span> failed: <span class="subst">&#123;e&#125;</span>&quot;</span>)</span><br><span class="line">        <span class="keyword">return</span> response</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">generate_chapter</span>(<span class="params">self, book_content, chapter_intro, prompt_file= <span class="string">&quot;prompts/chapter_writer.txt&quot;</span></span>) -&gt; <span class="built_in">str</span>:</span><br><span class="line">        <span class="string">&quot;&quot;&quot;生成单个章节的内容。</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">        Args:</span></span><br><span class="line"><span class="string">            chapter_title: 章节标题。</span></span><br><span class="line"><span class="string">            book_title: 书籍标题。</span></span><br><span class="line"><span class="string">            book_intro: 书籍介绍。</span></span><br><span class="line"><span class="string">            outline: 完整的章节大纲。</span></span><br><span class="line"><span class="string">            prompt: 用于生成章节的提示。</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">        Returns:</span></span><br><span class="line"><span class="string">            生成的章节内容。</span></span><br><span class="line"><span class="string">        &quot;&quot;&quot;</span></span><br><span class="line">        </span><br><span class="line">        prompt_args = &#123;<span class="string">&quot;book_content&quot;</span>: <span class="built_in">str</span>(book_content), <span class="string">&quot;chapter_intro&quot;</span>: <span class="built_in">str</span>(chapter_intro)&#125;</span><br><span class="line">        prompt = read_prompt(prompt_file, prompt_args)</span><br><span class="line">        <span class="keyword">for</span> attempt <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">3</span>):</span><br><span class="line">            <span class="keyword">try</span>:</span><br><span class="line">                response = <span class="variable language_">self</span>.assistant.run(prompt, stream=<span class="literal">False</span>)</span><br><span class="line">                response.strip()</span><br><span class="line">                <span class="keyword">if</span> response.startswith(<span class="string">&#x27;```markdown&#x27;</span>):</span><br><span class="line">                    <span class="comment"># 删除第一行和最后一行</span></span><br><span class="line">                    lines = response.splitlines()</span><br><span class="line">                    response = <span class="string">&#x27;\n&#x27;</span>.join(lines[<span class="number">1</span>:-<span class="number">1</span>])</span><br><span class="line"></span><br><span class="line">                <span class="keyword">return</span> response</span><br><span class="line">            <span class="keyword">except</span> Exception <span class="keyword">as</span> e:</span><br><span class="line">                <span class="built_in">print</span>(<span class="string">f&quot;Attempt <span class="subst">&#123;attempt + <span class="number">1</span>&#125;</span> failed: <span class="subst">&#123;e&#125;</span>&quot;</span>)</span><br><span class="line">        response = convert_latex_to_markdown(response)</span><br><span class="line">        <span class="keyword">return</span> response</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">generate_book</span>(<span class="params">self, custom_theme=<span class="literal">None</span>, save_file=<span class="literal">False</span></span>) -&gt; <span class="literal">None</span>:</span><br><span class="line">        <span class="string">&quot;&quot;&quot;生成整本书并将其保存到文件中。</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">        Args:</span></span><br><span class="line"><span class="string">            custom_prompts: 自定义提示的字典。可以包括 &#x27;title_intro&#x27;, &#x27;outline&#x27; 和 &#x27;chapter&#x27; 键。</span></span><br><span class="line"><span class="string">        &quot;&quot;&quot;</span></span><br><span class="line"></span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;开始生成书籍标题和介绍...&quot;</span>)</span><br><span class="line">        theme = custom_theme <span class="keyword">if</span> custom_theme <span class="keyword">else</span> <span class="string">&quot;Transformer是什么&quot;</span></span><br><span class="line">        title_and_intro = <span class="variable language_">self</span>.generate_title_and_intro(theme)</span><br><span class="line">        title = title_and_intro[<span class="string">&quot;title&quot;</span>]</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">f&quot;书籍标题和介绍:\n <span class="subst">&#123;title_and_intro&#125;</span>&quot;</span>)</span><br><span class="line"></span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;\n开始生成章节大纲...&quot;</span>)</span><br><span class="line">        chapters = <span class="variable language_">self</span>.generate_outline(theme, title_and_intro)</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;章节大纲:&quot;</span>)</span><br><span class="line">        <span class="built_in">print</span>(chapters)</span><br><span class="line"></span><br><span class="line">        book_intro = title_and_intro</span><br><span class="line">        book_content = <span class="string">&quot;# &quot;</span> + title</span><br><span class="line"></span><br><span class="line">        <span class="comment"># 使用线程池来并行生成章节内容</span></span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;\n开始创作正文内容，时间较长（约几分钟）请等待~&quot;</span>)</span><br><span class="line">        <span class="keyword">with</span> ThreadPoolExecutor() <span class="keyword">as</span> executor:</span><br><span class="line">            chapter_contents = <span class="built_in">list</span>(executor.<span class="built_in">map</span>(<span class="variable language_">self</span>.generate_chapter, [book_intro]*<span class="built_in">len</span>(chapters), chapters))</span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span> i, chapter <span class="keyword">in</span> <span class="built_in">enumerate</span>(chapters, <span class="number">1</span>):</span><br><span class="line">            <span class="built_in">print</span>(<span class="string">f&quot;\n正在生成第<span class="subst">&#123;i&#125;</span>章：<span class="subst">&#123;chapter&#125;</span>&quot;</span>)</span><br><span class="line">            chapter_content = chapter_contents[i-<span class="number">1</span>].strip()  <span class="comment"># 获取已生成的章节内容</span></span><br><span class="line">            <span class="built_in">print</span>(chapter_content)</span><br><span class="line">            book_content += <span class="string">f&quot;\n\n<span class="subst">&#123;chapter_content&#125;</span>&quot;</span></span><br><span class="line">            <span class="built_in">print</span>(<span class="string">f&quot;第<span class="subst">&#123;i&#125;</span>章已完成。&quot;</span>)</span><br><span class="line"></span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;\n整本书已生成完毕。&quot;</span>)</span><br><span class="line">        <span class="keyword">if</span> save_file:</span><br><span class="line">            filename = <span class="string">f&quot;books/<span class="subst">&#123;title.replace(<span class="string">&#x27; &#x27;</span>, <span class="string">&#x27;_&#x27;</span>)&#125;</span>.md&quot;</span></span><br><span class="line">            <span class="keyword">with</span> <span class="built_in">open</span>(filename, <span class="string">&quot;w&quot;</span>, encoding=<span class="string">&quot;utf-8&quot;</span>) <span class="keyword">as</span> f:</span><br><span class="line">                f.write(book_content)</span><br><span class="line">            </span><br><span class="line">            <span class="built_in">print</span>(<span class="string">f&quot;书籍内容已保存到 <span class="subst">&#123;filename&#125;</span> 文件中。&quot;</span>)</span><br><span class="line">        <span class="keyword">return</span> book_content</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">main</span>():</span><br><span class="line">    <span class="string">&quot;&quot;&quot;主函数, 演示如何使用BookWriter类。&quot;&quot;&quot;</span></span><br><span class="line">    book_theme = <span class="built_in">input</span>(<span class="string">&quot;请输入书籍主题(如 AI 是什么？): &quot;</span>)</span><br><span class="line"></span><br><span class="line">    api_key = os.getenv(<span class="string">&quot;API_KEY&quot;</span>)</span><br><span class="line">    base_url = os.getenv(<span class="string">&quot;BASE_URL&quot;</span>)</span><br><span class="line">    model_name = os.getenv(<span class="string">&quot;MODEL_NAME&quot;</span>)</span><br><span class="line">    <span class="built_in">print</span>(base_url, model_name)</span><br><span class="line">    book_writer = BookWriter(api_key, base_url, model_name, system_prompt=<span class="literal">None</span>)</span><br><span class="line">    book_writer.generate_book(custom_theme=book_theme, save_file=<span class="literal">True</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&quot;__main__&quot;</span>:</span><br><span class="line">    main()</span><br></pre></td></tr></table></figure>
+
+<p>顺序是标题-&gt;大纲-&gt;正文<img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202411262332213.png" alt="image-20241126233211136"></p>
+<h2 id="第四关-InternLM-LlamaIndex-RAG-实践"><a href="#第四关-InternLM-LlamaIndex-RAG-实践" class="headerlink" title="第四关  InternLM + LlamaIndex RAG 实践"></a>第四关  InternLM + LlamaIndex RAG 实践</h2><h3 id="基础任务-2"><a href="#基础任务-2" class="headerlink" title="基础任务"></a>基础任务</h3><p>因为利用浦语 API+LlamaIndex实践时，我一直遇到ascii的报错而导致不管是否使用RAG都不能进行对话；而用本地部署InternLM+LlamaIndex实践没有遇到问题。</p>
+<p><img src="https://i-blog.csdnimg.cn/direct/31a7e794abce43909780dd6c28ca798a.png" alt="在这里插入图片描述"><br>所以这里使用 InternLM2-Chat-1.8B 模型。<br>以“Soot是什么”问题为例：本来不知道<img src="https://i-blog.csdnimg.cn/direct/42093527796a458db3bb503cc3dfd7c7.png" alt="在这里插入图片描述"><br>加了RAG<br><img src="https://i-blog.csdnimg.cn/direct/954954d208fc40a99a0489deccefdfa2.png" alt="在这里插入图片描述"></p>
+<h3 id="笔记与过程-4"><a href="#笔记与过程-4" class="headerlink" title="笔记与过程"></a>笔记与过程</h3><h4 id="RAG"><a href="#RAG" class="headerlink" title="RAG"></a>RAG</h4><p>检索增强生成（Retrieval Augmented Generation，RAG），利用外部知识库增强性能</p>
+<ul>
+<li>可以补充最新信息</li>
+<li>补充过程</li>
+</ul>
+<p> 给模型注入新知识的方式，可以简单分为两种方式</p>
+<ul>
+<li>内部的，即更新模型的权重，代价大，因为大模型要重新训练</li>
+<li>外部的，给模型注入格外的上下文或者说外部信息，不改变它的的权重</li>
+</ul>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202411271742818.png" alt="image-20241127174208586"></p>
+<p>工作原理：用户输入对话或者推荐问题，首先在数据库进行检索，然后把检索的内容（这里就是RAG优化的部分）和问题作为prompt输入给大模型，生成答案</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202411271743472.png" alt="image-20241127174325308"></p>
+<p>向量数据库：承担所有数据存储</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202411271744933.png" alt="image-20241127174442769"></p>
+<p>发展进程：最早就是文档-索引-检索</p>
+<p>Advanced：多了两次检索。对问题有一次检索，拿到结果后重排或压缩</p>
+<p>多模态：模块化工程化</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202411271745692.png" alt="image-20241127174525543"></p>
+<p>常见优化：相关论文有很多最新方法</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202411271746626.png" alt="image-20241127174645452"></p>
+<h5 id="RAG-vs-微调"><a href="#RAG-vs-微调" class="headerlink" title="RAG vs 微调"></a>RAG vs 微调</h5><p>RAG：不改变模型，使用外部信息，用于需要最新信息和实时数据的任务</p>
+<ul>
+<li>长尾知识：训练集中的少数类别 (head class) 含有训练集中的多数标注数据，而大量其余类别 (tail class) 仅有少数标注数据（有些只有一份，微调会有bias）</li>
+<li>提升不会打破大模型，根本性能还是基于大模型，RAG只是提升<img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202411271749073.png" alt="image-20241127174950024"></li>
+</ul>
+<p>微调：重新训练参数集，适应特定任务。需要大量标注数据。</p>
+<ul>
+<li>可能会过拟合，可能有长尾问题</li>
+<li>对实时数据要求不高，专业度要求高，点对点，很适合微调</li>
+</ul>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202411271747344.png" alt="image-20241127174734155"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202411271754256.png" alt="image-20241127175436141"></p>
+<p>微调：模型适配度高、实时性低</p>
+<h5 id="评估框架和基准测试"><a href="#评估框架和基准测试" class="headerlink" title="评估框架和基准测试"></a>评估框架和基准测试</h5><p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202411271755636.png" alt="image-20241127175532502"></p>
+<p>安全性也有</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202411271756541.png" alt="image-20241127175603390"></p>
+<p>技术栈：Langchain、LlamaIndex</p>
+<p>挑战：长文本数据（基于大模型）、多模态</p>
+<h4 id="LlamaIndex"><a href="#LlamaIndex" class="headerlink" title="LlamaIndex"></a>LlamaIndex</h4><p>开源的索引和搜索库</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202411271757180.png" alt="image-20241127175713039"></p>
+<p>特点：</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202411271757311.png" alt="image-20241127175734216"></p>
+<p>应用：Hub提供很多数据，调API即可，自己搭建的部分很少</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202411271758333.png" alt="image-20241127175829189"></p>
+<h4 id="实践"><a href="#实践" class="headerlink" title="实践"></a>实践</h4><p>问xtuner是什么</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202411271759166.png" alt="image-20241127175940009"></p>
+<p>浦语 API+LlamaIndex 实践（助教反而用的是本地部署InternLM+LlamaIndex实践）：<a target="_blank" rel="noopener" href="https://github.com/InternLM/Tutorial/blob/camp4/docs/L1/LlamaIndex/readme_api.md">https://github.com/InternLM/Tutorial/blob/camp4/docs/L1/LlamaIndex/readme_api.md</a></p>
+<ol>
+<li>配置python环境、Llamaindex环境</li>
+<li>下载 Sentence Transformer 模型（开源词向量模型，轻量，支持中文且效果较好）</li>
+<li>下载NLTK库</li>
+<li>是否使用 LlamaIndex 前后对比<ol>
+<li>不使用 LlamaIndex RAG（仅API）：浦语官网和硅基流动都提供了InternLM的类OpenAI接口格式的免费的 API。这一步我有报错，试了些设置utf8也未解决（明天再试试）<img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202411280020543.png" alt="image-20241128002043445"></li>
+<li>使用 API+LlamaIndex：读取md，作为向量数据库</li>
+</ol>
+</li>
+<li>命令行格式变成页面格式：使用streamlit</li>
+</ol>
+<p>所以用本地部署InternLM+LlamaIndex实践：<a target="_blank" rel="noopener" href="https://github.com/InternLM/Tutorial/blob/camp4/docs/L1/LlamaIndex/readme_local.md">https://github.com/InternLM/Tutorial/blob/camp4/docs/L1/LlamaIndex/readme_local.md</a></p>
+<p>LlamaIndex HuggingFaceLLM：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> llama_index.llms.huggingface <span class="keyword">import</span> HuggingFaceLLM</span><br><span class="line"><span class="keyword">from</span> llama_index.core.llms <span class="keyword">import</span> ChatMessage</span><br><span class="line">llm = HuggingFaceLLM(</span><br><span class="line">    model_name=<span class="string">&quot;/root/model/internlm2-chat-1_8b&quot;</span>,<span class="comment">#一个包含 8 亿参数的大型语言模型</span></span><br><span class="line">   tokenizer_name=<span class="string">&quot;/root/model/internlm2-chat-1_8b&quot;</span>, <span class="comment">#分词器用于将文本转换为模型可以理解的 tokens</span></span><br><span class="line">    model_kwargs=&#123;<span class="string">&quot;trust_remote_code&quot;</span>:<span class="literal">True</span>&#125;,<span class="comment">#允许模型加载时执行远程代码</span></span><br><span class="line">    tokenizer_kwargs=&#123;<span class="string">&quot;trust_remote_code&quot;</span>:<span class="literal">True</span>&#125;<span class="comment">#表示信任远程代码以加载分词器</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line">rsp = llm.chat(messages=[ChatMessage(content=<span class="string">&quot;xtuner是什么？&quot;</span>)])<span class="comment">#ChatMessage 类将该消息格式化为模型可以处理的格式</span></span><br><span class="line"><span class="built_in">print</span>(rsp)</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202411281614965.png" alt="image-20241128161422909"></p>
+<p>LlamaIndex RAG：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> llama_index.core <span class="keyword">import</span> VectorStoreIndex, SimpleDirectoryReader, Settings</span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> llama_index.embeddings.huggingface <span class="keyword">import</span> HuggingFaceEmbedding</span><br><span class="line"><span class="keyword">from</span> llama_index.llms.huggingface <span class="keyword">import</span> HuggingFaceLLM</span><br><span class="line"></span><br><span class="line"><span class="comment">#初始化一个HuggingFaceEmbedding对象，用于将文本转换为向量表示</span></span><br><span class="line">embed_model = HuggingFaceEmbedding(</span><br><span class="line"><span class="comment">#指定了一个预训练的sentence-transformer模型的路径</span></span><br><span class="line">    model_name=<span class="string">&quot;/root/model/sentence-transformer&quot;</span></span><br><span class="line">)</span><br><span class="line"><span class="comment">#将创建的嵌入模型赋值给全局设置的embed_model属性，</span></span><br><span class="line"><span class="comment">#这样在后续的索引构建过程中就会使用这个模型。</span></span><br><span class="line">Settings.embed_model = embed_model</span><br><span class="line"></span><br><span class="line">llm = HuggingFaceLLM(</span><br><span class="line">    model_name=<span class="string">&quot;/root/model/internlm2-chat-1_8b&quot;</span>,</span><br><span class="line">    tokenizer_name=<span class="string">&quot;/root/model/internlm2-chat-1_8b&quot;</span>,</span><br><span class="line">    model_kwargs=&#123;<span class="string">&quot;trust_remote_code&quot;</span>:<span class="literal">True</span>&#125;,</span><br><span class="line">    tokenizer_kwargs=&#123;<span class="string">&quot;trust_remote_code&quot;</span>:<span class="literal">True</span>&#125;</span><br><span class="line">)</span><br><span class="line"><span class="comment">#设置全局的llm属性，这样在索引查询时会使用这个模型。</span></span><br><span class="line">Settings.llm = llm</span><br><span class="line"></span><br><span class="line"><span class="comment">#从指定目录读取所有文档，并加载数据到内存中</span></span><br><span class="line">documents = SimpleDirectoryReader(<span class="string">&quot;/root/llamaindex_demo/data&quot;</span>).load_data()</span><br><span class="line"><span class="comment">#创建一个VectorStoreIndex，并使用之前加载的文档来构建索引。</span></span><br><span class="line"><span class="comment"># 此索引将文档转换为向量，并存储这些向量以便于快速检索。</span></span><br><span class="line">index = VectorStoreIndex.from_documents(documents)</span><br><span class="line"><span class="comment"># 创建一个查询引擎，这个引擎可以接收查询并返回相关文档的响应。</span></span><br><span class="line">query_engine = index.as_query_engine()</span><br><span class="line">response = query_engine.query(<span class="string">&quot;xtuner是什么?&quot;</span>)<span class="comment">#调的虽然是query_engine，但embed_model和llm会被用到</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(response)</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202411281618831.png" alt="image-20241128161804726"></p>
+<p>streamlit可视化网页的代码：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> streamlit <span class="keyword">as</span> st</span><br><span class="line"><span class="keyword">from</span> llama_index.core <span class="keyword">import</span> VectorStoreIndex, SimpleDirectoryReader, Settings</span><br><span class="line"><span class="keyword">from</span> llama_index.embeddings.huggingface <span class="keyword">import</span> HuggingFaceEmbedding</span><br><span class="line"><span class="keyword">from</span> llama_index.llms.huggingface <span class="keyword">import</span> HuggingFaceLLM</span><br><span class="line"></span><br><span class="line">st.set_page_config(page_title=<span class="string">&quot;llama_index_demo&quot;</span>, page_icon=<span class="string">&quot;🦜🔗&quot;</span>)</span><br><span class="line">st.title(<span class="string">&quot;llama_index_demo&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 初始化模型</span></span><br><span class="line"><span class="meta">@st.cache_resource</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">init_models</span>():</span><br><span class="line">    embed_model = HuggingFaceEmbedding(</span><br><span class="line">        model_name=<span class="string">&quot;/root/model/sentence-transformer&quot;</span></span><br><span class="line">    )</span><br><span class="line">    Settings.embed_model = embed_model</span><br><span class="line"></span><br><span class="line">    llm = HuggingFaceLLM(</span><br><span class="line">        model_name=<span class="string">&quot;/root/model/internlm2-chat-1_8b&quot;</span>,</span><br><span class="line">        tokenizer_name=<span class="string">&quot;/root/model/internlm2-chat-1_8b&quot;</span>,</span><br><span class="line">        model_kwargs=&#123;<span class="string">&quot;trust_remote_code&quot;</span>: <span class="literal">True</span>&#125;,</span><br><span class="line">        tokenizer_kwargs=&#123;<span class="string">&quot;trust_remote_code&quot;</span>: <span class="literal">True</span>&#125;</span><br><span class="line">    )</span><br><span class="line">    Settings.llm = llm</span><br><span class="line"></span><br><span class="line">    documents = SimpleDirectoryReader(<span class="string">&quot;/root/llamaindex_demo/data&quot;</span>).load_data()</span><br><span class="line">    index = VectorStoreIndex.from_documents(documents)</span><br><span class="line">    query_engine = index.as_query_engine()</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> query_engine</span><br><span class="line"></span><br><span class="line"><span class="comment"># 检查是否需要初始化模型</span></span><br><span class="line"><span class="keyword">if</span> <span class="string">&#x27;query_engine&#x27;</span> <span class="keyword">not</span> <span class="keyword">in</span> st.session_state:</span><br><span class="line">    st.session_state[<span class="string">&#x27;query_engine&#x27;</span>] = init_models()</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">greet2</span>(<span class="params">question</span>):</span><br><span class="line">    response = st.session_state[<span class="string">&#x27;query_engine&#x27;</span>].query(question)</span><br><span class="line">    <span class="keyword">return</span> response</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># Store LLM generated responses</span></span><br><span class="line"><span class="keyword">if</span> <span class="string">&quot;messages&quot;</span> <span class="keyword">not</span> <span class="keyword">in</span> st.session_state.keys():</span><br><span class="line">    st.session_state.messages = [&#123;<span class="string">&quot;role&quot;</span>: <span class="string">&quot;assistant&quot;</span>, <span class="string">&quot;content&quot;</span>: <span class="string">&quot;你好，我是你的助手，有什么我可以帮助你的吗？&quot;</span>&#125;]</span><br><span class="line"></span><br><span class="line">    <span class="comment"># Display or clear chat messages</span></span><br><span class="line"><span class="keyword">for</span> message <span class="keyword">in</span> st.session_state.messages:</span><br><span class="line">    <span class="keyword">with</span> st.chat_message(message[<span class="string">&quot;role&quot;</span>]):</span><br><span class="line">        st.write(message[<span class="string">&quot;content&quot;</span>])</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">clear_chat_history</span>():</span><br><span class="line">    st.session_state.messages = [&#123;<span class="string">&quot;role&quot;</span>: <span class="string">&quot;assistant&quot;</span>, <span class="string">&quot;content&quot;</span>: <span class="string">&quot;你好，我是你的助手，有什么我可以帮助你的吗？&quot;</span>&#125;]</span><br><span class="line"></span><br><span class="line">st.sidebar.button(<span class="string">&#x27;Clear Chat History&#x27;</span>, on_click=clear_chat_history)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Function for generating LLaMA2 response</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">generate_llama_index_response</span>(<span class="params">prompt_input</span>):</span><br><span class="line">    <span class="keyword">return</span> greet2(prompt_input)</span><br><span class="line"></span><br><span class="line"><span class="comment"># User-provided prompt</span></span><br><span class="line"><span class="keyword">if</span> prompt := st.chat_input():</span><br><span class="line">    st.session_state.messages.append(&#123;<span class="string">&quot;role&quot;</span>: <span class="string">&quot;user&quot;</span>, <span class="string">&quot;content&quot;</span>: prompt&#125;)</span><br><span class="line">    <span class="keyword">with</span> st.chat_message(<span class="string">&quot;user&quot;</span>):</span><br><span class="line">        st.write(prompt)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Gegenerate_llama_index_response last message is not from assistant</span></span><br><span class="line"><span class="keyword">if</span> st.session_state.messages[-<span class="number">1</span>][<span class="string">&quot;role&quot;</span>] != <span class="string">&quot;assistant&quot;</span>:</span><br><span class="line">    <span class="keyword">with</span> st.chat_message(<span class="string">&quot;assistant&quot;</span>):</span><br><span class="line">        <span class="keyword">with</span> st.spinner(<span class="string">&quot;Thinking...&quot;</span>):</span><br><span class="line">            response = generate_llama_index_response(prompt)</span><br><span class="line">            placeholder = st.empty()</span><br><span class="line">            placeholder.markdown(response)</span><br><span class="line">    message = &#123;<span class="string">&quot;role&quot;</span>: <span class="string">&quot;assistant&quot;</span>, <span class="string">&quot;content&quot;</span>: response&#125;</span><br><span class="line">    st.session_state.messages.append(message)</span><br></pre></td></tr></table></figure>
+
+<h2 id="第五关-XTuner-微调个人小助手认知"><a href="#第五关-XTuner-微调个人小助手认知" class="headerlink" title="第五关 XTuner 微调个人小助手认知"></a>第五关 XTuner 微调个人小助手认知</h2><h3 id="基础任务-3"><a href="#基础任务-3" class="headerlink" title="基础任务"></a>基础任务</h3><blockquote>
+<p>使用 XTuner 微调 InternLM2-Chat-7B 实现自己的小助手认知，如下图所示（图中的尖米需替换成自己的昵称），记录复现过程并截图。（即微调一个adapter然后合并到模型中）</p>
+</blockquote>
+<p><strong>环境配置和数据准备</strong></p>
+<ol>
+<li>使用 conda 先构建一个 Python-3.10 的虚拟环境</li>
+<li>安装 XTuner</li>
+<li>验证安装<br><img src="https://i-blog.csdnimg.cn/direct/77046e2ec46f457e82884ea34efe0965.png" alt="在这里插入图片描述"></li>
+</ol>
+<p><strong>修改提供的数据</strong><br>4. 创建一个新的文件夹用于存储微调数据<br>5. 创建修改脚本：批量处理 JSON 数据、替换成自己的名字（本任务是修改的已有数据，如果想要新数据可以使用LLM获得）<br>6. 执行脚本<img src="https://i-blog.csdnimg.cn/direct/1acf16fc7ba842d78a4dd26d7c3d4427.png" alt="在这里插入图片描述"><br><strong>模型启动</strong><br>7. 复制模型<br>8. 修改Config：设置预训练模型路径、数据路径、数据集加载路径<img src="https://i-blog.csdnimg.cn/direct/80972f55819645539013796540f7d438.png" alt="在这里插入图片描述"><br><img src="https://i-blog.csdnimg.cn/direct/10130ab3181d4fe782335fcfc6919f86.png" alt="在这里插入图片描述"><br><img src="https://i-blog.csdnimg.cn/direct/5de91f11490d416396b67ae43773d3b8.png" alt="在这里插入图片描述"><br><img src="https://i-blog.csdnimg.cn/direct/46a7f84df30f48439d2eb8581982e46d.png" alt="在这里插入图片描述"><br>数据从哪里来：找LLM要，用常见问题得到的回答作为训练数据<br><img src="https://i-blog.csdnimg.cn/direct/47d271925f974c40b6872117ebb89bd3.png" alt="在这里插入图片描述"></p>
+<ol start="9">
+<li>启动微调</li>
+</ol>
+<blockquote>
+<p>xtuner train 命令用于启动模型微调进程。该命令需要一个参数：CONFIG 用于指定微调配置文件。这里我们使用修改好的配置文件 internlm2_5_chat_7b_qlora_alpaca_e3_copy.py。<br>训练过程中产生的所有文件，包括日志、配置文件、检查点文件、微调后的模型等，默认保存在 work_dirs 目录下，我们也可以通过添加 –work-dir 指定特定的文件保存位置。–deepspeed 则为使用 deepspeed， deepspeed 可以节约显存。</p>
+</blockquote>
+<p>我遇见了报错，跟<a target="_blank" rel="noopener" href="https://github.com/InternLM/Tutorial/issues/2842%E7%9A%84%E6%8A%A5%E9%94%99%E5%92%8Cconda%E7%8E%AF%E5%A2%83%E6%98%AF%E4%B8%80%E6%A0%B7%E7%9A%84%EF%BC%88%E6%9C%89%E4%BA%BA%E8%AF%B4%E9%87%8D%E6%96%B0%E9%85%8D%E7%BD%AE%E7%8E%AF%E5%A2%83%E5%8F%AF%E4%BB%A5%E8%A7%A3%E5%86%B3%EF%BC%8C%E4%BD%86%E6%88%91%E9%85%8D%E4%BA%86%E4%B8%89%E6%AC%A1%E9%83%BD%E4%B8%8D%E8%A1%8C%EF%BC%89%E4%BB%8E%E6%9C%AC%E8%8A%82%E5%BC%80%E5%A7%8B%E5%AE%9E%E9%AA%8C%E5%9B%A0%E4%B8%BA%E5%BC%80%E5%8F%91%E6%9C%BA%E6%93%8D%E4%BD%9C%E8%BF%87%E6%85%A2%E6%89%80%E4%BB%A5%E7%9C%8B%E7%9A%84%E6%98%AF%E8%A7%86%E9%A2%91%E8%AE%B2%E8%A7%A3">https://github.com/InternLM/Tutorial/issues/2842的报错和conda环境是一样的（有人说重新配置环境可以解决，但我配了三次都不行）从本节开始实验因为开发机操作过慢所以看的是视频讲解</a><br><img src="https://i-blog.csdnimg.cn/direct/7044b7b3b2ae4c7584bd23416d08e67c.png" alt="在这里插入图片描述"><br>10. 权重转换：模型转换的本质其实就是将原本使用 Pytorch 训练出来的模型权重文件转换为目前通用的 HuggingFace 格式文件。转换完成后，可以看到模型被转换为 HuggingFace 中常用的 .bin 格式文件，这就代表着文件成功被转化为 HuggingFace 格式了。此时，hf 文件夹即为我们平时所理解的所谓 “LoRA 模型文件”。可以简单理解：LoRA 模型文件 &#x3D; Adapter<br>11. 模型合并：对于 LoRA 或者 QLoRA 微调出来的模型其实并不是一个完整的模型，而是一个额外的层（Adapter），训练完的这个层最终还是要与原模型进行合并才能被正常的使用。</p>
+<blockquote>
+<p>对于全量微调的模型（full）其实是不需要进行整合这一步的，因为全量微调修改的是原模型的权重而非微调一个新的 Adapter ，因此是不需要进行模型整合的。</p>
+</blockquote>
+<p>在 XTuner 中提供了一键合并的命令 xtuner convert merge，在使用前我们需要准备好三个路径，包括原模型的路径、训练好的 Adapter 层的（模型格式转换后的）路径以及最终保存的路径。<br>最后使用streamlit实现模型 WebUI 对话，此时使用的权重是微调之后的权重，模型是合并后的模型。<br><img src="https://i-blog.csdnimg.cn/direct/3da5e10ab13743af8a9ec9824caa5924.png" alt="在这里插入图片描述"></p>
+<h3 id="笔记与过程-5"><a href="#笔记与过程-5" class="headerlink" title="笔记与过程"></a>笔记与过程</h3><p>微调：在预训练的LLM上，使用特定任务的数据训练模型</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202412272243572.png" alt="image-20241227224346459"></p>
+<p>显卡数据有限，在其他大模型上做微调：</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202412272244248.png" alt="image-20241227224426182"></p>
+<p>增量预训练微调：学习新知识，先做这个，使用的数据比较多，每类数据不一样</p>
+<p>指令跟随微调：对话模板，再做这个</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202412272245358.png" alt="image-20241227224509306"></p>
+<h4 id="LoRA"><a href="#LoRA" class="headerlink" title="LoRA"></a>LoRA</h4><p>在linear旁新增支路</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202412272246854.png" alt="image-20241227224609798"></p>
+<ul>
+<li>全量微调：优化器状态是什么？</li>
+<li>aLoRA：adapter训练</li>
+<li>QLoRA：QLoRA对adapter进一步优化</li>
+</ul>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202412272248476.png" alt="image-20241227224850421"></p>
+<p>书生的微调工具XTuner：包括多种微调方法</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202412272251477.png" alt="image-20241227225112409"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202412272252799.png" alt="image-20241227225225742"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202412272253638.png" alt="image-20241227225310581"></p>
+<h2 id="第六关-OpenCompass-评测书生大模型实践"><a href="#第六关-OpenCompass-评测书生大模型实践" class="headerlink" title="第六关 OpenCompass 评测书生大模型实践"></a>第六关 OpenCompass 评测书生大模型实践</h2><h3 id="基础任务-4"><a href="#基础任务-4" class="headerlink" title="基础任务"></a>基础任务</h3><p>OpenCompass 提供了 API 模式评测和本地直接评测两种方式。其中 API 模式评测针对那些以 API 服务形式部署的模型，而本地直接评测则面向那些可以获取到模型权重文件的情况。<br>比如GPT闭源，用API；Meta的Llama&#x2F;openMMlab的iternlm模型开源，可以本地运行</p>
+<ol>
+<li>API评测：配置模型和数据集，在 –debug 模式下，任务将按顺序执行，并实时打印输出（并不是很懂最后一列的数字的性能含义）</li>
+<li>评测本地模型：首先需要获取到完整的模型权重文件。以开源模型为例，你可以从 Hugging Face 等平台下载模型文件。接下来，你需要准备足够的计算资源，比如至少一张显存够大的 GPU，因为模型文件通常都比较大。有了模型和硬件后，你需要在评测配置文件中指定模型路径和相关参数，然后评测框架就会自动加载模型并开始评测。这种评测方式虽然前期准备工作相对繁琐，需要考虑硬件资源，但好处是评测过程完全在本地完成，不依赖网络状态，而且你可以更灵活地调整模型参数，深入了解模型的性能表现。这种方式特别适合需要深入研究模型性能或进行模型改进的研发人员。</li>
+</ol>
+<h3 id="笔记与过程-6"><a href="#笔记与过程-6" class="headerlink" title="笔记与过程"></a>笔记与过程</h3><p>评测可以知道大模型的性能；对于医疗、金融等垂直领域也需要评测</p>
+<p>挑战：从对话到智能体，评测体系变化</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202412281932751.png" alt="image-20241228193244611"></p>
+<p>根据模型类型的不同进行不同的评测设计</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202412281934269.png" alt="image-20241228193444184"></p>
+<p>评测也可以分为客观和主观，更多考虑摸模型评测</p>
+<ul>
+<li>也有长文本评测：在长文本中插入一句话（主题可能不相关），如果能记住这句话，说明长文本效果好</li>
+</ul>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202412281935088.png" alt="image-20241228193507999"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202412281936632.png" alt="image-20241228193610552"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202412281936509.png" alt="image-20241228193647422"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202412281937623.png" alt="image-20241228193704511"></p>
+<h4 id="司南生态"><a href="#司南生态" class="headerlink" title="司南生态"></a>司南生态</h4><p>根据社区需求实时更新榜单</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202412281937134.png" alt="image-20241228193721047"></p>
+<p>榜单除了大模型，还包括多模态<img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202412281939126.png" alt="image-20241228193913036"></p>
+<p>正在替换推理模型进行提速<img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202412281939204.png" alt="image-20241228193937125"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202412281940614.png" alt="image-20241228194014528"></p>
+<h4 id="CompassBench闭源评测集"><a href="#CompassBench闭源评测集" class="headerlink" title="CompassBench闭源评测集"></a>CompassBench闭源评测集</h4><p>主观：对战胜率：包括创造、语言、数学、推理</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202412281940269.png" alt="image-20241228194053181"></p>
+<p>客观：选择和填空</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202412281941716.png" alt="image-20241228194146613"></p>
+<p>用直方图进行直观排名</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202412281942520.png" alt="image-20241228194201439"></p>
+<p>结果：</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202412281942310.png" alt="image-20241228194221224"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202412281942828.png" alt="image-20241228194230768"></p>
+<h4 id="司南榜单矩阵"><a href="#司南榜单矩阵" class="headerlink" title="司南榜单矩阵"></a>司南榜单矩阵</h4><p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202412281950594.png" alt="image-20241228195045513"></p>
+<p>反映模型能力的差距：</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202412281951486.png" alt="image-20241228195108398"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202412281951535.png" alt="image-20241228195119458"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202412281951106.png" alt="image-20241228195147032"></p>
+<h4 id="司南评测研究成果"><a href="#司南评测研究成果" class="headerlink" title="司南评测研究成果"></a>司南评测研究成果</h4><p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202412281952643.png" alt="image-20241228195205565"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202412281952846.png" alt="image-20241228195216757"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202412281952527.png" alt="image-20241228195226431"></p>
+<p>未来计划：</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202412281953414.png" alt="image-20241228195314357"></p>
+<h1 id="进阶岛"><a href="#进阶岛" class="headerlink" title="进阶岛"></a>进阶岛</h1><h2 id="第一关-探索书生大模型能力边界"><a href="#第一关-探索书生大模型能力边界" class="headerlink" title="第一关 探索书生大模型能力边界"></a>第一关 探索书生大模型能力边界</h2><h3 id="笔记与过程-7"><a href="#笔记与过程-7" class="headerlink" title="笔记与过程"></a>笔记与过程</h3><p>InternThinker: <a target="_blank" rel="noopener" href="https://internlm-chat.intern-ai.org.cn/internthinker">https://internlm-chat.intern-ai.org.cn/internthinker</a><br>InternThinker 是一个强推理模型，具备长思维能力，并能在推理过程中进行自我反思和纠正，从而在数学、代码、推理谜题等多种复杂推理任务上取得更优结果。在解力扣时往往表现得比InternLM好。</p>
+<h2 id="第二关-Lagent-自定义你的-Agent-智能体"><a href="#第二关-Lagent-自定义你的-Agent-智能体" class="headerlink" title="第二关 Lagent 自定义你的 Agent 智能体"></a>第二关 Lagent 自定义你的 Agent 智能体</h2><h3 id="基础任务-5"><a href="#基础任务-5" class="headerlink" title="基础任务"></a>基础任务</h3><p>Lagent框架中Agent的使用：Action，也称为工具，Lagent中集成了很多好用的工具，提供了一套LLM驱动的智能体用来与真实世界交互并执行复杂任务的函数，包括谷歌文献检索、Arxiv文献检索、Python编译器等。具体可以查看<a target="_blank" rel="noopener" href="https://lagent.readthedocs.io/zh-cn/latest/tutorials/action.html#id2">文档</a></p>
+<ul>
+<li>可以理解为集成了普通LLM没有的更丰富&#x2F;复杂的函数，如文献检索</li>
+<li>集成的方式是调用已有的接口，总之就是可以利用现成的API，没必要自己通过微调&#x2F;RAG实现某功能</li>
+</ul>
+<p>在agent_api_web_demo.py中写入下面的代码，这里利用 GPTAPI 类，该类继承自 BaseAPILLM，封装了对 API 的调用逻辑，然后利用Streamlit启动Web服务：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">initialize_chatbot</span>(<span class="params">self, model_name, api_base, plugin_action</span>):</span><br><span class="line">        <span class="string">&quot;&quot;&quot;初始化 GPTAPI 实例作为 chatbot。&quot;&quot;&quot;</span></span><br><span class="line">        token = os.getenv(<span class="string">&quot;token&quot;</span>)</span><br><span class="line">        <span class="keyword">if</span> <span class="keyword">not</span> token:</span><br><span class="line">            st.error(<span class="string">&quot;未检测到环境变量 `token`，请设置环境变量，例如 `export token=&#x27;your_token_here&#x27;` 后重新运行 X﹏X&quot;</span>)</span><br><span class="line">            st.stop()  <span class="comment"># 停止运行应用</span></span><br><span class="line">            </span><br><span class="line">        <span class="comment"># 创建完整的 meta_prompt，保留原始结构并动态插入侧边栏配置</span></span><br><span class="line">        meta_prompt = [</span><br><span class="line">            &#123;<span class="string">&quot;role&quot;</span>: <span class="string">&quot;system&quot;</span>, <span class="string">&quot;content&quot;</span>: <span class="variable language_">self</span>.meta_prompt, <span class="string">&quot;api_role&quot;</span>: <span class="string">&quot;system&quot;</span>&#125;,</span><br><span class="line">            &#123;<span class="string">&quot;role&quot;</span>: <span class="string">&quot;user&quot;</span>, <span class="string">&quot;content&quot;</span>: <span class="string">&quot;&quot;</span>, <span class="string">&quot;api_role&quot;</span>: <span class="string">&quot;user&quot;</span>&#125;,</span><br><span class="line">            &#123;<span class="string">&quot;role&quot;</span>: <span class="string">&quot;assistant&quot;</span>, <span class="string">&quot;content&quot;</span>: <span class="variable language_">self</span>.plugin_prompt, <span class="string">&quot;api_role&quot;</span>: <span class="string">&quot;assistant&quot;</span>&#125;,</span><br><span class="line">            &#123;<span class="string">&quot;role&quot;</span>: <span class="string">&quot;environment&quot;</span>, <span class="string">&quot;content&quot;</span>: <span class="string">&quot;&quot;</span>, <span class="string">&quot;api_role&quot;</span>: <span class="string">&quot;environment&quot;</span>&#125;</span><br><span class="line">        ]</span><br><span class="line"></span><br><span class="line">        api_model = GPTAPI(</span><br><span class="line">            model_type=model_name,</span><br><span class="line">            api_base=api_base,</span><br><span class="line">            key=token,  <span class="comment"># 从环境变量中获取授权令牌</span></span><br><span class="line">            meta_template=meta_prompt,</span><br><span class="line">            max_new_tokens=<span class="number">512</span>,</span><br><span class="line">            temperature=<span class="number">0.8</span>,</span><br><span class="line">            top_p=<span class="number">0.9</span></span><br><span class="line">        )</span><br><span class="line">        <span class="keyword">return</span> api_model</span><br></pre></td></tr></table></figure>
+<p>记得在本地进行端口映射。<br>将ArxivSearch插件选择上，再次输入指令“帮我搜索一下最新版本的MindSearch论文”，可以看到，通过调用外部工具，大模型成功理解了我们的任务，得到了我们需要的文献：<img src="https://i-blog.csdnimg.cn/direct/5de87350b02645c6a552a2ea3d8b2fe9.png" alt="在这里插入图片描述"></p>
+<h4 id="制作一个属于自己的Agent"><a href="#制作一个属于自己的Agent" class="headerlink" title="制作一个属于自己的Agent"></a>制作一个属于自己的Agent</h4><p>使用 Lagent 自定义工具主要分为以下3步：</p>
+<p>（1）继承 BaseAction 类</p>
+<p>（2）实现简单工具的 run 方法；或者实现工具包内每个子工具的功能</p>
+<p>（3）简单工具的 run 方法可选被 tool_api 装饰；工具包内每个子工具的功能都需要被 tool_api 装饰</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> os</span><br><span class="line"><span class="keyword">import</span> requests</span><br><span class="line"><span class="keyword">from</span> lagent.actions.base_action <span class="keyword">import</span> BaseAction, tool_api</span><br><span class="line"><span class="keyword">from</span> lagent.schema <span class="keyword">import</span> ActionReturn, ActionStatusCode</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">WeatherQuery</span>(<span class="title class_ inherited__">BaseAction</span>):<span class="comment">#必须继承</span></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="built_in">super</span>().__init__()</span><br><span class="line">        <span class="variable language_">self</span>.api_key = os.getenv(<span class="string">&quot;weather_token&quot;</span>)</span><br><span class="line">        <span class="built_in">print</span>(<span class="variable language_">self</span>.api_key)</span><br><span class="line">        <span class="keyword">if</span> <span class="keyword">not</span> <span class="variable language_">self</span>.api_key:</span><br><span class="line">            <span class="keyword">raise</span> EnvironmentError(<span class="string">&quot;未找到环境变量 &#x27;token&#x27;。请设置你的和风天气 API Key 到 &#x27;weather_token&#x27; 环境变量中，比如export weather_token=&#x27;xxx&#x27; &quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="meta">    @tool_api</span></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">run</span>(<span class="params">self, location: <span class="built_in">str</span></span>) -&gt; <span class="built_in">dict</span>:</span><br><span class="line">        <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">        查询实时天气信息。</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">        Args:</span></span><br><span class="line"><span class="string">            location (str): 要查询的地点名称、LocationID 或经纬度坐标（如 &quot;101010100&quot; 或 &quot;116.41,39.92&quot;）。</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">        Returns:</span></span><br><span class="line"><span class="string">            dict: 包含天气信息的字典</span></span><br><span class="line"><span class="string">                * location: 地点名称</span></span><br><span class="line"><span class="string">                * weather: 天气状况</span></span><br><span class="line"><span class="string">                * temperature: 当前温度</span></span><br><span class="line"><span class="string">                * wind_direction: 风向</span></span><br><span class="line"><span class="string">                * wind_speed: 风速（公里/小时）</span></span><br><span class="line"><span class="string">                * humidity: 相对湿度（%）</span></span><br><span class="line"><span class="string">                * report_time: 数据报告时间</span></span><br><span class="line"><span class="string">        &quot;&quot;&quot;</span></span><br><span class="line">        <span class="keyword">try</span>:</span><br><span class="line">            <span class="comment"># 如果 location 不是坐标格式（例如 &quot;116.41,39.92&quot;），则调用 GeoAPI 获取 LocationID</span></span><br><span class="line">            <span class="keyword">if</span> <span class="keyword">not</span> (<span class="string">&quot;,&quot;</span> <span class="keyword">in</span> location <span class="keyword">and</span> location.replace(<span class="string">&quot;,&quot;</span>, <span class="string">&quot;&quot;</span>).replace(<span class="string">&quot;.&quot;</span>, <span class="string">&quot;&quot;</span>).isdigit()):</span><br><span class="line">                <span class="comment"># 使用 GeoAPI 获取 LocationID</span></span><br><span class="line">                geo_url = <span class="string">f&quot;https://geoapi.qweather.com/v2/city/lookup?location=<span class="subst">&#123;location&#125;</span>&amp;key=<span class="subst">&#123;self.api_key&#125;</span>&quot;</span></span><br><span class="line">                geo_response = requests.get(geo_url)</span><br><span class="line">                geo_data = geo_response.json()</span><br><span class="line"></span><br><span class="line">                <span class="keyword">if</span> geo_data.get(<span class="string">&quot;code&quot;</span>) != <span class="string">&quot;200&quot;</span> <span class="keyword">or</span> <span class="keyword">not</span> geo_data.get(<span class="string">&quot;location&quot;</span>):</span><br><span class="line">                    <span class="keyword">raise</span> Exception(<span class="string">f&quot;GeoAPI 返回错误码：<span class="subst">&#123;geo_data.get(<span class="string">&#x27;code&#x27;</span>)&#125;</span> 或未找到位置&quot;</span>)</span><br><span class="line"></span><br><span class="line">                location = geo_data[<span class="string">&quot;location&quot;</span>][<span class="number">0</span>][<span class="string">&quot;id&quot;</span>]</span><br><span class="line"></span><br><span class="line">            <span class="comment"># 构建天气查询的 API 请求 URL</span></span><br><span class="line">            weather_url = <span class="string">f&quot;https://devapi.qweather.com/v7/weather/now?location=<span class="subst">&#123;location&#125;</span>&amp;key=<span class="subst">&#123;self.api_key&#125;</span>&quot;</span></span><br><span class="line">            response = requests.get(weather_url)</span><br><span class="line">            data = response.json()</span><br><span class="line"></span><br><span class="line">            <span class="comment"># 检查 API 响应码</span></span><br><span class="line">            <span class="keyword">if</span> data.get(<span class="string">&quot;code&quot;</span>) != <span class="string">&quot;200&quot;</span>:</span><br><span class="line">                <span class="keyword">raise</span> Exception(<span class="string">f&quot;Weather API 返回错误码：<span class="subst">&#123;data.get(<span class="string">&#x27;code&#x27;</span>)&#125;</span>&quot;</span>)</span><br><span class="line"></span><br><span class="line">            <span class="comment"># 解析和组织天气信息</span></span><br><span class="line">            weather_info = &#123;</span><br><span class="line">                <span class="string">&quot;location&quot;</span>: location,</span><br><span class="line">                <span class="string">&quot;weather&quot;</span>: data[<span class="string">&quot;now&quot;</span>][<span class="string">&quot;text&quot;</span>],</span><br><span class="line">                <span class="string">&quot;temperature&quot;</span>: data[<span class="string">&quot;now&quot;</span>][<span class="string">&quot;temp&quot;</span>] + <span class="string">&quot;°C&quot;</span>, </span><br><span class="line">                <span class="string">&quot;wind_direction&quot;</span>: data[<span class="string">&quot;now&quot;</span>][<span class="string">&quot;windDir&quot;</span>],</span><br><span class="line">                <span class="string">&quot;wind_speed&quot;</span>: data[<span class="string">&quot;now&quot;</span>][<span class="string">&quot;windSpeed&quot;</span>] + <span class="string">&quot; km/h&quot;</span>,  </span><br><span class="line">                <span class="string">&quot;humidity&quot;</span>: data[<span class="string">&quot;now&quot;</span>][<span class="string">&quot;humidity&quot;</span>] + <span class="string">&quot;%&quot;</span>,</span><br><span class="line">                <span class="string">&quot;report_time&quot;</span>: data[<span class="string">&quot;updateTime&quot;</span>]</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            <span class="keyword">return</span> &#123;<span class="string">&quot;result&quot;</span>: weather_info&#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">except</span> Exception <span class="keyword">as</span> exc:</span><br><span class="line">            <span class="keyword">return</span> ActionReturn(</span><br><span class="line">                errmsg=<span class="string">f&quot;WeatherQuery 异常：<span class="subst">&#123;exc&#125;</span>&quot;</span>,</span><br><span class="line">                state=ActionStatusCode.HTTP_ERROR</span><br><span class="line">            )</span><br></pre></td></tr></table></figure>
+<p>其中，WeatherQuery 类继承自 BaseAction，这是 Lagent 的基础工具类，提供了工具的框架逻辑。tool_api 是一个装饰器，用于标记工具中具体执行逻辑的函数，使得 Lagent 智能体能够调用该方法执行任务。run 方法是工具的主要逻辑入口，通常会根据输入参数完成一项任务并返回结果。</p>
+<p>在具体函数实现上，利用GeoAPI 获取 LocationID，当用户输入的 location 不是经纬度坐标格式（如 116.41,39.92），则使用和风天气的 GeoAPI 将位置名转换为 LocationID，并通过 Weather API 获取目标位置的实时天气数据。最后，解析返回的 JSON 数据，并格式化为结构化字典。<br>注意在lagent的init方法和web demo脚本都要将该新增的工具注册进大模型的插件列表中。<br>将2个插件同时勾选上，用以说明模型具备识别调用不同工具的能力，什么任务对应什么工具来解决。</p>
+<h4 id="Multi-Agents博客写作系统的搭建"><a href="#Multi-Agents博客写作系统的搭建" class="headerlink" title="Multi-Agents博客写作系统的搭建"></a>Multi-Agents博客写作系统的搭建</h4><p>使用 Lagent 来构建一个多智能体系统 (Multi-Agent System)，展示如何协调不同的智能代理完成内容生成和优化的任务。我们的多智能体系统由两个主要代理组成：</p>
+<p>（1）内容生成代理：负责根据用户的主题提示生成一篇结构化、专业的文章或报告。</p>
+<p>（2）批评优化代理：负责审阅生成的内容，指出不足，推荐合适的文献，使文章更加完善。</p>
+<p>Multi-Agents博客写作系统的流程图如下：<br><img src="https://i-blog.csdnimg.cn/direct/a085fb7112fe4889ac82b063b9af7a20.png" alt="在这里插入图片描述"><br>可以看到，Multi-Agents博客写作系统正在按照下面的3步骤，生成、批评和完善内容。</p>
+<p>Step 1：写作者根据用户输入生成初稿。</p>
+<p>Step 2：批评者对初稿进行评估，提供改进建议和文献推荐（通过关键词触发 Arxiv 文献搜索）。</p>
+<p>Step 3：写作者根据批评意见对内容进行改进。<br>这样加入批评后的博客质量比第一步好。</p>
+<h3 id="笔记与过程-8"><a href="#笔记与过程-8" class="headerlink" title="笔记与过程"></a>笔记与过程</h3><p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202412282033273.png" alt="image-20241228203325215"></p>
+<h4 id="Agent-Lagent"><a href="#Agent-Lagent" class="headerlink" title="Agent &amp; Lagent"></a>Agent &amp; Lagent</h4><p>本质是函数，输入是感知，输出是动作</p>
+<ul>
+<li>Model：对感知进行处理，进行策略</li>
+</ul>
+<p>Agent技术的应用领域其实十分广泛，涵盖了从交通、医疗到教育、家居和娱乐等生活的方方面面，以下列举2个实际例子。</p>
+<p><strong>（1）自动驾驶系统</strong></p>
+<ul>
+<li><strong>应用</strong>：自动驾驶汽车、出租车等。</li>
+<li><strong>目标</strong>：安全、快捷、守法、舒适和高效。</li>
+<li><strong>传感器</strong>：摄像头、雷达、定位系统等。</li>
+<li><strong>执行器</strong>：方向盘、油门、刹车、信号灯。</li>
+</ul>
+<p><strong>（2）医疗诊断系统</strong></p>
+<ul>
+<li><strong>应用</strong>：医院诊断、病情监控。</li>
+<li><strong>目标</strong>：精准诊断、降低费用。</li>
+<li><strong>传感器</strong>：症状输入、患者自述。</li>
+<li><strong>执行器</strong>：检测、诊断、处方。</li>
+</ul>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202412282033222.png" alt="image-20241228203341144"></p>
+<p>Lagent：轻量级框架，可以构建基于LLM的智能体</p>
+<ul>
+<li>LLM：负责推理、规划、响应</li>
+<li>Action Executor</li>
+<li>Planning &amp; Action</li>
+</ul>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202412282035584.png" alt="image-20241228203523507"></p>
+<h4 id="范式"><a href="#范式" class="headerlink" title="范式"></a>范式</h4><p>通用范式</p>
+<p><strong>优势</strong>：</p>
+<ul>
+<li>灵活适应不同任务，无需设计和维护复杂的标记系统。</li>
+<li>适合快速迭代，降低微调和部署的复杂性。</li>
+<li>更易与多模态输入（如文本和图像）结合，扩展模型的通用性。</li>
+</ul>
+<p><strong>劣势</strong>：</p>
+<ul>
+<li>由于没有明确标记，调用工具时的错误难以捕捉和纠正。</li>
+<li>在复杂任务中，模型生成可能不够精准，导致工具调用的准确性下降。</li>
+</ul>
+<p><strong>（2）ReWoo</strong>：全称为<strong>Reason without Observation</strong>，是在ReAct范式基础上进行改进的Agent架构，针对多工具调用的复杂性与冗余性提供了一种高效的解决方案。相比于ReAct中的交替推理和行动，ReWoo直接生成一次性使用的<strong>完整工具链</strong>，减少了不必要的Token消耗和执行时间。同时，由于工具调用的规划与执行解耦，这一范式在模型微调时不需要实际调用工具即可完成。</p>
+<ul>
+<li><strong>Planner</strong>：用户输入的问题或任务首先传递给Planner，Planner将其分解为多个逻辑上相关的计划。每个计划包含推理部分（Reason）以及工具调用和参数（Execution）。Task List按顺序列出所有需要执行的任务链。</li>
+<li><strong>Worker</strong>：每个Worker根据Task List中的子任务，调用指定工具并返回结果。所有Worker之间通过共享状态保持任务执行的连续性。</li>
+<li><strong>Solver阶段</strong>：Worker完成任务后，将所有结果同步到Solver。Solver会对这些结果进行整合，并生成最终的答案或解决方案返回给用户。</li>
+</ul>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202412282036619.png" alt="image-20241228203617520"></p>
+<p>特化范式：</p>
+<p><strong>优势</strong>：</p>
+<ul>
+<li>特定标记明确工具调用的<strong>起止点</strong>，提高了调用的准确性。</li>
+<li>有助于模型在部署过程中避免误调用，增强系统的可控性。</li>
+<li>提高对复杂调用链的支持，适合复杂任务的场景。</li>
+</ul>
+<p><strong>劣势</strong>：</p>
+<ul>
+<li>需要对Tokenizer和模型架构进行定制，增加开发和维护成本。</li>
+<li>调用流程固定，降低了模型的灵活性，难以适应快速变化的任务。</li>
+</ul>
+<p>文档链接：<a target="_blank" rel="noopener" href="https://github.com/InternLM/InternLM/tree/main/agent">InternLM-Chat Agent</a></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202412282037075.png" alt="image-20241228203700988"></p>
+<p>工具是字典，提供不同功能的函数</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202412282037951.png" alt="image-20241228203712867"></p>
+<p>实践：联网搜论文、天气助手、博客写作系统</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202412282038835.png" alt="image-20241228203810762"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202412282038406.png" alt="image-20241228203846341"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202412282039259.png" alt="image-20241228203921203"></p>
+<h2 id="第三关-LMDeploy-量化部署进阶实践"><a href="#第三关-LMDeploy-量化部署进阶实践" class="headerlink" title="第三关 LMDeploy 量化部署进阶实践"></a>第三关 LMDeploy 量化部署进阶实践</h2><h3 id="基础任务-6"><a href="#基础任务-6" class="headerlink" title="基础任务"></a>基础任务</h3><p>我们要运行参数量为7B的InternLM2.5，由InternLM2.5的码仓查询InternLM2.5-7b-chat的config.json文件可知，该模型的权重被存储为bfloat16格式。对于一个7B（70亿）参数的模型，每个参数使用16位浮点数（等于 2个 Byte）表示，则模型的权重大小约为：<br>7×10^9 parameters×2 Bytes&#x2F;parameter&#x3D;14GB<br>70亿个参数×每个参数占用2个字节&#x3D;14GB<br>所以我们需要大于14GB的显存，选择 30%A100*1(24GB显存容量)，后选择立即创建，等状态栏变成运行中，点击进入开发机，我们即可开始部署。<br><img src="https://i-blog.csdnimg.cn/direct/2a6965a8e3af43a5a8fad125ea6805e6.png" alt="在这里插入图片描述"><br><strong>LMDeploy API部署InternLM2.5</strong>：<br>可以用命令行形式连接API服务器、以Gradio网页形式连接API服务器<br><img src="https://i-blog.csdnimg.cn/direct/1948434a484c421a99237eef2889d0e1.png" alt="在这里插入图片描述"></p>
+<h4 id="LMDeploy-Lite"><a href="#LMDeploy-Lite" class="headerlink" title="LMDeploy Lite"></a>LMDeploy Lite</h4><p>上面部署一个模型就要22G显存，所以希望用压缩技术降低部署成本。LMDeploy 提供了权重量化和 k&#x2F;v cache两种策略。<br><strong>设置最大kv cache缓存大小</strong>：就是把历史kv存起来。kv cache是一种缓存技术，通过存储键值对的形式来复用计算结果，以达到提高性能和降低内存消耗的目的。在大规模训练和推理中，kv cache可以显著减少重复计算量，从而提升模型的推理速度。理想情况下，kv cache全部存储于显存，以加快访存速度。</p>
+<p>模型在运行时，占用的显存可大致分为三部分：模型参数本身占用的显存、kv cache占用的显存，以及中间运算结果占用的显存。LMDeploy的kv cache管理器可以通过设置–cache-max-entry-count参数，控制kv缓存占用剩余显存的最大比例。默认的比例为0.8（预先申请策略会全部占用满）</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">lmdeploy chat /root/models/internlm2_5<span class="literal">-7b-chat</span> <span class="literal">--cache-max-entry-count</span> <span class="number">0.4</span></span><br></pre></td></tr></table></figure>
+
+<p>我们用命令将比例改为0.4后，则让KV Cache的占用变少了，最终只需19GB。<br><strong>设置在线 kv cache int4&#x2F;int8 量化</strong>：量化方式为 per-head per-token 的非对称量化。此外，通过 LMDeploy 应用 kv 量化非常简单，只需要设定 quant_policy 和cache-max-entry-count参数。相比使用BF16精度的kv cache，int4的Cache可以在相同4GB的显存下只需要4位来存储一个数值，而BF16需要16位。这意味着int4的Cache可以存储的元素数量是BF16的四倍。</p>
+<ul>
+<li>上面是申请的空间少了，理论上存储的kv也少了，这里是将浮点数变成整数，让可存储的元素变多了，但精度下降了</li>
+</ul>
+<p><strong>W4A16 模型量化和部署</strong>：<br>模型量化是一种优化技术，旨在减少机器学习模型的大小并提高其推理速度。量化通过将模型的权重和激活从高精度（如16位浮点数）转换为低精度（如8位整数、4位整数、甚至二值网络）来实现。</p>
+<ul>
+<li>W4：这通常表示权重量化为4位整数（int4）。这意味着模型中的权重参数将从它们原始的浮点表示（例如FP32、BF16或FP16，Internlm2.5精度为BF16）转换为4位的整数表示。这样做可以显著减少模型的大小。</li>
+<li>A16：这表示激活（或输入&#x2F;输出）仍然保持在16位浮点数（例如FP16或BF16）。激活是在神经网络中传播的数据，通常在每层运算之后产生。</li>
+</ul>
+<p>因此，W4A16的量化配置意味着：</p>
+<ul>
+<li>权重被量化为4位整数（LMDeploy的AWQ算法能够实现模型的4bit权重量化）</li>
+<li>激活保持为16位浮点数。</li>
+</ul>
+<p>那么推理后的模型和原本的模型区别在哪里呢？最明显的两点是模型文件大小以及占据显存大小。<img src="https://i-blog.csdnimg.cn/direct/780cce12d76143f88dc503958076198b.png" alt="在这里插入图片描述"><br><strong>W4A16 量化+ KV cache+KV cache 量化</strong><br><img src="https://i-blog.csdnimg.cn/direct/b5a46b98f00f49f888ac8ffec8079087.png" alt="在这里插入图片描述"><br>量化和部署使用：lmdeploy lite auto_awq，lmdeploy serve api_server<br>Function call：函数调用功能允许开发者在调用模型时，详细说明函数的作用，并使模型能够智能地根据用户的提问来输入参数并执行函数。完成调用后，模型会将函数的输出结果作为回答用户问题的依据。</p>
+<ul>
+<li>可以自行给大模型添加暂时没有的功能API，同时给精准的描述</li>
+<li>client &#x3D; OpenAI(api_key&#x3D;’YOUR_API_KEY’, base_url&#x3D;’<a target="_blank" rel="noopener" href="http://0.0.0.0:23333/v1">http://0.0.0.0:23333/v1</a>‘)<br><img src="https://i-blog.csdnimg.cn/direct/0b34d1909e774a89874b590e42fdda39.png" alt="在这里插入图片描述"></li>
+</ul>
+<h3 id="笔记与过程-9"><a href="#笔记与过程-9" class="headerlink" title="笔记与过程"></a>笔记与过程</h3><h4 id="LMDeploy部署模型"><a href="#LMDeploy部署模型" class="headerlink" title="LMDeploy部署模型"></a>LMDeploy部署模型</h4><p>部署：将训练好的模型在特定环境中运行</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202412282118694.png" alt="image-20241228211841615"></p>
+<p>支持Llama，千问等主流模型</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202412282120957.png" alt="image-20241228212023877"></p>
+<p>在A100上测试吞吐量</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202412282121785.png" alt="image-20241228212107739"></p>
+<h4 id="大模型缓存推理技术"><a href="#大模型缓存推理技术" class="headerlink" title="大模型缓存推理技术"></a>大模型缓存推理技术</h4><p>注意力机制：x通过三个线性变换获得KQV，经过attention得到y</p>
+<ul>
+<li>输入的问题是一个序列，包含多个token，一次性输入大模型。在注意力机制时拿到所有的kqv（预填充阶段）</li>
+<li>大模型生成回答（generation阶段）：token逐个迭代生成，每次迭代大模型生成新的x，把最新的Xn+1和历史的均输入得到qkv再计算。<ul>
+<li>这里的问题是历史的qkv计算过了，又重新计算了，而且只关心新生成的token YN+1，以前的token Y1…YN是没有用的</li>
+</ul>
+</li>
+</ul>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202412282123865.png" alt="image-20241228212324804"></p>
+<p>优化：对于新的迭代，只输入新的x，计算新的kqv，历史的kv缓存起来，把新的q和所有k计算注意力分数，再和所有v计算注意力汇聚，即可得到新的y</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202412282135412.png" alt="image-20241228213513364"></p>
+<p>Pytorch代码如下：</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202412282136833.png" alt="image-20241228213618764"></p>
+<p>如果传入了历史的kv，就和当前kv合成，即可把新的kv传入</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202412282137163.png" alt="image-20241228213730111"></p>
+<p>LMDeploy：实现KV Cache管理器，负责更新维护，甚至可以在显存部署时把当前不需要的KV Cache从显存放入内存，类比OS中分页内存管理的机制。不过用户感知不到，只能告诉LMDeploy最多使用多少显存。</p>
+<ul>
+<li>预先申请策略：最多使用8G，无论8G是否全部用到，都会一起申请给KV Cache，即可以推理更多的上下文</li>
+<li>传递参数，设置max_block_count（KV Cache块），free是当前剩余的显存</li>
+</ul>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202412282150243.png" alt="image-20241228215040178"></p>
+<h4 id="大模型量化技术"><a href="#大模型量化技术" class="headerlink" title="大模型量化技术"></a>大模型量化技术</h4><p>量化：浮点数-&gt;整数或离散形式，减轻深度学习模型的存储和计算负担</p>
+<p>激活值：y&#x3D;wx+b,w是权重，x就是激活值</p>
+<p>PTQ：数据集标定等方式，不需要重新训练，成本较低；而QAT&#x2F;QAF往往还要重新训练，所以生产实践中往往使用PTQ</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202412282155988.png" alt="image-20241228215526920"></p>
+<p><strong>KV Cache量化</strong></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202412282156455.png" alt="image-20241228215611384"></p>
+<p>权重量化：对权重4bit量化（节省存储空间），FP16是反量化成浮点数，性能提高</p>
+<ul>
+<li>英伟达算子是int8，算力高，有人觉得量化到整数可以调用更高算力的计算单元，所以要量化，但这里反量化的存在说明该观点是错误的</li>
+<li>因为计算瓶颈不在计算，而是访存上，4bit减少了IO（数据通信），这才是性能提升的原因</li>
+</ul>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202412282222132.png" alt="image-20241228222239081"></p>
+<h5 id="AWQ量化"><a href="#AWQ量化" class="headerlink" title="AWQ量化"></a>AWQ量化</h5><p>405b权重很多，但重要的很少</p>
+<ul>
+<li>随机：不科学，因为显著权重肯定不是随便的</li>
+<li>论文证明根据x的大小排序，困惑度会降到很少</li>
+</ul>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202412282226330.png" alt="image-20241228222629265"></p>
+<p>通道级别进行挑选显著权重：对x每一列（每个通道）求绝对值的平均值，比较大的认为是显著通道，对应的W则是显著权重</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202412282229144.png" alt="image-20241228222933073"></p>
+<p>有的是INT4,有的是FP16，是硬件不友好的，cuda很难实现</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202412282302878.png" alt="image-20241228230252838"></p>
+<p>Δ是量化单位，缩放因子。把单个元素w量化时先乘s，反量化再乘1&#x2F;s</p>
+<ul>
+<li>唯一的损失是取整函数，因为其他是FP16的</li>
+<li>w和wx怎么就互相等价了，也没懂</li>
+<li>现在的w是单个元素，即使乘了s还是不如之前<strong>w</strong>矩阵的最大值大，Δ’和Δ大概率相等（这里没咋听懂）</li>
+</ul>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202412282306497.png" alt="image-20241228230641439"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202412282308313.png" alt="image-20241228230813266"></p>
+<p>s&#x3D;1时，Δ’和Δ相等<img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202412282308650.png" alt="image-20241228230853599"></p>
+<p>对权重W的每一行乘以s，s是根据对应的x列得到的</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202412282314272.png" alt="image-20241228231429218"></p>
+<h4 id="大模型外推技术"><a href="#大模型外推技术" class="headerlink" title="大模型外推技术"></a>大模型外推技术</h4><p>训练：4096，8192之类的，预测：16K、32K、长文。接触的长度可能不一致</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202412282315014.png" alt="image-20241228231501967"></p>
+<p>大模型为什么需要位置编码？</p>
+<ul>
+<li>以前是循环神经网络：不能并行，要逐个输入</li>
+<li>注意力：并行输入，不具备区分token位置的能力，位置编码就能识别位置</li>
+</ul>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202412282317555.png" alt="image-20241228231720485"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202412282318748.png" alt="image-20241228231815702"></p>
+<p>我们取余：利用周期性分布在0-β之间；sin&#x2F;cos也是周期性</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202412282319798.png" alt="image-20241228231917735"></p>
+<p>编码长度位数不够怎么办？训练时就预留好位数，但实际情况中不行</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202412282320063.png" alt="image-20241228232014018"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202412282321145.png" alt="image-20241228232103093"></p>
+<p>2345&#x2F;4&#x3D;586.25<img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202412282322367.png" alt="image-20241228232212311"></p>
+<h5 id="进制转换"><a href="#进制转换" class="headerlink" title="进制转换"></a>进制转换</h5><p>14+2*16+9*256&#x3D;2350。虽然十六进制下最大位为15，但也只是多了一位，模型仍有能力进行泛化。</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202412282324257.png" alt="image-20241228232421202"></p>
+<p>先计算k(scaling_factor)、再计算k^(d&#x2F;d-2)，这样即解决长度不够时泛化效果不好的问题</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202412282329309.png" alt="image-20241228232920245"></p>
+<h4 id="Function-Calling"><a href="#Function-Calling" class="headerlink" title="Function Calling"></a>Function Calling</h4><p>最新数据不知道时利用，或者需要python解释器之类的</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202412282331938.png" alt="image-20241228233146888"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202412282334190.png" alt="image-20241228233421135"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202412282334741.png" alt="image-20241228233434691"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202412282346322.png" alt="image-20241228234627270"></p>
+<h2 id="第四关-InternVL-多模态模型部署微调实践"><a href="#第四关-InternVL-多模态模型部署微调实践" class="headerlink" title="第四关 InternVL 多模态模型部署微调实践"></a>第四关 InternVL 多模态模型部署微调实践</h2><h3 id="基础任务-7"><a href="#基础任务-7" class="headerlink" title="基础任务"></a>基础任务</h3><h4 id="LMDeploy部署"><a href="#LMDeploy部署" class="headerlink" title="LMDeploy部署"></a>LMDeploy部署</h4><p>主要通过pipeline.chat 接口来构造多轮对话管线，核心代码为：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">## 1.导入相关依赖包</span></span><br><span class="line"><span class="keyword">from</span> lmdeploy <span class="keyword">import</span> pipeline, TurbomindEngineConfig, GenerationConfig</span><br><span class="line"><span class="keyword">from</span> lmdeploy.vl <span class="keyword">import</span> load_image</span><br><span class="line"></span><br><span class="line"><span class="comment">## 2.使用你的模型初始化推理管线</span></span><br><span class="line">model_path = <span class="string">&quot;your_model_path&quot;</span></span><br><span class="line">pipe = pipeline(model_path,</span><br><span class="line">                backend_config=TurbomindEngineConfig(session_len=<span class="number">8192</span>))</span><br><span class="line">                </span><br><span class="line"><span class="comment">## 3.读取图片（此处使用PIL读取也行）</span></span><br><span class="line">image = load_image(<span class="string">&#x27;your_image_path&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">## 4.配置推理参数</span></span><br><span class="line">gen_config = GenerationConfig(top_p=<span class="number">0.8</span>, temperature=<span class="number">0.8</span>)</span><br><span class="line"><span class="comment">## 5.利用 pipeline.chat 接口 进行对话，需传入生成参数</span></span><br><span class="line">sess = pipe.chat((<span class="string">&#x27;describe this image&#x27;</span>, image), gen_config=gen_config)</span><br><span class="line"><span class="built_in">print</span>(sess.response.text)</span><br><span class="line"><span class="comment">## 6.之后的对话轮次需要传入之前的session，以告知模型历史上下文</span></span><br><span class="line">sess = pipe.chat(<span class="string">&#x27;What is the woman doing?&#x27;</span>, session=sess, gen_config=gen_config)</span><br><span class="line"><span class="built_in">print</span>(sess.response.text)</span><br></pre></td></tr></table></figure>
+<p>InternVL2-2B模型:可以识别食物图片的菜系</p>
+<ul>
+<li>如果识别不出来怎么办？只有调，学习新的美食知识，这里使用xtuner<img src="https://i-blog.csdnimg.cn/direct/aa0b6af923864532a95d3ee84c858662.png" alt="在这里插入图片描述"></li>
+<li>数据集可以用huggingface下载<br><img src="https://i-blog.csdnimg.cn/direct/281d88c4bbd042b5848beaf555678c4f.png" alt="在这里插入图片描述"><br>XTuner的参数选择：xtuner train开始微调<br><img src="https://i-blog.csdnimg.cn/direct/c3817d573a9b41b7ab9c1f6666b27b4c.png" alt="在这里插入图片描述"><br><img src="https://i-blog.csdnimg.cn/direct/6b1ab4151b27412abe73fec5b4ddc034.png" alt="在这里插入图片描述"><br><img src="https://i-blog.csdnimg.cn/direct/d34abea299964a338a49157fea71d950.png" alt="在这里插入图片描述"><br><img src="https://i-blog.csdnimg.cn/direct/47d834cad07749479e0ef41d619d60e0.png" alt="在这里插入图片描述"><img src="https://i-blog.csdnimg.cn/direct/c7031354afa842669f5512b7fa6f8824.png" alt="在这里插入图片描述"><br>max_epoch大了容易过拟合</li>
+</ul>
+<h3 id="笔记与过程-10"><a href="#笔记与过程-10" class="headerlink" title="笔记与过程"></a>笔记与过程</h3><p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202412301512970.png" alt="image-20241230151212734"></p>
+<h4 id="多模态大语言模型MLLM"><a href="#多模态大语言模型MLLM" class="headerlink" title="多模态大语言模型MLLM"></a>多模态大语言模型MLLM</h4><p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202412301512476.png" alt="image-20241230151251178"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202412301513180.png" alt="image-20241230151309041"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202412301513465.png" alt="image-20241230151323177"></p>
+<p>多模态研究的重点是不同模态特征空间的对齐（即融合不同模态的信息）TODO：我对对齐不是很理解</p>
+<ul>
+<li>即编码后的表征不同，特征向量的表征空间不同，对于同一语义在不同表征空间的表示不同</li>
+</ul>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202412301514737.png" alt="image-20241230151457591"></p>
+<p>用三个loss进行对齐，用不同的mask</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202412301515736.png" alt="image-20241230151541543"></p>
+<p>线性层用于调整维度，进行对齐</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202412301605962.png" alt="image-20241230160536919"></p>
+<p>比较简单但效果好，很多后续工作也基于此</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202412301606441.png" alt="image-20241230160609399"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202412301606700.png" alt="image-20241230160658646"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202412301607041.png" alt="image-20241230160713982"></p>
+<p>100M&#x3D;1亿<img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202412301607884.png" alt="image-20241230160739825"></p>
+<p>LLaVa框架容易改造<img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202412301608015.png" alt="image-20241230160813951"></p>
+<h4 id="InternVL2简介"><a href="#InternVL2简介" class="headerlink" title="InternVL2简介"></a>InternVL2简介</h4><blockquote>
+<p>听不懂</p>
+</blockquote>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202412301609442.png" alt="image-20241230160916384"></p>
+<p>视觉编码器有更大的参数</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202412301610098.png" alt="image-20241230161042046"></p>
+<p>Pixel Shuffle：</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202412301611330.png" alt="image-20241230161105263"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202412301615331.png" alt="image-20241230161537257"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202412301615983.png" alt="image-20241230161551922"></p>
+<p>训练：预训练只训练MLP，微调会激活每一层</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202412301616487.png" alt="image-20241230161627447"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202412301616751.png" alt="image-20241230161657685"></p>
+<h4 id="InternVL部署流程"><a href="#InternVL部署流程" class="headerlink" title="InternVL部署流程"></a>InternVL部署流程</h4><p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202412301617104.png" alt="image-20241230161739052"></p>
+<h2 id="第五关-茴香豆：企业级知识库问答工具"><a href="#第五关-茴香豆：企业级知识库问答工具" class="headerlink" title="第五关 茴香豆：企业级知识库问答工具"></a>第五关 茴香豆：企业级知识库问答工具</h2><h3 id="基础任务-8"><a href="#基础任务-8" class="headerlink" title="基础任务"></a>基础任务</h3><p>茴香豆 是由书生·浦语团队开发的一款开源、专门针对国内企业级使用场景设计并优化的知识问答工具。在基础 RAG 课程中我们了解到，RAG 可以有效的帮助提高 LLM 知识检索的相关性、实时性，同时避免 LLM 训练带来的巨大成本。在实际的生产和生活环境需求，对 RAG 系统的开发、部署和调优的挑战更大，如需要解决群应答、能够无关问题拒答、多渠道应答、更高的安全性挑战。因此，根据大量国内用户的实际需求，总结出了三阶段Pipeline的茴香豆知识问答助手架构，帮助企业级用户可以快速上手安装部署。</p>
+<p>茴香豆特点：</p>
+<ul>
+<li>三阶段 Pipeline （前处理、拒答、响应），提高相应准确率和安全性</li>
+<li>打通微信和飞书群聊天，适合国内知识问答场景</li>
+<li>支持各种硬件配置安装，安装部署限制条件少</li>
+<li>适配性强，兼容多个 LLM 和 API</li>
+<li>傻瓜操作，安装和配置方便</li>
+</ul>
+<p><img src="https://i-blog.csdnimg.cn/direct/356070a5c49b4fc4a1de301138cb8cca.png" alt="在这里插入图片描述"><br><strong>web 版茴香豆</strong><br>可以创建知识库，在该知识库进行：</p>
+<ul>
+<li>添加&#x2F;删除文档：上传或删除文件后将自动进行特征提取，生成的向量知识库被用于后续 RAG 检索和相似性比对。</li>
+<li>编辑正反例：在真实的使用场景中，调试知识助手回答相关问题和拒答无关问题（如闲聊）是保证回答准确率和效率十分重要的部分。茴香豆的架构中，除了利用 LLM 的功能判断问题相关性，也可以通过手动添加正例（希望模型回答的问题）和反例（希望模型拒答的问题）来调优知识助手的应答效果。<br>对于<strong>正例相似</strong>问题，茴香豆会在知识库中尽量搜寻相关解答，在没有相关知识的情况下，会推测答案，并在回答中提示我们该回答并不准确。这保证了回答的可追溯性。<br>对于<strong>反例</strong>问题，茴香豆拒绝作答，这保证了在对话，尤其是企业级群聊中的闲聊、非问题和无关问题触发回答带来的回答混乱和资源浪费。</li>
+<li>打通微信和飞书群 开启网络搜索功能（需要填入自己的 Serper token，token 获取参考 3.1开启网络搜索） </li>
+<li>聊天测试：查看微信和飞书群的集成教程，可以在 Web 版茴香豆中直接获取对应的回调地址和 appId 等必需参数。</li>
+</ul>
+<p><strong>茴香豆本地标准版搭建</strong></p>
+<ol>
+<li>搭建茴香豆虚拟环境</li>
+<li>安装茴香豆（茴香豆默认会根据配置文件自动下载对应的模型文件、茴香豆的所有功能开启和模型切换都可以通过 config.ini 文件进行修改、执行下面的命令更改配置文件，让茴香豆使用本地模型）</li>
+<li>知识库创建：使用文档构建向量数据库。<br>3.1 在 huixiangdou 文件加下创建 repodir 文件夹，用来储存知识库原始文档。再创建一个文件夹 workdir 用来存放原始文档特征提取到的向量知识库。<br>3.2 知识库创建成功后会有一系列小测试，检验问题拒答和响应效果，如图所示，关于“mmpose 安装”的问题，测试结果可以很好的反馈相应答案和对应的参考文件，但关于“std：：vector 使用”的问题，因为属于 C++ 范畴，不再在知识库范围内，测试结果显示拒答，说明我们的知识助手工作正常。<br>3.3 和 Web 版一样，本地版也可以通过编辑正反例来调整茴香豆的拒答和响应，正例位于 &#x2F;root&#x2F;huixiangdou&#x2F;resource&#x2F;good_questions.json 文件夹中，反例位于&#x2F;root&#x2F;huixiangdou&#x2F;resource&#x2F;bad_questions.json。</li>
+<li>测试知识助手：命令行运行、Gradio UI 界面测试</li>
+</ol>
+<p><strong>高阶应用</strong><br>对于本地知识库没有提到的问题或是实时性强的问题，可以开启茴香豆的网络搜索功能，结合网络的搜索结果，生成更可靠的回答。<br>除了将 LLM 模型下载到本地，茴香豆还可以通过调用远程模型 API 的方式实现知识问答助手。支持从 CPU-only、2G、10G、20G、到 80G 不同的硬件配置，满足不同规模的企业需求。<br>茴香豆中有 3 处调用了模型，分别是 嵌入模型（Embedding）、重排模型（Rerank）和 大语音模型（LLM）。<br>最新的茴香豆支持了多模态的图文检索，启用该功能后，茴香豆可以解析上传的图片内容，并根据图片内容和文字提示词进行检索回答。</p>
+<h3 id="笔记与过程-11"><a href="#笔记与过程-11" class="headerlink" title="笔记与过程"></a>笔记与过程</h3><p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202412301619319.png" alt="image-20241230161923283"></p>
+<p>技术支持以群聊为主，不习惯独立问答界面；表情包等信息冗余，如果对其回答没有意义<img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202412301620580.png" alt="image-20241230162008534"></p>
+<p>场景：RAG的智能客服群聊<img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202412301621699.png" alt="image-20241230162143637"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202412301622172.png" alt="image-20241230162258120"></p>
+<p>从知识库回答问题：根据微信等得到问题，将问题和知识库给后端</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202412301633728.png" alt="image-20241230163358672"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202412301634607.png" alt="image-20241230163436559"></p>
+<p>指代消除歧义：需要上下文关联</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202412301635604.png" alt="image-20241230163540567"></p>
+<p>拒答：判断是否是问题-&gt;问题的相关性<img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202412301636173.png" alt="image-20241230163622129"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202412301636797.png" alt="image-20241230163653748"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202412301637508.png" alt="image-20241230163748459"></p>
+<h2 id="第六关-MindSearch-快速部署"><a href="#第六关-MindSearch-快速部署" class="headerlink" title="第六关 MindSearch 快速部署"></a>第六关 MindSearch 快速部署</h2><h3 id="笔记与过程-12"><a href="#笔记与过程-12" class="headerlink" title="笔记与过程"></a>笔记与过程</h3><p>MindSearch 是一个开源的 AI 搜索引擎框架，具有与 Perplexity.ai Pro 相同的性能。我们可以轻松部署它来构建自己的专属搜索引擎，可以基于闭源的LLM（如GPT、Claude系列），也可以使用开源的LLM（如经过专门优化的InternLM2.5 系列模型，能够在MindSearch框架中提供卓越的性能） 最新版的MindSearch拥有以下特性：</p>
+<ul>
+<li>🤔 任何你想知道的问题：MindSearch 通过搜索解决你在生活中遇到的各种问题</li>
+<li>📚 深度知识探索：MindSearch 通过数百个网页的浏览，提供更广泛、深层次的答案</li>
+<li>🔍 透明的解决方案路径：MindSearch 提供了思考路径、搜索关键词等完整的内容，提高回复的可信度和可用性。</li>
+<li>💻 多种用户界面：为用户提供各种接口，包括 React、Gradio、Streamlit 和本地调试。根据需要选择任意类型。</li>
+<li>🧠 动态图构建过程：MindSearch 将用户查询分解为图中的子问题节点，并根据 WebSearcher 的搜索结果逐步扩展图。</li>
+</ul>
+<p>想要简单部署到hugging face上，我们需要将开发机平台从InternStudio 替换成 GitHub CodeSpace。且随着硅基流动提供了免费的InternLM2.5-7B-Chat的API服务，大大降低了部署门槛，我们无需GPU资源也可以部署和使用MindSearch，这也是可以利用CodeSpace完成本次实验的原因。那就让我们一起来看看如何使用硅基流动的API来部署MindSearch吧~</p>
+<ol>
+<li>启动MindSearch：启动后端和前端</li>
+<li>部署到自己的 HuggingFace Spaces上</li>
+</ol>
+<h1 id="彩蛋"><a href="#彩蛋" class="headerlink" title="彩蛋"></a>彩蛋</h1><h2 id="1-销冠——卖货主播大模型"><a href="#1-销冠——卖货主播大模型" class="headerlink" title="1. 销冠——卖货主播大模型"></a><a target="_blank" rel="noopener" href="https://github.com/PeterH0323/Streamer-Sales">1. 销冠——卖货主播大模型</a></h2><p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202501020100169.png" alt="image-20250102010031022"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202501020101829.png" alt="image-20250102010109753"></p>
+<p>RAG：更新商品说明书不用重新训练模型，比如屏幕分辨率</p>
+<p>Agent：快递时间的搜索（对天气也进行查询）</p>
+<p>ASR：语音识别</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202501020103562.png" alt="image-20250102010326475"></p>
+<p>环境搭建：50%A100</p>
+<h3 id="数据集生成"><a href="#数据集生成" class="headerlink" title="数据集生成"></a>数据集生成</h3><p>微调数据：没有行业内数据怎么办？</p>
+<ul>
+<li><p>主播性格用prompt<img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202501020105821.png" alt="image-20250102010509772"></p>
+</li>
+<li><p>产品信息用两个prompt<img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202501020108448.png" alt="image-20250102010805387"></p>
+</li>
+<li><p>用户可能提出的疑问也用prompt：<img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202501020108753.png" alt="image-20250102010836665"></p>
+</li>
+<li><p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202501020104457.png" alt="image-20250102010426390"></p>
+</li>
+</ul>
+<p>核心点：组成多轮对话，将上述prompt和回答对应好，文案+QA的数量</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202501020109867.png" alt="image-20250102010932807"></p>
+<p>数据生成的脚本：调用千问和文心一言的API</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202501020110936.png" alt="image-20250102011047855"></p>
+<h3 id="说明书-RAG-收集"><a href="#说明书-RAG-收集" class="headerlink" title="说明书(RAG)收集"></a>说明书(RAG)收集</h3><p>先爬取网上说明书的图片-&gt;PaddleOCR将文字提取出来-&gt;大模型总结-&gt;生成OCR数据库</p>
+<ul>
+<li>trick：长图OCR效果不好，自动裁剪可以提升检测和识别的效果</li>
+</ul>
+<p>RAG 数据库的生成，会在 web app 启动的时候自动去读取配置文件里面每个产品的说明书路径去生成，无需手动操作了。</p>
+<ul>
+<li>这里倒不是很懂怎么找的prompt生成的产品的说明书，TODO，看下如何对应，不过是数据集的补充倒是</li>
+</ul>
+<h3 id="XTuner微调"><a href="#XTuner微调" class="headerlink" title="XTuner微调"></a>XTuner微调</h3><p>在生成的数据集上进行训练（改一下第一步生成的json数据集路径就行，非常简单），了解主播特点和产品信息</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202501020115959.png" alt="image-20250102011516893"></p>
+<h3 id="数字人"><a href="#数字人" class="headerlink" title="数字人"></a>数字人</h3><p>可以录制视频然后改口型和录音，不过作者用的是更麻烦点的Stable Diffusion</p>
+<p>生成mp4，然后改脚本的路径</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202501020117315.png" alt="image-20250102011707202"></p>
+<ol>
+<li>生成人像图片</li>
+<li>生成动作：骨骼图会真实些</li>
+</ol>
+<h3 id="TTS-ASR"><a href="#TTS-ASR" class="headerlink" title="TTS&amp;ASR"></a>TTS&amp;ASR</h3><p>TTS：语音克隆</p>
+<p>ASR：支持用户的语音&#x2F;文本输入</p>
+<h3 id="Agent"><a href="#Agent" class="headerlink" title="Agent"></a>Agent</h3><p>RAG难查询实时信息，如快递到哪里了</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202501020120616.png" alt="image-20250102012034551"></p>
+<p>Agent：实时API的查询，参考Lagent</p>
+<h3 id="部署-1"><a href="#部署-1" class="headerlink" title="部署"></a>部署</h3><p>LMdeploy的bit相比transformer提速了5倍</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202501020120914.png" alt="image-20250102012059857"></p>
+<p>web界面用streamlit</p>
+<h2 id="2-InternLM-1-8B-模型安卓端侧部署实践"><a href="#2-InternLM-1-8B-模型安卓端侧部署实践" class="headerlink" title="2. InternLM-1.8B 模型安卓端侧部署实践"></a><a target="_blank" rel="noopener" href="https://github.com/InternLM/Tutorial/tree/camp3/docs/EasterEgg/Android">2. InternLM-1.8B 模型安卓端侧部署实践</a></h2><p>通过修改配置文件和编译生成apk，运行App需要能访问huggingface下载模型</p>
+<h2 id="3-手把手带你使用InternLM实现谁是卧底游戏"><a href="#3-手把手带你使用InternLM实现谁是卧底游戏" class="headerlink" title="3. 手把手带你使用InternLM实现谁是卧底游戏"></a><a target="_blank" rel="noopener" href="https://github.com/InternLM/Tutorial/tree/camp3/docs/EasterEgg/Game">3. 手把手带你使用InternLM实现谁是卧底游戏</a></h2><p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202501021739007.png" alt="image-20250102173912902"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202501021739673.png" alt="image-20250102173950633"></p>
+<ol>
+<li><p>准备工作：由硅基流动(siliconflow)提供模型接口支持，获得API密钥并测试能否正常访问模型接口服务</p>
+</li>
+<li><p>系统结构设计</p>
+<ol>
+<li><p>基本游戏设计为构成游戏的基本元素，例如：</p>
+<ul>
+<li>平民关键词：可输入文本，表示平民身份的关键词；</li>
+<li>卧底关键词：可输入文本，表示卧底身份的关键词；</li>
+<li>总人数：参与游戏的玩家总数，包括人类玩家。可以设置为5-10人；</li>
+<li>卧底人数：玩家中卧底身份玩家的任务，可以设置为1至总人数的一半；</li>
+<li>最大回合数：可以设置为5-10之间的整数，即如果没有提前分出胜负，最少可以玩5轮，最多10轮；</li>
+</ul>
+</li>
+<li><p>消息栈：消息具体记录和仅保存玩家描述（方便参考哪个是卧底）的消息栈<img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202501021753945.png" alt="image-20250102175346908"></p>
+</li>
+<li><p>玩家实现：AI玩家由InternLM2_5-20b-chat扮演，提示词如下。在LangGPT结构化提示词框架的基础结构上，增加了Commands模块，用以区分AI玩家的动作（描述和投票）。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line">#Role: 谁是卧底游戏玩家</span><br><span class="line"></span><br><span class="line">##Profile</span><br><span class="line">- author: Mingle</span><br><span class="line">- version: 0.1</span><br><span class="line">- language: 中文</span><br><span class="line">- description: 谁是卧底游戏玩家，能够用简短的一句话描述自己得到的关键词，分析场上的描述历史以判断自己和其他玩家的身份，投票敌对玩家出局，并在发现自己是卧底时伪装成平民身份。</span><br><span class="line"></span><br><span class="line">##Background</span><br><span class="line">- 你是“谁是卧底”游戏中的一个玩家；</span><br><span class="line">- 你获得的关键词是:&#123;&#125;；</span><br><span class="line"></span><br><span class="line">##Skills</span><br><span class="line">- 熟悉“谁是卧底”的游戏规则，了解游戏的胜利条件；</span><br><span class="line">- 了解“谁是卧底”游戏的制胜技巧；</span><br><span class="line"></span><br><span class="line">##Commands</span><br><span class="line">- /describe：用简短的一句话描述自己得到的关键词，禁止直接说出关键词。</span><br><span class="line">- /vote：从玩家列表中选择一个，得票最多的玩家将会被投票出局。</span><br><span class="line"></span><br><span class="line">##Constraints</span><br><span class="line">- 不能直接说出或暗示自己的关键词；</span><br><span class="line">- 描述的内容必须符合关键词；</span><br><span class="line">- 描述的内容不能与已有的描述相同；</span><br><span class="line">- 在不确定自己的身份时，描述应该尽可能模糊，避免暴露；</span><br><span class="line">- 描述内容必须小于20字，禁止输出与描述无关的额外内容；</span><br><span class="line">- 投票时只能回复玩家id，不能输出任何额外内容；</span><br><span class="line"></span><br><span class="line">##Workflows</span><br><span class="line">1. 判断需要执行的动作</span><br><span class="line">1.1 如果命令为&quot;/describe&quot;，则需要描述关键词</span><br><span class="line">    a. 接收关键词，代表在游戏中的身份。</span><br><span class="line">    b. 构思一句话来描述自己的关键词。这句话应尽量模糊或广义，避免直接暴露具体信息，但也要足够合理，以免引起其他玩家的怀疑。</span><br><span class="line">        例如，如果关键词是“苹果”，玩家可以描述为：“这是一个很常见的水果。”</span><br><span class="line">    c. 分析其他玩家对其关键词的描述，尝试找出其中的模糊之处或与自己关键词的差异点。</span><br><span class="line">        注意关键词之间的微妙差异，例如“苹果”和“橙子”，可能有类似的描述，但在细节上会有区别。</span><br><span class="line">    d. 根据其他玩家的描述和场上的讨论情况，调整自己的策略，如果有必要，稍微修改自己的描述以避免暴露。</span><br><span class="line">    e. 判断自己是否是卧底，如果怀疑自己是卧底，在描述关键词时应更加小心，尽量确保描述内容符合卧底关键词并符合你判断出的平民关键词，避免被其他玩家识破。</span><br><span class="line">    f. 生成最终不超过20字的描述，避免直接暴露关键词。</span><br><span class="line">1.2 如果命令为&quot;/vote&quot;，则需要投票，将你认为敌对阵营的玩家投票出局</span><br><span class="line">    a. 接收所有玩家的描述历史记录；</span><br><span class="line">        特别关注与自己描述相似的玩家，这些玩家有可能是同一阵营。</span><br><span class="line">    b. 分析历史记录，描述比较模糊的玩家，尤其是描述与自己的关键词存在明显不同的玩家，就有可能是卧底；</span><br><span class="line">    c. 基于自己的分析，做出投票决定，从场上存活的玩家列表中，选出你认为敌对阵营的玩家；</span><br><span class="line">    d. 回复投票玩家的id，不要回复额外内容。</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>主要流程：保存游戏设置→AI玩家开始一轮描述→人类玩家描述→AI玩家根据描述历史投票→人类玩家投票并投出玩家→判断是否满足胜利条件→开始下一轮游戏</p>
+</li>
+</ol>
+</li>
+</ol>
+<p>保存基本的游戏设置后，系统会提示人类玩家的关键词(随机获取，请牢记这个词，并在之后的游戏中根据这个词描述)。保存设置后，可以点击“开始第x轮游戏”按钮开始当前轮游戏，之后AI玩家(P1-Pn)会分别输出自己的描述。人类玩家可以通过底部对话框输入自己的描述。 所有玩家描述完之后，可以点击“开始投票”按钮，此时AI玩家会分别投票给自己认为应该出局的玩家。AI玩家投票完之后，人类玩家决定自己的投票对象并根据结果选择投票对象，并点击“投出玩家”投出本轮出局的玩家。目前投票还不够稳定。</p>
+<h1 id="总结高频概念"><a href="#总结高频概念" class="headerlink" title="总结高频概念"></a>总结高频概念</h1><p>RAG：让基础模型实现非参数知识更新，无需训练就可以掌握新领域的知识。将新知识存储在向量数据库中，将检索到的文档块和原始问题一起作为prompt输入到LLM中。</p>
+<p>微调：在微调数据上通过LoRA 或者 QLoRA 微调出来的模型，它其实并不是一个完整的模型，而是一个额外的层（Adapter），训练完的这个层最终还是要与原模型进行合并才能被正常的使用。</p>
+<ul>
+<li>LoRA 模型文件 &#x3D; Adapter</li>
+<li>对于全量微调的模型（full）其实是不需要进行整合这一步的，因为全量微调修改的是原模型的权重而非微调一个新的 Adapter ，因此是不需要进行模型整合的。而Adapter只有这一部分参数变了，相比全量微调改变了参数少了很多。</li>
+</ul>
+<p>Agent：Lagent集成普通LLM没有的更丰富&#x2F;复杂的函数，实现方式是调用已有的接口，总之就是可以利用现成的API（如GPTAPI 类&#x2F;和风天气 API 服务），没必要自己通过微调&#x2F;RAG实现某功能</p>
+<p>量化：</p>
+<ul>
+<li>W4A16 量化：模型权重从浮点数变成int4，激活不变</li>
+<li>设定kv cache占用：让kv cache预先申请的比例变少（占用剩余显存的最大比例）</li>
+<li>KV cache 量化：把kv存储从浮点数变成int4</li>
+</ul>
+<p>茴香豆：可以支持某个知识库，在普通llm上集成了文档（对应向量数据库）、正反例、聊天的维护。模型包括嵌入模型（Embedding）、重排模型（Rerank）和 大语音模型（LLM）。</p>
+<h1 id="部分优秀项目"><a href="#部分优秀项目" class="headerlink" title="部分优秀项目"></a>部分优秀项目</h1><p>想到的idea：也是角色扮演类LLM，挺多现有的，可以杂糅</p>
+<p>多人聊天室：和多个人或一个人聊天（语料难找）</p>
+<p>模拟线上签售&#x2F;虚拟女友&#x2F;虚拟男友：</p>
+<ul>
+<li>语音输入，能否支持实时转译，还是仅限一种语言如中文</li>
+<li>能否让静态图动起来，这样不用专门找视频</li>
+<li>微调语音</li>
+<li>能否直接支持AI Cover</li>
+<li>语料库怎么找，使接近本人</li>
+</ul>
+<p>常见的逻辑：可参考进阶岛第四关：先利用开源大模型api-&gt;不会的问题就收集新数据集-&gt;xtuner微调-&gt;deploy-&gt;streamlit网页化</p>
+<ul>
+<li>中间可以对微调后的大模型进行评测</li>
+<li>Agent和RAG可以扩展更实时、复杂的知识</li>
+</ul>
+<p>优秀项目墙：<a target="_blank" rel="noopener" href="https://aicarrier.feishu.cn/wiki/AJJxwjzLAipu34kDWXhcjGHJnH3">https://aicarrier.feishu.cn/wiki/AJJxwjzLAipu34kDWXhcjGHJnH3</a></p>
+
+        </div>
+
+        
+            <section class="post-copyright">
+                
+                
+                
+                
+
+            </section>
+        
+        <section class="post-tags">
+            <div>
+                <span>标签:</span>
+                <span class="tag">
+                    
+                    
+                        <a href="/tags/%E7%AE%97%E6%B3%95/"># 算法</a>
+                    
+                        
+                </span>
+            </div>
+            <div>
+                <a href="javascript:window.history.back();">返回</a>
+                <span>· </span>
+                <a href="/">主页</a>
+            </div>
+        </section>
+        <section class="post-nav">
+            
+            
+            <a class="next" rel="next" href="/2024/12/01/%E6%95%B0%E5%AD%97%E5%9B%BE%E5%83%8F%E5%92%8C%E8%A7%86%E9%A2%91%E5%A4%84%E7%90%86%E8%AF%BE%E7%A8%8B%E7%AC%94%E8%AE%B0/">数字图像和视频处理课程笔记</a>
+            
+        </section>
+
+
+    </article>
+</div>
+
+
+    <div id="gitalk-container"></div>
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.css">
+<script src="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.min.js"></script>
+<script src="//cdn.bootcss.com/blueimp-md5/2.10.0/js/md5.js"></script>
+<div id="gitalk-container"></div>
+<script type="text/javascript">
+      var gitalk = new Gitalk({
+        clientID: '',
+        clientSecret: '',
+        repo: 'blog_comment',
+        owner: 'lyxx2535',
+        admin: 'lyxx2535',
+        id: md5(location.pathname),
+        labels: 'Gitalk'.split(',').filter(l => l),
+        perPage: 10,
+        pagerDirection: 'last',
+        createIssueManually: true,
+        distractionFreeMode: false
+      })
+      gitalk.render('gitalk-container')
+</script>
+
+            </div>
+            <footer id="footer" class="footer">
+    <div class="copyright">
+        <span>© Annie | Powered by <a href="https://hexo.io" target="_blank">Hexo</a> & <a href="https://github.com/Siricee/hexo-theme-Chic" target="_blank">Chic</a> | 2020 - 2025
+            <br>
+            <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+<span class="site-uv">
+    Total visitors:
+    <i class="busuanzi-value" id="busuanzi_value_site_uv"></i>
+</span>&nbsp;|&nbsp;
+
+
+<span class="site-pv">
+    Total views:
+    <i class="busuanzi-value" id="busuanzi_value_site_pv"></i>
+</span>
+
+          </span>
+    </div>
+</footer>
+
+    </div>
+</body>
+
+</html>

@@ -1,0 +1,2300 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <meta name="author" content="Annie">
+
+
+
+
+
+<title>计算机组成课程笔记 | Annie&#39;s Blog</title>
+
+
+
+    <link rel="icon" href="/favicon.ico">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+    <script src="/js/tocbot.min.js"></script>
+    
+
+
+
+    
+    
+        
+    
+
+
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+<body>
+    <script>
+        // this function is used to check current theme before page loaded.
+        (() => {
+            const currentTheme = window.localStorage && window.localStorage.getItem('theme') || '';
+            const isDark = currentTheme === 'dark';
+            const pagebody = document.getElementsByTagName('body')[0]
+            if (isDark) {
+                pagebody.classList.add('dark-theme');
+                // mobile
+                document.getElementById("mobile-toggle-theme").innerText = "· Dark"
+            } else {
+                pagebody.classList.remove('dark-theme');
+                // mobile
+                document.getElementById("mobile-toggle-theme").innerText = "· Light"
+            }
+        })();
+    </script>
+
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">Lapsey&#39;s Blog</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default">
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+        </div>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">Lapsey&#39;s Blog</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; 菜单</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+            <div class="main">
+                <div class="container">
+    
+    
+        <div class="post-toc">
+    <div class="tocbot-list">
+    </div>
+    <div class="tocbot-list-menu">
+        <a class="tocbot-toc-expand" onclick="expand_toc()">全部展开</a>
+        <a onclick="go_top()">回到顶部</a>
+        <a onclick="go_bottom()">前往底部</a>
+    </div>
+</div>
+
+<script>
+    var tocbot_timer;
+    var DEPTH_MAX = 6; // 为 6 时展开所有
+    var tocbot_default_config = {
+        tocSelector: '.tocbot-list',
+        contentSelector: '.post-content',
+        headingSelector: 'h1, h2, h3, h4, h5',
+        orderedList: false,
+        scrollSmooth: true,
+        onClick: extend_click,
+    };
+
+    function extend_click() {
+        clearTimeout(tocbot_timer);
+        tocbot_timer = setTimeout(function() {
+            tocbot.refresh(obj_merge(tocbot_default_config, {
+                hasInnerContainers: true
+            }));
+        }, 420); // 这个值是由 tocbot 源码里定义的 scrollSmoothDuration 得来的
+    }
+
+    document.ready(function() {
+        tocbot.init(obj_merge(tocbot_default_config, {
+            collapseDepth: 1
+        }));
+    });
+
+    function expand_toc() {
+        var b = document.querySelector('.tocbot-toc-expand');
+        var expanded = b.getAttribute('data-expanded');
+        expanded ? b.removeAttribute('data-expanded') : b.setAttribute('data-expanded', true);
+        tocbot.refresh(obj_merge(tocbot_default_config, {
+            collapseDepth: expanded ? 1 : DEPTH_MAX
+        }));
+        b.innerText = expanded ? 'Expand all' : 'Collapse all';
+    }
+
+    function go_top() {
+        window.scrollTo(0, 0);
+    }
+
+    function go_bottom() {
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+
+    function obj_merge(target, source) {
+        for (var item in source) {
+            if (source.hasOwnProperty(item)) {
+                target[item] = source[item];
+            }
+        }
+        return target;
+    }
+</script>
+    
+
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">计算机组成课程笔记</h1>
+            
+                <div class="post-meta">
+                    
+                        作者: <a itemprop="author" rel="author" href="/">Annie</a>
+                    
+
+                    
+                        <span class="post-time">
+                        日期: <a href="#">February 1, 2021&nbsp;&nbsp;10:51:05</a>
+                        </span>
+                    
+                    
+                        <span class="post-category">
+                        分类:
+                            
+                                <a href="/categories/%E6%9C%AC%E7%A7%91%E7%94%9F%E8%AF%BE%E7%A8%8B/">本科生课程</a>
+                            
+                        </span>
+                    
+                </div>
+            
+        </header>
+
+        <div class="post-content">
+            <h1 id="导论"><a href="#导论" class="headerlink" title="导论"></a>导论</h1><h2 id="01-计算机系统概述"><a href="#01-计算机系统概述" class="headerlink" title="01 计算机系统概述"></a>01 计算机系统概述</h2><p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032203366.png" alt="image-20220105150359004"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032203159.png" alt="image-20220105150413986"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032203321.png" alt="image-20220105150428689"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032203283.png" alt="image-20220105150448995"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032203359.png" alt="image-20220105150538399"></p>
+<p>f&#x2F;v：每秒包含的CPU时钟周期数</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032203340.png" alt="image-20220105150832212"></p>
+<p>CPI：指令所需的时钟周期数</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032203123.png" alt="image-20220105151035443"></p>
+<p>基准程序：对于不同应用可能要不同的计算机</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032203314.png" alt="image-20220105151131220"></p>
+<p>转换成MIPS再计算！！对计算机而不是程序作对比分析</p>
+<h2 id="02-计算机顶层视图"><a href="#02-计算机顶层视图" class="headerlink" title="02 计算机顶层视图"></a>02 计算机顶层视图</h2><h3 id="CPU"><a href="#CPU" class="headerlink" title="CPU"></a>CPU</h3><p><img src="/../../../../84368/AppData/Roaming/Typora/typora-user-images/image-20220105152912771.png" alt="image-20220105152912771"></p>
+<ul>
+<li>CPU频率不能无限提高<ul>
+<li>改进CPU芯片结构</li>
+</ul>
+</li>
+<li>内存墙的存在<ul>
+<li>采用高速缓存</li>
+</ul>
+</li>
+<li>CPU等待I&#x2F;O传输数据<ul>
+<li>采用中断机制</li>
+</ul>
+</li>
+</ul>
+<h3 id="存储器"><a href="#存储器" class="headerlink" title="存储器"></a>存储器</h3><p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032203372.png" alt="image-20220105153737732"></p>
+<ul>
+<li>兼顾存储容量、速度和成本<ul>
+<li>层次式存储结构</li>
+</ul>
+</li>
+</ul>
+<h3 id="I-O设备"><a href="#I-O设备" class="headerlink" title="I&#x2F;O设备"></a>I&#x2F;O设备</h3><p><img src="/../../../../84368/AppData/Roaming/Typora/typora-user-images/image-20220105154106723.png" alt="image-20220105154106723"></p>
+<ul>
+<li>I&#x2F;O设备传输速率差异大，跟不上CPU性能的提升<ul>
+<li>设立缓冲区</li>
+<li>新的接口技术</li>
+<li>不同的I&#x2F;O操作技术</li>
+</ul>
+</li>
+</ul>
+<h3 id="总线"><a href="#总线" class="headerlink" title="总线"></a>总线</h3><p><img src="/../../../../84368/AppData/Roaming/Typora/typora-user-images/image-20220105154316240.png" alt="image-20220105154316240"></p>
+<ul>
+<li>计算机部件互连复杂<ul>
+<li>采用总线</li>
+</ul>
+</li>
+</ul>
+<h2 id="03-数据的机器级表示"><a href="#03-数据的机器级表示" class="headerlink" title="03 数据的机器级表示"></a>03 数据的机器级表示</h2><h3 id="整数的二进制表示"><a href="#整数的二进制表示" class="headerlink" title="整数的二进制表示"></a>整数的二进制表示</h3><p><img src="/../../../../84368/AppData/Roaming/Typora/typora-user-images/image-20220105161837616.png" alt="image-20220105161837616"></p>
+<p>补码是平移，移码是镜面。</p>
+<p><img src="/../../../../84368/AppData/Roaming/Typora/typora-user-images/image-20220105161817307.png" alt="image-20220105161817307"></p>
+<h3 id="浮点数的二进制表示"><a href="#浮点数的二进制表示" class="headerlink" title="浮点数的二进制表示"></a>浮点数的二进制表示</h3><p>信息量相同（2^k），精度和表示范围的取舍。（小数要精度，大数要范围）</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032203259.png" alt="image-20220105163826060"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032203270.png" alt="image-20220105164016207"></p>
+<h3 id="二进制编码的十进制表示"><a href="#二进制编码的十进制表示" class="headerlink" title="二进制编码的十进制表示"></a>二进制编码的十进制表示</h3><p>浮点运算有<strong>精度限制、转换成本高</strong>等问题，而应用需要长数字串计算，引入BCD码直接计算。</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032203265.png" alt="image-20220105164538556"></p>
+<h2 id="04-数据校验码"><a href="#04-数据校验码" class="headerlink" title="04 数据校验码"></a>04 数据校验码</h2><h3 id="奇偶校验码"><a href="#奇偶校验码" class="headerlink" title="奇偶校验码"></a>奇偶校验码</h3><p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032203283.png" alt="image-20220105193217735"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032203289.png" alt="image-20220105193229090"></p>
+<h3 id="海明码"><a href="#海明码" class="headerlink" title="海明码"></a>海明码</h3><p>设计：先确定长度，再确定参与的位。</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032203455.png" alt="image-20220105195732708"></p>
+<p>不是M越大越好？因为M越大假设越可能不成立。</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032203155.png" alt="image-20220105195804784"></p>
+<p>将位设置在与其故障字值相同的位置。</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032203189.png" alt="image-20220105195848294"></p>
+<p>C‘直接从D’中取出，C’’通过D‘重新计算。</p>
+<h3 id="循环冗余检验"><a href="#循环冗余检验" class="headerlink" title="循环冗余检验"></a>循环冗余检验</h3><p>适合传输大量数据</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032203216.png" alt="image-20220105200338897"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032203242.png" alt="image-20220105200351317"></p>
+<p>先生成k位校验码，再跟在M位数据后面除以生成多项式，看是否能整除。</p>
+<p>问传输后接收的数据：不需要包括校错。</p>
+<h1 id="中央处理器（CPU）"><a href="#中央处理器（CPU）" class="headerlink" title="中央处理器（CPU）"></a>中央处理器（CPU）</h1><h2 id="ALU"><a href="#ALU" class="headerlink" title="ALU"></a>ALU</h2><h3 id="05-整数运算"><a href="#05-整数运算" class="headerlink" title="05 整数运算"></a>05 整数运算</h3><h4 id="加法"><a href="#加法" class="headerlink" title="加法"></a>加法</h4><p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032211687.png" alt="image-20220105214247501"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032211717.png" alt="image-20220105214322644"></p>
+<p>速度慢，因为要递归到C0-&gt;全先行进位加法器</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032211669.png" alt="image-20220105214401645"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032211663.png" alt="image-20220105214416918"></p>
+<p>全先行复杂，取得计算时间和硬件复杂度的权衡-&gt;多个CLA串联</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032211705.png" alt="image-20220105214518336"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032211701.png" alt="image-20220106100412406"></p>
+<p>OF&#x3D;Cn xor Cn-1</p>
+<p>CF&#x3D;Cin xor Cout Cout&#x3D;Cn 如果做减法要取补码则Cin&#x3D;1 否则为0</p>
+<h4 id="减法"><a href="#减法" class="headerlink" title="减法"></a>减法</h4><p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032142307.png" alt="image-20210930141214085"></p>
+<p>变成加法，把Y取补码：</p>
+<p>多路选择器把Y按位取反，X和Y取反相加，但这不是补码？此时C0&#x3D;1 则为补码</p>
+<p>Sub信号为0，上面的路通；信号为1，下面的路通；</p>
+<p>还连接到ALU的C0：如果为0，C0&#x3D;0，X+Y；如果为1，C0&#x3D;1，X+~Y+1</p>
+<h4 id="乘法"><a href="#乘法" class="headerlink" title="乘法"></a>乘法</h4><blockquote>
+<p>包括无符号-手工演算、带符号-布斯算法</p>
+</blockquote>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032211790.png" alt="image-20210930141835406"></p>
+<p>手工演算：n*n 用2n位表示结果 硬件要覆盖2n长度</p>
+<p>1、部分积：一位乘以所有，或两位乘以所有再相加，类推… 一步步叠上去</p>
+<p>2、部分积左移改成原来的结果右移</p>
+<p>3、0不需要乘，做右移就够了</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032211808.png" alt="image-20210930142707557"></p>
+<p>红：参与运算 黑：不参与运算</p>
+<p>反复进行右移、加、右移、加…</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032211815.png" alt="image-20210930142906048"></p>
+<p>n位ALU：只储存进行运算的数字</p>
+<p>刚开始右边寄存器Y为空 浪费 所以把Y存入这部分空间（右边n位寄存器）</p>
+<p><strong>Y和运算结果可放在一起</strong>：乘完就不需要，用过的位置被剔除</p>
+<p>控制逻辑决定：先加再右移（1）还是直接右移（0）</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032211823.png" alt="image-20210930143233693"></p>
+<p>红：部分积   黑：乘数Y        节约空间巧妙</p>
+<p>无符号用该方法计算：<strong>注意+被乘数所得的溢出位应被保留</strong>！（因为右移代替左移）</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032211840.png" alt="image-20210930143346902"></p>
+<p>变成原码后，符号位用异或获得，然后将结果转换成补码               但这消耗大量计算资源，速度慢</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032211833.png" alt="image-20210930143546290"></p>
+<p>把Y表示出来 Y0因为防止落单而补充</p>
+<p>红框式：求和式      可作为迭代的运算方式</p>
+<p>2*（-1）表示右移一位     Pi+1表示已经右移后的结果</p>
+<p>其实只改了绿框：以前是 X*Yi   绿框在0的基础上多了-1的可能性</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032211258.png" alt="image-20210930145029811"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032211934.png" alt="image-20210930145157681"></p>
+<p>Y0&#x3D;0补了状态 </p>
+<p>0：右移       -1：-X        1：+X       最后把Y0舍去    106！&#x3D;42    问题出在<strong>补充位</strong>！！补1而不是0！！</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032211960.png" alt="image-20210930145542180"></p>
+<p>原来是0补0，原来是1补1，<strong>补充位和原来相同</strong>    因为右移是除以2的操作——应保持符号不变</p>
+<p>适用于<strong>有符号数</strong>：如果无符号想用，要在1前面补0以示区别 所以没必要用这个方法</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032211987.png" alt="image-20210930145841584"></p>
+<p>Yi*Xi可通过一个与运算替代</p>
+<h4 id="除法"><a href="#除法" class="headerlink" title="除法"></a>除法</h4><blockquote>
+<p>包括无符号-手工演算、带符号（恢复余数、不恢复余数）</p>
+</blockquote>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032211013.png" alt="image-20210930150051995"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032211042.png" alt="image-20210930150427490"></p>
+<p>位数不够就上0</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032211259.png" alt="image-20210930150653588"></p>
+<p>余数取低n位</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032211908.png" alt="image-20210930150818623"></p>
+<p>除数右移，看余数减去除数够不够减，够减时从余数减掉，结果上在商里（1：够 0：不够）  </p>
+<p>最后余数只有<strong>低位有用</strong></p>
+<p>实际上参与运算的长度只有n位，但放了2n位，造成了浪费</p>
+<p>这里的此消彼长：有效的余数长度变短、商的位数变长</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032211938.png" alt="image-20210930151347539"></p>
+<p>高位专门存余数，低位刚开始是余数，后来是商——<strong>除数右移替换成余数左移</strong> 所以除数不变了</p>
+<p>刚开始余数分开放在了 余数和商 里</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032211960.png" alt="image-20210930151546220"></p>
+<p>看余数的4位够不够减除数，够减上1，不够减上0     但是上面没有考虑同号异号问题</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032211987.png" alt="image-20210930151747624"></p>
+<p>-7&#x2F;3&#x3D;-2余-1（-3余2是错误的！！！！！）</p>
+<p><strong>余数-除数后符号不能改变</strong>（-1-3符号不变，2-3符号变化）</p>
+<p>目标是：<strong>余数绝对值不断变小</strong>但<strong>符号不改变</strong></p>
+<p><strong>余数</strong>符号不变：够减；符号变化：不够减</p>
+<img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032211015.png" alt="image-20210930152349326" style="zoom:200%;" />
+
+<p>左移、减除数判断是否够减（和余数符号是否相同）、左移、判断是否够减..</p>
+<p><strong>除数和被除数异号</strong>：商要<strong>取反加一</strong>（看最开始的0011与1001是否异号）</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032211215.png" alt="image-20210930152552336"></p>
+<p>没办法判断够不够，先加减<strong>除数</strong>再看要不要恢复（两栏余数的符号是否一致）     够减上1，不够减上0</p>
+<p>这里除数和被除数异号，所以<strong>商要取反加一</strong></p>
+<p><strong>思考：余数左移过程中可能变号吗？采用刚开始的符号还是什么？</strong>因为是乘2，应该采用开始的吧</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032211749.png" alt="image-20210930153440291"></p>
+<p>恢复、撤销成本高如果有错误：在下面的过程中恢复 不恢复余数除法思想</p>
+<p>左移（乘以2）然后减除数Y    不够大的做+Y操作（加法弥补不够减的偏差、同号后的减操作)因为+Y不影响结果</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032211775.png" alt="image-20210930153841177"></p>
+<p>区别：先上1&#x2F;0，再左移</p>
+<p>最后处理商和余数的方式：</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032211806.png" alt="image-20210930154014905"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032211835.png" alt="image-20210930154118137"></p>
+<p>余数和除数符号相同：左移减   先左移得到0101 0011    再减R&#x3D;0101-0011&#x3D;0010 </p>
+<p>商：1110左移一位：1101  再加1：1110</p>
+<p>余数0010与被除数1001符号不同，被除数1001与除数0011符号也不同：余数-除数&#x3D;0010-0011&#x3D;1111</p>
+<p><strong>思考：有一些结果算不对？</strong>余数中途或最后为0，直接在商+1，再补0</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032211646.png" alt="image-20211216152550086"></p>
+<p>这里就是所谓的异常情况，就是余数和除数的绝对值关系</p>
+<h3 id="06-浮点数运算"><a href="#06-浮点数运算" class="headerlink" title="06 浮点数运算"></a>06 浮点数运算</h3><h4 id="加法和减法"><a href="#加法和减法" class="headerlink" title="加法和减法"></a>加法和减法</h4><p>大的变小：尾数左移时高位可能丢掉 </p>
+<p>小的变大：尾数右移时低位可能丢掉，但影响没有高位大 即使保留下来可能在32-&gt;23尾码的过程中损失</p>
+<p>这里如果是规格化数，尾数会补上符号位，再进行移动，即sig_a |&#x3D; 0x800000;</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032214332.png" alt="image-20211009143653147"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032214338.png" alt="image-20211009143725646"></p>
+<ol>
+<li><p>减法变加法：符号位取反</p>
+</li>
+<li><p>X&#x3D;0或Y&#x3D;0 把另一个赋给结果</p>
+</li>
+<li><p>均不为0：看阶码是否相同 </p>
+<ul>
+<li>如果相同＋尾数  </li>
+<li>如果不同 把小的阶码变大 将尾数右移（此处循环）<ul>
+<li>特判：尾数是否为0？因为阶码可相差253，但尾数只有24位 如果全0了<strong>直接把另一个数赋给结果</strong></li>
+</ul>
+</li>
+</ul>
+<p>4.阶码相同后进行Signed<strong>带符号</strong>尾数的相加（符号位+尾数 若为相反数则一定为0）</p>
+</li>
+</ol>
+<ul>
+<li><p>如果加后为0，说明是相反数，此时<strong>调整阶码为0使结果为0</strong>，才有Z为0（如果不调整为1.0<em>2^阶码）*<em>指数清零</em></em></p>
+</li>
+<li><p>隐藏位参与运算 若尾数溢出（<strong>是否有进位</strong>）则尾数右移 阶码加1 如果尾数0开头要左移阶码减</p>
+<ul>
+<li>若太大（Exponent&#x3D;255）：正负无穷 Report：<strong>尾数清零</strong></li>
+<li>若太小：变成非规格化数  注意移码变为126</li>
+</ul>
+<p>5.如果阶码处理完毕，开始处理尾数：</p>
+<p>需要先判断隐藏位为1但是阶码为0的情况：<strong>非规格化数-&gt;规格化数</strong> 把阶码从0变为1就变成规格化数了</p>
+<p>若隐藏位不为1（尾数此时是24位）尾数左移（<strong>使1为首位</strong>）阶码减1   </p>
+<ul>
+<li>Report underflow:  <strong>阶码减到0时注意尾数要右移一次（127-&gt;126）</strong> <strong>规格化数-&gt;非规格化数</strong></li>
+</ul>
+</li>
+</ul>
+<h4 id="原码加法"><a href="#原码加法" class="headerlink" title="原码加法"></a>原码加法</h4><p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032214361.png" alt="image-20211010110531693"></p>
+<p>做减法：不够减：先借一个1，如果有进位，借的位可以忽略不计；如果没进位说明还不回去</p>
+<h4 id="乘除法（尾数部分利用无符号乘除）"><a href="#乘除法（尾数部分利用无符号乘除）" class="headerlink" title="乘除法（尾数部分利用无符号乘除）"></a>乘除法（尾数部分利用无符号乘除）</h4><p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032214356.png" alt="image-20211009153353559"></p>
+<ol>
+<li><p>先弄阶码：Subtract bias：从阶值的和中减去一个偏移量-127</p>
+</li>
+<li><p>阶码是否上溢：正负无穷</p>
+</li>
+<li><p>价码是否下溢：非规格化数</p>
+</li>
+<li><p>乘尾数：直接乘（规格化）</p>
+</li>
+<li><p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032214374.png" alt="image-20211216234447253"></p>
+<p>无符号乘法：遇见0就移位，遇见1就加</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032214351.png" alt="image-20211009154245602"></p>
+</li>
+</ol>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032214335.png" alt="image-20211217002550241">除法余数出现全0：是够减还是不够减</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032214372.png" alt="image-20211010122737078"></p>
+<h4 id="精度考虑"><a href="#精度考虑" class="headerlink" title="精度考虑"></a>精度考虑</h4><p>三个保护位提高精度    有时候也不一定 看舍入方式</p>
+<h3 id="07-二进制编码的十进制数运算"><a href="#07-二进制编码的十进制数运算" class="headerlink" title="07 二进制编码的十进制数运算"></a>07 二进制编码的十进制数运算</h3><p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032217103.png" alt="image-20211012164533707"></p>
+<ul>
+<li><p>到了10没到16进不上去：希望逢10进1，此时逢16进1，补6</p>
+</li>
+<li><p>到了16（16、17、18、19）：多消耗了6，补6  （进位依然参与运算）</p>
+</li>
+</ul>
+<p>10-19需要调整 9&#x3D;10+9 有一位进位时</p>
+<p>​                <img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032217112.png" alt="image-20211012171901820"></p>
+<ol>
+<li>取反-6</li>
+<li>+6取反</li>
+</ol>
+<h1 id="存储"><a href="#存储" class="headerlink" title="存储"></a>存储</h1><h2 id="08-内部存储器"><a href="#08-内部存储器" class="headerlink" title="08 内部存储器"></a>08 内部存储器</h2><p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032218286.png" alt="image-20211014141127462"></p>
+<p>地址空间：房间（地址）的集合   楼里面几个房间</p>
+<p>寻址能力：一次能找几个房间（地址）   投递员认识几个房间</p>
+<p>32位系统访问4GB（2^32） 对科学计算不够 怎么增加内存条？房间数不能增加，增加房间人数</p>
+<p><strong>为什么让普通的字节寻址，而不是64位寻址？</strong></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032218308.png" alt="image-20211014142448760"></p>
+<p>外存不属于冯诺依曼结构，冯诺依曼的存储器指主存</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032218325.png" alt="image-20211014143016571"></p>
+<p>存储刚开始是磁芯</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032218319.png" alt="image-20211014143122347"></p>
+<p>控制信号  先选中位元，然后再给控制信号说是读还是写</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032218358.png" alt="image-20211014143330182"></p>
+<p>只读存储器能写：毕竟至少写一次 写完一次就不能写了</p>
+<h3 id="RAM"><a href="#RAM" class="headerlink" title="RAM"></a>RAM</h3><ul>
+<li><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032218346.png" alt="image-20211014143543531"></li>
+</ul>
+<p>最先产生，所以由此命名（其实其他都能随机存取）</p>
+<p>易失的：断电时突然没有    通电时可擦除</p>
+<p><strong>随机：读写所需要的时间与这段信息所在的位置或所写入的位置无关。</strong></p>
+<ul>
+<li>​		<img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032218212.png" alt="image-20211014143915670"></li>
+</ul>
+<p>电量不会一成不变，如何保证漏电不会漏没：定期维护充电 刷新指处理到理想状态（可充电可放电）</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032218239.png" alt="image-20211014144342951"></p>
+<p>RAM：易失的 断电后数据依然会丢失</p>
+<p>好处：有电时不需要被刷新 刷新时不能正常访问内存，有可能影响访问（变慢）</p>
+<p>坏处：体积变大，集成度降低</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032218263.png" alt="image-20211014144849628"></p>
+<p>SRAM更快，因为容量较小所以放在金字塔上方</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032218292.png" alt="image-20211014150347663"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032218325.png" alt="image-20211014150708838"></p>
+<p>读写速度会变快</p>
+<h3 id="ROM"><a href="#ROM" class="headerlink" title="ROM"></a>ROM</h3><p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032218357.png" alt="image-20211014151251114"></p>
+<p>是随机的 可以读但不能写入新的数据</p>
+<p>非易失，不可以被修改（有好：只要写入就一直在那里    有坏：写错了）</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032218380.png" alt="image-20211014151911220"></p>
+<p>可以用电来写  </p>
+<p>PROM是<strong>成批生产</strong>的，当需要的ROM数量较小时，使用PROM（<strong>电</strong>）比制作专门的<strong>掩膜</strong>ROM更经济，而且有利于缩短制作周期。</p>
+<p>用户可以按照自己的需要写入数据，即对PROM编程。</p>
+<h3 id="RMM"><a href="#RMM" class="headerlink" title="RMM"></a>RMM</h3><p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032218410.png" alt="image-20211014152848364"></p>
+<p>主要读不等于不能写   <strong>可读可写</strong>！！</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032218435.png" alt="image-20211014153144795"></p>
+<p>把原来的消掉，再写进去（可多次改写）</p>
+<p>擦比较局限：时间长、所有东西都要擦（不能保留写对的）</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032218466.png" alt="image-20211014153539933"></p>
+<p>和上面的区别：<strong>擦除用电而不是光</strong>     不会删除之前的内容  ROM都是非易失</p>
+<p>坏处：贵、集成度低、可以在线修改所以可靠性不高</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032218497.png" alt="image-20211014154304149"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032218508.png" alt="image-20211014154729236"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032218534.png" alt="image-20211014154913470"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032218565.png" alt="image-20211014155116507"></p>
+<blockquote>
+<p>内存条-&gt;内存系统</p>
+<blockquote>
+<h5 id="问问题："><a href="#问问题：" class="headerlink" title="问问题："></a>问问题：</h5><p>插黄的插红的 什么东西</p>
+<p>内存空间增加扩大容量：字扩展</p>
+</blockquote>
+</blockquote>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032218696.png" alt="image-20211023193047925"></p>
+<p>同一个地址的存储位置放着多个位元，构成一个存储单元。访问的最小的单元。</p>
+<p>放多少个位元：寻址模式。一个字：多个字节。如64位：8个字节。</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032218731.png" alt="image-20211023193206718"></p>
+<p>串、正方形、还是窄窄的矩形？排成<strong>正方形</strong>。</p>
+<p>串不好：选中一个寻址单元需要100根线，10*10就只需要20根线（<strong>不复用</strong>），有利于构筑存储阵列。</p>
+<p>箭头：有一根线相连。选中的方法：“<strong>交叉</strong>”所在行列的线会被加电。</p>
+<p>行译码器、列译码器：如何确定哪根线被加电。</p>
+<p>地址缓冲器：对应2048，11位地址线可复用，先用来传行地址，再用来传列地址，行列地址都有后就可以解析。</p>
+<p>数据：放大器用来输入输出</p>
+<p>刷新：内存主要是DRAM 电容的电量会自然丢失，不刷新状态就不能长期保持稳定，所以要不断地刷新</p>
+<p><strong>地址线</strong>是从主存获取行和列信息交给行地址缓冲器和列地址缓冲器的，可以复用。</p>
+<p>而行译码器和列译码器不能复用，否则不可能唯一标识出来单元。所以上面需要11+11&#x3D;22根线</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032218754.png" alt="image-20211023232744351"></p>
+<p>2^3&#x3D;8，所以用3位地址来选片。片内地址log2(16*2^20)&#x3D;24（行+列吧）最后得27&#x3D;24+3.</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032218024.png" alt="image-20211023233220703"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032218737.png" alt="image-20211023233531372"></p>
+<p>1、字扩展：4个芯片地址变了，需要选地址。2个选片位。16K&#x3D;2^4*2^10，所以片内地址14位。</p>
+<p>2、位扩展：虽然有8个芯片，但增加的是位数而不是地址，所以不需要标识芯片（地址范围一样）。2^12，全部为片内。</p>
+<p>3、同时：4个芯片地址变了，需要选地址。依然是14位片内地址。</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032218777.png" alt="image-20211024000548032"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032218809.png" alt="image-20211023194221447"></p>
+<p>n位地址变成2^n种输出，把线设为1</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032218848.png" alt="image-20211023194312317"></p>
+<p>给电容充电：电容（主存）不能访问。一会工作一会不工作。所以刷新影响寄存器工作（数据都在主存里读写）</p>
+<ul>
+<li>集中式刷新：停止所有，刷新每一行，需要时间。对系统影响很大。（看有几个）</li>
+<li>分散式刷新：分散到每一次存储周期（读写操作）。完成一次进行一次刷新。整个刷新时间一样，不过分散到每一个周期。没有明显暂停，就是变慢了，但一直可以访问。</li>
+<li>异步式刷新：设了一个间隔，间隔内保证每一行被刷新一次，具体什么时候刷新根据这一行被不被读写来定。</li>
+<li><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032218897.png" alt="image-20211023200208521"></li>
+</ul>
+<p>引脚：小白点，为了可访问</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032218106.png" alt="image-20211023200318275"></p>
+<p>正反八个芯片（内存条），组织在一起其实是对容量进行了扩展。</p>
+<ul>
+<li>位扩展：寻址单元个数没有变，改变里面的位数，即寻址模式。地址线决定有多少行和列。原来1根现在8根数据线</li>
+<li>字扩展：改变个数，但不改变位数。4倍增加一条线（复用），两条线（不复用）。</li>
+<li>字、位同时扩展：同上。</li>
+</ul>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032218933.png" alt="image-20211023201237035"></p>
+<p>把内存条插入插槽，就可以互相协作。四个内存条是<strong>字扩展</strong>：依然是字节寻址，说明访问的存储单元数量变多了。</p>
+<h2 id="09-高速缓存存储器（Cache）"><a href="#09-高速缓存存储器（Cache）" class="headerlink" title="09 高速缓存存储器（Cache）"></a>09 高速缓存存储器（Cache）</h2><h3 id="目的、基本思路、工作流程"><a href="#目的、基本思路、工作流程" class="headerlink" title="目的、基本思路、工作流程"></a>目的、基本思路、工作流程</h3><p>比主存更靠近CPU.速度更快，为了解决内存墙</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032219868.png" alt="image-20211023202401431"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032219855.png" alt="image-20211023202523869"></p>
+<p>可以给CPU提供数据和指令。可以在主板在，也可以在CPU内部（主要）。</p>
+<p>存放的依然是主存里的信息，是部分信息的副本。</p>
+<p>需要的信息不在Cache中怎么办？</p>
+<p>不能把Cache和主存一样大：DRAM SRAM 成本上的激增，集成度低相同容量大</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032219898.png" alt="image-20211023203223721"></p>
+<p>Hit：绿色 可以快速返回</p>
+<p>Miss：从主存中读<strong>块</strong>，然后把所需要的的<strong>字</strong>传给CPU</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032219888.png" alt="image-20211023203826877"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032219879.png" alt="image-20211023204225532"></p>
+<p>1、Cache中内容和位置都有。不看内容，检查<strong>位置</strong>在不在，遍历地址（标记）一一核对</p>
+<p>2、3、照理来说容量非常小，所以大部分时候未命中，时间应该更长？更短：说明<strong>大部分时候命中</strong>。CPU访问数据应该是<strong>有规律</strong>的——<strong>程序访问的局部性原理</strong>。</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032219912.png" alt="image-20211023204714433"></p>
+<ul>
+<li>时间局部性：重复访问。</li>
+<li>空间局限性：相邻存储位置，没有超过一个范围。</li>
+<li><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032219096.png" alt="image-20211023205354147"></li>
+</ul>
+<p>factorial：存在Cache里面 反复调用</p>
+<p>score：我的数据和上一个同学的数据是相邻的</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032219124.png" alt="image-20211023205851423"></p>
+<p>未命中时：返回给CPU的同时放给Cache。</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032219153.png" alt="image-20211023205955582"></p>
+<p>把<strong>相邻的数据</strong>也传送回来，以防后面会被使用。块是事先定好的。所以所属块在Cache，字也在Cache。块不在，字也肯定不在。所以只需要对块进行标记。看<strong>块号</strong>在不在Cache中（就不用看字在不在了）。</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032219195.png" alt="image-20211023210655710"></p>
+<p>分了两种情况：得到的结果中Tc：检查阶段的耗时 （1-p）Tm：把数据传给CPU的耗时</p>
+<p>只有p可以改变。Tc也可以根据Cache来改变。</p>
+<p>Ta&lt;Tm：基本要求 Tc&#x2F;Tm<strong>相对比较小</strong></p>
+<p>难点：容量小 命中率相应也会小 <strong>p实际中是很高的值</strong></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032219232.png" alt="image-20211104110349181"></p>
+<h3 id="容量"><a href="#容量" class="headerlink" title="容量"></a>容量</h3><p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032219256.png" alt="image-20211104110413445"></p>
+<p>是越大越好吗？带来的影响：</p>
+<p>1、命中率会提高，成本会上升</p>
+<p>2、主存是地址解析直接选中，不是找的，但Cache要找，寻找时间<strong>Tc会变长</strong></p>
+<p>3、大到一定程度命中率的上升会变缓，访问时间倒不一定</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032220326.png" alt="image-20211104110853670"></p>
+<p>容量并不是不断上升</p>
+<h3 id="映射功能"><a href="#映射功能" class="headerlink" title="映射功能"></a>映射功能</h3><p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032220350.png" alt="image-20211104111411469"></p>
+<p>同一个块，前面的一段相同，就后面几位不一样，<strong>前面相同的部分就可以作为块号</strong></p>
+<p>8个字节：后三位 16个字节：后四位 <strong>后log2：块内地址 前面的：块号</strong></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032220389.png" alt="image-20211104111642563"></p>
+<p>i&#x3D;2 j&#x3D;4 前三在第一行，最后一个在第二行不好 两种方式：12第一行34第二行 13第一行24第二行 <strong>mod说明是间隔放的</strong> 如果12在同一行，<strong>间隔时12 34可以连续访问</strong>，都在Cache里面，不会被顶替</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032220414.png" alt="image-20211104112103667"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032220440.png" alt="image-20211104112115434"></p>
+<p>标记位：直接放块号肯定可以 两个块映射到同一行：低的log2C位相同 如0和8的后三位都是000</p>
+<p>看0号块在不在Cache，只需要看第0行 比较是0还是8还是16：只需要比前面的，因为后面肯定相同（标识行号）</p>
+<p>所以n&#x3D;log2M（块号的长度）-log2C（行数，不用存）</p>
+<p>log2C反映映射的行号，<strong>Cache的行的大小和主存的块的大小是相同的</strong>，所以块的大小也是8个字，低三位为块内 地址    中间两位为两个行号，剩下两位区分不同的块</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032220470.png" alt="image-20211104113040577"></p>
+<p><strong>行比较小</strong>容易出现抖动现象：所以直接映射适合大容量Cache</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032220581.png" alt="image-20211104113320061"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032220601.png" alt="image-20211104113452357"></p>
+<p>灵活：允许放在任何位置，像停车场</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032220627.png" alt="image-20211104113607507"></p>
+<p>判断行是不是某个块，必须知道完整块号，没有别的方法推断</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032220656.png" alt="image-20211104114004295"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032220687.png" alt="image-20211104114442842"></p>
+<p>要停在这一片，但这一片的具体位置可以随意 K：每组里面包含的行数 S是组数</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032220731.png" alt="image-20211104114639255"></p>
+<p>红框是一个组</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032220813.png" alt="image-20211104114709976"></p>
+<p>n不需要放块号，同一个组的log2S位是相同的</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032220854.png" alt="image-20211104114856947"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032220894.png" alt="image-20211104114926033"></p>
+<p>K&#x3D;1：一个组里面就一行 相当于每个块映射到每一行是固定的</p>
+<p>K&#x3D;C：S&#x3D;1，就一个组，跟关联映射没区别</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032220922.png" alt="image-20211104115333850"></p>
+<p>关联度低，容易被替换，命中率低；可能的位置少，时间短；标记的开销小</p>
+<h3 id="替换算法"><a href="#替换算法" class="headerlink" title="替换算法"></a>替换算法</h3><p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032220959.png" alt="image-20211104121140788"></p>
+<p>直接映射：每一个块只有一个可以摆放的行，所以只能替换那一个块</p>
+<p>关联映射和组关联映射：需要选择操作 要把<strong>最最不可能使用的块</strong>替换出去</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032220998.png" alt="image-20211104121418038"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032220848.png" alt="image-20211104121822806"></p>
+<p>删掉最长时间没被用过的数据块。 1表示刚刚被用过，0没被用过</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032220882.png" alt="image-20211104122016434"></p>
+<p>初始化：每个都为0 如何保证替换的为0的就是最早进来的：先进先出算法 会把下一行设为0 像击鼓传花一样</p>
+<p>假设1：上一个被用过最有可能使用 修改  用一次设一次USE</p>
+<p>假设2：上一个被载入更有可能使用 创建  被替换一次设一次USE</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032220928.png" alt="image-20211104122403117"></p>
+<p>看被访问的频率，设置了计数器</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032220956.png" alt="image-20211104122542098"></p>
+<p>因为能进入Cache频率本来就比较高了</p>
+<h3 id="写策略"><a href="#写策略" class="headerlink" title="写策略"></a>写策略</h3><p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032220985.png" alt="image-20211104124433002"></p>
+<p>看有没有被修改，如果有修改被替换时要写回</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032220014.png" alt="image-20211104124609668"></p>
+<p>违背初衷：减少对主存的访问，而且没必要一直保持最新</p>
+<p>如果多个CPU共用一块内存时，很有用处，因为数据可以一直最新</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032220183.png" alt="image-20211104124855738"></p>
+<p>利用脏位来标识块有没有被修改</p>
+<p>有时需要强行写入</p>
+<h3 id="行大小"><a href="#行大小" class="headerlink" title="行大小"></a>行大小</h3><p>容量定下来，行的大小该怎么调整？</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032220213.png" alt="image-20211104125128079"></p>
+<p>行数会减少，替换会变得频繁，抖动会很严重；数据也离得比较远</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032220254.png" alt="image-20211104125410054"></p>
+<p>如果是两级：L2容量更大，才能装L1没有的东西，L2从内存，L1从L2获得数据。</p>
+<p><strong>为什么要两级？只使用L2？</strong></p>
+<p>两种访问：1、按概率 2、按流程，这种更有利</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032220281.png" alt="image-20211104125603124"></p>
+<p>可以帮助消除竞争</p>
+<h2 id="10-外部存储器"><a href="#10-外部存储器" class="headerlink" title="10 外部存储器"></a>10 外部存储器</h2><p>不在计算机系统内部</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032221306.png" alt="image-20211109163712312"></p>
+<p>用于存数据量比较大的信息</p>
+<p>非易失：不能断电就丢，要一直在那里</p>
+<h3 id="磁盘存储器"><a href="#磁盘存储器" class="headerlink" title="磁盘存储器"></a>磁盘存储器</h3><p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032221314.png" alt="image-20211109164106389"></p>
+<p>至少要表达两种稳定的状态</p>
+<p>飞行高度：旋转时有磁头在磁盘上面，影响磁性物质，达到读和写的目的</p>
+<ul>
+<li><p>希望存储信息比较多：每位信息占的面积要比较小 如果磁头离磁盘远：不太好辨识</p>
+</li>
+<li><p>飞行高度低：让每位信息所占面积变小 但要求平整（防止意外撞到）</p>
+</li>
+</ul>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032221331.png" alt="image-20211109164806898"></p>
+<p>看基材的材质是软的还是硬的：上面外观，下面是拆开后   片上有磁性物质 </p>
+<p>软盘：</p>
+<ul>
+<li><p>上面的银是下面的黑，要放到软盘驱动器使用：直接塞（光驱要打开再放） 框和圆盘的框对上就可以读写数据</p>
+</li>
+<li><p>0.44M：很小</p>
+</li>
+<li><p>非常容易损坏 读一遍可能就坏了</p>
+</li>
+</ul>
+<p>机械硬盘：     </p>
+<ul>
+<li>原理相似，用磁头读取写入</li>
+<li>更加稳定，不容易损坏，体积更大</li>
+<li>可以多个盘片叠在一起</li>
+</ul>
+<h4 id="结构"><a href="#结构" class="headerlink" title="结构"></a>结构</h4><p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032221345.png" alt="image-20211109165603452"></p>
+<p>蓝色框：中间轴 把盘片串起来</p>
+<p>红色框：盘片 每个盘片上下两面都可以存储信息 所以右边有10个盘片</p>
+<p>绿色框：读写头，吊杆可<strong>转</strong>，会移动到目标位置进行读写   （图里面是平移）</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032221364.png" alt="image-20211109165836325"></p>
+<p>上下两面都要配磁头（红色小圈）</p>
+<p>一种方式：所有磁头被连在一起（吊杆），<strong>同时移动</strong></p>
+<p>另一种方式：磁头不变 盘片动</p>
+<p>答案：<strong>磁头和盘片都在动</strong>  磁头只沿着直径的方向 盘片不断地转动 就可以访问所有信息</p>
+<p>轴和盘片是<strong>固定</strong>的，比较稳定</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032221378.png" alt="image-20211113102612389"></p>
+<p>读写的时候改变磁性物质的朝向，所以磁头需要产生（写）&#x2F;感应（读）大磁场</p>
+<ul>
+<li>小——电磁感应能力弱 离盘片要近 更高的数据密度：每个信息更小 磁头也需要更小才能读出来</li>
+</ul>
+<p>温彻斯特：保证离磁盘的高度比较小</p>
+<h4 id="读写机制"><a href="#读写机制" class="headerlink" title="读写机制"></a>读写机制</h4><p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032221622.png" alt="image-20211113103217270"></p>
+<ul>
+<li><p>磁头静止：到达磁道需要磁头的移动，但这不在读写期间。到圈后才开始读写，此时磁头不动。</p>
+</li>
+<li><p>读和写有不同机制：用双磁头</p>
+</li>
+</ul>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032221655.png" alt="image-20211113103553155"></p>
+<p>线圈：改变电流方向，磁场方向也改变——磁盘上的记录介质也会变</p>
+<p>不同的电流方向——不同的磁场——形成不同方向的排列，即写入</p>
+<p>不加电流：经过物质也会产生感应电流，也可以通过感应电流方向的不一样读取信息</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032221683.png" alt="image-20211113104044303"></p>
+<p>电阻会随着介质的磁化方向而改变，MR敏感期会根据电阻变化引起的电压变化看是0还是1</p>
+<ul>
+<li>不需要电流的改变，只需要看电压的改变，速度会比较快（<strong>读比写快</strong>）</li>
+</ul>
+<h4 id="数据组织"><a href="#数据组织" class="headerlink" title="数据组织"></a>数据组织</h4><p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032221731.png" alt="image-20211113104401272"></p>
+<p>扇区存的数据量相同，默认<strong>512B</strong>（要记住）</p>
+<p>磁道的编号：<strong>从外往里</strong>（要记住）</p>
+<p>不读数据，磁头一般停在磁道0</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032221766.png" alt="image-20211113104803456"></p>
+<p>恒定角速度：利用圆盘的半径</p>
+<ul>
+<li><p>可以得到<strong>恒定的数据传输率</strong>  不管看起来大还是小，数据量是一样的，时间又是一样的</p>
+</li>
+<li><p>比较好寻址 </p>
+</li>
+<li><p>缺点：外侧要比较大，内侧要比较小 内侧能存外侧利用率就不高了 <strong>受到最内部的约束</strong></p>
+</li>
+</ul>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032221802.png" alt="image-20211113112035128"></p>
+<p>外侧扇区数比较多，提高利用率</p>
+<p>相同数据量：内侧圆心角大，转速要快；外侧圆心角小，转速要慢 <strong>转速不一样</strong> 所以需要更复杂的电路</p>
+<p>问题：每个磁道的划分方式都不同吗？不是</p>
+<p>磁头要做的很窄，假设信息分布均匀，从里往外，直径变换很小。</p>
+<ul>
+<li>往外一层：100个，按跟刚才相同的划分，可以用和刚才相同的转速访问</li>
+<li>往外多层：量变带动质变，可以放得下101个，转速也会变化</li>
+</ul>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032221054.png" alt="image-20211113113057474"></p>
+<p>从上到下看</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032221301.png" alt="image-20211113113305806"></p>
+<p>格式化：将磁盘组成上述方式。</p>
+<p>ID域：校验码，防止出错</p>
+<p>数据域：和ID域大致相同</p>
+<ul>
+<li><p>同步字节：怎么知道是扇区——看扇号——怎么知道01串是扇号——特定01串同步字节</p>
+</li>
+<li><p>间隙：处理反应，用于判断下面的数据域是不是想要的（以免漏掉数据），转速越快间隙越大</p>
+</li>
+</ul>
+<p> 格式化后还可以恢复：数据没有真正破坏掉，所以可以读出来</p>
+<p>磁盘损坏了后数据恢复：无尘实验室打开硬盘盒，一个一个硬盘片拿出来放在好的磁头的地方读</p>
+<p>（可能是磁头&#x2F;盘片损坏）磁头撞上灰尘会损坏</p>
+<p>低级格式化：完全清除里面的数据 不能分区（如分cd盘） 对硬盘有损伤 可以标识坏的数据</p>
+<p><strong>数据域变大</strong>更有优势：4096（4K）避免更多扇区的IDE 可以提高磁盘容量的10% 作业按照512</p>
+<h4 id="I-O访问时间"><a href="#I-O访问时间" class="headerlink" title="I&#x2F;O访问时间"></a>I&#x2F;O访问时间</h4><p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032221331.png" alt="image-20211114141719400"></p>
+<ul>
+<li><p>寻道时间：有时考虑跨越距离的多少，有时不考虑</p>
+</li>
+<li><p>旋转延迟：磁头到达磁道后，等待需要读取的扇区到达下方</p>
+<ul>
+<li>等待时间为0：快到是最好的，读取同步字节发现是需要的扇区</li>
+<li>等待时间为旋转一周的时间：同步字节刚刚过去</li>
+<li>平均下来是旋转半周所需的时间</li>
+</ul>
+</li>
+<li><p>传送时间：b&#x2F;N：传送的字节覆盖的距离 r：盘片旋转的速度 1&#x2F;r：转一圈需要的时间</p>
+<ul>
+<li>b&lt;N结论成立，b&gt;N还要分情况讨论</li>
+</ul>
+</li>
+</ul>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032221369.png" alt="image-20211114142235293"></p>
+<ul>
+<li><p>平均时间：对寻道时间和旋转延迟取平均</p>
+</li>
+<li><p>实际时间：传送时间</p>
+</li>
+<li><p>每跨越一个磁道都考虑旋转延迟</p>
+</li>
+<li><p>从第一个到第二个通常不考虑寻道时间，因为距离短，所以只考虑到达第一个磁道的时间开销。</p>
+<ul>
+<li>如果明确知道每一个相邻的寻道时间，需要加上去！！</li>
+</ul>
+</li>
+</ul>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032221412.png" alt="image-20211114142639995"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032221443.png" alt="image-20211114142804907"></p>
+<ul>
+<li>到第一个磁道：4ms</li>
+<li>1min:15000r  4ms:1r   平均旋转延迟：转0.5r  2ms</li>
+<li>500扇区即一圈：4ms </li>
+<li>后面不计寻道时间了</li>
+</ul>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032221317.png" alt="image-20211114143049277"></p>
+<ul>
+<li>读一个扇区：旋转一圈的时间除以500，即4&#x2F;500  比之前长了很多</li>
+</ul>
+<p><strong>磁盘整理功能</strong>：帮忙找一块连续的区域存进去，就可以是<strong>顺序组织</strong>，时间较短。</p>
+<ul>
+<li><p>有助于<strong>碎片化</strong>存储文件：方便未来修改文件，留一点备用的空间</p>
+</li>
+<li><p>但也不用做很频繁：涉及文件读取到内存并读写进磁盘，负担大</p>
+</li>
+</ul>
+<h4 id="磁头寻道-磁盘调度（6种）"><a href="#磁头寻道-磁盘调度（6种）" class="headerlink" title="磁头寻道&#x2F;磁盘调度（6种）"></a>磁头寻道&#x2F;磁盘调度（6种）</h4><p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032221340.png" alt="image-20211114144816983"></p>
+<p>决定哪个任务先做，哪个任务后做</p>
+<ul>
+<li>所有任务已知</li>
+<li>任务是逐步到达的</li>
+</ul>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032221371.png" alt="image-20211114144953392"></p>
+<p>按照顺序被处理：把总共移动的磁道个数加起来，然后求平均  效率比较低</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032221412.png" alt="image-20211114145220424"></p>
+<p>优先最近的，远的会被拖延：最外侧和最内侧很容易<strong>被忽略</strong> <strong>饥饿现象</strong></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032221454.png" alt="image-20211114145520854"></p>
+<p>沿着一个方向走，走到边缘（<strong>TRACK_NUM磁道数！</strong>）调头  <strong>不存在饥饿现象</strong></p>
+<p>响应不均匀：位于中间响应频率高（等待时间平均一点）</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032221497.png" alt="image-20211114150043111"></p>
+<p>到头后不扫描回来，直接到另一头从头扫描</p>
+<p><strong>响应频率平均</strong></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032221691.png" alt="image-20211114150503441"></p>
+<p>不走到头，没有请求就立刻改变方向</p>
+<p>代价：SCAN-&gt;LOOK，190的任务没来，就立刻调头，要等18结束再回头，任务等待时间非常长</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032221779.png" alt="image-20211114150724316"></p>
+<p>到头后会返回起点</p>
+<h3 id="光存储器"><a href="#光存储器" class="headerlink" title="光存储器"></a>光存储器</h3><p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032221824.png" alt="image-20211121211045502"></p>
+<p>高清和蓝光的关系？</p>
+<p>光存储器分为两面</p>
+<h4 id="CD-CD-ROM"><a href="#CD-CD-ROM" class="headerlink" title="CD CD-ROM"></a>CD CD-ROM</h4><p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032221853.png" alt="image-20211121211921096"></p>
+<p>CD-ROM：更好纠错，更加稳定</p>
+<p>母盘按后会形成对称结构，在凹凸不平面镀反射性强的材料 按-&gt;金属层-&gt;保护层</p>
+<p>压从上往下压还是从下往上：**从上往下 **下面是聚碳酸酯塑料 按完后镀一层铝（黑色） 铝上是保护层：丙烯酸树脂</p>
+<p>亮晶晶的一面：<strong>下面</strong> 保护层不透明，聚碳酸酯塑料透明 <strong>上面是标签</strong>（画）</p>
+<p>激光读取：从下往上（虚线 朝上发射激光 朝下被反射）</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032221886.png" alt="image-20211121212539809"></p>
+<p>磁盘和磁驱动器在一起，但光驱和光盘是分开的。</p>
+<p>光驱发低强度光束，凹坑比较散，台比较强，就可以表示两种不同的状态。</p>
+<p>光盘的数据组织：一个螺旋线从里到外连着，为了存储更多的信息。</p>
+<p>扇区长度一样，速度一样，经过每一扇区的时间也一样。</p>
+<p>两个扇区：内侧角速度大（因为长度相同，圆心角大） 转速则不一样，里面快外面慢  磁盘是角速度恒定的？</p>
+<ul>
+<li>红色框：同步字节</li>
+<li>黄色框：第几分、秒、扇、模式</li>
+<li>数据</li>
+<li>层次：辅助数据 和纠错码比较像</li>
+</ul>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032221928.png" alt="image-20211121213935689"></p>
+<p>速度比较慢</p>
+<h4 id="CD-R-CD-RW"><a href="#CD-R-CD-RW" class="headerlink" title="CD-R CD-RW"></a>CD-R CD-RW</h4><p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032221973.png" alt="image-20211121214051822"></p>
+<p>解决了写和反复写的问题。</p>
+<h4 id="DVD"><a href="#DVD" class="headerlink" title="DVD"></a>DVD</h4><p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032221194.png" alt="image-20211121214245340"></p>
+<ul>
+<li>位更紧密：线间距变小，凹坑间距变小，容量相应到7倍左右，所以读取激光束会更细<ul>
+<li>所以DVD光驱能读CD，但反过来不行</li>
+</ul>
+</li>
+<li>双层结构：可以读取两层的信息，容量进一步增加</li>
+<li>两面都可以记录数据 <ul>
+<li>​	R RW可以写和可以反复写</li>
+</ul>
+</li>
+</ul>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032221222.png" alt="image-20211121214908740"></p>
+<p>凹坑更小，数据可以放更多</p>
+<h3 id="磁带"><a href="#磁带" class="headerlink" title="磁带"></a>磁带</h3><p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032221257.png" alt="image-20211121215053428"></p>
+<p>磁头一开始停在最外面，可以直接到达目标位置，所以是直接读取。</p>
+<p>长的带子，要把目标前面的带子滚完，所以是顺序读取。</p>
+<p>串行：沿着蛇形方式 <strong>先扫磁带0、再磁带1</strong> 类比马路和洒水车</p>
+<h3 id="回顾：快闪存储器"><a href="#回顾：快闪存储器" class="headerlink" title="回顾：快闪存储器"></a>回顾：快闪存储器</h3><p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032221291.png" alt="image-20211121220446836"></p>
+<h3 id="U盘和固态硬盘"><a href="#U盘和固态硬盘" class="headerlink" title="U盘和固态硬盘"></a>U盘和固态硬盘</h3><p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032221329.png" alt="image-20211121220536631"></p>
+<p>固态硬盘无磁头，对振动不敏感，<strong>半导体</strong>存储器，没有轴转动，没有机械磁头移动，所以有很多优势</p>
+<ul>
+<li>已经出现非易失的内存了，可能会替代固态硬盘</li>
+</ul>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032221358.png" alt="image-20211121221126293"></p>
+<h2 id="11-冗余磁盘阵列"><a href="#11-冗余磁盘阵列" class="headerlink" title="11 冗余磁盘阵列"></a>11 冗余磁盘阵列</h2><p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032222321.png" alt="image-20211121232351420"></p>
+<p>为什么需要RAID？</p>
+<ul>
+<li><p>想着更多的硬盘合在一起会不会更好，增加容量</p>
+</li>
+<li><p>解决硬盘速度的问题，解决可靠性的问题</p>
+</li>
+</ul>
+<h3 id="分类"><a href="#分类" class="headerlink" title="分类"></a>分类</h3><p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032222397.png" alt="image-20211121232711380"></p>
+<p>0：解决条带化</p>
+<p>1：镜像</p>
+<p>2、3：并行存取</p>
+<p>4、5、6：独立存取</p>
+<h4 id="RAID-0"><a href="#RAID-0" class="headerlink" title="RAID 0"></a>RAID 0</h4><p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032222344.png" alt="image-20211121232823136"></p>
+<p>存完条带0，存条带1（并不是存同一条带的条带4）</p>
+<p>好处：数据传输变快，I&#x2F;O请求响应变快</p>
+<ul>
+<li>4个硬盘可以同时往外输出，往内写入，所以读写会快（针对<strong>大数据块</strong>）</li>
+<li>小数据块可能位于不同磁盘上，两个I&#x2F;O请求就可以不用依次响应，而可以同时响应（针对<strong>小数据块</strong>）</li>
+</ul>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032222358.png" alt="image-20211121233054760"></p>
+<p>劣势：</p>
+<ul>
+<li>出现错误的概率升高 有一个崩掉所有就崩掉</li>
+<li>非冗余 坏了就坏了</li>
+</ul>
+<h4 id="RAID-1"><a href="#RAID-1" class="headerlink" title="RAID 1"></a>RAID 1</h4><p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032222386.png" alt="image-20211121233407417"></p>
+<ul>
+<li><p>冗余盘：简单地进行了拷贝 数据可用性增强（坏一个不要紧）坏：圆柱上所有条带不能访问</p>
+</li>
+<li><p>两个I&#x2F;O请求即便位于同一个磁盘：</p>
+<ul>
+<li>有备份 <strong>可以同时响应</strong> 所以响应速度比单盘快一倍 </li>
+<li>数据很大时读取也会快：0-4 0-7 可以白灰分一下下<ul>
+<li>写的话并不快，因为要把两个都写完 受限于白灰中更慢的一个</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032222372.png" alt="image-20211121234057463"></p>
+<p>一半的磁盘存冗余，所以昂贵</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032222767.png" alt="image-20211121234203514"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032222809.png" alt="image-20211121234335602"></p>
+<ul>
+<li><p>先条带化、再备份：0坏了 12不可以联动 因为2只能和3配合 如果3再坏了 01就不能工作了</p>
+</li>
+<li><p>先备份、再条带化：不存在上述问题 同一组的磁盘谁坏了不要紧 12可以联动  所以<strong>10更好</strong></p>
+</li>
+</ul>
+<p>（具体不是特别理解，感觉对条带化出错的过程理解不是很清楚？？？）</p>
+<h4 id="RAID-2（弃）"><a href="#RAID-2（弃）" class="headerlink" title="RAID 2（弃）"></a>RAID 2（弃）</h4><p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032222839.png" alt="image-20211121234752211"></p>
+<p>并行技术：不仅大数据块参与请求，而是所有磁盘参与每一个请求</p>
+<p>条带：用满了才能用下一个 所以要很容易填满 所以条带非常小</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032222862.png" alt="image-20211121235123046"></p>
+<p>奇偶校验码：不管前面多长生成1个 <strong>海明码</strong>：8个生成4个 4个生成3个</p>
+<ul>
+<li>读数据，用校验码判断数据有没有问题</li>
+<li>写数据：同时读写</li>
+</ul>
+<p>1只能解决盘坏了，不解决数据出错：只发现数据不一致，不能确定哪个是对的</p>
+<p>2可以解决纠错问题</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032222886.png" alt="image-20211121235650464"></p>
+<p>数据本身已经有校验码，再加一个海明码意义小，反而影响读写效率（读要检查，写要写入）<strong>已经被弃用</strong></p>
+<h4 id="RAID-3"><a href="#RAID-3" class="headerlink" title="RAID 3"></a>RAID 3</h4><p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032222917.png" alt="image-20211121235759814"></p>
+<p>少了校验盘：1个 奇偶校验码 好处是大大减少校验盘的数量</p>
+<p>奇偶校验只能发现有错，不能判断，所以学海明码？</p>
+<p>RAID冗余：防止磁盘坏了而不是纠错数据  坏了：明确定位哪里读不到了 出错：混迹其中 还是可读</p>
+<p>怎么做数据重构？假设P(b)发生损坏 通过异或恢复</p>
+<ul>
+<li>假设是偶校验 P(b)&#x3D;b0异或b1..b3 两边同时加异或b1..b3 满足结合律和交换律 自己异或自己&#x3D;0 右边只剩b0</li>
+<li>假设是奇校验 P(b)&#x3D;b0异或b1..b3异或1 两边同时加异或b1..b3异或1 所以<strong>奇校验多异或一个1</strong></li>
+</ul>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032222800.png" alt="image-20211122000841832"></p>
+<p>是让单个I&#x2F;O变快，而不是面向多个请求</p>
+<h4 id="RAID-4（弃）"><a href="#RAID-4（弃）" class="headerlink" title="RAID 4（弃）"></a>RAID 4（弃）</h4><p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032222822.png" alt="image-20211122001026612"></p>
+<p>目的是解决多个I&#x2F;O请求</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032222854.png" alt="image-20211122001155354"></p>
+<p>更新每个块，还要更新校验位：要先读出来，然后再写进去（RAID3每次所有都要重新写，不存在这个问题）</p>
+<ul>
+<li><p>校验位公式：先列P(b)&#x3D;B0异或…B3 P(b)’&#x3D;B0’异或B1…B3 两式异或得公式 （要读两个数P(B) B0出来）</p>
+</li>
+<li><p>较大I&#x2F;O写操作：B0..B3都要更新 只需要利用新的数据算就好，<strong>一个都不读</strong></p>
+</li>
+</ul>
+<p>写操作大问题：修改的两个数据块即使不在同一行和列，也要争夺校验盘，因为只有一个 所以<strong>被弃用</strong></p>
+<h4 id="RAID-5"><a href="#RAID-5" class="headerlink" title="RAID 5"></a>RAID 5</h4><p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032222888.png" alt="image-20211122002313138"></p>
+<p>灰带：右上角到左下角：校验盘拆散，分布在每一列</p>
+<ul>
+<li><p>优点：省 80%</p>
+</li>
+<li><p>缺点：只能坏<strong>一块盘</strong>（可用校验位算出来坏的位）超过一块就无法恢复</p>
+</li>
+<li><p>相比4的改进：块0块6同时修改：1354同时访问，不冲突（块6——P(4-7)）</p>
+<ul>
+<li>块0被修改，P(0-3)被修改占用，P(20-23)和P(0-3)在一起，P(0-3)影响块0&#x2F;1&#x2F;2&#x2F;3&#x2F;7&#x2F;11&#x2F;15 P(20-23) 块20&#x2F;21&#x2F;22 其实不完全独立，还是有很多制约（<strong>行列都有冲突</strong>） 但比4好很多了</li>
+</ul>
+</li>
+<li><p>“两读两写”：</p>
+<ul>
+<li><p>先读B0 P(B)无所谓 可同时读或分开读</p>
+</li>
+<li><p>写也无所谓，但要<strong>在读后面</strong></p>
+<ul>
+<li>最好的情况：同时读B0 P(B)  同时写P(B)’ B0’ 2倍的时间</li>
+<li>最坏的情况：完全不重合 （没考虑等待时间） 4倍的时间</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032222915.png" alt="image-20211122003634159"></p>
+<p>每个里面坏一块可以，但同一个5不能坏两块以上 </p>
+<p>容量利用率会降低</p>
+<h4 id="RAID-6"><a href="#RAID-6" class="headerlink" title="RAID 6"></a>RAID 6</h4><p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032222754.png" alt="image-20211122004127571"></p>
+<p>同时3个故障出现故障才丢失：<strong>允许坏两个</strong></p>
+<p>但写每次影响2个，写效率降低</p>
+<h3 id="比较"><a href="#比较" class="headerlink" title="比较"></a>比较</h3><p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032222784.png" alt="image-20211122004328661"></p>
+<p>0：同时利用多个磁盘</p>
+<p>1：非常可靠 最低容量利用率：50%</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032222820.png" alt="image-20211122004421336"></p>
+<p>2：容易坏  所以用海明码</p>
+<p>3：很小的数据校验码（奇偶）1个 用于修复坏的</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032222045.png" alt="image-20211122004553155"></p>
+<h2 id="12-虚拟存储器"><a href="#12-虚拟存储器" class="headerlink" title="12 虚拟存储器"></a>12 虚拟存储器</h2><h3 id="操作系统"><a href="#操作系统" class="headerlink" title="操作系统"></a>操作系统</h3><p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032224203.png" alt="image-20211126201314671"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032224264.png" alt="image-20211126201440767"></p>
+<ul>
+<li><p>用户和硬件之间</p>
+</li>
+<li><p>本身就是程序：需要占用计算机的资源，又会有效分配资源</p>
+</li>
+</ul>
+<h3 id="存储器管理"><a href="#存储器管理" class="headerlink" title="存储器管理"></a>存储器管理</h3><p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032224248.png" alt="image-20211126201947514"></p>
+<ul>
+<li>除了操作系统，会放多个程序，为了让处理器不空闲：多道程序设计</li>
+<li>多个任务都要被载入到主存</li>
+</ul>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032224237.png" alt="image-20211126202401827"></p>
+<ul>
+<li>交换：处理不了就先放置，先处理其他任务</li>
+<li>虚拟存储器涉及虚拟地址（考点）</li>
+</ul>
+<h4 id="分区方式"><a href="#分区方式" class="headerlink" title="分区方式"></a>分区方式</h4><h5 id="简单固定分区"><a href="#简单固定分区" class="headerlink" title="简单固定分区"></a>简单固定分区</h5><p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032224227.png" alt="image-20211126202640310"></p>
+<ul>
+<li>长度不等，固定长：128、64都是固定死的 为什么不等：找容纳的可用的最小分区</li>
+<li>一个区只能放一个任务 可用：没有被别的任务占</li>
+<li>容纳：区的容量比任务的大小要大</li>
+<li>浪费空间：<ul>
+<li>193KB只能放在256KB</li>
+<li>1KB 前面的都不能用 只能放在384KB</li>
+<li>2个100KB 一个占256KB 一个占384KB</li>
+</ul>
+</li>
+</ul>
+<h5 id="可变长分区"><a href="#可变长分区" class="headerlink" title="可变长分区"></a>可变长分区</h5><h4 id=""><a href="#" class="headerlink" title=""></a><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032224277.png" alt="image-20211126204030869"></h4><ul>
+<li><p>系统区固定，变的是用户区</p>
+</li>
+<li><p>3个分散的空，不能被利用：<strong>碎片</strong> 时间变长会越来越多 </p>
+<ul>
+<li>能不能拼起来？重定位，额外开销….有没有更好的方式？</li>
+</ul>
+</li>
+</ul>
+<p><strong>怕碎片，就把它全都变成碎片</strong></p>
+<h4 id="分页方式"><a href="#分页方式" class="headerlink" title="分页方式"></a>分页方式</h4><p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032224609.png" alt="image-20211126204713767"></p>
+<ul>
+<li>页装进页框：同一个任务中的页不需要在连续页框中存储，可以跳</li>
+<li>任务5分成3个页 1718被占用 接着放第3个页在19的位置</li>
+<li>麻烦：主存块的真实位置不连续，压根不知道这些块怎么分布<ul>
+<li>引入逻辑地址、物理地址，需要来回转化，知道对应关系<strong>页表    每一个进程都有相应的页表</strong></li>
+<li>逻辑地址：所有地址都是连续的</li>
+<li>物理地址：实际的地址，根据每次语句载入而变化</li>
+</ul>
+</li>
+</ul>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032224639.png" alt="image-20211126210704168"></p>
+<ul>
+<li>请求分页：对于每个任务，只把当前要用的载进来<ul>
+<li>把逻辑地址转成物理地址</li>
+<li>可能不在主存里，因为只放了一部分，可能未命中</li>
+<li>每次只载用当时用到的页面，如游戏可以写很大，同一时刻用到页面有限 游戏可以大于物理空间，只要保证同时载入的页面是可以被物理空间接收的——丰富了程序</li>
+</ul>
+</li>
+</ul>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032224670.png" alt="image-20211126211254140"></p>
+<ul>
+<li>把所有的页载入到硬盘</li>
+<li>当前任务正在使用的页放到主存（真正载入）   页表：记录每个页的状态（在不在主存里，有没有被修改…）</li>
+<li>主存和硬盘会有的交互，可能还会往回写</li>
+</ul>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032224699.png" alt="image-20211126211628408"></p>
+<ul>
+<li><p>Cache里访问主存代价比主存没有访问硬盘代价小 </p>
+</li>
+<li><p>尽可能避免对硬盘的访问，提高主存的命中率</p>
+</li>
+<li><p>提高命中率：页大小大很多，一次性可以搬更多，减少交换次数</p>
+<ul>
+<li>cache容量小，放大了会挤压别的空间；页空间大很多，后者过一段时间去用，减少对主存的访问</li>
+<li>全相联映射：命中率最高</li>
+</ul>
+</li>
+<li><p>写回：肯定不能玩一下写一下硬盘 非常卡， 载出去的话再写一下</p>
+</li>
+</ul>
+<h5 id="分页式虚拟存储器"><a href="#分页式虚拟存储器" class="headerlink" title="分页式虚拟存储器"></a>分页式虚拟存储器</h5><p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032224723.png" alt="image-20211126232435010"></p>
+<ul>
+<li>页表：所有虚拟页状态信息<ul>
+<li>肯定不存在硬盘，否则每次都访问太慢了，要放在主存</li>
+<li>有一个连续的很大的虚拟存储空间</li>
+</ul>
+</li>
+</ul>
+<ol>
+<li>写程序启动后，会产生很多页面，需要很大空间</li>
+<li>没有那么大空间，所以载到硬盘</li>
+<li>把要用的搬到主存，在什么位置呢？页表来记录（存在主存）</li>
+</ol>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032224759.png" alt="image-20211126233201853"></p>
+<ul>
+<li>null：没有存任何东西</li>
+<li>PP0，PP1：里面有页面，已经存在了主存中  最长：某个页的<strong>物理地址</strong>（即<strong>物理页框号</strong>）取出来合并就是页内偏移量</li>
+<li>空：有对应的虚页，已经有内容存在硬盘上，用<strong>指针形式</strong>表示位置 比较短</li>
+</ul>
+<p>1、<strong>存放位置长度是统一的</strong>：</p>
+<p>并不是按照实际的长度 按照PP0物理页面地址的长度 <strong>因为虚页会变化</strong> 存放位置三种情况都有可能</p>
+<p>2、每一行需不需要记录虚拟页号？如VP0、VP1：<strong>不要</strong></p>
+<p>所有虚页都放进去了，程序运行过程中不会再多一个虚页了，<strong>每一个页的顺序是固定的</strong></p>
+<p>3、虚拟地址和物理地址的转化：利用页表</p>
+<p>页内偏移量相同，只需要用物理地址替换虚拟地址</p>
+<p>虚拟地址和物理地址哪个更长？虚拟地址比物理地址更长：不用一下子载入，可以写很长</p>
+<p>虚拟页号也会更长一些：虚拟页号&#x3D;虚拟地址长度-页内偏移量 物理页号同理</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032224286.png" alt="image-20211126235102491"></p>
+<p>每次知道页面都要查页表</p>
+<p>使用Cache：减少对主存的访问</p>
+<p>使用虚拟存储器：能不能少访问主存：页表放Cache 整个太大了<strong>放最活跃的几个</strong></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032224318.png" alt="image-20211126235407815"></p>
+<p>VA：虚拟地址 PA：物理地址  valid（装入位）：这个页已经从硬盘载入主存了</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032224365.png" alt="image-20211126235620392"></p>
+<p>1、CPU要取数据，发出<strong>虚拟地址</strong>，首先需要转化成物理地址，否则不可能抓到数据（主存只有物理地址，从页表到硬盘太慢了）</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032224396.png" alt="image-20211126235836090"></p>
+<p>2、先查TLB。</p>
+<ul>
+<li>一种正好命中且已装入：问题：可能invalid吗？没有，为什么？因为装入了才可能命中？</li>
+</ul>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032224423.png" alt="image-20211127001907430"></p>
+<ul>
+<li>未命中：去页表查，因为保留所有信息，肯定能查到：<ul>
+<li>已经被载入主存了，可以被替换成物理地址</li>
+<li>没有被载入到内存：发起缺页操作，从硬盘到主存</li>
+</ul>
+</li>
+</ul>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032224472.png" alt="image-20211127002434497"></p>
+<p>3、现在就有PA了，来看Cache。TLB也可以看做Cache。</p>
+<ul>
+<li>命中，cache把数据给CPU；</li>
+</ul>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032224431.png" alt="image-20211127002614882"></p>
+<ul>
+<li>未命中：根据物理地址去主存中取相应数据，块到Cache，字节到CPU</li>
+</ul>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032224464.png" alt="image-20211127002737834"></p>
+<ul>
+<li>缺页：页不在主存：把页从硬盘到主存，再从主存到CPU</li>
+</ul>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032224502.png" alt="image-20211127003023439"></p>
+<ul>
+<li>红色：虚拟地址到物理地址的转化</li>
+<li>蓝色：缺页操作。主存中有没有空的地方，没有时需要替换：用新的替换旧的 更新页表和TLB（可以保证都在主存里 前面不可能有invalid）</li>
+<li>绿色：cache操作一模一样</li>
+</ul>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032224536.png" alt="image-20211127003749558"></p>
+<p>2 cache那里要访问主存 3 访问主存的页表 4 cache和TLB两次 5缺页，需要访问硬盘</p>
+<p>67  TLB留下记录的，页面肯定载入主存了     8 主存没有cache里不可能有</p>
+<p>缺失后怎么处理？Cache：硬件 页表：软件 TLB：硬件或软件</p>
+<h5 id="分段式虚拟存储器"><a href="#分段式虚拟存储器" class="headerlink" title="分段式虚拟存储器"></a>分段式虚拟存储器</h5><p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032224571.png" alt="image-20211127005245548"></p>
+<p>页的划分不知道，段的划分程序员知道：一块一块，长度不固定，会引起碎片</p>
+<h5 id="段页式虚拟存储器"><a href="#段页式虚拟存储器" class="headerlink" title="段页式虚拟存储器"></a>段页式虚拟存储器</h5><p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032224604.png" alt="image-20211127005412617"></p>
+<p>页号+页内偏移量：相当于段偏移量   物理页号是页框号！不是实际地址</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032224715.png" alt="image-20211127005515677"></p>
+<h1 id="13-总线"><a href="#13-总线" class="headerlink" title="13 总线"></a>13 总线</h1><p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032227449.png" alt="image-20211204092000120"></p>
+<p>简化互连的复杂度</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032227438.png" alt="image-20211204092042777"></p>
+<p>每个房子连在路上，路也分层级（多层结构）</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032227514.png" alt="image-20211204092241856"></p>
+<h2 id="类型"><a href="#类型" class="headerlink" title="类型"></a>类型</h2><p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032227466.png" alt="image-20211204092434636"></p>
+<p>分为芯片<strong>内部</strong>总线、系统总线和通信总线。主要讲系统总线。</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032227481.png" alt="image-20211204092518919"></p>
+<p>Intel：特指I&#x2F;O bridge和CPU，但前面说的还包括所有绿色框里面的线。</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032227495.png" alt="image-20211204092618468"></p>
+<ul>
+<li><p>数据线根数：决定可以传递数据的大小   因为一根线只能传递一位数据</p>
+</li>
+<li><p>地址线：指定从哪来到哪去 根数多，地址长度越长，地址所含位数越多，寻址空间越大</p>
+<ul>
+<li>16：不可能大于2^16</li>
+</ul>
+</li>
+<li><p>两个计算机系统地址线相同，寻址空间是否相同？差不多</p>
+<ul>
+<li>特例：地址是64位，可以分两次把地址传（先行地址再列地址），此时寻址空间可以得到扩展</li>
+</ul>
+</li>
+</ul>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032227607.png" alt="image-20211204093009052"></p>
+<p>控制线：防止冲突  I&#x2F;O还有中断</p>
+<p>时钟：同步两个设备协同操作</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032227658.png" alt="image-20211204095532437"></p>
+<ul>
+<li><p>听可以一起听，但只有<strong>一个设备</strong>发送数据</p>
+</li>
+<li><p>使用时<strong>不可以抢夺使用权</strong>，无论优先权有多高</p>
+</li>
+</ul>
+<h2 id="设计要素"><a href="#设计要素" class="headerlink" title="设计要素"></a>设计要素</h2><p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032227693.png" alt="image-20211204095822548"></p>
+<h3 id="用途"><a href="#用途" class="headerlink" title="用途"></a>用途</h3><p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032227719.png" alt="image-20211204095907988"></p>
+<ul>
+<li>专用：功能单一，服务对象单一    不需要和其他设备分享，想传就传，冲突率小吞吐量大  成本高规模大</li>
+<li>复用：节省空间成本 但要控制冲突、复杂性增加</li>
+</ul>
+<h3 id="仲裁"><a href="#仲裁" class="headerlink" title="仲裁"></a>仲裁</h3><p>要决定哪个设备使用总线：</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032227744.png" alt="image-20211204100234620"></p>
+<p>优先级和公平性两个是矛盾的</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032227769.png" alt="image-20211204100359503"></p>
+<ul>
+<li>集中式：辅导员分配</li>
+<li>分布式：自己商量</li>
+</ul>
+<h4 id="集中式"><a href="#集中式" class="headerlink" title="集中式"></a>集中式</h4><h5 id="链式查询"><a href="#链式查询" class="headerlink" title="链式查询"></a>链式查询</h5><p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032227058.png" alt="image-20211204100631432"></p>
+<p>请求信号：一个或多个设备想使用总线</p>
+<p>先判断是否使用总线（看有无请求信号）：</p>
+<ul>
+<li>使用就把允许信号&#x2F;&#x2F;截下来，不使用就继续传下去（传递需要总线不忙）</li>
+</ul>
+<p>繁忙：是<strong>双向</strong>的。当总线忙，不允许被使用。</p>
+<ul>
+<li>发允许信号要求总线不忙</li>
+<li>发起了请求，也拿到了使用权：要把总线设为忙</li>
+<li>想使用总线：先看总线忙不忙，如果忙就不发送请求</li>
+</ul>
+<p><strong>总结</strong></p>
+<p>绿色线串联起设备，每个设备先监听总线忙不忙，不忙就发起请求（同一个周期里可能有多个）。</p>
+<p>蓝线拿到请求会先看总线忙不忙，如果不忙就会在绿色的线上发起信号，每个设备会依次拿到允许信号，根据自己发送请求与否决定是否传下去。想使用：设为忙，不往下传；不想使用：继续往下传。</p>
+<ul>
+<li>优先级是严格固定的，公平性比较差</li>
+</ul>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032227104.png" alt="image-20211204101621260"></p>
+<ul>
+<li><p>对电路故障敏感：根据自己的状态决定传不传下去，无法判断是设备坏了还是想使用。一个坏了，后面的所有都无法使用总线了</p>
+</li>
+<li><p>等待时间长，响应速度慢：平均n&#x2F;2</p>
+</li>
+</ul>
+<h5 id="计数器查询"><a href="#计数器查询" class="headerlink" title="计数器查询"></a>计数器查询</h5><p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032227126.png" alt="image-20211204101855763"></p>
+<ul>
+<li>允许线换成设备ID线：报号 如果想用就发送请求</li>
+<li>log2N根线同时监听，才能知道报数是不是到自己（才能表示N个地址）</li>
+</ul>
+<p>区别：辅导员说而不是同学说了  窍门：<strong>报数可以改变顺序</strong> 1234 3124 </p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032227155.png" alt="image-20211204102358164"></p>
+<p>某个设备坏了影响不是很大</p>
+<p>需要知道喊的是我：需要解码和比较ID设备的硬件模块，速度也相应变慢</p>
+<h5 id="独立请求"><a href="#独立请求" class="headerlink" title="独立请求"></a>独立请求</h5><p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032227180.png" alt="image-20211204102622942"></p>
+<p>非常灵活，优先级和公平性都可以通过不同策略有</p>
+<p>想用就可以请求，不需要等，速度得到大幅提高</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032227466.png" alt="image-20211204102836615"></p>
+<h4 id="分布式"><a href="#分布式" class="headerlink" title="分布式"></a>分布式</h4><h5 id="自举式"><a href="#自举式" class="headerlink" title="自举式"></a>自举式</h5><p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032227147.png" alt="image-20211204103151337"></p>
+<p>只关心比我<strong>优先级高</strong>的设备用不用：公平性受影响</p>
+<p><strong>设备3优先级最高</strong>：不用管别人 只用自己发送请求</p>
+<ul>
+<li><p>向下：关心其他设备要不要使用</p>
+</li>
+<li><p>向上：发送请求</p>
+</li>
+</ul>
+<p>BR3：设备3想用总线，设为1，设备012会接收到信号。</p>
+<p>设备0没有表达请求的线：只用看BR0繁忙上有没有信号，不忙就可以申请</p>
+<p><strong>总结</strong></p>
+<p>首先看总线忙不忙，然后表达自己的请求，同时看高优先级的有没有请求，如果能用就把总线设为忙。</p>
+<h5 id="冲突检测"><a href="#冲突检测" class="headerlink" title="冲突检测"></a>冲突检测</h5><p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032227174.png" alt="image-20211204104011311"></p>
+<p>看到椅子没人，就立即去坐。感觉到挤说明有冲突。都站起来。各自随机回退一定距离，再重新抢。</p>
+<p>很公平，但没有优先级，需要时间，效率相对低</p>
+<h3 id="时序"><a href="#时序" class="headerlink" title="时序"></a>时序</h3><p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032227202.png" alt="image-20211204104724707"></p>
+<p>异步：前后事件的衔接</p>
+<h4 id="同步时序"><a href="#同步时序" class="headerlink" title="同步时序"></a>同步时序</h4><p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032227231.png" alt="image-20211204104840252"></p>
+<p>约定好策略   </p>
+<ul>
+<li>快的迁就慢的（一个时钟周期准备好）没办法发挥高性能优势   </li>
+<li>如果想同步意味着总线不能太长</li>
+</ul>
+<h4 id="异步时序"><a href="#异步时序" class="headerlink" title="异步时序"></a>异步时序</h4><p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032227258.png" alt="image-20211204105741131"></p>
+<p>伸一只手，再伸一只：有先后关系 三个不同的状态</p>
+<ul>
+<li>Ready：准备好了可以来拿      上升沿：准备好 下降沿：撤了，为下一次传输腾空间</li>
+<li>Ack：拿完了，通知一声拿了   上升沿：取好了&#x3D;&#x3D;可以把ready信号撤了  下降沿：撤掉“取好了”</li>
+</ul>
+<p><strong>非互锁</strong></p>
+<p>先“准备好”，再“取到”：没有额外限制，必然状态</p>
+<p><strong>半互锁</strong></p>
+<p>知道“取到了”再撤掉：<strong>防止</strong>ready信号撤早了 如果撤早了ack可能压根不知道ready准备好，会一直等</p>
+<p><strong>全互锁</strong></p>
+<p>知道“ready撤”再撤ack：<strong>防止</strong>ready不知道ack取好了，ready就会一直等</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032227485.png" alt="image-20211204123446515"></p>
+<p>全局：CPU有某个地址，从存储器取数据后传给CPU       3次握手完成地址传输 3次握手完成数据传输</p>
+<p>两个Ready信号：</p>
+<ul>
+<li>ReadReq：地址就绪</li>
+<li>DataRdy：数据就绪</li>
+</ul>
+<p>Data：地址线和数据线复用（用的同一批线）</p>
+<p>1、先设置地址才能读</p>
+<p>2、存储器读完了，CPU请求和地址才能被释放  否则存储器不知道读请求</p>
+<p>3、“读完了”信号才能被释放  否则CPU可能不知道读完了，会一直放着数据线</p>
+<p>4、承上启下，开启对数据的传输</p>
+<p>5、读数据</p>
+<p>6、知道“CPU读完了” 存储器才能释放请求和数据 否则CPU不知道读请求</p>
+<p>7、“读完了”信号才能被释放 否则存储器可能不知道读完了，会一直放着数据线</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032227521.png" alt="image-20211204124721403"></p>
+<p>所有事情的发生通过信号：对噪声敏感</p>
+<h4 id="半同步时序"><a href="#半同步时序" class="headerlink" title="半同步时序"></a>半同步时序</h4><p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032227550.png" alt="image-20211204124804355"></p>
+<p>异步很随意，所以容易被噪音影响。</p>
+<p>限定时间点：某个时钟周期的节点：使得和噪声混淆概率降低，比如要求在时钟上升沿</p>
+<h4 id="分离事务"><a href="#分离事务" class="headerlink" title="分离事务"></a>分离事务</h4><p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032227577.png" alt="image-20211204125134844"></p>
+<p> 把一个总线事务分成两个：中途可以让别的设备使用 提高总线利用率 但一个事件的时间增加</p>
+<h2 id="总线带宽和数据传输率"><a href="#总线带宽和数据传输率" class="headerlink" title="总线带宽和数据传输率"></a>总线带宽和数据传输率</h2><p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032227600.png" alt="image-20211204125438204"></p>
+<p>总线带宽：与时间和数据量相关，<strong>时，</strong>数据传输速率**比较现实。</p>
+<p>地址总线：可能多次传输，但地址总线越宽，<strong>一次</strong>传输的地址位数越多</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032227626.png" alt="image-20211204125722487"></p>
+<p>同步：CPU发地址给内存，内存准备数据后将数据传输给CPU</p>
+<p>读一个32位的字：总线正好是32位宽 所以只需传一次 一个时钟周期就行</p>
+<p>总共传了32位：数据量&#x2F;总耗时</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032227107.png" alt="image-20211204125924933"></p>
+<p>1、CPU把地址传给内存</p>
+<p><strong>234都可以准备数据，因为不需要数据</strong>，5：取234和数据准备的最大值（按图片左边的来，右边指下一步！！）</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032227868.png" alt="image-20211204130146987"></p>
+<p>同步：250？<strong>一个时钟周期只能做一件事</strong>  确定了开始和结束的时间 230&#x2F;50 &#x3D; 5 5*50&#x3D;250</p>
+<p>注意下面这道题是同步（3步）。异步则有7步。</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032227906.png" alt="image-20211204130340528"></p>
+<p>每次传输：靠一个地址来传输 表示一个总线事务传4个字或16个字</p>
+<p>因为能整除：传256个字、4个字、16个字数据传输率一样。所以只需求每次总线事务里面的就可以了</p>
+<p>传输时间：总线事务传输的时间*总线事务的个数</p>
+<p>每秒总线事务数：1s&#x2F;总线事务传输的时间</p>
+<p>2、64位宽：每次传2个字</p>
+<p>3、2个空闲的时钟周期：算到总的时间开销</p>
+<p>4、cache的原理：前四个字未命中，后四个字命中</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032227948.png" alt="image-20211204131034944"></p>
+<p>过程依然是CPU发地址给内存，内存准备好数据后把数据给CPU</p>
+<ul>
+<li><p>一个地址：一个时钟周期</p>
+</li>
+<li><p>数据准备：只准备前4个字所以需要200ns</p>
+</li>
+<li><p>一个时钟周期：2个字 所以传输4个字需要两个时钟周期</p>
+</li>
+</ul>
+<p>总共需要256个字，需要这样的操作64次</p>
+<p>200MHz：1s有(200 * 10^6)个时钟周期，所以一个时钟周期的时间为 10^9&#x2F;(200*10^6)&#x3D;5ns</p>
+<p>这个传输时间有64个总线事务，所以一个总线事务：14400ns&#x2F;64 每秒的总线事务数就是用1&#x2F;(14400ns&#x2F;64)</p>
+<p>数据传输率：256个字，每个字32bit</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032227976.png" alt="image-20211204131636147"></p>
+<p>16个字：准备4次 前面的数据在总线上传输时可以准备后面的字</p>
+<p>第一个传输与第二个准备叠，第二个传输与第三个准备叠，第三个传输与第四个准备叠，20ns是四个时钟周期，所以取大的。数据准备好了连续传是可以的，不影响这里的结果。</p>
+<p>蓝色的2：最后的4个字传输的时间</p>
+<p>黑色的2：表示空闲</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032227441.png" alt="image-20211212234614868"></p>
+<ul>
+<li><p>提高频率：缩短周期</p>
+</li>
+<li><p>数据线根数变多 时间不变数据变多（分子变大）</p>
+</li>
+<li><p>一次传一次地址，可以穿一大块地址：同样的数据量，减少了地址传输的时间和数据准备的时间 但需要额外的支持</p>
+</li>
+<li><p>释放总线后：总线可以传输别的 空闲时间干一些其他事情 可传输的数据变多 每个事务的时间会变长（要等车）</p>
+</li>
+<li><p>写操作可以同时传过去，不需要等待先传地址再传数据</p>
+</li>
+</ul>
+<h2 id="总线层次结构"><a href="#总线层次结构" class="headerlink" title="总线层次结构"></a>总线层次结构</h2><h3 id="单总线结构"><a href="#单总线结构" class="headerlink" title="单总线结构"></a>单总线结构</h3><p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032227747.png" alt="image-20211212235247601"></p>
+<ul>
+<li><p>长度增长，延迟变大，协调困难</p>
+</li>
+<li><p>请求多，总线成为瓶颈 车多路窄</p>
+</li>
+</ul>
+<h3 id="双总线结构I"><a href="#双总线结构I" class="headerlink" title="双总线结构I"></a>双总线结构I</h3><p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032227337.png" alt="image-20211212235819486"></p>
+<p>CPU需要指令和数据</p>
+<p>CPU如果还要和I&#x2F;O模块谦让效率就会降低</p>
+<p>还可以分流系统总线</p>
+<h3 id="双总线结构II"><a href="#双总线结构II" class="headerlink" title="双总线结构II"></a>双总线结构II</h3><p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032227361.png" alt="image-20211213000106651"></p>
+<p>IOP：输入输出处理机</p>
+<p>原来的总线改名成存储器总线 可以减少I&#x2F;O对总线的影响</p>
+<h3 id="多总线结构I"><a href="#多总线结构I" class="headerlink" title="多总线结构I"></a>多总线结构I</h3><p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032227402.png" alt="image-20211213000345461"></p>
+<ul>
+<li>加了cache，本地总线</li>
+<li>这时候cache还在cpu外部，现在在内部了</li>
+</ul>
+<h3 id="多总线结构II"><a href="#多总线结构II" class="headerlink" title="多总线结构II"></a>多总线结构II</h3><p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032227332.png" alt="image-20211213000833201"></p>
+<p>主存没有连在系统总线，而是高速I&#x2F;O</p>
+<p>DMA：其实是通过CPU在进行交互？？</p>
+<h3 id="多总线结构III"><a href="#多总线结构III" class="headerlink" title="多总线结构III"></a>多总线结构III</h3><p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032227351.png" alt="image-20211213001204716"></p>
+<p>分了低速和高速</p>
+<h1 id="14-指令系统"><a href="#14-指令系统" class="headerlink" title="14-指令系统"></a>14-指令系统</h1><p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032229267.png" alt="image-20211213145115956"></p>
+<p>计算机：处理器执行指令来完成</p>
+<p>指令集：能执行的指令的集合 不同计算机有不同的指令集</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032229278.png" alt="image-20211213145319431"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032229285.png" alt="image-20211213145413480"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032229297.png" alt="image-20211213145503915"></p>
+<p>如何解析01串？</p>
+<p>解读方式：依据指令格式：分成几段  一般不止一种格式 所以避免<strong>二义性</strong></p>
+<p>0&#x2F;1串给人读很累：符号表示法 操作码写作助记符 操作数用存放的地方来表示</p>
+<h2 id="操作码"><a href="#操作码" class="headerlink" title="操作码"></a>操作码</h2><p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032229314.png" alt="image-20211213145834892"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032229321.png" alt="image-20211213145925967"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032229164.png" alt="image-20211213150025722"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032229190.png" alt="image-20211213150059839"></p>
+<p>移位怎么做？</p>
+<ul>
+<li>逻辑：空出来的位置补0</li>
+<li>算术：符号位不动 左移补0右移补符号位</li>
+<li>循环</li>
+</ul>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032229213.png" alt="image-20211213150457827"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032229246.png" alt="image-20211213150518277"></p>
+<h3 id="指令寻址"><a href="#指令寻址" class="headerlink" title="指令寻址"></a>指令寻址</h3><p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032229275.png" alt="image-20211213150658974"></p>
+<ul>
+<li>实现循环和条件判定</li>
+</ul>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032229299.png" alt="image-20211213150811972"></p>
+<ul>
+<li>不同：包含隐地址 接下来一条会被跳过去，或者是下一指令地址</li>
+<li>更加灵活</li>
+</ul>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032229307.png" alt="image-20211213150945297"></p>
+<p>调用怎么实现？关键是返回的那个点在哪里，只要把返回指令的位置记住就可以调用了。</p>
+<ul>
+<li><p>4100有调用过程1 返回地点：4601 4651 4101</p>
+</li>
+<li><p>RN存下一条指令（PC+三角）的地址，把需要调用的首地址X放到当前寄存器PC 执行完以后再从相应寄存器中取出地址   </p>
+</li>
+<li><p>问题：过程1再调用过程2就不行了，需要无穷尽的寄存器   所以这个方法只支持<strong>无嵌套的调用</strong></p>
+</li>
+</ul>
+<p>怎么去做多层调用？黄色框</p>
+<ul>
+<li>X：被调用过程开始的地方 返回的地址放到了被调用的函数开始的地方，然后从第二条开始执行</li>
+<li>所以被调用的方法：第一条是空出来的：存放调用他的需要返回的地址 第二条才是指令开始的地方</li>
+<li>4101：放在4500的位置 4601放在4800 4651放在4800  最后返回到4101</li>
+<li>为什么需要使用栈：前提：返回的地址不会在过程执行中被修改  什么时候会被修改：执行时有人调用它，意味着<strong>自己调用自己</strong>（递归解决不了） 然后会覆盖原来存下来的地址</li>
+</ul>
+<p>使用栈：解决递归</p>
+<ul>
+<li>返回的地址压入栈</li>
+</ul>
+<h2 id="操作数"><a href="#操作数" class="headerlink" title="操作数"></a>操作数</h2><p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032229344.png" alt="image-20211213153838396"></p>
+<ul>
+<li>提供四个地址引用，但下一指令地址一般是隐含的  目的操作数：结果操作数</li>
+<li>可以把源操作数当做目的操作数（只需要两个，图2） 有一个默认的位置（AC寄存器，只需要告诉第二个位置）（只需要一个，图3）所以地址引用的数量是不定的</li>
+<li>地址数量越少，指令越短，不需要复杂的CPU</li>
+<li>坏处：不灵活 约束比较多（需要规定某个操作数的地方）条数会变多，时间会变长（看三张图即可知道）</li>
+<li>如果用多个地址，需要多个寄存器</li>
+</ul>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032229376.png" alt="image-20211213154453614"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032229412.png" alt="image-20211213154518752"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032229438.png" alt="image-20211213154530826"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032229471.png" alt="image-20211213154552958"></p>
+<p>大端：把低位数据放在大的地址</p>
+<p>小端：把低位数据放在小的地址</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032229189.png" alt="image-20211213155256824"></p>
+<p>字节层面反过来，而不是87654321，不影响字节内部的排列</p>
+<p>大端：顺着下来的</p>
+<p>小端：从32位地址直接取低位也很方便</p>
+<h3 id="操作数寻址"><a href="#操作数寻址" class="headerlink" title="操作数寻址"></a>操作数寻址</h3><p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032229213.png" alt="image-20211213155532036"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032229238.png" alt="image-20211213155549314"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032229281.png" alt="image-20211213155615405"></p>
+<p>EA：指向的可能是操作数地址 </p>
+<p>（X）：括号表示里面的内容</p>
+<h4 id="立即寻址"><a href="#立即寻址" class="headerlink" title="立即寻址"></a>立即寻址</h4><p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032229300.png" alt="image-20211213155711178"></p>
+<p>实际出现：不是直接寻址是<strong>立即寻址</strong>！！立刻通过指令本身获得操作数，什么都不用干 只需要取一条指令</p>
+<p>数据的长度受限于地址字段的长度，表示的数的大小有限</p>
+<h4 id="直接寻址"><a href="#直接寻址" class="headerlink" title="直接寻址"></a>直接寻址</h4><p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032229792.png" alt="image-20211213155917923"></p>
+<p>可以获得操作数的有效（实际）地址，只要去存储器访问就行了</p>
+<ul>
+<li>限制：有效地址的大小：因为是指令里面的一段</li>
+</ul>
+<p>操作数永远可以表示成（EA） 这里就可以表示为（A）</p>
+<h4 id="间接寻址"><a href="#间接寻址" class="headerlink" title="间接寻址"></a>间接寻址</h4><p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032229024.png" alt="image-20211213161401166"></p>
+<p>指向的是存操作数的地址（有效地址的地址）</p>
+<ul>
+<li>缺点：要访问2次存储器</li>
+<li>好处：扩展地址空间</li>
+</ul>
+<p>解释：虽然多了一道寻址，但A还是有一定约束，不过这不一定是坏事</p>
+<h4 id="寄存器寻址"><a href="#寄存器寻址" class="headerlink" title="寄存器寻址"></a>寄存器寻址</h4><p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032229048.png" alt="image-20211213161752141"></p>
+<ul>
+<li><p>缺点：寄存器少（精贵），需要很好地利用</p>
+</li>
+<li><p>有效利用：把一个数据从主存放到寄存器，读了再算，再放回寄存器没有意义</p>
+</li>
+<li><p>如果多次访问寄存器才有意义，否则是对寄存器的浪费性的使用</p>
+</li>
+</ul>
+<h4 id="寄存器间接寻址"><a href="#寄存器间接寻址" class="headerlink" title="寄存器间接寻址"></a>寄存器间接寻址</h4><p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032229073.png" alt="image-20211213162151314"></p>
+<p>第一步用的寄存器的地址，比间接寻址少一次存储器访问，但比寄存器寻址多一次存储器访问</p>
+<h4 id="偏移寻址"><a href="#偏移寻址" class="headerlink" title="偏移寻址"></a>偏移寻址</h4><p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032229947.png" alt="image-20211213180206258"></p>
+<p>需要算：寄存器的内容+相对偏移</p>
+<p>哪个是显式的？A</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032229968.png" alt="image-20211213180339079"></p>
+<p>局部性：差不会很大，可以节约地址的位数 用相对短的差替代比较长的地址</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032229041.png" alt="image-20211213180615721"></p>
+<p>会给B：<strong>重定位</strong>怎么确定真实地址？相对基础地址来定义，看偏移量即可</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032229065.png" alt="image-20211213181035089"></p>
+<p>前面两种变化的都是A，跟数组下标很像。A是数组第一个元素的位置，R表示下标，用自增的寄存器可以对数组进行遍历。</p>
+<p>两种变址结果是一样的。</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032229089.png" alt="image-20211213181345836"></p>
+<p>指针指向栈顶，保存在某个寄存器。知道栈顶的位置，再用偏移量取对应数据出来</p>
+<ul>
+<li>与零地址的关系：可不可以不要地址？表示操作数存在固定的地方 两个操作数按照预设的顺序存在固定的地方——栈</li>
+</ul>
+<h4 id="栈寻址"><a href="#栈寻址" class="headerlink" title="栈寻址"></a>栈寻址</h4><p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032229122.png" alt="image-20211213181955479"></p>
+<p>后进先出</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032229041.png" alt="image-20211213182126831"></p>
+<p>分隔开：栈顶针存放着当前的栈顶，即可进行操作</p>
+<ul>
+<li>栈基放低地址：向上增长</li>
+<li>栈基放高地址：向下增长</li>
+</ul>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032229071.png" alt="image-20211213182252189"></p>
+<p>后缀表示法更好：不需要括号，很容易利用栈来进行求值运算</p>
+<ul>
+<li><p>怎么把中缀表达式变成后缀表达式？中间：从左往右扫描  遇到操作数：输出 遇到操作符：压栈，如果优先级高：压入，如果优先级低或一样：不断弹出知道遇到优先级更低的（相等不行）（+X 遇到＋ 弹出X和+） 遇到左括号压 遇到右括号：弹出操作符直到遇到左括号  输入为空再把栈里的依次弹出</p>
+</li>
+<li><p>后缀变成中缀：是操作数：压进去 是操作符：运算后把结果再压入</p>
+<ul>
+<li>a b c -&gt;a b<em>c-&gt; a+(b * c) -&gt; a+(b * c) d e -&gt; a+(b * c) d+e -&gt;a+(b * c) + f</em>(d+e)</li>
+</ul>
+</li>
+</ul>
+<h2 id="指令格式"><a href="#指令格式" class="headerlink" title="指令格式"></a>指令格式</h2><p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032229119.png" alt="image-20211213184935665"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032229148.png" alt="image-20211213184956570"></p>
+<p>不是任意的，有这样的规则：</p>
+<ul>
+<li>不能太短或太长</li>
+<li>唯一的含义</li>
+<li>字段的个数多了比较灵活，小了会短但是条数增加</li>
+</ul>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032229177.png" alt="image-20211213185505649"></p>
+<ul>
+<li><p>短：节省空间</p>
+</li>
+<li><p>长：位数更多，方便</p>
+</li>
+<li><p>等于存储器的传送长度：可以正好取一条指令 不要少一块或者多一块</p>
+</li>
+</ul>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032229209.png" alt="image-20211213185706782"></p>
+<p>涉及操作码和操作数怎么分配：</p>
+<p>操作数长寻址能力强，操作码长可以更加灵活</p>
+<ul>
+<li>变长：可以占用更长的区域 前提是操作数需要的位数少&#x2F;需要的寻址能力少</li>
+<li>字节寻址比较细，需要更长的地址；16、32位需要更少的地址位</li>
+</ul>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032229429.png" alt="image-20211213190257975"></p>
+<ul>
+<li>优点：提供比较多的操作码</li>
+<li>怎么保证可以取出来这些指令？按<strong>最长</strong>的来</li>
+</ul>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032229457.png" alt="image-20211213190431100"></p>
+<ul>
+<li>完备性：也不是越多越好</li>
+<li>兼容性：原来的软件也能用</li>
+<li>多种数据类型都能进行处理</li>
+<li>可扩充：为新增的操作码提供可能</li>
+</ul>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032229497.png" alt="image-20211213190615713"></p>
+<p>操作码为什么那么多：指令条数不要太长，操作码类型也不要太多</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032229523.png" alt="image-20211213191535238"></p>
+<h1 id="15-指令周期和指令流水线"><a href="#15-指令周期和指令流水线" class="headerlink" title="15 指令周期和指令流水线"></a>15 指令周期和指令流水线</h1><h2 id="指令周期"><a href="#指令周期" class="headerlink" title="指令周期"></a>指令周期</h2><p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032230180.png" alt="image-20211213191823889"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032230200.png" alt="image-20211213192002304"></p>
+<ul>
+<li>解析操作码-&gt;看操作数（计算EA有效地址，取操作数，多次往复）-&gt;操作数据（运算）-&gt;算结果放哪里-&gt;取下一条指令（算地址）  中间：返回字符串或数据还需要再译码</li>
+</ul>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032230245.png" alt="image-20211213192400204"></p>
+<p>加了中断：检查有没有中断。</p>
+<p>做完一个案件不是立即取下一个指令：</p>
+<ul>
+<li>中断禁止：回过去取下一条指令</li>
+<li>中断允许：检查有无中断及处理中断</li>
+</ul>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032230218.png" alt="image-20211213192717254"></p>
+<p>有中断朝右（处理完了也会朝左），没时间朝左</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032230256.png" alt="image-20211213192805092"></p>
+<p>间接寻址：需要更多的存储器访问 这里把读取存储器的过程当做另外的指令周期 因为涉及存储器的访问，所以单独拎出来（左侧是正常的指令周期）</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032230274.png" alt="image-20211213193155884"></p>
+<p>取操作数：多了两个指向自己的。相当于取了两次。</p>
+<ul>
+<li>提出的意义：相当于取了两次操作数，多了一些操作，反映在CPU中影响数据流和指令流水线。</li>
+</ul>
+<h2 id="CPU的任务"><a href="#CPU的任务" class="headerlink" title="CPU的任务"></a>CPU的任务</h2><p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032230729.png" alt="image-20211213193351878"></p>
+<p>从数据流的视角观察</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032230761.png" alt="image-20211213193605385"></p>
+<h3 id="取指周期"><a href="#取指周期" class="headerlink" title="取指周期"></a>取指周期</h3><p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032230791.png" alt="image-20211213193735839"></p>
+<p>1、指令存储的地址：PC 放地址总线上，因为不是直接连，先放在MAR再放在地址总线。</p>
+<p>控制线要告诉存储器地址准备好了，存储器从控制线上获得响应信息。</p>
+<p>黄色：存储器接收到准备好的信号后从地址总线读取地址，随即进行数据准备。</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032230824.png" alt="image-20211213193841718"></p>
+<p>2、指令取好后存储器把数据放到数据总线。因为MBR与数据总线连在一起，再送到IR。</p>
+<p>如果是同步，按时做操作就行。如果是异步：要反馈，绿色箭头含义是存储器已经准备好了。</p>
+<p>一般都是同步的，所以画单向箭头也没事。</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032230852.png" alt="image-20211213193955916"></p>
+<p>3、控制器会让PC+1。发生在指令取完后。</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032230880.png" alt="image-20211213194654408"></p>
+<h3 id="间址周期"><a href="#间址周期" class="headerlink" title="间址周期"></a>间址周期</h3><p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032230441.png" alt="image-20211213194742455"></p>
+<ul>
+<li>要把间接地址换成有效地址：MBR里面获得的是间接地址，需要传给MAR，MAR再放到地址总线（因为只有MAR连接着地址总线），控制器会发送响应信号，存储器随之从地址总线上取地址。（区别在不是从PC开始而是从MBR、MAR开始了）</li>
+</ul>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032230472.png" alt="image-20211213195345607"></p>
+<ul>
+<li>准备数据：通过右边的箭头返回到数据总线，再反馈到MBR。取出来的是有效地址（在存储器中转换） <ul>
+<li>MBR可以一直认为连在数据总线上，数据总线有啥他就有啥</li>
+<li>MAR可以认为一直连在地址总线上</li>
+</ul>
+</li>
+<li>取出来的是什么东西？取出的是有效地址。<strong>取操作数在执行里做</strong>（和取指周期一样，这里返回的是<strong>有效地址</strong>）。</li>
+</ul>
+<h3 id="中断周期"><a href="#中断周期" class="headerlink" title="中断周期"></a>中断周期</h3><p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032230510.png" alt="image-20211213201846381"></p>
+<p>多了一个PC</p>
+<ul>
+<li><p>所有的东西都指向存储器：这里是写操作（刚刚是读操作）</p>
+</li>
+<li><p>PC到MBR：对PC内容的保存，处理中断要知道能返回到哪里</p>
+</li>
+<li><p>控制器通知PC，PC把下一条指令的地址放到MBR，MBR放到数据总线上</p>
+</li>
+</ul>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032230540.png" alt="image-20211213202238595"></p>
+<p>MAR放什么地址：保存PC寄存器中的下一条指令的位置的地址。存在存储器的哪里？由控制器告诉。类似栈里面调用的过程。中断也有这种过程调用。</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032230566.png" alt="image-20211213203001814"></p>
+<p>控制器需要通知存储器：绿色箭头，知道要写入数据了</p>
+<p>存储器会从地址线获取地址（红色），从数据线上获取数据（黄色），然后写起来（存的是PC+1）</p>
+<h2 id="指令流水线"><a href="#指令流水线" class="headerlink" title="指令流水线"></a>指令流水线</h2><p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032230594.png" alt="image-20211213205250785"></p>
+<p>流水线：把若干个阶段分好工 每一个人都只做了一部分事情</p>
+<p>好处：每个人的步骤单一，熟练度得到提高，更快 CPU本来就是各个部件，非常适用。CPU就相当于生产线，各部件相当于装水的工人。</p>
+<ul>
+<li>有一个工作最闲：贴标签 如果工作量分配不平衡就不好，会造成资源的浪费</li>
+</ul>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032230860.png" alt="image-20211213210005845"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032230883.png" alt="image-20211213210054937"></p>
+<p>问题：执行指令的时间长，都需要访问内存：访问冲突</p>
+<p>取指令会经常等执行指令，但执行时如分支语句地址也需要等，会给新的地址，原来的会作废。</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032230912.png" alt="image-20211213210419932"></p>
+<p>把执行指令划分成了5个组成部分。处理了时间不平衡的问题。</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032230947.png" alt="image-20211213210529319"></p>
+<p>指令1译码时，可以取第二条指令…因为每个步骤由不同部件在完成</p>
+<p>大大缩减时间单位</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032230974.png" alt="image-20211213210757536"></p>
+<ul>
+<li><p>Load不需要写回操作数，需不需要简化呢？不需要，因为会多一条生产线，不执行空着就行（硬件设计便利）</p>
+</li>
+<li><p>不是所有并行：因为有冲突</p>
+</li>
+<li><p>时间难免会有差别：时刻的设计——以每个阶段中最长的，保证所有人都能做完</p>
+</li>
+</ul>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032230063.png" alt="image-20211213211120426"></p>
+<p>跳转：取回的指令执行不下去了，可能要取新的——代价大，做了一半的指令被浪费了（最后才知道跳到哪个地址）4567均失效（这里明显指令3是跳转指令）</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032230089.png" alt="image-20211213211242169"></p>
+<p>跳转和中断都会发生浪费</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032230115.png" alt="image-20211213211323929"></p>
+<p>红色框无效（因为I3是跳转指令，WO写入会把指令送到流水线执行，因为设定是在流水线上刚一出现就撤销）。绿色是空区域，把不该执行的指令的控制信号清零。</p>
+<h3 id="性能"><a href="#性能" class="headerlink" title="性能"></a>性能</h3><p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032230145.png" alt="image-20211213211419416"></p>
+<p>如何评价这个流水线好不好：</p>
+<p>ti：处理时间</p>
+<p>tm：最大的延迟</p>
+<p>k：多少段</p>
+<p>d：上一阶段到下一阶段需要的时间  装好水后还要给下一个人需要时间（可能中间会放在桌子） 指令也可能放在寄存器，再从寄存器取出来，会有延迟</p>
+<ul>
+<li>周期时间：最慢的ti+d</li>
+</ul>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032230627.png" alt="image-20211213213551259"></p>
+<p>第一条指令：k个t，后面的每一条：比原来多1个时间阶段</p>
+<p>kt+t+t(n-1个t)&#x3D;[k+(n-1)]t</p>
+<ul>
+<li>加速比：评价性能好坏：没使用流水线的时间&#x2F;使用流水线的时间 <strong>大于1</strong></li>
+</ul>
+<p>理想情况下的公式</p>
+<p>但需要考虑流水线失效：分母可能会变（跳转的话分母会变化）</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032230951.png" alt="image-20211213213929474"></p>
+<p>阶段数越多，指令数越大，执行速度越快  但这不是绝对的，因为d会越来越多（<strong>延迟</strong>），不同部件使用相同资源产生的<strong>冲突</strong>也始终没有解决</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032230977.png" alt="image-20211213214035092"></p>
+<h3 id="冒险"><a href="#冒险" class="headerlink" title="冒险"></a>冒险</h3><p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032230274.png" alt="image-20211213214229644"></p>
+<p>数据依赖性：需要前面的数据算出来，而不是可以直接并行去做</p>
+<p>控制冒险：有跳转或者其他的</p>
+<h4 id="结构冒险"><a href="#结构冒险" class="headerlink" title="结构冒险"></a>结构冒险</h4><p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032230190.png" alt="image-20211213215310041"></p>
+<p>不同指令同一时刻访问相同的资源：都要访问内存&#x2F;寄存器</p>
+<ul>
+<li>分成不同的存储器：指令和数据 而且引入了Cache 数据cache和代码cache是分离的，可以避免冲突发生</li>
+<li>上升沿下降沿交给不同的使用：往里写，往外读，是不同的在使用</li>
+</ul>
+<h4 id="数据冒险"><a href="#数据冒险" class="headerlink" title="数据冒险"></a>数据冒险</h4><p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032230215.png" alt="image-20211213215524599"></p>
+<p>第一个指令 r1是结果 执行完才能得到 只有异或采用的新的r1，前面都有问题</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032230243.png" alt="image-20211213215729222"></p>
+<p>nop慢慢等就行 坏处：啥都做不了</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032230271.png" alt="image-20211213215816712"></p>
+<p>硬件插入气泡：硬件阻塞  比较复杂：要判断哪些相关，怎么做到阻塞  其实还是有时间开销</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032230312.png" alt="image-20211213215931103"></p>
+<p>其实不是最后才产生r1：第三步就算好r1了（旁路，提前打听好）转发r1给r2，正好也赶得上r2计算（ALU前面输入）</p>
+<p>什么时候有效？前面算出来的是可以用，有一种情况不是算出来的——load是取出来的，在DM后面才能拿到</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032230369.png" alt="image-20211213220508954"></p>
+<p>两个lw：b到2，c到3 通过<strong>调整顺序</strong>让几条指令间不需要等</p>
+<h4 id="控制冒险"><a href="#控制冒险" class="headerlink" title="控制冒险"></a>控制冒险</h4><p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032230134.png" alt="image-20211213220841073"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032230155.png" alt="image-20211213220913618"></p>
+<p>问题：取错了需要的，如果没取错就没问题：解决——不去选择，都取 </p>
+<p>当然也要控制数量：用一个循环缓冲器：在里面就不放，不在里面就取</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032230184.png" alt="image-20211213221326269"></p>
+<p>另外一种思路：不多取，而是猜谁更对点（预测可能的分支）</p>
+<ul>
+<li>静态预测：和现在的状态无关 预测规则不变（不根据处理的历史发生改变）</li>
+<li>动态预测：</li>
+</ul>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032230228.png" alt="image-20211213221519224"></p>
+<p>静态：来一个操作码就预测</p>
+<p>动态：状态不同预测不同 对for循环</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032230270.png" alt="image-20211213221658757"></p>
+<p>看是不是第一次：第一次就加，不是第一次看之前是怎样的，再根据这次的结果调整应该做怎样的预测</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032230957.png" alt="image-20211213221801167"></p>
+<h1 id="16-控制器"><a href="#16-控制器" class="headerlink" title="16 控制器"></a>16 控制器</h1><p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032232209.png" alt="image-20211219193956860"></p>
+<p>左边是ALU，然后是几组寄存器，下面是控制线，由CPU内部总线连接。CPU和内存：系统总线，内部是内部总线。灰色粗点的：控制通路，传递控制信号。</p>
+<p>ALU里面的双向箭头：可能生成或者取</p>
+<h2 id="寄存器"><a href="#寄存器" class="headerlink" title="寄存器"></a>寄存器</h2><p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032232192.png" alt="image-20211219194322447"></p>
+<ul>
+<li>帮助减少对主存的访问</li>
+<li>控制CPU，大多数不可见</li>
+<li>两者其实没有明确界限，PC寄存器在x86是用户可见，可以修改使用，不少机器上不能使用</li>
+<li>有些明明是操作系统控制的，也是用户可见的</li>
+</ul>
+<h3 id="用户可见寄存器"><a href="#用户可见寄存器" class="headerlink" title="用户可见寄存器"></a>用户可见寄存器</h3><p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032232253.png" alt="image-20211219194815371"></p>
+<ul>
+<li>通用：什么都能做，但也没有那么通用，如只用于浮点数或者栈操作</li>
+<li>数据&#x2F;地址：</li>
+<li>条件码寄存器&#x2F;标志寄存器：部分用户可见，如程序员可观察到 正负0溢出等存在reg里 可能不能被程序员修改，但可以通过一定方式隐含的被读出来  虽然是用户可见，同时构成控制寄存器的组成部分</li>
+<li>条件码寄存器不一定是必须的，有优缺点：指令变简单，硬件复杂性，额外的操作</li>
+</ul>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032232272.png" alt="image-20211219195402595"></p>
+<ul>
+<li>完全通用vs固定用途</li>
+<li>AC寄存器：操作数和结果可能放在特定寄存器 长度短 但不灵活 不仅涉及用途还涉及指令集</li>
+<li>寄存器数量：少：不够用 多：成本上升</li>
+<li>长度：越长越贵 可以保存大多数类型的值 两个：特定的应用</li>
+</ul>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032232225.png" alt="image-20211219195937189"></p>
+<p>新的子程序，原来的状态也要保存下来 调用和保存：CPU完成，可以独立使用</p>
+<ul>
+<li>子程序调用之外要保存：程序员的责任</li>
+</ul>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032232295.png" alt="image-20211219200144849"></p>
+<ul>
+<li><strong>取出来指令，PC就完成+1</strong>.转移跳转也会完成变化。<strong>始终指向下一条要执行的指令</strong></li>
+<li>IR</li>
+<li>MAR </li>
+<li>MBR：包含写进或读出来的字，用户可见寄存器再和MBR进行数据交换<ul>
+<li>CPU给ALU处理素材和结果，可用在CPU和存储器的交互</li>
+</ul>
+</li>
+</ul>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032232925.png" alt="image-20211219200719087"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032232967.png" alt="image-20211219200929598"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032232999.png" alt="image-20211219225742332"></p>
+<p>定制寄存器的设计，权衡寄存器和存储器</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032232028.png" alt="image-20211219225919244"></p>
+<h2 id="微操作"><a href="#微操作" class="headerlink" title="微操作"></a>微操作</h2><p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032232057.png" alt="image-20211219225952322"></p>
+<p>程序的执行分解为指令周期</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032232093.png" alt="image-20211219230133955"></p>
+<p>左边就是一个个微操作 </p>
+<ul>
+<li>MAR和地址总线相连 取地址是把pc的地址给主存，需要把pc地址放到地址总线上，pc做不了只能拷贝到MAR，而MAR和地址总线直接相连，所以内容相同 括号指里面的内容</li>
+<li>主存会把要取的指令准备好，放到数据总线上，而MBR与数据总线相连，存储指令的值 <ul>
+<li>PC不一样：PC+1</li>
+</ul>
+</li>
+<li>指令放到IR寄存器 即把MBR内容放到IR寄存器</li>
+</ul>
+<p>还没有写完：t1 t2 t3 会假设有一个时钟，每一个操作所需时间等长 <strong>微操作还要标识在哪个时间单位里</strong></p>
+<p>微操作唯一吗？不一定（当然一个周期里面调换顺序不算）<img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032232456.png" alt="image-20211219231206235"></p>
+<p>IR&lt;-(MBR)可以放在第四个吗？不可以，时间要少</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032232477.png" alt="image-20211219231304176"></p>
+<ul>
+<li>前后顺序要恰当</li>
+<li>避免冲突：先读后写和先写后读不可能放在一个里面</li>
+<li>满足条件下，时间尽可能少</li>
+</ul>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032232503.png" alt="image-20211219231534503"></p>
+<ul>
+<li>指令中的地址部分：<strong>间接地址</strong>放到MAR 然后主存会读出(MAR)的内容，获得<strong>有效地址</strong>放到MBR</li>
+<li>MBR在t2是写，在t3是读，显然需要三个周期</li>
+</ul>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032232528.png" alt="image-20211219231754283"></p>
+<ul>
+<li>根据IR寄存器的地址放到MAR，在从主存中取数据放到MBR，因为是间接寻址所以是(MBR)+(R1)<ul>
+<li>不能压时间：送地址才能写内容 t2写t3读</li>
+</ul>
+</li>
+<li>保存当前地址并跳转到另一个地方：1、把PC内容写到指定的地方，2、根据指令地址跳转新的地方<ul>
+<li>MAR存了指令里的地址 因为要告诉MAR存到哪里 要跳转的地方在哪里 可能帮助传输给PC？</li>
+<li>PC放到MBR才能放到主存，且更新PC要跳转的地址</li>
+</ul>
+</li>
+</ul>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032232551.png" alt="image-20211219233158362"></p>
+<p>看看有没有允许的中断发生</p>
+<ul>
+<li>PC的内容放到MBR 存放地址放到MAR 新的地址放到PC MBR的内容放主存（备份旧地址）</li>
+<li>尽可能少：2个就可以完成</li>
+</ul>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032232216.png" alt="image-20211219234021527"></p>
+<p>怎么把各个微操作连起来？ICC表示四个不同状态</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032232254.png" alt="image-20211219234609231"></p>
+<ul>
+<li>00：判断是不是间接寻址，不是就直接执行</li>
+</ul>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032232283.png" alt="image-20211219234743024"></p>
+<p>01：读有效地址 就可以执行了</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032232623.png" alt="image-20211219235104944"></p>
+<p>首先看操作码 对应不同的微操作序列 00：进入下一个取址</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032232432.png" alt="image-20211219235159269"></p>
+<p>通过ICC把各个操作联系起来了</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032232615.png" alt="image-20211219235446263"></p>
+<p>让寄存器和内部总线之间来回传递 箭头是数据流动方向</p>
+<ul>
+<li>MAR连地址线，把主存里的内容放MBR</li>
+<li>MBR绿色箭头指的和AC红色箭头指的可以同时合并吗？放进去并不会分别到ALU的两条线上，而是在总线上混淆，所以先放其中一个，用Y暂存一个操作数 这样看图可以进入ALU的两个分支</li>
+<li>绿色箭头断掉AC才能打开，然后自动生成结果</li>
+<li>结果不能自动返回到系统总线上，因为AC还在，会造成循环运算-&gt;蓝色暂存</li>
+<li>第五步把蓝色输出门打开，红色输入门打开，就可以算出来了</li>
+</ul>
+<h2 id="控制器"><a href="#控制器" class="headerlink" title="控制器"></a>控制器</h2><p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032232643.png" alt="image-20211220000419690"></p>
+<ul>
+<li>定序：排列微操作 然后保证执行</li>
+</ul>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032232857.png" alt="image-20211220000558181"></p>
+<ul>
+<li>指令中的寻址方式（间址周期） 操作码（执行周期）影响控制</li>
+<li>标志：上一次的结果 </li>
+<li>时钟：标识时间 </li>
+<li>收到来自控制总线的控制信号：中断等</li>
+</ul>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032232888.png" alt="image-20211220000750712"></p>
+<ul>
+<li>CPU内的控制信号<ul>
+<li>寄存器之间数据传送</li>
+<li>启动ALU功能</li>
+</ul>
+</li>
+<li>指向控制总线的控制信号（CPU外）<ul>
+<li>到存储器</li>
+<li>到I&#x2F;O模块</li>
+</ul>
+</li>
+<li>所有控制信号到最后是0&#x2F;1作用到各个逻辑门 0关上 1打开</li>
+</ul>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032232926.png" alt="image-20211220000957545"></p>
+<ul>
+<li>红色：PC-&gt;MAR C2打开（需要控制信号连C2 1） C0看成一直开着的（可到达地址总线） </li>
+<li>绿色：还需要Cr（对外的读信号）告诉存储器需要读，然后放到数据总线上 打开C5就存入了MBR</li>
+<li>MBR-&gt;IR：出的 把C4打开连到IR，别的门都断了</li>
+</ul>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032232458.png" alt="image-20211220001458348"></p>
+<ul>
+<li>C8是到MAR的</li>
+<li>Cr&#x2F;C5到MBR</li>
+<li>C4送到IR</li>
+</ul>
+<p>中断：</p>
+<ul>
+<li>PC到MBR：C1</li>
+<li>MBR内容要写到主存，C12开，同时要Cw写信号</li>
+</ul>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032232482.png" alt="image-20211220001809630"></p>
+<p>高频使用：只做最少的事情 只需要知道性质并产生相应信号 不用具体</p>
+<h3 id="实现"><a href="#实现" class="headerlink" title="实现"></a>实现</h3><p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032232510.png" alt="image-20211220001923464"></p>
+<ul>
+<li>输入转输出</li>
+<li>逻辑由微程序中的微指令控制</li>
+</ul>
+<h4 id="硬布线实现"><a href="#硬布线实现" class="headerlink" title="硬布线实现"></a>硬布线实现</h4><p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032232541.png" alt="image-20211220002021801"></p>
+<p>4种输入：时钟、标志、控制总线信号、指令寄存器</p>
+<ul>
+<li><p>标志、控制总线信号：都是0、1 溢出、中断请求等：都有特殊含义</p>
+</li>
+<li><p>指令寄存器有寻址方式和操作码</p>
+<ul>
+<li>把操作码转化成逻辑输入：本来是编码好的01串（0001表示什么，0010表示什么）2^n种方式 但不方便</li>
+<li>译码：n位 生成2^n种输出 某个操作码有特定位为1 实际困难一点</li>
+</ul>
+</li>
+<li><p>输入I1-4，对应了一个O的输出</p>
+<ul>
+<li>0000 O16为1，其他为0</li>
+<li>0001 O15为1，其他为0</li>
+<li>这里需要log2(16)&#x3D;4位来标识16位 标志</li>
+</ul>
+</li>
+</ul>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032232576.png" alt="image-20211220002706340"></p>
+<p>规范哪个时间单位，还是要转化为逻辑信号01</p>
+<ul>
+<li>定时器分解为很多逻辑信号，在哪个阶段相应线为1，其他为0</li>
+<li>时钟一直累加还是在一个指令周期内？一个指令周期内 T1 T2是子周期内部 完成子周期时钟信号会清零 t1+t2..+所需要的阶段 完成子周期（如取指周期结束）就清零</li>
+</ul>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032232607.png" alt="image-20211220003007557"></p>
+<p>P&#x2F;Q:表示在哪个子周期里 帮忙规定在指令周期的哪个阶段</p>
+<p>C5:00的T2+01的T2 +或 两种情况值为1</p>
+<p>执行周期有时候要读入操作数10：LDA:LOAD 为1 会更完整</p>
+<p>所有的控制信号C都可以用布尔表达式表达-&gt;实现硬件</p>
+<p>这样<strong>输入就可以变成输出的控制信号</strong></p>
+<p>局限性：布尔表达式数量非常大，超级复杂</p>
+<h4 id="微程序实现"><a href="#微程序实现" class="headerlink" title="微程序实现"></a>微程序实现</h4><p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032232789.png" alt="image-20211220003651868"></p>
+<p>固件：微指令：一行来描述微操作</p>
+<p>每一个操作对应门的开关，要产生01控制信号 把每个线排好形成01串 就是<strong>一行</strong></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032232828.png" alt="image-20211220003945863"></p>
+<p>每个字标地址，来回跳来跳去，就可以不断输出控制信号</p>
+<p>微指令地址：存跳到的微指令</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032232861.png" alt="image-20211220004315094"></p>
+<p>任意一条指令，取指、间址、中断，微操作序列一样 微指令序列也一样</p>
+<p>不同：执行 和操作数无关 和操作码有关：对应不同微指令 <strong>相同操作码-&gt;相同微指令</strong></p>
+<p>执行：拿出来01串放到控制线上发出去</p>
+<p>红字：间：到黄  执行：到绿</p>
+<p>黄：到绿 </p>
+<p>绿：分析操作码 跳到相应紫 最后统一紫（中断） 有：黄下到蓝 再跳到取指 </p>
+<h3 id="任务"><a href="#任务" class="headerlink" title="任务"></a>任务</h3><p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032232886.png" alt="image-20211220004947651"></p>
+<p>大小 时间：不想太慢</p>
+<p>执行：复制01串到线上就行</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032232448.png" alt="image-20211220005122787"></p>
+<p>双：二选一</p>
+<p>单：一个地址 普遍</p>
+<p>可变格式：12都有可能</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032232491.png" alt="image-20211220005229235"></p>
+<p>定序逻辑：决定下一条地址，发送给控制地址寄存器，也会发读命令给控制存储器</p>
+<p>控制地址寄存器：存下一个地址</p>
+<p>控制存储器：根据地址读相应的微指令，放在缓冲里</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032232526.png" alt="image-20211220005437856"></p>
+<p>黄色内容生成控制信号，绿色传（因为和控制线相连），蓝色决定下一条的信息，玫红传新的地址</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032232560.png" alt="image-20211220005802148"></p>
+<ul>
+<li>生成新地址<ul>
+<li>顺序：定序逻辑中+1</li>
+<li>跳转：新的放定序逻辑，再装到控制地址寄存器</li>
+<li>机器指令例程</li>
+</ul>
+</li>
+<li>红色：01正好对应？但不够紧凑 实际可以编码（留下需要用的） 长度缩短</li>
+<li>绿色：因为被编码了也需要译码器</li>
+</ul>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032232594.png" alt="image-20211220010204713"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032234881.png" alt="image-20211220010243704"></p>
+<h1 id="17-输入输出"><a href="#17-输入输出" class="headerlink" title="17 输入输出"></a>17 输入输出</h1><p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032233842.png" alt="image-20211222130746856"></p>
+<p>不是计算机系统，不是I&#x2F;O模块。</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032233859.png" alt="image-20211222130808058"></p>
+<p>数据交换：屏幕、电影 都是二进制输出 鼠标点击、麦克风、喇叭：二进制输入</p>
+<p>内部0&#x2F;1和外部环境的交互：通过外围设备 <strong>外设</strong></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032233876.png" alt="image-20211222131323335"></p>
+<p>不可以</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032233881.png" alt="image-20211222131400037"></p>
+<ul>
+<li>鼠标、显示器、打印机大不相同 总线不能支持这么多的操作</li>
+<li>大部分数据传送速度比较慢，少部分非常快 慢：等待 浪费 快：涌入大量数据来不及处理</li>
+<li>数据格式可能不一样</li>
+</ul>
+<h2 id="I-O模块"><a href="#I-O模块" class="headerlink" title="I&#x2F;O模块"></a>I&#x2F;O模块</h2><p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032233890.png" alt="image-20211222131629957"></p>
+<p>把难以对接的两方面连在一起，外设非常多 </p>
+<p>I&#x2F;O模块属于计算机系统，外设不属于 <strong>输入输出就是这里的I&#x2F;O模块</strong></p>
+<p>上面连系统总线，下面连外设</p>
+<ul>
+<li>上面：控制线控制信号 听令于CPU 地址数据线各自传 I&#x2F;O模块有不同寻址方式 数据从内部到外从外设到内存都有</li>
+<li>下面：<img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032233910.png" alt="image-20211222132038312"></li>
+</ul>
+<p>以统一的方式还是不同的方式：统一，因为外设层出不穷 分开太复杂了</p>
+<ul>
+<li>控制信号：外设也受计算机系统操控 控制信号从计算机内部经过I&#x2F;O模块输出</li>
+<li>状态信号：由外设送里面：打印机没墨、卡纸，输送状态</li>
+<li>数据信息：双向 有输出也有输入</li>
+</ul>
+<p>背景色：抽象的外部设备 </p>
+<p>控制逻辑：用来控制外设的操作，控制信号它接收，状态信号它汇报，朝右箭头：<strong>控制的能力</strong></p>
+<p>大一点的框：</p>
+<ul>
+<li>缓冲器 对接和I&#x2F;O模块的数据交换 解决数据交换速度不一等问题</li>
+<li>转换器：音频信号和01信号有区别，没办法直接输入输出，需要<strong>转换</strong> 喇叭有耳机，01要被听到，转化成音频信号 把设备特有的形态和01进行转换</li>
+</ul>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032233134.png" alt="image-20211222132854902"></p>
+<p>I&#x2F;O模块受到计算机系统的命令、数据、报告状态、分辨外设的<strong>唯一地址</strong>，也要能和外设进行交互。</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032233165.png" alt="image-20211222133018805"></p>
+<p>速度不匹配，需要在两者之间做缓冲</p>
+<p>每次同时处理三个人，一下子来了30人，人少也可以攒，都是缓冲</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032233206.png" alt="image-20211222133407964"></p>
+<p>并不知道什么时候敲键盘，所以要做控制和定时</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032233234.png" alt="image-20211222133458821"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032233256.png" alt="image-20211222133526686"></p>
+<p>逆时针方向90°旋转</p>
+<ul>
+<li>红色：连到了计算机系统内部<ul>
+<li>数据线连数据寄存器：</li>
+<li>状态&#x2F;控制寄存器：不是从控制线过来？控制一种是CPU对I&#x2F;O模块的控制，要读&#x2F;写，从控制信号过来；另一种是<strong>发给外部设备的命令，从数据线过来</strong>，同样的从外设获得的状态信息也从状态寄存器来，再从数据线返回</li>
+<li>为什么混在一起？不会同时出现。获取状态和发控制命令是不会同时出现的（一般先后），可以复用</li>
+</ul>
+</li>
+<li>蓝色：和外设，涉及数据控制状态  不止一个外设所以有多组</li>
+</ul>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032233288.png" alt="image-20211222134048291"></p>
+<ul>
+<li>并行接口：连多根线到外围设备 同时传多位数据</li>
+<li>串行接口：只有一根线 每次只传输一位</li>
+<li><strong>串行用的更多</strong>：并行需要保持信息同步，走的一样快很难。1、本身不要走太远 2、两批数据间隔时间变长，不容易混在一起 要求线不能太长，频率不能太高 串行频率可以很高传很远</li>
+</ul>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032233590.png" alt="image-20211222134437939"></p>
+<p>USB：通用串行总线</p>
+<h2 id="I-O操作技术"><a href="#I-O操作技术" class="headerlink" title="I&#x2F;O操作技术"></a>I&#x2F;O操作技术</h2><p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032233616.png" alt="image-20211222155317235"></p>
+<ul>
+<li>编程式：无中断 有处理器</li>
+<li>中断驱动式：有中断 有处理器</li>
+<li>DMA：有中断  无处理器（处理器也会做事，但数据传送不需要）</li>
+</ul>
+<h3 id="编程式"><a href="#编程式" class="headerlink" title="编程式"></a>编程式</h3><p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032233652.png" alt="image-20211222155714153"></p>
+<ul>
+<li>读<strong>外围设备的状态</strong> 会等待 CPU始终在参与I&#x2F;O这件事情 投入比例是100%<ul>
+<li>未就绪：要等等</li>
+<li>就绪：从硬盘读取字，然后写到存储器 判断有没有结束</li>
+<li>设备坏了：报错</li>
+</ul>
+</li>
+</ul>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032233690.png" alt="image-20211222160030050"></p>
+<p>读：从外设获得数据，写：传到外设</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032233720.png" alt="image-20211222160317180"></p>
+<p>编址：</p>
+<ul>
+<li>映射式：统一的地址空间 会占用地址空间</li>
+<li>分离式：有存储器的线，也有I&#x2F;O命令线，是分开的</li>
+</ul>
+<h3 id="中断驱动式"><a href="#中断驱动式" class="headerlink" title="中断驱动式"></a>中断驱动式</h3><p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032233750.png" alt="image-20211222160543875"></p>
+<p>解决不断等待设备就绪的过程中消耗的时间</p>
+<p>区别：向I&#x2F;O模块发出读命令后，CPU可做其他事情 I&#x2F;O准备好后会发起中断提醒CPU，CPU再检查</p>
+<ul>
+<li>就绪：等待的任务交给I&#x2F;O模块，等到数据读好后利用中弄断提醒CPU</li>
+<li>出错</li>
+</ul>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032233154.png" alt="image-20211222161000730"></p>
+<ul>
+<li>控制器的一个来源就是来自系统总线的控制信号</li>
+<li>处理器会处理完更重要的事情然后来处理这个中断，然后获取这个数据</li>
+</ul>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032233178.png" alt="image-20211222161247283"></p>
+<ul>
+<li>结束时会检查中断</li>
+<li>保存现场，读数据字并存储，恢复现场并继续运行</li>
+</ul>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032233204.png" alt="image-20211222161333743"></p>
+<ul>
+<li>保存：需要一段时间，过程中如果中断仍允许可能被打断，所以会禁止中断，安心保存现场，再允许，恢复同理也会禁止中断，再允许中断 正常情况下其实都允许</li>
+<li>处理中断时允许吗？<strong>允许</strong>，否则中断响应后一直禁止了</li>
+</ul>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032233236.png" alt="image-20211222162119366"></p>
+<p>响应优先级高：小伙子抢到座位 更快地抢到位置 多个中断谁会被最先响应</p>
+<p>处理优先级高：小伙子会把位子让给老太太 最后地占有位置 看到小伙子会视而不见（只能看到处理优先级高的，处理优先级低或同级的会屏蔽掉） 新的中断来如果优先级高会切换响应</p>
+<p>好几个中断一起来：从里面筛选处理优先级比自己高的，然后优先响应<strong>响应优先级最高</strong>的，但是最终抢到位置的是<strong>处理优先级最高</strong>的（在保存完现场打算处理时把中断允许后比较）</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032233260.png" alt="image-20211222162807972"></p>
+<p>掩码字：表示谁可以屏蔽谁 （根据<strong>处理优先级</strong>来算） <strong>所在行的能不能屏蔽列的</strong> 最低的只能屏蔽自己</p>
+<p>中断服务程序：</p>
+<ul>
+<li>主程序的优先级是最低的 L1(因为响应优先级最高)（保存后开中断，处理L1，会看看L3L4的处理优先级比不比L1高）（小红线包括保存、处理、恢复原来破坏的状态）</li>
+<li>响应L3（响应优先级更高）L3保存现场后打开中断发现L4的处理优先级高，会切换到L4，处理完后切到L3，因为L2处理优先级低于L3，视而不见，恢复主程序的现场，刚恢复好发现L2在，处理L2</li>
+</ul>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032233280.png" alt="image-20211222163703350"></p>
+<p>怎么知道哪一个设备发起中断？多个中断线：每条线还是要进一步分辨哪一个设备，还是要用三种技术</p>
+<ul>
+<li>软件轮询：问哪个模块发生的中断</li>
+<li>菊花链：统一的中断请求线，传到这了就响应一下</li>
+<li>独立请求：特定的阶码和分析优先级</li>
+</ul>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032233582.png" alt="image-20211222164320582"></p>
+<ul>
+<li>固定优先级</li>
+<li>轮询次数</li>
+<li>链接次序</li>
+<li>中断控制器控制</li>
+</ul>
+<h3 id="直接存储器存取"><a href="#直接存储器存取" class="headerlink" title="直接存储器存取"></a>直接存储器存取</h3><p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032233608.png" alt="image-20211222164435447"></p>
+<p>I&#x2F;O直接和存储器读写数据</p>
+<ul>
+<li>CPU等待I&#x2F;O就绪花时间</li>
+<li>传递数据时先到CPU，再从CPU传到主存，读写都一样，因为没有直接沟通的途径，所以需要CPU干预，只有CPU有控制功能，主存和I&#x2F;O模块只能听令行事</li>
+<li>能不能解放CPU？提高利用率，因为其实没干啥</li>
+</ul>
+<p>需要特殊硬件——DMA模块，替换CPU：有计数，把CPU的功能剥离了，设计专门硬件</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032233642.png" alt="image-20211222164825310"></p>
+<p>长流程图变得很短：向DMA交代要去读，然后CPU做其他事情，DMA处理完了数据交互后会发指令给CPU，此时CPU知道所有事情都做完了</p>
+<ul>
+<li><p>其他麻烦：搬数据让给DMA了，指令在内存里，DMA在内存和I&#x2F;O模块间搬数据，都会访问内存——一个内存应付两个设备，可能发生冲突，让给谁——<strong>DMA优先</strong>，因为通常连接高速数据，如果不快速处理就会被冲掉</p>
+</li>
+<li><p>交给DMA做：CPU告诉DMA从哪里读，读多长，CPU在初始化和结束的处理时都有一定的时间开销</p>
+</li>
+</ul>
+<h4 id="内存访问"><a href="#内存访问" class="headerlink" title="内存访问"></a>内存访问</h4><h5 id="CPU停止法"><a href="#CPU停止法" class="headerlink" title="CPU停止法"></a>CPU停止法</h5><p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032233680.png" alt="image-20211222165415020"></p>
+<p>把权限给DMA，DMA要用CPU就交出去，但CPU会被耽误 DMA如果始终在传输数据方法没问题，但有时候数据是一波一波来的，两波数据之间主存并没有被有效利用  所以<strong>适用于大块数据传输</strong></p>
+<h5 id="周期窃取"><a href="#周期窃取" class="headerlink" title="周期窃取"></a>周期窃取</h5><p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032233712.png" alt="image-20211222165629831"></p>
+<p>I&#x2F;O数据准备好了才会发请求给总线，才会迁移总线控制权</p>
+<p>中间一段给CPU了，<strong>DMA只要不用就立刻交回去</strong>，交换频繁，坏处DMA每次要用都要向总线发请求，然后切换，会有开销 当然主存利用率会变大 适用周期大，然后数据一波儿一波儿</p>
+<h5 id="交替分时访问"><a href="#交替分时访问" class="headerlink" title="交替分时访问"></a>交替分时访问</h5><p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032233738.png" alt="image-20211222165839887"></p>
+<p>每个存储周期一分为二，上半周期应对CPU，下半周期应对DMA 很强的假设：存储周期很长，CPU来得及DMA也来得及</p>
+<p>DMA怎么连到总线上？</p>
+<h4 id="配置机制"><a href="#配置机制" class="headerlink" title="配置机制"></a>配置机制</h4><h5 id="单总线分离DMA"><a href="#单总线分离DMA" class="headerlink" title="单总线分离DMA"></a>单总线分离DMA</h5><p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032233041.png" alt="image-20211222170148933"></p>
+<p>就是把编程式里CPU的部分变成DMA了</p>
+<h5 id="单总线集合的DMA-I-O"><a href="#单总线集合的DMA-I-O" class="headerlink" title="单总线集合的DMA-I&#x2F;O"></a>单总线集合的DMA-I&#x2F;O</h5><p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032233068.png" alt="image-20211222170336802"></p>
+<p>为一个或多个I&#x2F;O模块配备专门的DMA，有单独通道，不根据总线和I&#x2F;O通讯了，有专门的，减少对总线的占用</p>
+<h5 id="I-O总线"><a href="#I-O总线" class="headerlink" title="I&#x2F;O总线"></a>I&#x2F;O总线</h5><p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032233101.png" alt="image-20211222170500018"></p>
+<p>共用DMA，可以提升整体的利用率，扩展性好 加一个I&#x2F;O也支持</p>
+<h4 id="DMA示例"><a href="#DMA示例" class="headerlink" title="DMA示例"></a>DMA示例</h4><p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032233127.png" alt="image-20211222170550174"></p>
+<p>一开始要查询传递参数设置，中断在硬盘上寻道、查找扇区，CPU才能将任务交给DMA。读写完成后发起中断让CPU做结束操作，并进行校验。比较高的参与度</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032233145.png" alt="image-20211222170828241"></p>
+<p>不断发展：现在：I&#x2F;O通道：有自己的处理器，有些指令专门为I&#x2F;O设计</p>
+<p>I&#x2F;O处理器：增加一个局部存储器，发展为自治计算机</p>
+<h1 id="18-课程小结"><a href="#18-课程小结" class="headerlink" title="18 课程小结"></a>18 课程小结</h1><p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032233175.png" alt="image-20211223141807326"></p>
+<p>透明：看不见 组织会影响结构</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032233193.png" alt="image-20211223142115905"></p>
+<p>总线不在冯诺依曼里，是后来改进的</p>
+<p>把CPU拆开，I&#x2F;O拆开——5个</p>
+<p>思想：存储程序 现在和数据一起存——区分程序和数据（<strong>指令周期的每个阶段来区分</strong>：取指是指令，间址是数据）</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032233215.png" alt="image-20211223142558700"></p>
+<p>努力成为现实——带来很多正面影响 天气预报要超算 摄像头小</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032233258.png" alt="image-20211223143403418"></p>
+<p>最重要——CPU性能</p>
+<p>MIPS-防止做手脚MFLOPS-&gt;不同的方面</p>
+<p>指令流水线、多核等都可以提高性能</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032233287.png" alt="image-20211223143824355"></p>
+<p>钟 不同挪法——个数总是2^k </p>
+<p>双精度不是很重要</p>
+<p>填满数域的技巧：用00000000补小，用11111111补无穷（都是挪了一部分）</p>
+<p>NBCD：0-9用四位数表示 1100 1101表正负</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032233310.png" alt="image-20211223144430924"></p>
+<p>这里我好像忘光了</p>
+<p>校验码不出错-&gt;数据不出错 不能直接用C’和D‘ 比C’和C’’（已知最多一位出错，D’没有出错，C‘则一定没有出错）??</p>
+<ul>
+<li>奇：异或1 补上奇校验码有奇数个1 分清楚</li>
+<li>偶：补上后有偶数个1</li>
+<li>海明码：谁影响故障字 一位出错C 多位出错D</li>
+<li>循环冗余校验CRC：生成多项式</li>
+</ul>
+<h2 id="CPU（算术）"><a href="#CPU（算术）" class="headerlink" title="CPU（算术）"></a>CPU（算术）</h2><p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032233205.png" alt="image-20211223144907475"></p>
+<p>下一条：PC</p>
+<p>三地址（还有个结果）两地址（两个操作数）1（AC）0（栈）</p>
+<p>间接：取两次</p>
+<p>偏移分三种（忘了，待复习）</p>
+<p>二义性：长的操作码不能解释为短的操作码</p>
+<p><strong>用0地址1地址2地址写程序</strong>、微操作序列等</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032233225.png" alt="image-20211223150430292"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032233248.png" alt="image-20211223150458205"></p>
+<p>引入中断：判断允许还是禁止，正常都是允许的（判断有无中断，有没有看得到的中断，处理优先级）</p>
+<p>间址：取有效地址</p>
+<p>微操作除了告诉干什么，还给时间——t1、t2…尽可能少，读和写等不能冲突，一个t谁先谁后没有影响</p>
+<p>ICC：修改2位</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032233290.png" alt="image-20211223151050855"></p>
+<p>时间尽可能相等</p>
+<p>判断指标——<strong>加速比&gt;1</strong> 没用的放上面 T1,n变长了：因为有些步骤不需要，存寄存器取出来等浪费时间</p>
+<p>有跳转——下一条有效的第一个（读）和上一条有效的最后一个（写入）在一个时间线里，不冲突</p>
+<p>（红框的不算了，只算到最后的？？没听懂？？）</p>
+<p>旁路？nop 调整代码顺序</p>
+<p>靠旁路一定解决数据冒险吗：不一定</p>
+<p>控制冒险：开始的位置 不太可能一直在里面转圈，而是大多数预测准 一般就<strong>四个状态</strong></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032233319.png" alt="image-20211223151745473"></p>
+<p>公式怎么算，<strong>延迟</strong>分别是多少，怎么算</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032233338.png" alt="image-20211223151843762"></p>
+<p>减法：CarryIn+1，选择进行取反</p>
+<p>疑似一张A4纸考一道手算计算 </p>
+<p>Cache具体的过程肯定不考（没有不考Cache的意思）</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032233167.png" alt="image-20211223152129130"></p>
+<p>按照图来，不一定按照32位来，可能8位等（ppt的例子）</p>
+<p>保护位：右移时还在里面</p>
+<p>舍入：不同模式</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032233191.png" alt="image-20211223152345331"></p>
+<p>注意补偿+0110  看看结果对不对 要<strong>写过程</strong></p>
+<p>减法避免借位：反转操作 如果<strong>结果没有进1</strong>——还不上——反转加1 </p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032233218.png" alt="image-20211223152633443"></p>
+<p>控制器的实现：输入-&gt;输出</p>
+<ul>
+<li>硬布线：用布尔运算的形式算得控制信号 不能改</li>
+<li>微程序：通过不同的地址实现跳转等，灵活    比较慢<ul>
+<li>具体的实现流程</li>
+</ul>
+</li>
+</ul>
+<h2 id="存储-1"><a href="#存储-1" class="headerlink" title="存储"></a>存储</h2><p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032233269.png" alt="image-20211223153152579"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032233294.png" alt="image-20211223153204667"></p>
+<p>长了贵，短了不够用，看操作系统的需求 还有数据存在内存</p>
+<p>总线：不能有两个源发送信息：冲突 两个都无了 只能有一个门打开</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032233335.png" alt="image-20211223153405284"></p>
+<p>内存跟不上CPU速度</p>
+<p>p是命中率 Tm主存时间  第二行式子好算</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032233192.png" alt="image-20211223153631630"></p>
+<p>LRU：使用的时间</p>
+<p>LFU：使用的次数</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032233231.png" alt="image-20211223153736449"></p>
+<p><strong>存储器类型</strong>——背！！不同的区别 ROM可以写，出厂是ROM，自己写一次是DROM，整片整片擦、按字节擦，最后按块擦比较常用——快闪存储器</p>
+<p>存储阵列：位扩展（人多了）、字扩展（房间数多了）….行地址列地址怎么选中（行译码器）</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032233285.png" alt="image-20211223154132085"></p>
+<p>磁头离得更近，做的更小，盘子的密度更高，可以读写小位数的</p>
+<p>双磁头</p>
+<p>柱面</p>
+<p>输出数据的速度要尽可能稳定</p>
+<p>好几个磁道划一个扇区</p>
+<p>光盘：螺旋线，从头到尾一根线，恒定线速度，所以时快时慢，里面慢外面块 DVD：坑更小</p>
+<p>磁带顺序读</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032233322.png" alt="image-20211223154509549"></p>
+<p>多个磁盘合起来提高容量</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032233352.png" alt="image-20211223154629466"></p>
+<p>分页的逻辑：忘了  TLB当前要用的页放进去？？</p>
+<p>逻辑地址-&gt;物理地址（快表-&gt;页表 缺页到硬盘） 拿数据（Cache-&gt;主存）</p>
+<h2 id="总线-1"><a href="#总线-1" class="headerlink" title="总线"></a>总线</h2><p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032233376.png" alt="image-20211223154918100"></p>
+<p>复用-&gt;线变少，浪费时间</p>
+<p>节省时间：不复用   不在乎时间：复用</p>
+<p>仲裁：集中式（仲裁器，计数器查询解决出现故障的问题）&#x2F;分布式（自举式优先排好序，最低和总线连着）</p>
+<p>不可以两个设备发信号，别人用总线优先级高不能抢（与中断不同）</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032233751.png" alt="image-20211223155154144"></p>
+<p>算数据传输率（同步、异步）</p>
+<h2 id="输入输出"><a href="#输入输出" class="headerlink" title="输入输出"></a>输入输出</h2><p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032233292.png" alt="image-20211223155231987"></p>
+<p>串行好：速度高，距离远</p>
+<p>编程式：100% 运行一段程序</p>
+<p>中断：解决等设备就绪的问题（优先级的例子）不会画图但是会写流程（<strong>从哪里来回哪里去</strong>，看保存的是什么恢复到哪里，主存才能看到被屏蔽的中断请求） 响应和处理</p>
+<p>DMA：解决搬数据的问题 也会用中断（磁盘的例子）CPU让DMA（高速数据传输设备）</p>
+
+        </div>
+
+        
+            <section class="post-copyright">
+                
+                
+                
+                
+
+            </section>
+        
+        <section class="post-tags">
+            <div>
+                <span>标签:</span>
+                <span class="tag">
+                    
+                    
+                        <a href="/tags/%E8%AF%BE%E7%A8%8B/"># 课程</a>
+                    
+                        
+                </span>
+            </div>
+            <div>
+                <a href="javascript:window.history.back();">返回</a>
+                <span>· </span>
+                <a href="/">主页</a>
+            </div>
+        </section>
+        <section class="post-nav">
+            
+                <a class="prev" rel="prev" href="/2024/10/05/%E5%8D%9A%E5%AE%A2%E4%BC%98%E5%8C%96%E6%97%A5%E5%BF%97/">博客优化日志</a>
+            
+            
+        </section>
+
+
+    </article>
+</div>
+
+
+    <div id="gitalk-container"></div>
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.css">
+<script src="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.min.js"></script>
+<script src="//cdn.bootcss.com/blueimp-md5/2.10.0/js/md5.js"></script>
+<div id="gitalk-container"></div>
+<script type="text/javascript">
+      var gitalk = new Gitalk({
+        clientID: '',
+        clientSecret: '',
+        repo: 'blog_comment',
+        owner: 'lyxx2535',
+        admin: 'lyxx2535',
+        id: md5(location.pathname),
+        labels: 'Gitalk'.split(',').filter(l => l),
+        perPage: 10,
+        pagerDirection: 'last',
+        createIssueManually: true,
+        distractionFreeMode: false
+      })
+      gitalk.render('gitalk-container')
+</script>
+
+            </div>
+            <footer id="footer" class="footer">
+    <div class="copyright">
+        <span>© Annie | Powered by <a href="https://hexo.io" target="_blank">Hexo</a> & <a href="https://github.com/Siricee/hexo-theme-Chic" target="_blank">Chic</a> | 2020 - 2025
+            <br>
+            <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+<span class="site-uv">
+    Total visitors:
+    <i class="busuanzi-value" id="busuanzi_value_site_uv"></i>
+</span>&nbsp;|&nbsp;
+
+
+<span class="site-pv">
+    Total views:
+    <i class="busuanzi-value" id="busuanzi_value_site_pv"></i>
+</span>
+
+          </span>
+    </div>
+</footer>
+
+    </div>
+</body>
+
+</html>

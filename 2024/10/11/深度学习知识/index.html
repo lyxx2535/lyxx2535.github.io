@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <meta name="author" content="Annie">
+
+
+
+
+
+<title>深度学习知识 | Annie&#39;s Blog</title>
+
+
+
+    <link rel="icon" href="/favicon.ico">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+    <script src="/js/tocbot.min.js"></script>
+    
+
+
+
+    
+    
+        
+    
+
+
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+<body>
+    <script>
+        // this function is used to check current theme before page loaded.
+        (() => {
+            const currentTheme = window.localStorage && window.localStorage.getItem('theme') || '';
+            const isDark = currentTheme === 'dark';
+            const pagebody = document.getElementsByTagName('body')[0]
+            if (isDark) {
+                pagebody.classList.add('dark-theme');
+                // mobile
+                document.getElementById("mobile-toggle-theme").innerText = "· Dark"
+            } else {
+                pagebody.classList.remove('dark-theme');
+                // mobile
+                document.getElementById("mobile-toggle-theme").innerText = "· Light"
+            }
+        })();
+    </script>
+
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">Lapsey&#39;s Blog</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default">
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+        </div>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">Lapsey&#39;s Blog</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; 菜单</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+            <div class="main">
+                <div class="container">
+    
+    
+        <div class="post-toc">
+    <div class="tocbot-list">
+    </div>
+    <div class="tocbot-list-menu">
+        <a class="tocbot-toc-expand" onclick="expand_toc()">全部展开</a>
+        <a onclick="go_top()">回到顶部</a>
+        <a onclick="go_bottom()">前往底部</a>
+    </div>
+</div>
+
+<script>
+    var tocbot_timer;
+    var DEPTH_MAX = 6; // 为 6 时展开所有
+    var tocbot_default_config = {
+        tocSelector: '.tocbot-list',
+        contentSelector: '.post-content',
+        headingSelector: 'h1, h2, h3, h4, h5',
+        orderedList: false,
+        scrollSmooth: true,
+        onClick: extend_click,
+    };
+
+    function extend_click() {
+        clearTimeout(tocbot_timer);
+        tocbot_timer = setTimeout(function() {
+            tocbot.refresh(obj_merge(tocbot_default_config, {
+                hasInnerContainers: true
+            }));
+        }, 420); // 这个值是由 tocbot 源码里定义的 scrollSmoothDuration 得来的
+    }
+
+    document.ready(function() {
+        tocbot.init(obj_merge(tocbot_default_config, {
+            collapseDepth: 1
+        }));
+    });
+
+    function expand_toc() {
+        var b = document.querySelector('.tocbot-toc-expand');
+        var expanded = b.getAttribute('data-expanded');
+        expanded ? b.removeAttribute('data-expanded') : b.setAttribute('data-expanded', true);
+        tocbot.refresh(obj_merge(tocbot_default_config, {
+            collapseDepth: expanded ? 1 : DEPTH_MAX
+        }));
+        b.innerText = expanded ? 'Expand all' : 'Collapse all';
+    }
+
+    function go_top() {
+        window.scrollTo(0, 0);
+    }
+
+    function go_bottom() {
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+
+    function obj_merge(target, source) {
+        for (var item in source) {
+            if (source.hasOwnProperty(item)) {
+                target[item] = source[item];
+            }
+        }
+        return target;
+    }
+</script>
+    
+
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">深度学习知识</h1>
+            
+                <div class="post-meta">
+                    
+                        作者: <a itemprop="author" rel="author" href="/">Annie</a>
+                    
+
+                    
+                        <span class="post-time">
+                        日期: <a href="#">October 11, 2024&nbsp;&nbsp;14:21:33</a>
+                        </span>
+                    
+                    
+                        <span class="post-category">
+                        分类:
+                            
+                                <a href="/categories/%E7%A7%91%E7%A0%94/">科研</a>
+                            
+                        </span>
+                    
+                </div>
+            
+        </header>
+
+        <div class="post-content">
+            <h1 id="1-RNN-GRU-LSTM"><a href="#1-RNN-GRU-LSTM" class="headerlink" title="1. RNN&#x2F;GRU&#x2F;LSTM"></a>1. RNN&#x2F;GRU&#x2F;LSTM</h1><p>序列模型</p>
+<h2 id="1-1-RNN"><a href="#1-1-RNN" class="headerlink" title="1.1 RNN"></a>1.1 RNN</h2><p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202410121317837.png" alt="img"></p>
+<p>分阶段，串行输入每个x，再输出每个y</p>
+<p>结合当前的输入x^t与前一时间段的状态值a^(t-1)</p>
+<p>激活函数g，参数值都是反向传播学到的</p>
+<p>把Waa和Wax拼接成Wa，a^(t-1)与x^t拼接成[a^(t-1),x^t]上下堆叠，可以把两次乘法变成一次乘法（计算并行程度更好，效率更高）</p>
+<h2 id="1-2-GRU"><a href="#1-2-GRU" class="headerlink" title="1.2 GRU"></a>1.2 GRU</h2><p>引入记忆单元c^t，c^t&#x3D;a^t</p>
+<p>更新门：Γu控制更新多少</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202410121317805.png" alt="img"></p>
+<p>重置门：Γr，使用多少前一状态信息</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202410121317817.png" alt="img"></p>
+<ol>
+<li>算Γu更新门、Γr重置门，sigmoid函数</li>
+<li>算c~^t</li>
+<li>算c^t（相当于算了a^t）</li>
+<li>算y_hat^t</li>
+</ol>
+<h2 id="1-3-LSTM"><a href="#1-3-LSTM" class="headerlink" title="1.3 LSTM"></a>1.3 LSTM</h2><p>a^t !&#x3D; c^t</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202410121317869.png" alt="img"></p>
+<h1 id="2-Attention-Transformer"><a href="#2-Attention-Transformer" class="headerlink" title="2. Attention &amp; Transformer"></a>2. Attention &amp; Transformer</h1><h2 id="Attention"><a href="#Attention" class="headerlink" title="Attention"></a>Attention</h2><p>并行</p>
+<p>向量：列向量，左右拼接，变成矩阵</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202410121317697.png" alt="img"></p>
+<p>X*Q：query向量</p>
+<p>X*K：key向量</p>
+<p>X*V：value向量</p>
+<p>α就是注意力分数，是k和q的乘积之和，然后通过softmax进行归一化（所有α之和等于1）</p>
+<p>A‘是值，V是向量，相当于对向量进行缩放，α相当于V的权重，即得到更多的attention</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202410121317923.png" alt="img"></p>
+<ol>
+<li>先获得qkv.W的维度根据Q&#x2F;X决定</li>
+<li>每个qk进行内积运算得到attention score</li>
+</ol>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202410121317715.png" alt="img"></p>
+<ol>
+<li>对每列α进行归一化</li>
+</ol>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202410121317858.png" alt="img"></p>
+<ol>
+<li>最后计算y</li>
+</ol>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202410121317907.png" alt="img"></p>
+<p>Attention模型忽视距离，无论两个向量相隔多远都会乘上</p>
+<p>缺点：没有位置信息，可以用位置向量进行补充（比如transformer用sin&#x2F;cos，这里门道也多）</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202410121317821.png" alt="img"></p>
+<p>transformer：用输入向量位置pos和维度d_model进行对应位置向量的计算。通过以上两个公式，可以获得一个维度为4的位置向量e2，奇数位置的数用下面的公式得到，偶数用上面。即e2的1234个位置应该是0，1，1，2</p>
+<h2 id="Transformer"><a href="#Transformer" class="headerlink" title="Transformer"></a>Transformer</h2><p>在文本摘要任务中，输入可能是一篇文章，输出是该文章的摘要。 在对话生成任务中，输入可能是对话历史记录，输出是模型应该生成的下一句话。 在语音识别任务中，输入可能是音频信号，输出是对应的文本转录</p>
+<p>很适合序列任务</p>
+<p>2个特征：1. 编码器-解码器架构；2. 自回归（前一时刻的输出会作为后一时刻的输入）</p>
+<p>对于机器翻译任务，编码器的输入是源语言单词的独热编码（3个向量），输出是一系列经过全连接层和标准化处理的向量。在解码器层，输入包括编码器的输出、目标语言中的标记（如开始标记、结束标记）和之前已经生成的目标语言单词的向量表示。</p>
+<p>关于为什么这里直接把BOS和“永不言弃”编码成词向量，输入解码器，“永不言弃”怎么来的，这里的输入直接就是最终的“标准答案”，这样在训练的过程中可以引导解码器训练更好的参数。当然在预测任务中不知道答案，这时的输入仅有编码器的输出</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202410121317932.png" alt="img"></p>
+<h3 id="编码器"><a href="#编码器" class="headerlink" title="编码器"></a>编码器</h3><p>Encoder处理输入的信息，把输入向量补充位置信息，经过Self-Attention输出y。输出向量的个数和输入一样。</p>
+<p>Add&amp;Norm：</p>
+<ul>
+<li>Add： 把y与x相加，这里y和x维度要一样（一开始的input embedding和后面的linear会改变向量长度，当然x是input embedding的结果）</li>
+<li>Norm：层标准化，所有值减去均值然后除以标准差</li>
+</ul>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202410121317043.png" alt="img"></p>
+<p>Feed Forward：全连接的神经网络进行非线性转化，后面还要通过一层Add&amp;Norm</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202410121317268.png" alt="img"></p>
+<h3 id="解码器"><a href="#解码器" class="headerlink" title="解码器"></a>解码器</h3><p>解码器的输入是前一时刻编码器的所有输出</p>
+<p>然后进行Output Embedding操作，编码成词向量再加上位置向量，新向量输入到Masked Self-Attention(为了实现自回归)</p>
+<p>真实操作顺序：</p>
+<ol>
+<li>只有一个向量，经过Output Embedding+Positional Encoding，它隔壁的向量都乱七八糟。此时根据编码器的所有输出和进行输出“永”向量</li>
+</ol>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202410121317412.png" alt="img"></p>
+<ol>
+<li>有永和两个向量，编码器根据这两个向量和编码器的所有输出，输出结果“不”</li>
+<li>如此往复循环直到得到eos</li>
+</ol>
+<p>所以Masked Self-Attention我们希望只关注具体有的向量</p>
+<p>基于掩码的注意力机制后：不关注的向量填充为0向量，保证维度</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202410121317477.png" alt="img"></p>
+<p>Linear:wx+b，转换向量的维度，与输出结果向量的维度是一致的</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202410121317391.png" alt="img"></p>
+<p>最后输出向量的向量，每一维代表当前这个字出现的概率。将最大的位置置为1。TODO：这里好像不是一起输出的，只有绿色那里有向量，且“言”的one-hot值最大，其他向量都是乱码</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202410121317506.png" alt="img"></p>
+<h4 id="Masked-Attention"><a href="#Masked-Attention" class="headerlink" title="Masked-Attention"></a>Masked-Attention</h4><p>把不关注的向量的α值设置为-∞</p>
+<p>然后在归一化时，不想关注的地方权重就是0</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202410121317559.png" alt="img"></p>
+<h4 id="Cross-Attention"><a href="#Cross-Attention" class="headerlink" title="Cross-Attention"></a>Cross-Attention</h4><p>混合编码器和解码器的信息</p>
+<p>比如编码器输出3个向量，生成k,v；解码器这边有5个向量，生成q</p>
+<p>用解码器的q查询编码器的k，做内积运算，得到α，然后softmax，乘v，得到输出y</p>
+<h1 id="3-对比学习综述"><a href="#3-对比学习综述" class="headerlink" title="3. 对比学习综述"></a>3. 对比学习综述</h1><p>监督学习近些年获得了巨大的成功，但是有如下的缺点： 1.人工标签相对数据来说本身是稀疏的，蕴含的信息不如数据内容丰富； 2.监督学习只能学到特定任务的知识，不是通用知识，一般难以直接迁移到其他任务中。</p>
+<p>自监督学习是无监督学习的一种方式，它的主要目的是在非人工标注的数据中通过自己监督自己来学习到有用的信息。可以分为对比学习(contrastive learning) 和 生成学习(generative learning) 两条主要的技术路线。</p>
+<p>对比学习有正负样本，但不属于有标注数据，因为可以实现自我标注而构建规则</p>
+<h2 id="第一阶段"><a href="#第一阶段" class="headerlink" title="第一阶段"></a>第一阶段</h2><h3 id="InstDisc"><a href="#InstDisc" class="headerlink" title="InstDisc"></a>InstDisc</h3><p>个体判别任务：因为长的相似所以判别为同类。每个instance都是一个类别，把每个图片都分开。</p>
+<p>把每个图片编码作为一个特征，让最后特征在特征空间里尽可能地分开</p>
+<p>正样本：图片本身，可能经过数据增强</p>
+<p>负样本：其他图片</p>
+<p>memory bank：存放图片的特征，每个图片的特征大小是128维</p>
+<p>输入为正样本（数量看batch_size），待进行个体判别，负样本在memory bank中随机取。学习后计算NCE loss，更新memory bank</p>
+<h3 id="InvaSpread"><a href="#InvaSpread" class="headerlink" title="InvaSpread"></a>InvaSpread</h3><p>对比学习：同样的图片经过CNN后应该很类似，不同就不类似</p>
+<p>正样本：经过数据增强的图片 1 负样本：剩余的原始和数据增强图片 (256-1)*2 在同一个mini-batch中选负样本，可以用一个编码器做端到端的训练</p>
+<p>只用一个编码器，无需其他结构存储负样本</p>
+<h3 id="CPC"><a href="#CPC" class="headerlink" title="CPC"></a>CPC</h3><p>前两个是判别式（学习决策函数f(x)或条件概率分布P(y|x)，不还原P(x,y)，只学习差别然后分类等），这个是生成式（学习P(x,y)，然后生成P(y|x)或决策函数Y&#x3D;f(x)）</p>
+<p>预测的代理任务</p>
+<p>音频序号作为序列，特征给自回归模型gar（如RNN&#x2F;LSTM），每一步输出红色的Ct，代表上下文的特征表示。根据前者的特征得到后者更好的特征。</p>
+<p>自回归模型（Autoregressive <a target="_blank" rel="noopener" href="https://so.csdn.net/so/search?q=Model&spm=1001.2101.3001.7020">Model</a>）是用自身做回归变量的过程，即利用前期若干时刻的随机变量的线性组合来描述以后某时刻随机变量的线性回归模型，它是时间序列中的一种常 见形式。</p>
+<p>正样本：Xt+1…Xt+4 未来的输入</p>
+<p>负样本：其他的输入，得到的输出预测应该是不相似的</p>
+<h3 id="CMC"><a href="#CMC" class="headerlink" title="CMC"></a>CMC</h3><p>正样本：一个物体有多种视角，最重要的特征在不同传感器（视觉&#x2F;听觉）共享。希望学到强大的特征，强大的互信息，让不同传感器都能分类。</p>
+<p>4个view：原始、分割图像、距离图像等。这些互为正样本。负样本就是不配对的视角。</p>
+<p>clip：有多模态思想，如把图片和文本当正样本对。文本端：bert；图像端：vit</p>
+<p>局限性：使用几个view&#x2F;模态，就要使用多个编码器。计算代价高。但是现在一个transformer处理两个模态效果反而更好（可以处理多类型数据，无需针对数据做改进）</p>
+<h2 id="第二阶段"><a href="#第二阶段" class="headerlink" title="第二阶段"></a>第二阶段</h2><h3 id="Moco"><a href="#Moco" class="headerlink" title="Moco"></a>Moco</h3><p>对比学习：将样本通过模型映射到特征空间，在特征空间中拉近同类的样本，并使得不同类的点排斥开。</p>
+<p>NLP任务中的原始信号空间与CV领域不同，NLP领域原始信号为离散的信号，对应词典，无监督学习可以基于此很好的学习。而计算机视觉领域，图片是连续的高维的信号，不适合构建字典。当前在无监督视觉表征学习的研究都是关于对比损失contrastive loss，都可看做构建动态字典dynamic dictionary。</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202410121317757.png" alt="img"></p>
+<p>queue：解决大字典的问题。使得当前mini-batch的数据进入序列，并把最老的mini-batch挤出序列。</p>
+<p>动量编码器：解决字典特征不一致的问题。不是更新特征，而是更新编码器。Ekt &#x3D; mEkt-1+(1-m)Eq。当m比较大时，Ekt 与Ekt-1取得相似的结构，使得所有key的编码器都有相似的结构。</p>
+<p>编码器是一个体征提取器。可以使用卷积网络。论文中使用的ResNet50。</p>
+<p>改进InstDisc</p>
+<h3 id="SimCLR"><a href="#SimCLR" class="headerlink" title="SimCLR"></a>SimCLR</h3><p>对图片进行两种数据增强，得到的2个图片xi&#x2F;xj是正样本，剩余的2n-2是负样本</p>
+<p>2个f：共享权重，相当于一个编码器</p>
+<p>g：projector降维 全连接+relu激活 mlp层（多层感知机） 训练才用，下游任务不用</p>
+<ul>
+<li>relu将线性变成非线性？不是很懂</li>
+<li>不加relu的全连接层是linear的</li>
+</ul>
+<p>对比学习很需要数据增强技术，最有效是crop&#x2F;color</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202410121317185.png" alt="img"></p>
+<p>更大的batch_size：TPU</p>
+<p>128就够了</p>
+<h3 id="Moco-v2"><a href="#Moco-v2" class="headerlink" title="Moco v2"></a>Moco v2</h3><p>数据增强+MLP+cos+训练更多的epoch</p>
+<ul>
+<li>epoch：一次前向+一次反向。一个Epoch就是将所有训练样本训练一次的过程。</li>
+<li>batch：一次epoch的样本太大时，分为多个batch。batch_size是每批样本的大小。</li>
+<li>iteration：训练一个batch就是一次iteration，一个迭代就是梯度下降的过程，会优化参数<ul>
+<li>GD：没有分批次，整个数据集训练，计算开销大full batch</li>
+<li>SGD：batch_size&#x3D;1，每次计算一个样本进行梯度下降</li>
+<li>mini-batch: 就是选合适数量的子集。有时候会走弯路但整体是朝最优解迭代的。</li>
+<li><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202410121317085.png" alt="img"></li>
+</ul>
+</li>
+</ul>
+<p>Moco的优越性相比SimCLR在于硬件，需要的GPU和训练时间少。端到端对硬件要求很高</p>
+<h3 id="SimCLR-v2"><a href="#SimCLR-v2" class="headerlink" title="SimCLR v2"></a>SimCLR v2</h3><p>适合<a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_44015059/article/details/106448533">半监督学习</a>（少量有标签的数据和大量无标签的数据）</p>
+<p>先用大量未标注数据，用SimCLR自监督获得预训练模型</p>
+<p>再用少量的有标签数据，进行有标签的微调，获得teacher模型</p>
+<p>用teacher给无标注数据生成伪标签，继续进行自学习</p>
+<p>v1-&gt;v2：1. 把模型变得更大；2. 试着把MLP变多到两层；3. 使用动量编码器（但提升不多）</p>
+<h3 id="SwAV"><a href="#SwAV" class="headerlink" title="SwAV"></a>SwAV</h3><p>对比学习+聚类+multi-crop</p>
+<p>没有用负样本，用的是聚类中心，但也是明确对比的东西</p>
+<p>两个crop：指数据增强后的两个图片</p>
+<p>multi-crop：增加正样本，增加view，然后取图片的维度减小，使计算代价尽量不变（关注全局+局部）</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202410121317091.png" alt="img"></p>
+<p>聚类：按照某个特定标准(如距离准则)把一个数据集分割成不同的类或簇，使得同一个簇内的数据对象的相似性尽可能大，同时不在同一个簇中的数据对象的差异性也尽可能地大。即<a target="_blank" rel="noopener" href="https://zhida.zhihu.com/search?content_id=481457389&content_type=Answer&match_order=2&q=%E8%81%9A%E7%B1%BB&zhida_source=entity">聚类</a>后同一类的数据尽可能聚集到一起，不同数据尽量分离。不关心类是什么，只需要把相似的聚在一起（计算相似度即可），所以是无监督的学习</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202410121317151.png" alt="img"></p>
+<p>获得zi&#x2F;zj特征后计算loss</p>
+<p>我们可以把对比学习看成是一个字典查询的任务，即训练一个<a target="_blank" rel="noopener" href="https://zhida.zhihu.com/search?content_id=200697713&content_type=Article&match_order=1&q=%E7%BC%96%E7%A0%81%E5%99%A8&zhida_source=entity">编码器</a>从而去做字典查询的任务。假设已经有一个编码好的query q（一个特征），以及一系列编码好的样本k0,k1,k2,…，那么k0,k1,k2,…可以看作是字典里的key。假设字典里只有一个key即k+(称为k positive）是跟q是匹配的，那么q和k+就互为<a target="_blank" rel="noopener" href="https://zhida.zhihu.com/search?content_id=200697713&content_type=Article&match_order=1&q=%E6%AD%A3%E6%A0%B7%E6%9C%AC&zhida_source=entity">正样本</a>对，其余的key为q的负样本。一旦定义好了正负样本对，就需要一个对比学习的损失函数来指导模型来进行学习。<strong>这个损失函数需要满足这些要求</strong>，即当query q和唯一的正样本k+相似，并且和其他所有负样本key都不相似的时候，这个loss的值应该比较低。反之，如果q和k+不相似，或者q和其他负样本的key相似了，那么loss就应该大，从而惩罚模型，促使模型进行参数更新。</p>
+<p>拿特征和特征对比费资源，能不能不和负样本作近似，而是利用先验信息和聚类中心比较。</p>
+<p>z和c生成目标q，作为ground truth，q1和q2可以互相预测</p>
+<p><strong>预训练</strong> 就是指预先训练的一个模型或者指预先训练模型的过程，一般是他人的常用模型，比如<code>VGG16/19，Resnet</code>等模型，并用大型数据集来做训练集，比如<code>Imagenet, COCO</code>等训练好的模型参数</p>
+<p><strong>微调</strong> 就是指将预训练过的模型作用于自己的数据集，并使参数适应自己数据集的过程。</p>
+<ul>
+<li>为目标模型添加一个输出大小为目标数据集类别个数的输出层，并随机初始化该层的模型参数。</li>
+<li>在目标数据集（例如椅子数据集）上训练目标模型。我们将从头训练输出层，而其余层的参数都是基于源模型的参数微调得到的。</li>
+</ul>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202410121317098.png" alt="img"></p>
+<h3 id="CPC-v2"><a href="#CPC-v2" class="headerlink" title="CPC v2"></a>CPC v2</h3><p>更大的模型+更大图像块+方向上的预测任务+batch norm换成layer norm+更多的数据增强</p>
+<p>处理图像的角度：蓝色表示归一化的对象。N是batch维度，C是channel维度。对于图像，每个channel都可以看作一个特征维度。按照上图，BatchNorm显然是对一个batch内所有样本的某个channel做归一化，而LayerNorm对某一个样本的所有channel做归一化。</p>
+<p><strong>BatchNorm&#x2F;Layer norm的作用</strong></p>
+<p>1.加快收敛速度，有效避免梯度消失。 2.提升模型泛化能力，BN的缩放因子可以有效的识别对网络贡献不大的神经元，经过激活函数后可以自动削弱或消除一些神经元。另外，由于归一化，很少发生数据分布不同导致的参数变动过大问题。</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202410121317295.png" alt="img"></p>
+<p>处理文本的角度：蓝色表示归一化的对象。BatchNorm与上一幅图基本一致，对一个batch内所有样本的某一个特征维度做归一化。但是，LayerNorm与上一幅图有所不同，这里是对某一个样本的某一个token的所有特征维度（即该token的embedding）做归一化。在Transformer结构中，每个token都是单独的语义单元。LayerNorm的作用是让每层语义单元的输出分布保持稳定。</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202410121317702.png" alt="img"></p>
+<p>文本句子的特征是编码后的原始数据，即多个token。</p>
+<p>token：模型输入基本单元。比如中文BERT中，token可以是一个单词、一个词组、一个标点符号、一个字符等，取决于文本处理的需求和方法。</p>
+<p>embedding：一个用来表示token的稠密的向量。token本身不可计算，需要将其映射到一个连续向量空间，才可以进行后续运算，这个映射的结果就是该token对应的embedding。</p>
+<p>encoding：表示编码的过程。将一个句子，浓缩成为一个稠密向量，也称为表征，（representation），这个向量可以用于后续计算，用来表示该句子在连续向量空间中的一个点。理想的encoding能使语义相似的句子被映射到相近的空间。</p>
+<h3 id="informing"><a href="#informing" class="headerlink" title="informing"></a>informing</h3><p>infomin：不需要太多的互信息，获得需要的互信息就行，多了可能影响泛化</p>
+<p>中庸思想</p>
+<h2 id="第三阶段"><a href="#第三阶段" class="headerlink" title="第三阶段"></a>第三阶段</h2><h3 id="BYOL"><a href="#BYOL" class="headerlink" title="BYOL"></a>BYOL</h3><p>特征的不同用词：latent hidden feature embedding</p>
+<p>没有用负样本。负样本是对比学习的约束，不然相似的物体有相似的特征，模型输出一致（捷径解，模型坍塌），使loss&#x3D;0即可。</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202410121317709.png" alt="img"></p>
+<p>fθ随梯度更新而更新；下面的f是moving average（动量编码器）得到特征z后，simclr会进行尽可能地接近（maximum agreement）</p>
+<p>这里又加了新的一层predictor，q也是mlp，得到qθ(zθ)，把匹配问题变成了预测问题（用一个视角的特征预测另一个视角的特征）用MSE_LOSS做最后的损失函数</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202410121317666.png" alt="img"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202410121317780.png" alt="img"></p>
+<p>MLP层有两个BN层</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202410121317845.png" alt="img"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202410121317963.png" alt="img"></p>
+<p>有了BN其实也在做对比，比较正样本图片和平均图片（类比聚类中心）有什么区别，属于隐式的对比学习</p>
+<h3 id="simsiam"><a href="#simsiam" class="headerlink" title="simsiam"></a>simsiam</h3><p>stop gradient使模型不坍塌，可以理解为EM算法</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202410121317216.png" alt="img"></p>
+<p>simclr：对比任务，有端到端的对比回传</p>
+<p>swav：对比任务，和聚类中心比较（聚类中心通过SK算法得到）</p>
+<p>byol：预测任务，左边预测右边，动量编码器</p>
+<p>simsiam：预测任务，共享参数来更新（而不是用梯度回传或动量编码更新）</p>
+<p>还是用moco v2作为基线任务好</p>
+<h2 id="第四阶段"><a href="#第四阶段" class="headerlink" title="第四阶段"></a>第四阶段</h2><h3 id="vision-transformer"><a href="#vision-transformer" class="headerlink" title="vision transformer"></a>vision transformer</h3><p>把骨干网络从ResNet换成Vit</p>
+<p>loss大幅震度正确性有下降时，看梯度也有震荡，发现问题是在图片-&gt;patch的过程中（tokenization），把random patch projection冻住就好了</p>
+<p>如果不动transformer，就只能在开头tokenization和结尾改目标函数</p>
+<h3 id="DINO"><a href="#DINO" class="headerlink" title="DINO"></a>DINO</h3><p>自蒸馏框架</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202410121317299.png" alt="img"></p>
+<p>centering：防止模型坍塌，给所有样本做均值，类比BN</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202410121317399.png" alt="img"></p>
+<ol>
+<li>第一阶段<ol>
+<li>instDisc: 个体判别，memory bank外部结构</li>
+<li>invoSpread: 端到端，一个编码器，batch_size小</li>
+<li>cpcv1：预测性代理任务，图像、音频、视频</li>
+<li>CMC：2视角变为多视角</li>
+<li>deepchester：聚类学习</li>
+</ol>
+</li>
+<li>第二阶段<ol>
+<li>moco v1：memory bank变成队列，动量更新特征变成动量编码器</li>
+<li>simclr v1：加大batch_size+projection head+训练时长长</li>
+<li>cpc v2</li>
+<li>infomin：互信息刚刚好就行，不过量</li>
+<li>moco v2</li>
+<li>simclr v2：主要针对半监督</li>
+<li>swav：对比+聚类（multi-crop重要）</li>
+</ol>
+</li>
+<li>第三阶段<ol>
+<li>BYOL：对比-&gt;预测，mse loss，自己和自己学</li>
+<li>BYOL v2</li>
+<li>simsiam：孪生网络的学习方法。假设stop gradient很重要，EM，逐步更新避免模型坍塌</li>
+</ol>
+</li>
+<li>第四阶段<ol>
+<li>vision transformer：骨干网络从Resnet换成vit，有不稳定的现象</li>
+<li>moco v3：提出把projection head冻住改善不稳定</li>
+<li>DINO：把teacher的输出作centering</li>
+</ol>
+</li>
+</ol>
+<p>MAE：掩码学习</p>
+<p>CLIP 多模态的对比学习仍然是主流 图像和文本一起</p>
+
+        </div>
+
+        
+            <section class="post-copyright">
+                
+                
+                
+                
+
+            </section>
+        
+        <section class="post-tags">
+            <div>
+                <span>标签:</span>
+                <span class="tag">
+                    
+                    
+                        <a href="/tags/%E7%AE%97%E6%B3%95/"># 算法</a>
+                    
+                        
+                </span>
+            </div>
+            <div>
+                <a href="javascript:window.history.back();">返回</a>
+                <span>· </span>
+                <a href="/">主页</a>
+            </div>
+        </section>
+        <section class="post-nav">
+            
+                <a class="prev" rel="prev" href="/2024/11/01/%E4%BF%A1%E6%81%AF%E8%AE%BA%E8%AF%BE%E7%A8%8B%E7%AC%94%E8%AE%B0/">信息论课程笔记</a>
+            
+            
+            <a class="next" rel="next" href="/2024/10/05/%E5%8D%9A%E5%AE%A2%E4%BC%98%E5%8C%96%E6%97%A5%E5%BF%97/">博客优化日志</a>
+            
+        </section>
+
+
+    </article>
+</div>
+
+
+    <div id="gitalk-container"></div>
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.css">
+<script src="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.min.js"></script>
+<script src="//cdn.bootcss.com/blueimp-md5/2.10.0/js/md5.js"></script>
+<div id="gitalk-container"></div>
+<script type="text/javascript">
+      var gitalk = new Gitalk({
+        clientID: '',
+        clientSecret: '',
+        repo: 'blog_comment',
+        owner: 'lyxx2535',
+        admin: 'lyxx2535',
+        id: md5(location.pathname),
+        labels: 'Gitalk'.split(',').filter(l => l),
+        perPage: 10,
+        pagerDirection: 'last',
+        createIssueManually: true,
+        distractionFreeMode: false
+      })
+      gitalk.render('gitalk-container')
+</script>
+
+            </div>
+            <footer id="footer" class="footer">
+    <div class="copyright">
+        <span>© Annie | Powered by <a href="https://hexo.io" target="_blank">Hexo</a> & <a href="https://github.com/Siricee/hexo-theme-Chic" target="_blank">Chic</a> | 2020 - 2025
+            <br>
+            <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+<span class="site-uv">
+    Total visitors:
+    <i class="busuanzi-value" id="busuanzi_value_site_uv"></i>
+</span>&nbsp;|&nbsp;
+
+
+<span class="site-pv">
+    Total views:
+    <i class="busuanzi-value" id="busuanzi_value_site_pv"></i>
+</span>
+
+          </span>
+    </div>
+</footer>
+
+    </div>
+</body>
+
+</html>

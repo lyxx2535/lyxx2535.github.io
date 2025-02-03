@@ -1,0 +1,712 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <meta name="author" content="Annie">
+
+
+
+
+
+<title>信息论课程笔记 | Annie&#39;s Blog</title>
+
+
+
+    <link rel="icon" href="/favicon.ico">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+    <script src="/js/tocbot.min.js"></script>
+    
+
+
+
+    
+    
+        
+    
+
+
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+<body>
+    <script>
+        // this function is used to check current theme before page loaded.
+        (() => {
+            const currentTheme = window.localStorage && window.localStorage.getItem('theme') || '';
+            const isDark = currentTheme === 'dark';
+            const pagebody = document.getElementsByTagName('body')[0]
+            if (isDark) {
+                pagebody.classList.add('dark-theme');
+                // mobile
+                document.getElementById("mobile-toggle-theme").innerText = "· Dark"
+            } else {
+                pagebody.classList.remove('dark-theme');
+                // mobile
+                document.getElementById("mobile-toggle-theme").innerText = "· Light"
+            }
+        })();
+    </script>
+
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">Lapsey&#39;s Blog</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default">
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+        </div>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">Lapsey&#39;s Blog</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; 菜单</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+            <div class="main">
+                <div class="container">
+    
+    
+        <div class="post-toc">
+    <div class="tocbot-list">
+    </div>
+    <div class="tocbot-list-menu">
+        <a class="tocbot-toc-expand" onclick="expand_toc()">全部展开</a>
+        <a onclick="go_top()">回到顶部</a>
+        <a onclick="go_bottom()">前往底部</a>
+    </div>
+</div>
+
+<script>
+    var tocbot_timer;
+    var DEPTH_MAX = 6; // 为 6 时展开所有
+    var tocbot_default_config = {
+        tocSelector: '.tocbot-list',
+        contentSelector: '.post-content',
+        headingSelector: 'h1, h2, h3, h4, h5',
+        orderedList: false,
+        scrollSmooth: true,
+        onClick: extend_click,
+    };
+
+    function extend_click() {
+        clearTimeout(tocbot_timer);
+        tocbot_timer = setTimeout(function() {
+            tocbot.refresh(obj_merge(tocbot_default_config, {
+                hasInnerContainers: true
+            }));
+        }, 420); // 这个值是由 tocbot 源码里定义的 scrollSmoothDuration 得来的
+    }
+
+    document.ready(function() {
+        tocbot.init(obj_merge(tocbot_default_config, {
+            collapseDepth: 1
+        }));
+    });
+
+    function expand_toc() {
+        var b = document.querySelector('.tocbot-toc-expand');
+        var expanded = b.getAttribute('data-expanded');
+        expanded ? b.removeAttribute('data-expanded') : b.setAttribute('data-expanded', true);
+        tocbot.refresh(obj_merge(tocbot_default_config, {
+            collapseDepth: expanded ? 1 : DEPTH_MAX
+        }));
+        b.innerText = expanded ? 'Expand all' : 'Collapse all';
+    }
+
+    function go_top() {
+        window.scrollTo(0, 0);
+    }
+
+    function go_bottom() {
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+
+    function obj_merge(target, source) {
+        for (var item in source) {
+            if (source.hasOwnProperty(item)) {
+                target[item] = source[item];
+            }
+        }
+        return target;
+    }
+</script>
+    
+
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">信息论课程笔记</h1>
+            
+                <div class="post-meta">
+                    
+                        作者: <a itemprop="author" rel="author" href="/">Annie</a>
+                    
+
+                    
+                        <span class="post-time">
+                        日期: <a href="#">November 1, 2024&nbsp;&nbsp;21:51:05</a>
+                        </span>
+                    
+                    
+                        <span class="post-category">
+                        分类:
+                            
+                                <a href="/categories/%E7%A0%94%E7%A9%B6%E7%94%9F%E8%AF%BE%E7%A8%8B/">研究生课程</a>
+                            
+                        </span>
+                    
+                </div>
+            
+        </header>
+
+        <div class="post-content">
+            <h1 id="Lec1-概率论、线性代数"><a href="#Lec1-概率论、线性代数" class="headerlink" title="Lec1 概率论、线性代数"></a>Lec1 概率论、线性代数</h1><p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202410272226274.png" alt="image-20241027222614241"></p>
+<p>边缘概率分布：通过求和”联合概率分布来得到的，如<img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202410262324306.png" alt="image-20241026232454283"></p>
+<p>xy独立说明P(xy)&#x3D;P(x)P(y)</p>
+<p>注意随机变量大写，取值小写</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202410252236201.png" alt="image-20241025223604149"></p>
+<p>全期望公式:</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202410280922710.png" alt="image-20241028092216663"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202410280922182.png" alt="image-20241028092251141"></p>
+<p>期望是[]内内容的平均</p>
+<p>E[X^2]&#x3D;Σx^2*P(x)</p>
+<p>条件期望是Y已经已知了，所以遍历X即可</p>
+<p>注意期望有分配律</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202410261536507.png" alt="image-20241026153654448"></p>
+<p>概率密度函数：在某一点的值指的是概率在该点的变化率(或导数)，不是概率值</p>
+<p>均匀分布的定义是，随机变量在指定区间上取值的概率密度是<strong>均匀的</strong>，区间之外的概率密度为 0。</p>
+<h2 id="多元高斯分布"><a href="#多元高斯分布" class="headerlink" title="多元高斯分布"></a>多元高斯分布</h2><p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202410271640450.png" alt="image-20241027164004400"></p>
+<p>这里的可逆矩阵当然满足<img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202410271702227.png" style="zoom:50%;" /></p>
+<h2 id="奇异值分解"><a href="#奇异值分解" class="headerlink" title="奇异值分解"></a>奇异值分解</h2><p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202410271654846.png" alt="image-20241027165451787"></p>
+<h1 id="Lec2-熵、互信息、K-L散度"><a href="#Lec2-熵、互信息、K-L散度" class="headerlink" title="Lec2 熵、互信息、K-L散度"></a>Lec2 熵、互信息、K-L散度</h1><p>我们介绍了信息论后续发展所需的大多数基本定义。信息的概念太宽泛了，不能用一个单一的定义来完全捕获。然而，对于任何概率分布，我们定义了一个称为熵的量，它有许多性质，与信息度量的直观概念相一致。这个概念被扩展到定义互信息，互信息是一个随机变量包含另一个变量的信息量的度量。熵就成为一个随机变量的自化。互信息是一个更一般的被称为相对熵的量的一种特殊情况，它是对两个概率分布之间的距离的一种度量。所有这些量都是密切相关的，并共享一些简单的性质。</p>
+<h2 id="香农熵"><a href="#香农熵" class="headerlink" title="香农熵"></a>香农熵</h2><p>事件p的信息量f(p)&#x3D;-logp</p>
+<p>熵的单位是bit。熵中以2为底，所以log2&#x3D;1</p>
+<p>离散变量X：观察到的所有信息量。-logP是随机变量，Px是概率分布，用右下角的分布对里面的变量求加权平均</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202410252241986.png" alt="image-20241025224123961"></p>
+<h3 id="联合熵"><a href="#联合熵" class="headerlink" title="联合熵"></a>联合熵</h3><p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202410252259199.png" alt="image-20241025225944177"></p>
+<h3 id="条件熵"><a href="#条件熵" class="headerlink" title="条件熵"></a>条件熵</h3><p>XY两个向量，先固定X，再固定Y，使一次只看一个变量。对x,y的两个求和可以合成一个对x,y的求和</p>
+<p>表示有X信息后还可以获得的Y的信息</p>
+<p>注意条件熵的初始表示就是遍历所有X的取值</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202410252300668.png" alt="image-20241025230006530"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202410272233554.png" alt="image-20241027223349526"></p>
+<h3 id="链式法则"><a href="#链式法则" class="headerlink" title="链式法则"></a>链式法则</h3><p>注意多画图片，以及H(X)这里的表示，有y也不影响</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202410252332767.png" alt="image-20241025233221734"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202410252344517.png" alt="image-20241025234439492"></p>
+<h2 id="互信息"><a href="#互信息" class="headerlink" title="互信息"></a>互信息</h2><p>衡量观察X后可以获得的Y的信息。注意是分号</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202410261013810.png" alt="image-20241026101333713"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202410261016414.png" alt="image-20241026101622386"></p>
+<p>对于条件，可以用遍历加权来求</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202410261445130.png" alt="image-20241026144554120"></p>
+<h2 id="KL散度-相对熵"><a href="#KL散度-相对熵" class="headerlink" title="KL散度&#x2F;相对熵"></a>KL散度&#x2F;相对熵</h2><p>衡量X的两种概率分布Px&#x2F;Qx的相似程度，分布的距离</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202410261021626.png" alt="image-20241026102159587"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202410261022954.png" alt="image-20241026102205931"></p>
+<h2 id="链式法则-1"><a href="#链式法则-1" class="headerlink" title="链式法则"></a>链式法则</h2><h3 id="熵"><a href="#熵" class="headerlink" title="熵"></a>熵</h3><p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202410261120578.png" alt="image-20241026112037540"></p>
+<p>注意条件联合熵也有链式法则(加|Y成立)，H(X1…Xn|Y)&#x3D;\sum H(Xi|Xi-1…X1Y)</p>
+<p>证明可以用H(X,Y)反复拆，也可以利用概率P的链式法则</p>
+<h3 id="互信息-1"><a href="#互信息-1" class="headerlink" title="互信息"></a>互信息</h3><p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202410261415244.png" alt="image-20241026141540229"></p>
+<p>这里的链式法则也可以应用于后面加|Z的情况：<img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202410261430964.png" alt="image-20241026143001942"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202410261415286.png" alt="image-20241026141519266"></p>
+<h1 id="Lec3-不等式：Jensen不等式、熵的凹凸性、数据处理不等式"><a href="#Lec3-不等式：Jensen不等式、熵的凹凸性、数据处理不等式" class="headerlink" title="Lec3 不等式：Jensen不等式、熵的凹凸性、数据处理不等式"></a>Lec3 不等式：Jensen不等式、熵的凹凸性、数据处理不等式</h1><h2 id="凸凹性"><a href="#凸凹性" class="headerlink" title="凸凹性"></a>凸凹性</h2><p>凸：convex</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202410261704663.png" alt="image-20241026170450639"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202410261705034.png" alt="image-20241026170510017"></p>
+<p>凹：concave</p>
+<h2 id="琴生不等式"><a href="#琴生不等式" class="headerlink" title="琴生不等式"></a>琴生不等式</h2><p>对于凸函数符号如下，凹函数要反过来。</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202410261718209.png" alt="image-20241026171803186"></p>
+<p>可证明KL散度&gt;&#x3D;0，在px&#x3D;qx时取等</p>
+<p>证明H(X)那里设置了q(x)，很巧妙</p>
+<p>条件均使熵减小，联合也比相加熵小，符合直觉，因为有一定信息了</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202410261742937.png" alt="image-20241026174259881"></p>
+<h2 id="熵的凹凸性"><a href="#熵的凹凸性" class="headerlink" title="熵的凹凸性"></a>熵的凹凸性</h2><h3 id="log-sum不等式-KL散度是凸"><a href="#log-sum不等式-KL散度是凸" class="headerlink" title="log sum不等式&#x2F;KL散度是凸"></a>log sum不等式&#x2F;KL散度是凸</h3><p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202410262004011.png" alt="image-20241026200430980"></p>
+<p>带入琴生的f(x)&#x3D;xlogx可以证明（λ&#x3D;1，xi&#x3D;ai&#x2F;bi）</p>
+<p>KL散度是凸：用a1&#x2F;a2&#x2F;b1&#x2F;b2代替即可证明</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202410271045638.png" alt="image-20241027104518552"></p>
+<h3 id="熵是凹"><a href="#熵是凹" class="headerlink" title="熵是凹"></a>熵是凹</h3><p>假设比较难想，Z以λ的概率在p1分布采样，以1-λ的概率在p2分布采样</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202410262017001.png" alt="image-20241026201733974"></p>
+<h3 id="互信息有凸有凹"><a href="#互信息有凸有凹" class="headerlink" title="互信息有凸有凹"></a>互信息有凸有凹</h3><p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202410121326769.png" alt="img"></p>
+<p>证明互信息的凹凸性：</p>
+<ol>
+<li>当p(y|x)固定时，看作常数，第一项是关于p(x)的线性项（无关凹凸可忽略），第二项是关于p(x)的凹函数，因为是-p(x)logp(x)，即-xlogx，是凹函数<img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202410121326779.png" alt="img"></li>
+<li>另一种证法是证明H(Y)关于Px(x)是凹函数（式子还是不太懂）<img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202410262124786.png" alt="image-20241026212417748"></li>
+</ol>
+<p>当p(x)固定时，看p(y|x)的凹凸性，用p1&#x2F;p2&#x2F;DL的性质推得I(X;Y~)满足凸函数</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202410121326758.png" alt="img"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202410121326723.png" alt="img"></p>
+<h2 id="数据处理不等式"><a href="#数据处理不等式" class="headerlink" title="数据处理不等式"></a>数据处理不等式</h2><h3 id="马尔可夫链-互信息形式"><a href="#马尔可夫链-互信息形式" class="headerlink" title="马尔可夫链&#x2F;互信息形式"></a>马尔可夫链&#x2F;互信息形式</h3><p>X-Y-Z：指X,Z在给定Y的条件下是条件独立的。Y仅取决于X，Z仅取决于Y：“无记忆性”</p>
+<ul>
+<li>当Z&#x3D;f(Y)时，根据马尔科夫链的性质X-Y-Z，即X&#x2F;Y&#x2F;Z形成马尔科夫链。这是因为Z对X的依赖完全通过Y来传递，与直接从X获取信息无关。</li>
+<li>例如，如果Y表示一个人的身高，f是一个将身高转换为适合的衣服尺码的函数，那么Z就表示这个人适合的衣服尺码。在这种情况下，衣服尺码Z完全由身高Y决定。</li>
+</ul>
+<p>条件独立性：Y已知时，XZ独立，所以XZ|Y&#x3D;X|Y*Z|Y</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202410262227697.png" alt="image-20241026222749664"></p>
+<p>性质：关注I(X;Z|Y)&#x3D;0</p>
+<p>马尔科夫链满足时，条件使互信息减少</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202410262249523.png" alt="image-20241026224909490"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202410271053704.png" alt="image-20241027105336667"></p>
+<p>补充习题：因为有X-Y-f(Y)，所以有Y-X-f(X)</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202410272252180.png" alt="image-20241027225206142"></p>
+<h3 id="KL散度形式"><a href="#KL散度形式" class="headerlink" title="KL散度形式"></a>KL散度形式</h3><p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202410262309728.png" alt="image-20241026230915699"></p>
+<p>Py|x:信道，信息从发送端 到接收端，给定X输出Y</p>
+<p>该定理保证输出分布差异不会大于输入分布，K-L不会增加。用来衡量信道传输过程的信息损失。</p>
+<p>证明的关键是加上y,往信道转换，然后利用jensen。负号很巧妙。</p>
+<p>注意有qxy&#x3D;qx*P(y|x),所以满足边缘分布\sum_x(qxy)&#x3D;qy</p>
+<p>为什么把Py留到前面，当然是为了符合最终D(py||qy)的形式要求</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202410262314156.png" alt="image-20241026231411126"></p>
+<h1 id="Lec4-渐进均分性"><a href="#Lec4-渐进均分性" class="headerlink" title="Lec4 渐进均分性"></a>Lec4 渐进均分性</h1><p>在信息论中，大数定律的类比是渐近均分性质（AEP）。这是弱大数定律的直接结果。这使得我们能够将所有序列的集合分成两个集合，一个是典型集合，其中样本熵接近真实熵，另一个是非典型集合，其中包含其他序列。我们的大部分注意力都将集中在典型的序列上。任何为典型序列被证明的性质都将是高概率的，并将决定一个大样本的平均行为。</p>
+<h2 id="弱大数定律"><a href="#弱大数定律" class="headerlink" title="弱大数定律"></a>弱大数定律</h2><p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202410271127102.png" alt="image-20241027112747057"></p>
+<p>随机变量Z[μ-ε,μ+ε]落在区间的概率为1</p>
+<h2 id="渐进均分性定理AEP"><a href="#渐进均分性定理AEP" class="headerlink" title="渐进均分性定理AEP"></a>渐进均分性定理AEP</h2><p>意思是采样Z1…Zn，再定义集合S，满足||&gt;ε的概率很小</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202410271137211.png" alt="image-20241027113749157"></p>
+<h2 id="典型集"><a href="#典型集" class="headerlink" title="典型集"></a>典型集</h2><p>典型集A：含有多个<img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202410271443738.png" alt="image-20241027144338713" style="zoom:50%;" />的序列x^n（高概率序列），每个序列x^n(x1…xn)满足下列不等式</p>
+<p>P(A_ε^n)&#x3D;ΣP(x^n)&#x3D;ΣP(x1…xn)</p>
+<p>在n足够大(趋近于∞时)，P(A_ε^n)&#x3D;<img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202410271316599.png" alt="image-20241027131615570" style="zoom:50%;" /></p>
+<ul>
+<li>因为元素组成x^n是序列，满足式子的元素组成的集合就是P(A_ε^n)</li>
+</ul>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202410271146459.png" alt="image-20241027114605412"></p>
+<p>性质2：当n足够大时，P(A_ε^n)无限接近于1</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202410271150848.png" alt="image-20241027115049812"></p>
+<p>性质34：下界是1-ε，上界是1，进行缩放<img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202410271321974.png" alt="image-20241027132146946"></p>
+<h2 id="数据压缩"><a href="#数据压缩" class="headerlink" title="数据压缩"></a>数据压缩</h2><blockquote>
+<p>数据压缩可行性的理论基础</p>
+</blockquote>
+<p>信道编码希望把独立同分布的x映射成比特数据，还可以解码。</p>
+<p>x1….xn编码成b1…bm，最少需要m位编码，m是多少？</p>
+<p>可能的序列数量是|X|^n，其中|X|是集合X中元素的数量。这是因为序列中的每个位置都可以由 X 中的任何元素填充，并且有n个位置。如果描述所有序列，需要：<img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202410271342933.png" alt="image-20241027134228906"></p>
+<p>然而我们不需要描述所有序列，描述典型集即可（因为他们发生的概率高）在典型集里的序列seq.被称为典型序列</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202410271350708.png" alt="image-20241027135028681"></p>
+<h3 id="香农信源编码定理"><a href="#香农信源编码定理" class="headerlink" title="香农信源编码定理"></a>香农信源编码定理</h3><p> 当<img src="https://img-blog.csdn.net/20141217163332430?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvdTAxMDk0NTY4Mw==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center" alt="img">时，熵为H(X)的N个独立同分布随机变量，可被压缩为多于NH(X)个比特，使得信息的丢失忽略不计，若少于NH(X)个比特，则肯定会丢失信息。</p>
+<p>证明不能用小于m的比特编码：</p>
+<ol>
+<li><p>定义高概率集合<img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202410271444539.png" alt="image-20241027144447515" style="zoom:50%;" />，不用典型集而用高概率集合的原因是更符合简化编码问题时的初衷，不过我感觉这个定义就是典型集<img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202410271456314.png" alt="image-20241027145616284" style="zoom:50%;" /></p>
+</li>
+<li><p>证明：通过展示在高概率集合或典型集中，序列的数量超过了 2^m的特例即可反驳</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202410271450792.png" alt="image-20241027145014760"></p>
+</li>
+</ol>
+<h2 id="dot-equal"><a href="#dot-equal" class="headerlink" title="dot equal"></a>dot equal</h2><p>看指数速率，而不是看多项式，后面假设检验会用</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202410271458143.png" alt="image-20241027145841110"></p>
+<h1 id="Lec5-微分熵"><a href="#Lec5-微分熵" class="headerlink" title="Lec5 微分熵"></a>Lec5 微分熵</h1><p>方便研究logf(x)，所以针对S集合</p>
+<p>f(x)就是概率密度函数，对应P(x)</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202410271504608.png" alt="image-20241027150414579"></p>
+<p>感觉与离散相比，除了熵可能为负，其他形式和性质都是一样的</p>
+<p>别忘了写dx&#x2F;dy</p>
+<h3 id="微分熵"><a href="#微分熵" class="headerlink" title="微分熵"></a>微分熵</h3><p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202410271505249.png" alt="image-20241027150540229"></p>
+<p>可能为负，不像香农熵一定非负。</p>
+<p>注意可以写作h(f)，代表PDF为f(x)</p>
+<p>例题：计算高斯分布的h(f)。注意复杂的求积分直接用公式。<img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202410280016174.png" alt="image-20241028001641132"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202410271550187.png" alt="image-20241027155058148"></p>
+<p>性质：两道题都是用Y&#x3D;X+c，Y&#x3D;aX替换，然后将fY和fX联系起来（推导f时对F(y)求导）</p>
+<ol>
+<li><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202410271600985.png" alt="image-20241027160030966"></li>
+<li><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202410271600604.png" alt="image-20241027160043580"></li>
+</ol>
+<p>对于香农熵，性质2不成立：说明缩放不影响H，因为度量的是概率分布的均匀性或分散程度，而不是具体的数值大小</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202410271610198.png" alt="image-20241027161059162"></p>
+<h3 id="联合熵-1"><a href="#联合熵-1" class="headerlink" title="联合熵"></a>联合熵</h3><p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202410271614058.png" alt="image-20241027161412032"></p>
+<h3 id="条件熵-1"><a href="#条件熵-1" class="headerlink" title="条件熵"></a>条件熵</h3><p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202410271614173.png" alt="image-20241027161424146"></p>
+<p>很可能考试的题目：</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202410271621331.png" alt="image-20241027162155267"></p>
+<h2 id="AEP"><a href="#AEP" class="headerlink" title="AEP"></a>AEP</h2><p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202410271707289.png" alt="image-20241027170739263"></p>
+<h3 id="典型集-1"><a href="#典型集-1" class="headerlink" title="典型集"></a>典型集</h3><p>似乎比离散那里&lt;&#x3D;多了个&#x3D;</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202410271713674.png" alt="image-20241027171302633"></p>
+<h2 id="KL散度"><a href="#KL散度" class="headerlink" title="KL散度"></a>KL散度</h2><p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202410271724916.png" alt="image-20241027172439884"></p>
+<p>注意dx 是从第一个分布（N(m1,Σ1)）取样的，因为 KL 散度定义中，积分是对p1(x)进行加权的。lage</p>
+<h2 id="互信息-2"><a href="#互信息-2" class="headerlink" title="互信息"></a>互信息</h2><p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202410271726185.png" alt="image-20241027172632154"></p>
+<p>jensen不等式对连续熵一样成立，所以一些性质基本是一样的</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202410271728766.png" alt="image-20241027172808726"></p>
+<h2 id="高斯最大熵"><a href="#高斯最大熵" class="headerlink" title="高斯最大熵"></a>高斯最大熵</h2><p>证明熵最大的时候是均匀分布。</p>
+<p>证明非常巧妙地使用了高斯分布E与具体概率分布无关的性质，通过D构造不等式以及h(f)也十分巧妙。</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202410271733835.png" alt="image-20241027173338787"></p>
+<h1 id="Lec6-假设检验"><a href="#Lec6-假设检验" class="headerlink" title="Lec6 假设检验"></a>Lec6 假设检验</h1><p>在广泛的应用中，人们必须根据一组观察结果来做出决定。我们希望使用一个在适当意义上尽可能好的决策过程。解决这些问题是决策理论的目的，而建立这类问题的自然框架是基于假设检验。在这个框架中，每个可能的场景都对应于一个假设。今天的讲座的目的是介绍假设检验的概念。</p>
+<h2 id="过程"><a href="#过程" class="headerlink" title="过程"></a>过程</h2><h3 id="1-假设"><a href="#1-假设" class="headerlink" title="1. 假设"></a>1. 假设</h3><p>m种可能的取值（标签），离散</p>
+<p>有先验分布，是没做观察之前的知识，属于原假设H0</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202411012157295.png" alt="image-20241101215727208"></p>
+<h3 id="2-观察"><a href="#2-观察" class="headerlink" title="2. 观察"></a>2. 观察</h3><p>利用反证法的思想，先假定第一步的假设是成立的。如果实际从样本中观察到的情况在这个假设下 是不合理的，就认为原来的假设是不正确的，拒绝原来的假设。 如果样本没有不合理现象，就不能拒绝原来的假设。</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202410271912114.png" alt="image-20241027191259083">给定一个假设 H&#x3D;Hi，观察到的数据 <em>y</em> 是通过条件分布P(<em>Y</em>∣<em>H</em>) 得到的。这意味着在每个假设下，观察到的数据 <em>y</em> 的概率分布是不同的</p>
+<h3 id="3-决策制定"><a href="#3-决策制定" class="headerlink" title="3. 决策制定"></a>3. 决策制定</h3><p>虽然第一步假设集也只是人为建模，不完全正确，但已经是对实际情况的最佳建模尝试，所以我们希望f(y)可以映射到H。</p>
+<p>使用指示函数表示判对概率和判错概率</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202410271919290.png" alt="image-20241027191910246"></p>
+<h2 id="两个统计决策"><a href="#两个统计决策" class="headerlink" title="两个统计决策"></a>两个统计决策</h2><h3 id="最大后验MAP"><a href="#最大后验MAP" class="headerlink" title="最大后验MAP"></a>最大后验MAP</h3><p><strong>目的</strong>：在给定观察数据 y 的情况下，选择后验概率最大的假设 Hi。监督式学习基于该原理。</p>
+<ol>
+<li><strong>没有观察数据 y 时</strong>：选择先验概率最大的假设，即选择 H 使得 P(H&#x3D;Hi)最大。</li>
+<li><strong>观察到数据 Y&#x3D;y 时</strong>：使用贝叶斯定理计算后验概率，并选择后验概率最大的假设。</li>
+</ol>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202410271948449.png" alt="image-20241027194829411"></p>
+<h3 id="风险最小化决策"><a href="#风险最小化决策" class="headerlink" title="风险最小化决策"></a>风险最小化决策</h3><p><strong>目的</strong>：在给定观察数据 y 的情况下，选择使得期望成本最小的决策规则。</p>
+<p>f(y)是预测值，H是真实值，最小化预测错的代价</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202410271952421.png" alt="image-20241027195249387"></p>
+<h2 id="二元假设检验-似然比检验-对数似然比检验"><a href="#二元假设检验-似然比检验-对数似然比检验" class="headerlink" title="二元假设检验&#x2F;似然比检验&#x2F;对数似然比检验"></a>二元假设检验&#x2F;似然比检验&#x2F;对数似然比检验</h2><p>二元假设检验则是上述决策规则在特定情况下（即只有两个假设）的应用。使用先验+观测内容选择二分类预测的结果。最好的决策模型f(y)满足：</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202410272041271.png" alt="image-20241027204122233"></p>
+<p>证明疑似使用全期望公式和指示函数，巧妙地可以比较两项选小的</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202410272043791.png" alt="image-20241027204300739"></p>
+<p>使用到假设地：判错的代价&gt;判对。除法效率低，可以取对数</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202410272043494.png" alt="image-20241027204315430"></p>
+<p>左式：<img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202410272055970.png" alt="image-20241027205549941" style="zoom:50%;" /></p>
+<p>实际应用：信道传递时有噪声干扰w，s是原始信号，最终收到y后判断最初传的是s0还是s1。用公式计算<strong>LLR(y</strong>)即可</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202410272058737.png" alt="image-20241027205822676"></p>
+<p>多维高斯分布时：</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202410272127507.png" alt="image-20241027212740448"></p>
+<h1 id="期中复盘"><a href="#期中复盘" class="headerlink" title="期中复盘"></a>期中复盘</h1><p>假设检验不太熟</p>
+<h1 id="作业3"><a href="#作业3" class="headerlink" title="作业3"></a>作业3</h1><p><a target="_blank" rel="noopener" href="https://blog.csdn.net/z3w97/article/details/121953114">多元高斯分布的性质</a>：其中，用到了期望和迹可交换的性质。注意E[XX^T]和E[X^TX]不一样！</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202411091627901.png" alt="image-20241109162732795"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202411091639640.png" alt="image-20241109163910577"></p>
+<p>对实数加trace不改变值本身，如X^TAX就是一个实数（标量）</p>
+<p>我们知道研究信息几何有两个强烈的动机。首先是：一对统计模型，即概率分布的线性族和指数族，在信息几何中发挥着重要作用。它们是<em>双重平坦的</em>，因为前者相对于 m 连接是平坦的，后者相对于 e 连接是平坦的，并且这两个连接相对于 Fisher 度量是彼此对偶的（参见Amari 和 Nagaoka） ，2000 年，第 2.3 节和第 3 章）。我们建议读者参考Kurose (1994)和Matsuzoe (1998) ，以进一步了解黎曼几何中二元结构的重要性。即使没有黎曼几何，<strong>线性族和指数族之间的密切关系也是已知的。这两个族被证明是彼此“正交”的</strong>，因为指数族与相关线性族在一个点以直角相交，即关于KL 散度的毕达哥拉斯定理在该点成立交叉口。</p>
+<h1 id="Lec7-type"><a href="#Lec7-type" class="headerlink" title="Lec7 type"></a>Lec7 type</h1><p>在信息论中，我们特别关注假设检验的<strong>渐近性质</strong>。为了评估这一点，我们需要类型的方法，这是在大偏差理论中的一个强大的技术。我们使用类型的方法来计算罕见事件的概率，并推导出此类问题的最佳可能的误差指数</p>
+<h2 id="用重复观察进行的二元假设检验"><a href="#用重复观察进行的二元假设检验" class="headerlink" title="用重复观察进行的二元假设检验"></a>用重复观察进行的二元假设检验</h2><p>似然比：在假设H0&#x2F;H1时观测到样本的联合概率。由于样本是独立同分布的，可以将联合概率表示为单点概率的乘积</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202412212225390.png"></p>
+<p>评估假设检验的性能指标：1假阳性，2漏检。2更严重</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202412220044394.png" alt="image-20241222004454366"></p>
+<p>Pe是假设检验系统总共的错误概率：为了刻画Pe，关注n很大时，方便描述收敛速率刻画错误指数-&gt;为了计算提出Sanov’s定理</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202412220045520.png" alt="image-20241222004523493"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202412220045563.png" alt="image-20241222004531532"></p>
+<h2 id="Method-of-types经验分布Q"><a href="#Method-of-types经验分布Q" class="headerlink" title="Method of types经验分布Q"></a>Method of types经验分布Q</h2><p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202412221045134.png" alt="image-20241222104521055"></p>
+<p>序列的type（Px）：看每种x^n取值出现几次，是序列的经验分布。每个元素必然是出现次数&#x2F;序列长度</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202411091850678.png"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202412221046617.png" alt="image-20241222104633582"></p>
+<p>Pn：经验分布Q的集合，包含多个Q，比如上面的例子是一个Q。Q的序列长度为n，|X|&#x3D;M是取值的个数</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202412170833463.png" alt="image-20241109185431120"></p>
+<p>Tq：经验分布为Q的序列x^n的集合，称之为分布Q的type class</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202411091855525.png" alt="image-20241109185538500"></p>
+<h2 id="dot-equal，典型集的大小和概率"><a href="#dot-equal，典型集的大小和概率" class="headerlink" title="dot equal，典型集的大小和概率"></a>dot equal，典型集的大小和概率</h2><p>指数级的相等：因为后面典型集的大小、概率，Sanov定理都用指数级相等</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202411091921474.png" alt="image-20241109192106441"></p>
+<p>type class的大小：</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202411091921537.png" alt="image-20241109192144511"></p>
+<p>证明：已知固定的经验分布，和斯大林不等式，以及dot equal多项式不影响，与指数无关（技巧是把n^a形式写成e指数形式）<img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202412221118471.png" alt="image-20241222111856443"></p>
+<p>type class的概率：已知经验分布为Q，生成分布为P，x^n从P取样，分布为Q（PQ应该很相似）</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202411091927427.png" alt="image-20241109192745396"></p>
+<p>证明：找出所有分布为Q的x^n序列，概率是每位的p相乘，每个取值出现次数又可以根据nQi得到，|X|是取值的个数</p>
+<ul>
+<li>巧妙地将x^n的概率P(x_i)化为取值范围的概率P(i)</li>
+</ul>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202411091931903.png" alt="image-20241109193117872"></p>
+<h2 id="Sanov’s-Theorem"><a href="#Sanov’s-Theorem" class="headerlink" title="Sanov’s Theorem"></a>Sanov’s Theorem</h2><p>已知序列x从生成分布P中取样，实际分布为P_hat（经验分布）。Q用来近似P_hat的分布，Sanov’s Theorem 会从集合S中找到一个Q^*，使得它在 K-L 散度意义上最接近 P</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202411091953733.png" alt="image-20241109195318696"></p>
+<p>证明：当n足够大时，允许省略Pn，认为Pn是全集</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202411091953262.png" alt="image-20241109195338223"></p>
+<p>课后理解：<img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202411252150550.png" alt="image-20241125215043451" style="zoom:50%;" /></p>
+<p>根据cover’s book：用拉格朗日乘子法求得最优的Q</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202411092017212.png" alt="image-20241109201716169"></p>
+<p>参考：<a target="_blank" rel="noopener" href="https://web.stanford.edu/class/ee376a/files/2017-18/lecture_14.pdf">https://web.stanford.edu/class/ee376a/files/2017-18/lecture_14.pdf</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/zxyfrank/p/16414518.html#sanov%E5%AE%9A%E7%90%86">https://www.cnblogs.com/zxyfrank/p/16414518.html#sanov%E5%AE%9A%E7%90%86</a></p>
+<h1 id="Lec9-Chernoff-Stein-Theorem"><a href="#Lec9-Chernoff-Stein-Theorem" class="headerlink" title="Lec9 Chernoff-Stein Theorem"></a>Lec9 <strong>Chernoff-Stein</strong> <strong>Theorem</strong></h1><h2 id="Sanov’s-Theorem-1"><a href="#Sanov’s-Theorem-1" class="headerlink" title="Sanov’s Theorem"></a>Sanov’s Theorem</h2><p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202412221359016.png" alt="image-20241222135942989"></p>
+<p>线性族：把Q看成变量，f(x)看成系数</p>
+<p>指数族是通过P0(x)和P1(x)两个基准分布构造的分布族</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202412221414558.png" alt="image-20241222141433520"></p>
+<p>通过拉格朗日乘子法，如果在概率分布Q满足约束 EQ[f(X)]&#x3D;γ（即f(X)的期望值等于 γ）的条件下最小化Q和P0之间的KL散度，那么Q是服从指数族的，即是交点</p>
+<ul>
+<li>f(x)由P1,P0决定，s由γ决定，γ根据垂直时求得</li>
+<li>αn的证明在后面</li>
+</ul>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202412221423103.png" alt="image-20241222142320062"></p>
+<p>证明Q*的Pythagoras Identity，类似勾股定理：利用Q*是指数族的性质</p>
+<ul>
+<li>Q*的求和是1，因为是概率分布</li>
+</ul>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202412221445686.png" alt="image-20241222144549644"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202412221445727.png" alt="image-20241222144558696"></p>
+<h2 id="求解type-i-ii"><a href="#求解type-i-ii" class="headerlink" title="求解type i&#x2F;ii"></a>求解type i&#x2F;ii</h2><p>证明Type I error αn：在证明时经常将n变成|X|，这样与Q(x)产生联系</p>
+<ul>
+<li>通过拉格朗日乘子法，证明最小时的解是指数族</li>
+</ul>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202412221519939.png" alt="image-20241222151925903"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202412221523652.png" alt="image-20241222152341624"></p>
+<ul>
+<li>这一步从x^n∈Tq到e就像sanov证明一样，取了最大值</li>
+</ul>
+<p>接下俩利用拉格朗日求解线性族和指数族交点Q*需要满足的形式：<img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202412221525716.png" alt="image-20241222152537680"></p>
+<p>同理可以求得type ii error：</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202412221526985.png" alt="image-20241222152614962"></p>
+<p>注意上述内容均基于最开始Q满足线性族（因为LLRT的形式变形得到的就是线性族）</p>
+<h2 id="Error-probability使Pe最小"><a href="#Error-probability使Pe最小" class="headerlink" title="Error probability使Pe最小"></a>Error probability使Pe最小</h2><h3 id="贝叶斯-chernoff-stein定理"><a href="#贝叶斯-chernoff-stein定理" class="headerlink" title="贝叶斯&#x2F;chernoff-stein定理"></a>贝叶斯&#x2F;chernoff-stein定理</h3><p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202412221549093.png" alt="image-20241222154920059"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202412221549896.png" alt="image-20241222154955865"></p>
+<p>Q*到P0是Type I Error,到P1是Type II error，要使Pe最小，即让平面落在中间，使I和II相等</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202412221607867.png" alt="image-20241222160742832"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202412221612450.png" alt="image-20241222161236423"></p>
+<h3 id="Neyman-Person方法"><a href="#Neyman-Person方法" class="headerlink" title="Neyman-Person方法"></a>Neyman-Person方法</h3><p>研究在第一类错误αn小于某一阈值η（η不依赖于样本数n）的条件下，第二类错误 βn 的最优衰减速率。</p>
+<ul>
+<li>最优衰减速率指的是随着样本数量增加，错误概率的衰减速度（希望最快）</li>
+</ul>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202412221617335.png" alt="image-20241222161709307"></p>
+<h1 id="Lec11-Non-Bayesian-Parameter-Estimation"><a href="#Lec11-Non-Bayesian-Parameter-Estimation" class="headerlink" title="Lec11 Non-Bayesian Parameter Estimation"></a>Lec11 <strong>Non-Bayesian Parameter Estimation</strong></h1><p>注：在许多估计问题中，将感兴趣的潜在变量分配一个先验分布可能是不自然的，因此不能使用贝叶斯框架。在这种情况下，另一种方法是将变量视为确定性的，但是未知的。在这种情况下，观察模型不是以潜在变量为条件的分布，而是由该变量参数化的分布。</p>
+<img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202412170832746.png" alt="image-20241217083245667" style="zoom:33%;" />
+
+<p>传统的贝叶斯模型中，观察模型通常是条件概率分布，表示在给定潜在变量的情况下，观察到数据的概率。而在这种“确定性但未知”的设置下，观察模型则被参数化为潜在变量的函数。这意味着，我们在处理数据时，不再将潜在变量视为随机变量，而是将其作为模型中的一个未知参数进行估计。</p>
+<h2 id="估计值、偏差、协方差"><a href="#估计值、偏差、协方差" class="headerlink" title="估计值、偏差、协方差"></a>估计值、偏差、协方差</h2><p>用观察到的y估计x：</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202412170906867.png" alt="image-20241217090632832"></p>
+<p>定义偏差和误差协方差矩阵：</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202412170907453.png" alt="image-20241217090724400"></p>
+<p>证明：均方误差&#x3D;随机误差 (协方差)+系统性误差 (偏差平方)</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202412170907070.png" alt="image-20241217090734975"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202412170906154.png" alt="image-20241217090619061"></p>
+<h3 id="无偏估计"><a href="#无偏估计" class="headerlink" title="无偏估计"></a>无偏估计</h3><p>如果偏差为零，意味着估计量的期望值等于真实值 x</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202412171124548.png" alt="image-20241217112409501"></p>
+<p>E[e(Y)]&#x3D;0<img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202412171907918.png" alt="image-20241217190600837"></p>
+<p>单个观测值的无偏估计：</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202412171125637.png" alt="image-20241217112516551"></p>
+<p>多个独立同分布观测值的无偏估计：</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202412171137832.png" alt="image-20241217113726740"></p>
+<p>注意这里正着推导说明x(y)是其中一个估计量，但估计量是存在多个的，期望相同，方差不同，取到最小方差的才叫做MVU</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202412172236103.png" alt="image-20241217223602073"></p>
+<h2 id="最小方差无偏估计量MVU"><a href="#最小方差无偏估计量MVU" class="headerlink" title="最小方差无偏估计量MVU"></a>最小方差无偏估计量MVU</h2><p>正则化定义：<img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202412171935852.png" alt="image-20241217193552824"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202412171936631.png" alt="image-20241217193604609"></p>
+<p>积分和导数可交换顺序的条件：P大于0且在x上连续可微（可微和可导等价）</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202412171927429.png" alt="image-20241217192705406"></p>
+<p>所以正则化条件和E[]&#x3D;0是充要关系<img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202412171934061.png" alt="image-20241217193422029"></p>
+<p>如果Py为正则，x(Y)又为无偏估计量，可以得到方差的下界</p>
+<h3 id="Cramer-Rao-bound"><a href="#Cramer-Rao-bound" class="headerlink" title="Cramer-Rao bound"></a>Cramer-Rao bound</h3><p>提出方差拥有下界：</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202412172026295.png" alt="image-20241217202633244"></p>
+<p>证明不断使用<strong>无偏和正则</strong>的前置条件，利用相关系数的取值范围是因为cov&#x3D;1已求，var方差因为E[X]&#x3D;0可以转为E[X^2]的形式，与定义的λ和Fisher信息量J_Y(x)产生关联</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202412172026648.png" alt="image-20241217202657618"></p>
+<p>证明过程：无偏和正则都是充要条件（相关系数衡量两个随机变量之间的线性相关程度，范围在[−1,1]）</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202412172031612.png" alt="image-20241217203121587"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202412172031389.png" alt="image-20241217203133364"></p>
+<p>取得最小方差时，相关系数ρ&#x3D;1，e和s正相关，k(x)其实大于0，λ最小，对应得到此时的无偏估计值x</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202412172056689.png" alt="image-20241217205632659"></p>
+<p>例题：求解最小方差无偏估计量，利用了下面的平方展开公式</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202412172204989.png" alt="image-20241217220451956"></p>
+<p>首先获得方差的范围，然后这里求解了一个无偏估计量，代入正好是最小方差，说明找到了MVU，同时可以解k(x)</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202412172233628.png" alt="image-20241217223323594"></p>
+<h2 id="Efficiency高效估计量"><a href="#Efficiency高效估计量" class="headerlink" title="Efficiency高效估计量"></a>Efficiency高效估计量</h2><p>一个无偏估计是高效的当且仅当它取到了最小方差，并且k(x)&#x3D;1&#x2F;J&#x3D;Var(x(Y))就是方差本身</p>
+<ul>
+<li><p>eff与MVU的对比</p>
+<ul>
+<li>eff强调了不能依赖x，mvu没提，只是满足方差最小，感觉可以分段</li>
+<li>eff必须达到bound，可以为多个；MVU不一定达到bound，在全范围最小即可，但只有一个</li>
+</ul>
+</li>
+<li><p>证明使用了前文的E[e(Y)s(Y;x)]&#x3D;1</p>
+</li>
+</ul>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202412172258611.png" alt="image-20241217225808579"></p>
+<p>这里的假设并不是真实的x就等于极大似然的估计xML，而是想要与x无关，xML仅根据Y估计，并可以利用导数为0的性质，所以假设成x</p>
+<p>极大似然估计量（使观测值Y出现概率最大，导数为0）</p>
+<ul>
+<li>既然上面的corollary中x是未知的真实值，这里可以替换成xML仍然成立看起来很奇怪。</li>
+<li>可能因为假设了eff存在，总能表达成这种形式，其中右式替换成一个x的估计值后不依赖x即可，比如x选argminPy也算不依赖，式子可以成立？（不是很懂能推广到多少估计值，但这么想的话这个证明就没那么奇怪了，不要纠结在这里了）</li>
+</ul>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202412172329272.png" alt="image-20241217232934234"><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202412172348183.png" alt="image-20241217234829148"></p>
+<h1 id="Lec12-充分统计量"><a href="#Lec12-充分统计量" class="headerlink" title="Lec12 充分统计量"></a>Lec12 充分统计量</h1><p>在许多情况下，观察到的数据可以有一个非常大的维度。因此，直接基于此类数据执行推理可能相当麻烦。因此，一个有吸引力的推理架构包括首先对数据进行预处理，以<strong>获得更紧凑的数据集</strong>，我们从中进行推断，而不是直接从数据本身进行推断。</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202412181907132.png" alt="image-20241218190705062"></p>
+<p>Y是高维的，我们希望从Y中学习低维的f(Y)作为更紧凑的数据集，来预测X</p>
+<p>f(Y)是充分统计量，希望丢失冗余的信息，把精华特征X提取出来，保留f(Y)即可</p>
+<h2 id="非贝叶斯case"><a href="#非贝叶斯case" class="headerlink" title="非贝叶斯case"></a>非贝叶斯case</h2><p>t(Y):从数据Y中得到的统计量，是Y的函数，可能是“多对一”的函数映射。</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202412181941045.png" alt="image-20241218194103013"></p>
+<p>t(Y)如果是s.s，则y与x的关系可用t(y)代替，则PY|T与x无关，通过i推导可以算PY|PT</p>
+<ul>
+<li>在概率论和统计学中，边缘分布是指对于多个随机变量的联合分布，只考虑其中一个或几个随机变量的分布情况。联合&#x3D;条件*边缘，边缘&#x3D;联合+对另一个变量求积分</li>
+</ul>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202412182031246.png" alt="image-20241218203115211"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202412182031689.png" alt="image-20241218203123656"></p>
+<p>Fisher定理：注意用t(y)&#x3D;t来求解PT</p>
+<p>高斯问题：用线性特征一般有用，这里t从二维降维到了一维</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202412182037785.png" alt="image-20241218203723752"></p>
+<p>直接令等于y本身当然也是s.s，但是没有任何预处理，没啥用处</p>
+<p>下面是写成a*b的形式，证明t是s.s</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202412182055739.png" alt="image-20241218205542707"></p>
+<p>作业的一个结论：<img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202412182338583.png" alt="image-20241218233825560"></p>
+<h2 id="贝叶斯case"><a href="#贝叶斯case" class="headerlink" title="贝叶斯case"></a>贝叶斯case</h2><p>注意灵活地增加和删除T和Y，在多处使用</p>
+<p>以及条件概率公式PXY&#x3D;PX*PY|X多given一个Z也可以，也多次使用在证明中</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202412182122867.png" alt="image-20241218212207846"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202412182122579.png" alt="image-20241218212218563"></p>
+<p>第一个是定义，后面是根据定义得到的定理</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202412182132681.png" alt="image-20241218213243646"></p>
+<p>如果X-T-Y组成马尔科夫链，则t(y)&#x3D;T是s.s</p>
+<p>因为X-Y-T永远成立，利用Lec6证明过的s.s性质：</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202412182207372.png" alt="image-20241218220755173"></p>
+<h1 id="Lec14-HGR-Maximal-Correlation"><a href="#Lec14-HGR-Maximal-Correlation" class="headerlink" title="Lec14 HGR Maximal Correlation"></a>Lec14 HGR Maximal Correlation</h1><p>HGR相关性是统计学中的相关度量。与常用的相关性相比，它具有处理非线性统计依赖性的优势。HGR的最大相关性可以通过ACE（替代条件期望）算法来计算。</p>
+<p>给定2个离散的随机变量X,Y，想要测量X和Y之间的相关性，我们能怎么做？</p>
+<h2 id="Pearson相关系数"><a href="#Pearson相关系数" class="headerlink" title="Pearson相关系数"></a>Pearson相关系数</h2><p>问题是&#x3D;0时不一定独立，只能说明不相关。但独立时一定等于0</p>
+<p>取值范围为[-1,1]，+-1时XY线性相关</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202412191042305.png" alt="image-20241219104244246"></p>
+<p>Renyi认为的好的度量：可交换、归一化、XY独立是ρ&#x3D;0的充要条件、对于任意函数关系（比如η）都满足完全相关的关系、XY和函数一对一映射后，只是变量名字变了，概率分布不变</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202412191048478.png" alt="image-20241219104823446"></p>
+<p>对于pearson的绝对值：12满足，3不满足（0不一定独立）、4不满足（只是满足线性关系，不是任意函数关系）、5不满足（对X或Y进行非线性单射变换（如平方），Pearson 系数可能会发生变化）<img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202412191103592.png" alt="image-20241219110318559"></p>
+<p>对于互信息：1满足，2不满足（互信息I&gt;&#x3D;0，可以很大），3满足（I&#x3D;0-&gt;XY独立），4不满足（1在互信息中没啥特别的）、5满足（对于单射函数变换互信息值不会改变）<img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202412191203153.png" alt="image-20241219120313123"></p>
+<h2 id="HGR-最大相关性"><a href="#HGR-最大相关性" class="headerlink" title="HGR 最大相关性"></a>HGR 最大相关性</h2><p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202412191247827.png" alt="image-20241219124700799"></p>
+<p>希望找到X和Y之间最相关的特征</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202412191247816.png" alt="image-20241219124712783"></p>
+<p>1-5均满足：1对称，2范围在[0,1]，3&#x3D;0时f(X)和g(Y)间的任何统计相关性都会为0（<strong>最复杂</strong>，用依赖矩阵B来证），XY独立，5变成f’&#x2F;g’，4对于任意的函数关系，可以找到特殊的f与g使得ρ&#x3D;1（利用了单射变换K的概率分布不会变的性质）</p>
+<ul>
+<li>注意单射变换的概率分布不会改变，所以f’,g’仍然有均值为0，方差为1的性质，满足HGR的前提条件</li>
+</ul>
+<h3 id="HGR-典型依赖矩阵B的最大奇异值"><a href="#HGR-典型依赖矩阵B的最大奇异值" class="headerlink" title="HGR&#x3D;典型依赖矩阵B的最大奇异值"></a>HGR&#x3D;典型依赖矩阵B的最大奇异值</h3><p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202412191337453.png" alt="image-20241219133715423"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202412191337203.png" alt="image-20241219133725173"></p>
+<p>典型依赖矩阵B的定义：PXY为联合分布，PX&#x2F;PY为边缘分布</p>
+<p>定义两个与f(x)和g(y)相关的信息向量：<em>ϕ</em>,<em>ψ</em>，为后面的证明做准备</p>
+<p>性质：l2-norm-square&#x3D;1，inner product&#x3D;0</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202412191359671.png" alt="image-20241219135941639"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202412191400467.png" alt="image-20241219140004440"></p>
+<p>特征值有些矩阵没有（只有方阵有det(A−λI)&#x3D;0），奇异值所有矩阵都有A&#x3D;UΣVT，其中奇异值σi是Σ中的对角线元素，满足：σi&#x3D;\sqrt{λi}</p>
+<ul>
+<li>这里λi是矩阵ATA的非负特征值</li>
+</ul>
+<p>HGR可以用<em>ϕ</em>,<em>ψ</em>，B一起表示，ρ&#x3D;max…</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202412191541547.png" alt="image-20241219154157513"></p>
+<p>证明fact1：</p>
+<ul>
+<li>先证B的左奇异向量和右奇异向量是Px和Py（其实我不懂这一步到ρ&#x3D;σ的逻辑）</li>
+<li>再根据奇异值分解的性质，构造专门的f*&#x2F;g*让<em>ϕ</em>,<em>ψ</em>作为最大奇异向量，因为与Px&#x2F;Py正交所以是可行的</li>
+<li>可以用&#x3D;B的最大奇异值来证HGR满足ρ&#x3D;0-&gt;XY独立</li>
+</ul>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202412191654011.png" alt="image-20241219165426974"></p>
+<ul>
+<li>注意这里证明时用了[](y)，这样只用取某一项标量，比较方便运算，把y当作已知量</li>
+</ul>
+<p>奇异值分解的性质：奇异值非负</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202412201934241.png" alt="image-20241220193439223"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202412201934556.png" alt="image-20241220193404520"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202412201935687.png" alt="image-20241220193525655"></p>
+
+        </div>
+
+        
+            <section class="post-copyright">
+                
+                
+                
+                
+
+            </section>
+        
+        <section class="post-tags">
+            <div>
+                <span>标签:</span>
+                <span class="tag">
+                    
+                    
+                        <a href="/tags/%E8%AF%BE%E7%A8%8B/"># 课程</a>
+                    
+                        
+                </span>
+            </div>
+            <div>
+                <a href="javascript:window.history.back();">返回</a>
+                <span>· </span>
+                <a href="/">主页</a>
+            </div>
+        </section>
+        <section class="post-nav">
+            
+                <a class="prev" rel="prev" href="/2024/11/01/%E6%95%B0%E6%8D%AE%E5%AD%A6%E4%B9%A0%E8%AF%BE%E7%A8%8B%E7%AC%94%E8%AE%B0/">数据学习课程笔记</a>
+            
+            
+            <a class="next" rel="next" href="/2024/10/11/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E7%9F%A5%E8%AF%86/">深度学习知识</a>
+            
+        </section>
+
+
+    </article>
+</div>
+
+
+    <div id="gitalk-container"></div>
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.css">
+<script src="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.min.js"></script>
+<script src="//cdn.bootcss.com/blueimp-md5/2.10.0/js/md5.js"></script>
+<div id="gitalk-container"></div>
+<script type="text/javascript">
+      var gitalk = new Gitalk({
+        clientID: '',
+        clientSecret: '',
+        repo: 'blog_comment',
+        owner: 'lyxx2535',
+        admin: 'lyxx2535',
+        id: md5(location.pathname),
+        labels: 'Gitalk'.split(',').filter(l => l),
+        perPage: 10,
+        pagerDirection: 'last',
+        createIssueManually: true,
+        distractionFreeMode: false
+      })
+      gitalk.render('gitalk-container')
+</script>
+
+            </div>
+            <footer id="footer" class="footer">
+    <div class="copyright">
+        <span>© Annie | Powered by <a href="https://hexo.io" target="_blank">Hexo</a> & <a href="https://github.com/Siricee/hexo-theme-Chic" target="_blank">Chic</a> | 2020 - 2025
+            <br>
+            <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+<span class="site-uv">
+    Total visitors:
+    <i class="busuanzi-value" id="busuanzi_value_site_uv"></i>
+</span>&nbsp;|&nbsp;
+
+
+<span class="site-pv">
+    Total views:
+    <i class="busuanzi-value" id="busuanzi_value_site_pv"></i>
+</span>
+
+          </span>
+    </div>
+</footer>
+
+    </div>
+</body>
+
+</html>

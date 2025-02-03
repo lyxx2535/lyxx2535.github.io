@@ -1,0 +1,956 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <meta name="author" content="Annie">
+
+
+
+
+
+<title>数字图像和视频处理课程笔记 | Annie&#39;s Blog</title>
+
+
+
+    <link rel="icon" href="/favicon.ico">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+    <script src="/js/tocbot.min.js"></script>
+    
+
+
+
+    
+    
+        
+    
+
+
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+<body>
+    <script>
+        // this function is used to check current theme before page loaded.
+        (() => {
+            const currentTheme = window.localStorage && window.localStorage.getItem('theme') || '';
+            const isDark = currentTheme === 'dark';
+            const pagebody = document.getElementsByTagName('body')[0]
+            if (isDark) {
+                pagebody.classList.add('dark-theme');
+                // mobile
+                document.getElementById("mobile-toggle-theme").innerText = "· Dark"
+            } else {
+                pagebody.classList.remove('dark-theme');
+                // mobile
+                document.getElementById("mobile-toggle-theme").innerText = "· Light"
+            }
+        })();
+    </script>
+
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">Lapsey&#39;s Blog</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default">
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+        </div>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">Lapsey&#39;s Blog</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; 菜单</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+            <div class="main">
+                <div class="container">
+    
+    
+        <div class="post-toc">
+    <div class="tocbot-list">
+    </div>
+    <div class="tocbot-list-menu">
+        <a class="tocbot-toc-expand" onclick="expand_toc()">全部展开</a>
+        <a onclick="go_top()">回到顶部</a>
+        <a onclick="go_bottom()">前往底部</a>
+    </div>
+</div>
+
+<script>
+    var tocbot_timer;
+    var DEPTH_MAX = 6; // 为 6 时展开所有
+    var tocbot_default_config = {
+        tocSelector: '.tocbot-list',
+        contentSelector: '.post-content',
+        headingSelector: 'h1, h2, h3, h4, h5',
+        orderedList: false,
+        scrollSmooth: true,
+        onClick: extend_click,
+    };
+
+    function extend_click() {
+        clearTimeout(tocbot_timer);
+        tocbot_timer = setTimeout(function() {
+            tocbot.refresh(obj_merge(tocbot_default_config, {
+                hasInnerContainers: true
+            }));
+        }, 420); // 这个值是由 tocbot 源码里定义的 scrollSmoothDuration 得来的
+    }
+
+    document.ready(function() {
+        tocbot.init(obj_merge(tocbot_default_config, {
+            collapseDepth: 1
+        }));
+    });
+
+    function expand_toc() {
+        var b = document.querySelector('.tocbot-toc-expand');
+        var expanded = b.getAttribute('data-expanded');
+        expanded ? b.removeAttribute('data-expanded') : b.setAttribute('data-expanded', true);
+        tocbot.refresh(obj_merge(tocbot_default_config, {
+            collapseDepth: expanded ? 1 : DEPTH_MAX
+        }));
+        b.innerText = expanded ? 'Expand all' : 'Collapse all';
+    }
+
+    function go_top() {
+        window.scrollTo(0, 0);
+    }
+
+    function go_bottom() {
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+
+    function obj_merge(target, source) {
+        for (var item in source) {
+            if (source.hasOwnProperty(item)) {
+                target[item] = source[item];
+            }
+        }
+        return target;
+    }
+</script>
+    
+
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">数字图像和视频处理课程笔记</h1>
+            
+                <div class="post-meta">
+                    
+                        作者: <a itemprop="author" rel="author" href="/">Annie</a>
+                    
+
+                    
+                        <span class="post-time">
+                        日期: <a href="#">December 1, 2024&nbsp;&nbsp;21:54:05</a>
+                        </span>
+                    
+                    
+                        <span class="post-category">
+                        分类:
+                            
+                                <a href="/categories/%E7%A0%94%E7%A9%B6%E7%94%9F%E8%AF%BE%E7%A8%8B/">研究生课程</a>
+                            
+                        </span>
+                    
+                </div>
+            
+        </header>
+
+        <div class="post-content">
+            <h1 id="Lec1"><a href="#Lec1" class="headerlink" title="Lec1"></a>Lec1</h1><h2 id="图像处理介绍"><a href="#图像处理介绍" class="headerlink" title="图像处理介绍"></a>图像处理介绍</h2><p>图像是二维函数，f(x,y)是图片的强度或灰度</p>
+<p>数字图像是由有限数量的<strong>离散像素</strong>组成的，每个像素都有特定的位置和强度值。<img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202412101143471.png" alt="image-20241210114306345"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202501032044487.png" alt="image-20250103204424385"></p>
+<p>数字图像的重要性：视觉感知是人类最重要的信息来源，不仅能传递信息，还能传达空间结构信息</p>
+<p>为什么要处理数字图像？</p>
+<ul>
+<li><p>信息提取有助于理解数字图像。</p>
+</li>
+<li><p>信息通信可以提高传输数字图像的质量和效率。</p>
+</li>
+<li><p>获取图像</p>
+<ul>
+<li><p>校正光圈和色彩平衡</p>
+</li>
+<li><p>从投影重建 3D 物体</p>
+</li>
+</ul>
+</li>
+<li><p>为显示或打印做准备</p>
+<ul>
+<li><p>调整图像大小</p>
+</li>
+<li><p>色彩映射、伽马校正、半色调</p>
+</li>
+</ul>
+</li>
+<li><p>便于图像存储和传输</p>
+</li>
+<li><p>增强和恢复图像</p>
+</li>
+<li><p>从图像中提取信息</p>
+</li>
+<li><p>通过数字图像处理技术来判断图像的真实性</p>
+</li>
+<li><p>图像≠信息</p>
+</li>
+<li><p>数字图像处理：存储、增强&#x2F;恢复、压缩、分割、特征提取</p>
+</li>
+<li><p>数字图像处理的常见流程：图像获取、图像处理、图像压缩与传输、图像显示</p>
+</li>
+</ul>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202501032045450.png" alt="image-20250103204528405"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202501032045049.png" alt="image-20250103204536004"></p>
+<h2 id="信息形成"><a href="#信息形成" class="headerlink" title="信息形成"></a>信息形成</h2><p>人类视觉感知：视觉判断常用于数字图像处理（DIP）结果，数字图像处理算法有时会模仿人类的感知原理</p>
+<p>针孔相机模型：</p>
+<ul>
+<li><p>屏障（barrier）</p>
+</li>
+<li><p>数字传感器：可能是 CCD 或 CMOS 类型的传感器</p>
+</li>
+<li><p>针孔（pinhole）</p>
+</li>
+</ul>
+<img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202412101600514.png" alt="image-20241210160058457" style="zoom: 50%;" />
+
+<img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202412101609259.png" alt="image-20241210160920151" style="zoom:50%;" />
+
+<p>带传感器阵列的成像：在这个模型中，成像系统（例如镜头和传感器）会对光线进行处理。现代成像系统通常会包含光学元件和电子元件，这些元件会对光线进行矫正和处理，使得在内部图像平面上形成的图像是正立的。</p>
+<img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202412101610179.png" alt="image-20241210161019052" style="zoom:50%;" />
+
+<p>使用CCD相机对数字图像进行采样和量化：要产生一幅数字图像，需要把连续感测的数据转换为数字形式。采样（对坐标值进行数字化）、量化（对幅度值进行数字化）</p>
+<ul>
+<li>在 CCD 相机中，采样和量化是关键元素</li>
+<li>采样：通过 CCD 芯片网格对图像进行采样</li>
+<li>量化：每个 CCD 元件使用固定数量的比特来表示图像值<ul>
+<li>我们将图像表示为一个数字矩阵</li>
+<li>MATLAB 是图像处理的理想工具<img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202501032048252.png" alt="image-20250103204859190"></li>
+</ul>
+</li>
+</ul>
+<p>量化：</p>
+<ul>
+<li>为什么？只有有限的比特（精度）可用。</li>
+<li>如何？使用 8 比特（256 级）来表示所有可能的值。把原始值映射到0-255<img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202412101628789.png" alt="image-20241210162851664"></li>
+<li>不同量化方案的依据：值范围、值分布<img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202412101631171.png" alt="image-20241210163134113" style="zoom:50%;" /></li>
+</ul>
+<p>0、0.5、1分别是黑色、灰色、白色<img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202501032049729.png" alt="image-20250103204927683"></p>
+<p>度量相邻像素：</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202412101949748.png" alt="image-20241210194930726"></p>
+<h2 id="数学基础"><a href="#数学基础" class="headerlink" title="数学基础"></a>数学基础</h2><p>共轭矩阵：把每个元素替换成共轭复数，虚部取相反数<img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202412101952730.png" alt="image-20241210195215704"></p>
+<p>共轭转置：先转置后共轭，或者先共轭后转置，一样的。厄米特矩阵：满足A&#x3D;A^H<img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202412101956965.png" alt="image-20241210195624942"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202412101958579.png" alt="image-20241210195856558"></p>
+<p>trace迹：方阵（行数和列数相等的矩阵）主对角线上元素之和</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202412102002293.png" alt="image-20241210200245270"></p>
+<p>高斯分布：对星系的图像进行不同次数的平均处理，以减少加性高斯噪声的影响<img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202412102014384.png" alt="image-20241210201414362"></p>
+<p>齐次坐标：将二维坐标 (x, y) 扩展为三维坐标 (x, y, 1) 的一种表示方法</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202412102021484.png" alt="image-20241210202115461"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202412102024648.png" alt="image-20241210202425626"></p>
+<h2 id="练习"><a href="#练习" class="headerlink" title="练习"></a>练习</h2><p>2.1节的背景信息是：晶状体和视网膜的距离固定（17mm），即可计算中间凹区域的物体大小<img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202412101914142.png" alt="image-20241210191452085"></p>
+<p><img src="https://i-blog.csdnimg.cn/blog_migrate/c164d18fd232ba1fc0c54fb19130af76.png" alt="img"></p>
+<p>如图 P2.3 所示，视网膜图像中与点相对应的直径 x 是由类似的三角形得到的。即<img src="https://i-blog.csdnimg.cn/blog_migrate/b9434c08a7ee4961419370af14899675.png" alt="img" style="zoom:50%;" /></p>
+<p>得出 x &#x3D; 0.085d。将眼窝视为一个方形传感器阵列，拥有大约 337,000 个元素，这相当于一个大约 580×580 个元素的阵列。假设元素间距相等，则在 1.5 毫米长的边长上有 580 个元素和 579 个间距，共计 1,159 个。1.5mm&#x2F;1159&#x3D;1.3×10-6 m，是单个分辨率元素的大小，如果一个点的直径 0.085d＜1.3×10-6 m，或者 d＜15.3×10-6 m，眼睛就无法检测到这个点。</p>
+<h1 id="Lec2-强度Intensity转换"><a href="#Lec2-强度Intensity转换" class="headerlink" title="Lec2 强度Intensity转换"></a>Lec2 强度Intensity转换</h1><h2 id="图像增强"><a href="#图像增强" class="headerlink" title="图像增强"></a>图像增强</h2><p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202412102032977.png" alt="image-20241210203236947"></p>
+<p>图像增强与特征提取密切相关。它是特征提取的预处理步骤，不同的变换是从不同角度观察图像的常用工具。</p>
+<ul>
+<li>对于这个主题，最好有一个标准化的、定量的问题表述和评估标准。</li>
+</ul>
+<h2 id="空间域的图像增强方法"><a href="#空间域的图像增强方法" class="headerlink" title="空间域的图像增强方法"></a>空间域的图像增强方法</h2><p>空间域中，图像函数f(x,y)是函数值的结构化排列。增强方法作用于f，或者作用于坐标(x,y)和f</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202412102047709.png" alt="image-20241210204743681"></p>
+<p>本章讲解point和global，Lec3讲解filter，这三种都是空间域的增强</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202412102050510.png" alt="image-20241210205012462"></p>
+<h3 id="point-method"><a href="#point-method" class="headerlink" title="point method"></a>point method</h3><p>仅操作一个像素：1*1</p>
+<p>下面是基础的灰度变换函数：灰度图像是一种只包含亮度信息，而没有色彩信息的图像。灰度通常用一个数值来表示，范围从 <strong>0（黑色）</strong>到 <strong>255（白色）</strong>，中间的数值代表不同程度的灰色。</p>
+<p>方法1：裁剪和阈值操作</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202412102056338.png" alt="image-20241210205630311"></p>
+<p>方法2：图像取反</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202412102101995.png" alt="image-20241210210121937"></p>
+<p>方法3：对数变换，常用于扩展图像中的暗像素值，压缩亮像素值，使显示中的暗像素可见</p>
+<ul>
+<li>例：这里将强度值范围缩放从0到1.5×10⁶缩放到[0, 255]）</li>
+</ul>
+<p>​		<img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202412102138345.png" alt="image-20241210213826278"></p>
+<p>方法4：幂律变换，ε是一个小的正数（用于避免时的计算问题）。这种变换常用于调整图像的对比度（感觉这图横纵坐标被归一化成[0,1]了，不然不满足这个曲线）</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202412102136761.png" alt="image-20241210213607729"></p>
+<ul>
+<li>例1：显示器校准（伽马校正）<img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202412102142537.png" alt="image-20241210214259510"><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202412102148266.png" alt="image-20241210214834218"></li>
+<li>例2：增强图像对比度。γ&#x3D;0.3时最明显，每个像素点增大最多，变得更亮，反之γ&#x3D;5时像素值下降最多，变得最暗<img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202412102204526.png" alt="image-20241210220453470" style="zoom:33%;" /><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202412102207307.png" alt="image-20241210220727256" style="zoom:33%;" /></li>
+</ul>
+<p>方法5：分段线性变换函数</p>
+<ul>
+<li><p>例1：对比度拉伸。b：低对比度；c：对比度拉伸；d：阈值处理<img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202412102216300.png" alt="image-20241210221642256"></p>
+</li>
+<li><p>例2：灰度级分层，(a)增强比背景更亮的主要血管，(b)中其他部分是T(r)&#x3D;r，说明输出信号和输入信号一样<img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202412102223592.png" alt="image-20241210222318545"></p>
+</li>
+<li><p>例3：比特平面分层。256灰度的图片由8bit组成，指将8位灰度图像分割成8个不同的二进制图像，最低位k8对像素值的影响最小，而最高位k1的影响最大。</p>
+<ul>
+<li>最高有效的4个平面（尤其是最高的2个平面）包含大量具有视觉意义的数据</li>
+<li>提取每个像素的特定位：例如，<code>1 &lt;&lt; i</code>生成一个只在第<code>i</code>位有值的二进制数（例如，对于第0位是<code>00000001</code>，对于第7位是<code>10000000</code>），然后我们将这个数与图像中的每个像素值进行位与运算，结果是一个只包含第**<code>i</code>**位信息的图像。通过这种方式，可以观察每个位平面对图像视觉效果的贡献。</li>
+<li>程序思想：在8比特下，遍历整个图像，<strong>用像素值与各比特面的值进行位与操作</strong>，每个比特面的取值间隔为2^(n-1)，判断该像素值在该比特面是否存在即该比特位是否为1，如果存在进行二值化给该像素值所在位赋值为255（白色），这也是突出显示该比特的核心，否则赋值0。</li>
+</ul>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202412102235367.png" alt="image-20241210223527344"><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202412102235257.png" alt="image-20241210223540241"></p>
+<p>下图是比特平面从8到1：可以用87&#x2F;876&#x2F;8765恢复原图。较高比特平面能够捕捉到图像的主要轮廓和形状，较低比特平面只能捕捉到边界的部分信息。<img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202412111302811.png" alt="image-20241211130209685"></p>
+</li>
+</ul>
+<h3 id="global-method"><a href="#global-method" class="headerlink" title="global method"></a>global method</h3><p>基于直方图：直方图是一种图表，用于统计数据点在一系列范围或区间（bins）内出现的次数。区间（bin）是一个容器，它包含所有强度值落在相应区间内的数据点。</p>
+<p>下图Score列出了区间的上限，No. of Scores列出了对应区间内的数据点数量。数据区间较多时，可以用折线图代替条形图。<img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202412111316514.png" alt="image-20241211131630485"><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202412111318093.png" alt="image-20241211131827068"><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202412111318805.png" alt="image-20241211131836779"></p>
+<p>直方图传达的信息类型：</p>
+<ul>
+<li>频率分布的大致形状：正态分布、卡方分布等</li>
+<li>分布是对称的还是偏态的</li>
+<li>模态 - 单峰、双峰或多峰，看峰值数量</li>
+</ul>
+<p>bin width区间宽度的选择很重要：</p>
+<ul>
+<li>过宽时，数据会被过度合并，导致直方图可能无法准确地反映数据的分布情况，细节信息会丢失。</li>
+<li>过小时，直方图可能会变得过于碎片化，数据可能会显得非常杂乱，难以看出数据的整体分布趋势。</li>
+</ul>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202412111325039.png" alt="image-20241211132558008"></p>
+<h4 id="Histogram-equalization"><a href="#Histogram-equalization" class="headerlink" title="Histogram equalization"></a>Histogram equalization</h4><p>idea：使直方图均匀分布，可以增强图像的对比度，使得图像中的细节更加明显。</p>
+<p>目标：找到变换函数s&#x3D;T(r)，把任意PDF转为均匀的PDF</p>
+<ul>
+<li>转换函数T(r)需满足在[0,L-1]内严格单调递增（是双向的一对一映射）<img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202412111347701.png" alt="image-20241211134745669"></li>
+</ul>
+<p>所以构造：<img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202412111337928.png" alt="image-20241211133701900"></p>
+<p>证明：<img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202412111350798.png" alt="image-20241211135044772"><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202412111350119.png" alt="image-20241211135058097"><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202412111351024.png" alt="image-20241211135112994"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202412111336299.png" alt="image-20241211133628269"></p>
+<p>对于离散情况：<img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202412111359965.png" alt="image-20241211135903937" style="zoom:80%;" /><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202412111357148.png" alt="image-20241211135730126" style="zoom:50%;" /></p>
+<p>均衡后的效果图：可以看到对前三图效果明显，而第四幅图的灰度级本来就已经全覆盖，所以区别不大<img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202412111434521.png" alt="image-20241211143410460" style="zoom:50%;" /><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202412111435540.png" alt="image-20241211143553498" style="zoom: 67%;" /><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202412111434973.png" alt="image-20241211143427925"></p>
+<p>然而在有些场景下直方图均衡化效果不好，比如原始图像的像素分布非常集中，这时候使用直方图匹配。</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202412111537010.png" alt="image-20241211153730990"></p>
+<h4 id="Histogram-specification"><a href="#Histogram-specification" class="headerlink" title="Histogram specification"></a>Histogram specification</h4><p>规定待处理图像的直方图形状。r,z表示输入和输出图像的灰度级（比如8位就是0-255共256个灰度级），G(z)&#x3D;s是人为定义的，规定PDF时需要满足的条件。</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202412111550322.png" alt="image-20241211155001290"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202412111551236.png" alt="image-20241211155123195"></p>
+<p>根据pr(r)和pz(z)算出G(z)</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202412111555043.png" alt="image-20241211155541983"></p>
+<p>离散形式：注意反函数G^(-1)必须是严格单调的，这意味着pz(z)值不能为0，需要“变通”<img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202412111605004.png" alt="image-20241211160551969"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202412111545151.png" alt="image-20241211154508107"></p>
+<p>例题的图：a是原直方图，b是规定的pz，c是求解出来的G(有0，需要进一步处理)，d是处理后得到的pz，作为规定化结果**<img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202412111630313.png" alt="image-20241211163036268">**</p>
+<p>Histogram是全局方法，作用于整个图像。</p>
+<ul>
+<li>建议使用局部直方图（local histogram）来提高定位能力（localization ability）。<img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202412111645128.png" alt="image-20241211164536086"></li>
+<li>可能不够具体，它仅仅是强度分布，并且邻域信息在很大程度上被削弱了。</li>
+<li>可以使用直方图统计进行增强，例如n-th moment information（n 阶矩信息）。</li>
+</ul>
+<h2 id="练习-1"><a href="#练习-1" class="headerlink" title="练习"></a>练习</h2><blockquote>
+<p>重点看直方均衡化和直方匹配，因为考试应该只会考离散</p>
+</blockquote>
+<ol>
+<li>原本的bin是r，现在的bin是s，让直方图分布更为均衡。四舍五入到整数值后，获得每个新的灰度级的像素值，即可绘制均衡后的直方图</li>
+</ol>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202412111429365.png" alt="image-20241211142936312"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202412111430332.png" alt="image-20241211143010293"></p>
+<ol start="2">
+<li>给定一个强度图像I，构建一个单一的强度变换函数，将I的强度值进行扩展，使得最低强度值为 0，最高强度值为L-1。</li>
+</ol>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202412111531518.png" alt="image-20241211153145497"></p>
+<ol start="3">
+<li>多次应用直方图均衡化是否会使分布更加均匀，为什么？不会，第一次均衡化后，图像的强度分布已经符合累积分布的均衡化目标。</li>
+<li>直方图匹配：离散情况<img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202412111609248.png" alt="image-20241211160925208"><ol>
+<li>首先得到直方图均衡化的值<img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202412111609176.png" alt="image-20241211160935148"></li>
+<li>利用规定的直方图pz(z_q)计算G(z_q），然后四舍五入到0-7的整数<img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202412111620194.png" alt="image-20241211162035156"><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202412111559675.png" alt="image-20241211155923646"><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202412111609006.png" alt="image-20241211160955973"></li>
+<li>处理G出现0不是严格单调的情况：s0&#x3D;1，G(z3)最接近，所以映射到zq&#x3D;3</li>
+<li>获得基于z_q的像素，过程就是r-&gt;s-&gt;z的2重映射，把映射到同一值的pr(r_k)相加<img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202412111628857.png" alt="image-20241211162805820"></li>
+</ol>
+</li>
+</ol>
+<h1 id="Lec3-spatial-filtering-空间滤波"><a href="#Lec3-spatial-filtering-空间滤波" class="headerlink" title="Lec3 spatial filtering 空间滤波"></a>Lec3 spatial filtering 空间滤波</h1><p><strong>Filtering methods for image enhancement</strong></p>
+<p>本章讲空间域的滤波方法，第四章讲频率域的滤波方法</p>
+<p><strong>Filtering in Spatial Domain</strong></p>
+<ol>
+<li>“-Blurring - integration”：在空间域中，<strong>模糊操作</strong>可通过积分实现。模糊可以减少图像中的噪声和细节，使图像变得更加平滑。</li>
+<li>“Sharpening - differentiation”：<strong>锐化操作</strong>通过微分实现。锐化可以增强图像的边缘和细节，使图像看起来更加清晰。</li>
+</ol>
+<h2 id="Overview"><a href="#Overview" class="headerlink" title="Overview"></a>Overview</h2><p>一个空间滤波包括：</p>
+<ol>
+<li>邻域：通常是一个小正方形或矩形。空间滤波是基于图像中<strong>每个像素周围的一个局部区域</strong>进行操作的，这个局部区域就是邻域，常见的形状有小正方形或矩形。这个邻域的大小和形状会影响滤波的效果，较小的邻域可能更注重局部细节，而较大的邻域可能会考虑更广泛的图像区域。</li>
+<li>对邻域中的图像像素执行<strong>预定义操作</strong>：针对每个像素的邻域，有一个预先定义好的操作。这个操作可以是各种数学运算，如求和、求平均、加权求和等，目的是根据邻域内像素的值来改变中心像素的值。</li>
+</ol>
+<p>空间滤波的结果：作为滤波操作的结果，在邻域中心的坐标处创建一个新像素</p>
+<p>通常，结果被写入一个新图像中，因为邻域中的像素可能仍然需要用于其他像素的滤波，所以不会对原始图像直接进行修改，保证准确和一致性</p>
+<p>卷积 —— 在像素上移动滤波掩码，权重与像素值相乘并求和，得到中心像素的新值，根据目的设计</p>
+<h2 id="平滑（低通）空间滤波器"><a href="#平滑（低通）空间滤波器" class="headerlink" title="平滑（低通）空间滤波器"></a>平滑（低通）空间滤波器</h2><p>相关Correlation：内积</p>
+<p>卷积Convolution：从右到左，从下到上</p>
+<ul>
+<li>可以理解为卷积是先对卷积核进行了翻转后，再进行对应位置的乘积和求和操作（卷积&#x3D;核上下翻转+互相关运算）</li>
+<li>提升性能：卷积可分离。卷积运算具有结合律和分配律等性质。在图像处理中，对图像先后进行两次卷积操作可以等效于将两个卷积核先进行卷积得到一个新的卷积核，再用这个新卷积核对图像进行一次卷积操作。</li>
+</ul>
+<p>之间的关系：</p>
+<ol>
+<li>如果滤波器是对称的，那么相关和卷积是完全相同的。</li>
+<li>如果对滤波器进行旋转操作（90°上下翻转），相关和卷积是等价的。</li>
+</ol>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202410121324522.png" alt="img"></p>
+<p>Linear Spatial Filtering（线性空间滤波）：将滤波器系数与对应的像素值相乘，然后对乘积求和得到滤波后的响应。</p>
+<p>f(x,y)原始图像-&gt;w(s,t)滤波器-&gt;g(x,y)</p>
+<p>中心位置(x,y)就是当前正在处理的像素点，通过改变x,y遍历整个图像，注意边界处理一般会<strong>填充特定值</strong>（Padding）保证filter kernel w正常工作。同时，遍历整个图像进行滤波操作可能会消耗大量的计算资源，需要考虑优化算法以提高效率。</p>
+<ul>
+<li>zero padding：引入<strong>暗边界</strong>，厚度取决于核的大小和类型</li>
+<li>mirror padding：<strong>以图像边界为对称轴</strong>进行镜像对称填充。适合在边框附近的区域包含图像细节时。</li>
+<li>replicate padding：将图像边界处的像素值<strong>复制</strong>到填充区域。适合图像边界附近的区域是恒定时。</li>
+</ul>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202410142214629.png" alt="image-20241014221446528"><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202410142221748.png" alt="image-20241014222159656"></p>
+<h3 id="Mean-Box-Filter"><a href="#Mean-Box-Filter" class="headerlink" title="Mean&#x2F;Box Filter"></a>Mean&#x2F;Box Filter</h3><p>平均掩码的作用：对于一个含有噪声的像素点，经过均值滤波后，其新的值是周围几个像素值的平均，这个平均过程可以有效地减少那些异常的、高幅度的噪声值，使图像变得更加平滑，从而降低噪声的影响。</p>
+<h3 id="Gaussian-Filter"><a href="#Gaussian-Filter" class="headerlink" title="Gaussian Filter"></a>Gaussian Filter</h3><p>对于高斯卷积来说，我们可以将图像先与一维水平卷积核相卷积，再与一维垂直方向的卷积核相卷积，所得结果跟直接用二维核来卷积相同，这就是高斯卷积核的<strong>可分离性</strong>。</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202412112016280.png" alt="image-20241211201601250"></p>
+<ul>
+<li>2M+1就是滤波器的一半，可分离性告诉我们使用更大的filter也没啥好处，根据σ确认filter大小即可，并不是核越大模糊效果就越好。<img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202412112022920.png" alt="image-20241211202230890"></li>
+</ul>
+<p>网络参考：按照公式求解+归一化+内积（相关）</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202410121324507.png" alt="img"><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202410121324729.png" alt="img"></p>
+<p>高斯滤波与盒滤波的对比：高斯滤波更为平滑</p>
+<ol>
+<li>模糊效果上，高斯滤波在模糊过程中能够自然地过渡，没有明显边界；而盒式滤波不够平滑，在狗耳朵这样的边缘有块状效果；</li>
+<li>边缘检测效果上，高斯滤波对狗的五官、四肢等细节检测良好，但盒滤波失去了部分细节，且出现了伪影，让边缘难以辨认。</li>
+</ol>
+<p>高斯滤波与盒滤波均为线性可分离的滤波器，均用于平滑图像，减少图像中的噪声</p>
+<ul>
+<li><p>linear：满足叠加原理。<img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202410151053658.png" alt="image-20241015105346573"></p>
+</li>
+<li><p>均可以分解为一维水平和垂直滤波器，进行模糊&#x2F;平滑处理降低噪音，以及提升计算效率时有用</p>
+</li>
+</ul>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202412112101890.png" alt="image-20241211210107855"></p>
+<p>高斯滤波的应用：</p>
+<ul>
+<li>使用低通滤波和阈值处理提取感兴趣的区域，将区域提亮，并消除无关细节<img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202412112114046.png" alt="image-20241211211449017"></li>
+<li>使用低通滤波校正阴影，提取阴影模式，用原图除以阴影得到未被遮蔽的图像<img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202412112115791.png" alt="image-20241211211503738"></li>
+</ul>
+<h3 id="Ordrer-statistic-Filter"><a href="#Ordrer-statistic-Filter" class="headerlink" title="Ordrer-statistic Filter"></a>Ordrer-statistic Filter</h3><p>与上面的区别：非线性</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202412112114561.png" alt="image-20241211211409531"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202412112116772.png" alt="image-20241211211646727"></p>
+<h2 id="锐化（高通）空间滤波器"><a href="#锐化（高通）空间滤波器" class="headerlink" title="锐化（高通）空间滤波器"></a>锐化（高通）空间滤波器</h2><p>模糊操作通常会使图像变得柔和，减少细节，而锐化操作则会增强图像的边缘和细节。</p>
+<p>平均操作通常用于平滑图像，减少噪声，而微分操作则用于检测图像中的边缘和变化。</p>
+<p>锐化的总体目标：识别和增强图像中的不连续性（discontinuity），例如边缘（edges）。锐化滤波器的主要目的是突出图像中的边缘和细节，使图像看起来更加清晰和锐利。</p>
+<p>求解一阶导数和二阶导数：与一阶导数相比，二阶导数可以增强更精细的细节，且所需的运算量更少，所以主要使用二阶导数锐化图像</p>
+<ul>
+<li>画圈的地方二阶导数不为0，都是拐点</li>
+</ul>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202412112144500.png" alt="image-20241211214459472"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202412112145743.png" alt="image-20241211214548715"></p>
+<h3 id="Laplacian-Filter"><a href="#Laplacian-Filter" class="headerlink" title="Laplacian Filter"></a>Laplacian Filter</h3><p>这里的第一个filter就对应式（3.53），总之先求出f(x,y)的二阶导数，然后叠加到原始图像上（中心值为负则减，反之加）</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202412112153882.png" alt="image-20241211215347842"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202412112159278.png" alt="image-20241211215930249"></p>
+<p>如何用拉普拉斯滤波器增强边缘？添加回检测到的边缘（不确定是不是添加额外微分的意思），(b)核锐化效果更明显，因为添加了对角方向的额外微分<img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202412112215851.png" alt="image-20241211221528814"></p>
+<h3 id="Highboost-Filter"><a href="#Highboost-Filter" class="headerlink" title="Highboost Filter"></a>Highboost Filter</h3><p>钝化掩蔽：k&gt;1时，称为高提升滤波。主要通过获取模糊后的图像，计算出模板</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202412112219683.png" alt="image-20241211221927650"><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202412112221976.png" alt="image-20241211222101950"></p>
+<p>较大的k值会不自然，e的对比度和清晰度更高<img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202412112223817.png" alt="image-20241211222305776"></p>
+<p>对于空间滤波器（也称为空间掩码）的总结：</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202412112226029.png" alt="image-20241211222628991"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202412112226212.png" alt="image-20241211222657176"></p>
+<h2 id="练习-2"><a href="#练习-2" class="headerlink" title="练习"></a>练习</h2><ol>
+<li>证明使用均值滤波器可以去噪，注意使用了方差的线性组合性质<img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202412111951624.png" alt="image-20241211195110604"><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202412111951359.png" alt="image-20241211195123335"><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202412111950883.png" alt="image-20241211195032851"></li>
+</ol>
+<h1 id="Lec4-Spectral-Filtering-光谱过滤"><a href="#Lec4-Spectral-Filtering-光谱过滤" class="headerlink" title="Lec4 Spectral Filtering 光谱过滤"></a>Lec4 Spectral Filtering 光谱过滤</h1><h2 id="Transform"><a href="#Transform" class="headerlink" title="Transform"></a>Transform</h2><p>将原始信号转换为不同形式⇒前向变换</p>
+<p>查看来自不同角度的原始信号⇒逆变换</p>
+<p>必要性和重要性：从不同的角度来看图像。</p>
+<p>好的转换很难找到。</p>
+<ul>
+<li>傅里叶变换</li>
+<li>拉普拉斯变换</li>
+<li>小波变换</li>
+</ul>
+<h2 id="Fourier-Transformation"><a href="#Fourier-Transformation" class="headerlink" title="Fourier Transformation"></a>Fourier Transformation</h2><p>用傅里叶级数或变换表示的函数可由逆过程完全重建（复原），而不丢失信息</p>
+<p>计算优势C(m)&gt;1，FFT计算优势更大；反之，空间滤波的优势更大</p>
+<p>FFT相对于较大的空间核具有压倒性的优势</p>
+<h3 id="复数"><a href="#复数" class="headerlink" title="复数"></a>复数</h3><p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202412112238136.png" alt="image-20241211223819096"></p>
+<p>通过欧拉公式得到极坐标下熟悉的复数表示，θ的范围是[-Π，Π]</p>
+<h3 id="傅里叶变换"><a href="#傅里叶变换" class="headerlink" title="傅里叶变换"></a>傅里叶变换</h3><p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202412112249510.png" alt="image-20241211224944477"></p>
+<p>t,μ都是连续变量，前者是时间变量，后者是频率变量</p>
+<p>根据欧拉公式得到下式，FT是f(t)乘以正弦函数的展开式，其中正弦函数的频率由μ决定。因此积分后留下的唯一变量是频率μ，傅里叶变换域是频率域。</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202411051103655.png" alt="image-20241105110302562"></p>
+<p>卷积性质：</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202412112252888.png" alt="image-20241211225250855"></p>
+<p>对于复杂的滤波计算，完全可以利用卷积的性质先分别FT再乘，最后IFT</p>
+<img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202411051137135.png" alt="image-20241105113744046" style="zoom:50%;" />
+
+<h3 id="傅里叶级数"><a href="#傅里叶级数" class="headerlink" title="傅里叶级数"></a>傅里叶级数</h3><p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202411051140549.png" alt="image-20241105114029474"></p>
+<p>傅里叶级数和傅里叶变换的联系</p>
+<ol>
+<li><p>相同点：傅里叶级数和傅里叶变换都源自于傅里叶原理得出；傅里叶变换是从傅里叶级数推演而来的，傅里叶级数是所有周期函数都可以分解成一系列的正交三角函数（内积为0是正交），这样，周期函数对应的傅里叶级数即是它的频谱函数。</p>
+</li>
+<li><p>不同点</p>
+<ol>
+<li>本质不同：傅里叶变换是完全的频域分析，而傅里叶级数是周期信号的另一种时域的表达方式，也就是正交级数，它是不同的频率的波形的叠加。</li>
+<li>适用范围不同：傅里叶级数适用于对周期性现象做数学上的分析（即<strong>仅适用于周期信号</strong>），傅里叶变换可以看作傅里叶级数的极限形式，也可以看作是对周期现象进行数学上的分析，同时<strong>也适用于非周期性现象</strong>的分析。</li>
+<li>周期性不同：傅里叶级数是一种周期变换，傅里叶变换是一种非周期变换。傅里叶级数是以三角函数为基对周期信号的无穷级数展开，如果把周期函数的周期取作无穷大，对傅里叶级数取极限即得到傅里叶变换。</li>
+</ol>
+</li>
+</ol>
+<h2 id="Sampling采样"><a href="#Sampling采样" class="headerlink" title="Sampling采样"></a>Sampling采样</h2><p>我们正在做数字信号处理，因此，以一种<strong>离散</strong>的方式进行思考总是很重要的——在实践中，它与采样有关。我们如何对一个连续的信号（函数）f(t)进行采样？我们如何用数学来表示它？</p>
+<h3 id="unit-impulse"><a href="#unit-impulse" class="headerlink" title="unit impulse"></a>unit impulse</h3><p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202412112330456.png" alt="image-20241211233035433"></p>
+<p>从0推广到t0，在任意一点t0可以取样：<img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202412112333521.png" alt="image-20241211233346497"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202412112334956.png" alt="image-20241211233408930"></p>
+<p>如果想采样超过一个t？冲激串：把冲激放在一起</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202411121031592.png" alt="image-20241112103114504"></p>
+<p>连续函数f(t)以Δt间隔取样的例子：<img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202412211244093.png" alt="image-20241221124401050"></p>
+<p>因为在t&#x3D;nΔT处取样，其他地方都取非零值，所以可以写作：<img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202412211510637.png" alt="image-20241221151048610"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202412211244457.png" alt="image-20241221124449428"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202412211244060.png" alt="image-20241221124436015"></p>
+<h3 id="FT-of-Impulse-Functions"><a href="#FT-of-Impulse-Functions" class="headerlink" title="FT of Impulse Functions"></a>FT of Impulse Functions</h3><p>脉冲函数的傅里叶变换</p>
+<p>利用在0点的取样性质（&#x3D;f(0)）：注意单位冲激只在0点有值</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202411121051234.png" alt="image-20241112105115146"></p>
+<p>在t&#x3D;t0：&#x3D;f(t0)</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202411121053530.png" alt="image-20241112105312489"></p>
+<h4 id="周期冲激串的FT"><a href="#周期冲激串的FT" class="headerlink" title="周期冲激串的FT"></a>周期冲激串的FT</h4><ol>
+<li><p>因为满足傅里叶级数的定义获得定义（周期为ΔT的连续变量t的周期函数f(t)）：<img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202411121118728.png" alt="image-20241112111810018"></p>
+</li>
+<li><p>求和是线性过程，所以先获得分量的傅里叶变换（似乎是通过对称性得到的，但我没证过程）<img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202411121155514.png" alt="image-20241112115542444"><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202411121155508.png" alt="image-20241112115513414"><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202411121154143.png" alt="image-20241112115442033"></p>
+</li>
+<li><p>最后对各分量进行求和。注意FT后依然是冲激串，周期为1&#x2F;ΔT。注意周期呈<strong>反比</strong>关系。</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202412211324490.png" alt="image-20241221132448427"></p>
+</li>
+</ol>
+<blockquote>
+<p>卷积定理：<img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202411121158852.png" alt="image-20241112115800748"></p>
+</blockquote>
+<h3 id="FT-of-Sampled-Functions"><a href="#FT-of-Sampled-Functions" class="headerlink" title="FT of Sampled Functions"></a>FT of Sampled Functions</h3><p>目的：计算机处理前，连续函数必须转化为一系列离散值，要求取样和量化</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202412211425287.png" alt="image-20241221142538258"></p>
+<p>取样序列中的任意一个取样值fk：<img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202412211425331.png" alt="image-20241221142502298"></p>
+<p>取样的FT：S(μ-t)代入上面求得的S(μ)</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202411121216896.png" alt="image-20241112121650845"></p>
+<h2 id="取样定理"><a href="#取样定理" class="headerlink" title="取样定理"></a>取样定理</h2><p>取样率：1&#x2F;ΔT</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202412211429610.png" alt="image-20241221142900571"></p>
+<p>为了避免混叠，采样频率必须满足：取样定理</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202412211441545.png" alt="image-20241221144151520"></p>
+<p>先得到F(μ)，再得到f(t)。理想低通滤波器的输入μ是低频的，所以可以消除所有较高的频率（欠采样会让F(μ)形状不对）</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202412211444023.png" alt="image-20241221144404974"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202412211447314.png" alt="image-20241221144732271"></p>
+<h3 id="混叠"><a href="#混叠" class="headerlink" title="混叠"></a>混叠</h3><p>指取样后不同信号变得彼此无法区分的取样现象，混叠对再取样后无法区分，原因是取样率太粗，函数欠采样</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202412211450668.png" alt="image-20241221145049634"></p>
+<h3 id="由取样后的数据重建函数"><a href="#由取样后的数据重建函数" class="headerlink" title="由取样后的数据重建函数"></a>由取样后的数据重建函数</h3><p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202412211542429.png" alt="image-20241221154231402"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202412211541136.png" alt="image-20241221154150051"></p>
+<h3 id="二维的FT"><a href="#二维的FT" class="headerlink" title="二维的FT"></a>二维的FT</h3><p>TODO：可以对照着内容整理一维的</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202412211543024.png" alt="image-20241221154349991"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202412211544091.png" alt="image-20241221154406061"></p>
+<h2 id="离散傅里叶变换DFT"><a href="#离散傅里叶变换DFT" class="headerlink" title="离散傅里叶变换DFT"></a>离散傅里叶变换DFT</h2><h3 id="DFT-in-1D"><a href="#DFT-in-1D" class="headerlink" title="DFT in 1D"></a>DFT in 1D</h3><p>从连续到离散：<img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202412211556327.png" alt="image-20241221155613302"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202412211553279.png" alt="image-20241221155357246"></p>
+<p>得到离散的fm可以得到Fm，已知Fm时也可以通过IDFT复原样本集fm：</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202412211602426.png" alt="image-20241221160204386"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202412211602820.png" alt="image-20241221160213799"></p>
+<h3 id="DFT-in-2D"><a href="#DFT-in-2D" class="headerlink" title="DFT in 2D"></a>DFT in 2D</h3><p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202412211610285.png" alt="image-20241221161048253"></p>
+<p>位移：前两个图是1维DFT移到中间，后一张图是2维DFT移到中间</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202412211615219.png" alt="image-20241221161505168"></p>
+<p>卷积：<img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202412211620852.png" alt="image-20241221162018810"></p>
+<h2 id="Interpreting-FT频谱和相角（二维DFT）"><a href="#Interpreting-FT频谱和相角（二维DFT）" class="headerlink" title="Interpreting FT频谱和相角（二维DFT）"></a>Interpreting FT频谱和相角（二维DFT）</h2><p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202412211622968.png" alt="image-20241221162241938"><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202412211623228.png" alt="image-20241221162309190"></p>
+<p>可视化频谱|F(u,v)|：</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202412211625417.png" alt="image-20241221162502372"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202412211631885.png" alt="image-20241221163120836"></p>
+<p>分析移动后的矩形与原始矩形具有相同的频谱，这是怎么回事？ϕ就是相位，也称相角</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202412211639523.png" alt="image-20241221163918487"></p>
+<p>相角图片得不到直观的信息，比如4.25a对应的并不是4.24c，而是4.23a</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202412211640475.png" alt="image-20241221164013429"></p>
+<h3 id="应用"><a href="#应用" class="headerlink" title="应用"></a>应用</h3><p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202412211644549.png" alt="image-20241221164411505"></p>
+<p>图像边缘：高频，变化较快</p>
+<p>H是filter，进行图像处理。第三列说明：对滤波器加小常数并不会明显地影响清晰度，但会阻止消除直流项，因此会保留色调<img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202412211645517.png" alt="image-20241221164522482"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202412211646474.png" alt="image-20241221164609425"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202412211651362.png" alt="image-20241221165103273"></p>
+<p>重建过程：就是进行IDFT</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202412211652912.png" alt="image-20241221165206884"></p>
+<h2 id="练习-3"><a href="#练习-3" class="headerlink" title="练习"></a>练习</h2><ol>
+<li><p>求一个盒式函数的F(μ)&#x3D;AWsinc(μW)，频谱就是求绝对值</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202412112300130.png" alt="image-20241211230008101"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202412112305204.png" alt="image-20241211230540171"></p>
+<ol start="2">
+<li><p>离散DFT：利用下式做题：<img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202412211606105.png" alt="image-20241221160650076"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202412211608993.png" alt="image-20241221160803945"></p>
+</li>
+</ol>
+</li>
+</ol>
+<h1 id="Lec5-Spectral-Filtering续"><a href="#Lec5-Spectral-Filtering续" class="headerlink" title="Lec5 Spectral Filtering续"></a>Lec5 Spectral Filtering续</h1><h2 id="Spectral-Filters"><a href="#Spectral-Filters" class="headerlink" title="Spectral Filters"></a>Spectral Filters</h2><h3 id="频域和空域滤波之间关系"><a href="#频域和空域滤波之间关系" class="headerlink" title="频域和空域滤波之间关系"></a>频域和空域滤波之间关系</h3><p>频域提供了一种新的观察图像（甚至远不止图像）的视角。</p>
+<p>频域信息是<strong>全局性</strong>的 —— 每一项都包含了图像的<strong>所有</strong>信息，因此在空域和频域之间建立直观的联系并不容易。</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202412211704503.png" alt="image-20241221170459453"></p>
+<p>低频元素通常对应于图像中的大面积、缓慢变化的区域，这些区域的颜色或亮度变化较为平缓，例如天空、墙壁等大面积的均匀区域。</p>
+<p>高频元素通常对应于图像中的细节、边缘和纹理。这些区域的颜色或亮度变化较为剧烈，例如建筑物的窗户、门框、屋顶的边缘等。</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202412211708242.png" alt="image-20241221170810211"></p>
+<p>频域的复杂度小，所以选频域：<img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202412211846176.png" alt="image-20241221184615146"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202412211853584.png" alt="image-20241221185356565"></p>
+<p>通过上述操作得到的结果：<img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202412211858500.png" alt="image-20241221185855446"></p>
+<h3 id="Lowpass-Filters"><a href="#Lowpass-Filters" class="headerlink" title="Lowpass Filters"></a>Lowpass Filters</h3><h4 id="Ideal-Filter"><a href="#Ideal-Filter" class="headerlink" title="Ideal Filter"></a>Ideal Filter</h4><p>中间的圆可以通过所有频率</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202412211901387.png" alt="image-20241221190136358"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202412211901485.png" alt="image-20241221190113455"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202412211902171.png" alt="image-20241221190242114"></p>
+<p>使用低通滤波器在频率域平滑图像：效果不好，随着被滤除的内容减少，纹理中的振铃效应变得越来越弱</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202412211904505.png" alt="image-20241221190408408"></p>
+<p>效果不好的原因：b是ILPF的空间表示h(x,y)，卷积使得b中的函数的一个副本在图像的每个像素位置中心化。这个空间函数的中心波瓣是导致模糊的主因，而外侧较小的各个波瓣是造成振铃效应的主因。</p>
+<ul>
+<li>振铃效应：由于滤波器的特性，导致信号在突变点（如边缘）附近产生振荡现象，表现为在信号的突变点两侧出现一系列衰减的波动。</li>
+</ul>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202412212044191.png" alt="image-20241221204435148"></p>
+<h4 id="Guassian-Filter"><a href="#Guassian-Filter" class="headerlink" title="Guassian Filter"></a>Guassian Filter</h4><p>可以解决振铃效应：频率响应特性不同，所以同样是卷积，振荡不同</p>
+<ul>
+<li>理想低通滤波器在频域中的频率响应是一个矩形函数。它完全通过低于截止频率的频率成分，而完全阻止高于截止频率的频率成分。这种突然的截断在数学上是完美的，但在实际中会带来问题。</li>
+<li>理想低通滤波器的冲激响应（在时域中）是一个 sinc 函数（sinx&#x2F;x）。这个函数有无限的振荡特性，意味着在图像的边缘和细节处会产生振铃效应。</li>
+<li>高斯低通滤波器在频域中的频率响应是一个高斯函数。高斯函数是一个平滑的、钟形曲线，它在频域中没有突然的截断。</li>
+<li>高斯低通滤波器的冲激响应（在时域中）也是一个高斯函数。高斯函数的特性是它在时域和频域中都是平滑的，没有尖锐的边缘。</li>
+</ul>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202412212056013.png" alt="image-20241221205601971"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202412212200041.png" alt="image-20241221220012007"></p>
+<p>D0是截止频率，表现为一个从中心开始的衰减范围，可以看作是高斯滤波器的“截止半径”。<strong>频域高斯滤波器</strong>直接对频率分量操作，更精确地去除高频或低频成分，但需要进行傅里叶变换和逆变换，计算代价较高。<strong>空域高斯滤波器</strong>直接在像素空间进行处理，计算简单，尤其适合小核操作，但在滤波强度和频谱控制上不如频域滤波器灵活。</p>
+<p>与ILPF相比，实现的平滑稍少，关键区别是GLPF不会出现振铃效应</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202412212213213.png" alt="image-20241221221342110"></p>
+<h4 id="Butterworth-Filter"><a href="#Butterworth-Filter" class="headerlink" title="Butterworth Filter"></a>Butterworth Filter</h4><p>BLPF</p>
+<p>在保留<strong>理想滤波器的锐利度</strong>和<strong>减少其振铃效应</strong>之间取得平衡</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202412231813512.png" alt="image-20241223181305474"></p>
+<p>模糊程度小于ILPF，大于GLPF</p>
+<h3 id="Highpass-Filters"><a href="#Highpass-Filters" class="headerlink" title="Highpass Filters"></a>Highpass Filters</h3><p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202412231817308.png" alt="image-20241223181747267"></p>
+<p>IHPF&#x2F;GHPF&#x2F;BHPF：<img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202412231818750.png" alt="image-20241223181854714"></p>
+<ul>
+<li>理想有严重的失真，由振铃效应导致</li>
+</ul>
+<p>高通滤波和阈值处理可以一起使用（频域和空域方法可以同时使用）</p>
+<h4 id="Lalpacian-Filter"><a href="#Lalpacian-Filter" class="headerlink" title="Lalpacian Filter"></a>Lalpacian Filter</h4><p>利用偏微分性质求得频域下的算子</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202412231831780.png" alt="image-20241223183137741"></p>
+<p>你还记得如何使用空间滤波器来增强图像中的锐利特征吗？highboost</p>
+<h5 id="lalpacian-highboost"><a href="#lalpacian-highboost" class="headerlink" title="lalpacian+highboost"></a>lalpacian+highboost</h5><p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202412231836092.png" alt="image-20241223183635060"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202412231836628.png" alt="image-20241223183651592"></p>
+<h3 id="Selective-Filters"><a href="#Selective-Filters" class="headerlink" title="Selective Filters"></a>Selective Filters</h3><p>选择性滤波器的分类：</p>
+<ul>
+<li>对频率矩形中的特定频带（band filters，带通滤波器）或小区域（notch filters，陷波滤波器）进行处理。<ul>
+<li>这里的频率矩形通常是指在频域中的一个二维区域，它代表了图像在频率域中的分布。带通滤波器用于选择并处理特定的频带，而陷波滤波器用于去除或削弱特定的小区域频率。</li>
+</ul>
+</li>
+<li>可以选择过滤掉（reject，拒绝）或允许通过（pass，通过）指定的频率。</li>
+</ul>
+<p>相比高通低通，更加针对特定的频率范围，用C0和W限制范围</p>
+<h4 id="Band-Filter"><a href="#Band-Filter" class="headerlink" title="Band Filter"></a>Band Filter</h4><p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202412231847928.png" alt="image-20241223184745895"></p>
+<p>分为ideal&#x2F;guassian&#x2F;butterworth</p>
+<p>把低通和高通函数相加得到高斯核巴特沃斯带阻函数有难度，d是修改后的得到的高斯<img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202412231856628.png" alt="image-20241223185654604"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202412231856039.png" alt="image-20241223185626760"></p>
+<p>巴特沃斯性能位于理想和高斯之间</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202412231858430.png" alt="image-20241223185815383"></p>
+<h4 id="Notch-Filter"><a href="#Notch-Filter" class="headerlink" title="Notch Filter"></a>Notch Filter</h4><p>陷波滤波器的主要功能：</p>
+<ul>
+<li>修改频谱域中的特定区域，即过滤掉感兴趣区域内的信号</li>
+<li>通常应用于未填充（un - padded）的图像，以避免填充（padding）带来的环绕误差</li>
+</ul>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202412231909379.png" alt="image-20241223190919336"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202412231909381.png" alt="image-20241223190928354"></p>
+<p>可以删除数字化印刷物图像中的莫尔模式、去除周期干扰</p>
+<h1 id="Lec6-图像恢复"><a href="#Lec6-图像恢复" class="headerlink" title="Lec6 图像恢复"></a>Lec6 图像恢复</h1><h2 id="问题形成"><a href="#问题形成" class="headerlink" title="问题形成"></a>问题形成</h2><p>与图像增强的对比很重要！</p>
+<ol>
+<li><strong>图像增强（Enhancement）</strong><ul>
+<li>定义为一种带有主观标准（subjective criteria）的启发式过程（heuristic procedure）。</li>
+<li>目标是锐化感兴趣的特征（sharpen interested features）。</li>
+</ul>
+</li>
+<li><strong>图像复原（Restoration）</strong><ul>
+<li>定义为一种带有客观标准（objective criteria）的逆过程（inverse procedure）。</li>
+<li>目标是恢复退化前的原始图像（recover the original image before degradation）。</li>
+</ul>
+</li>
+</ol>
+<p>图像退化的示例：</p>
+<ol>
+<li><strong>optical blur（光学模糊）</strong><ul>
+<li>这是第二张图像，显示了由于光学原因导致的模糊效果。这种模糊通常是由镜头问题、对焦不准确或相机抖动等因素引起的。</li>
+</ul>
+</li>
+<li><strong>motion blur（运动模糊）</strong><ul>
+<li>第三张图像展示了运动模糊的效果。这种模糊通常发生在拍摄对象或相机在曝光过程中移动时，导致图像中的对象看起来模糊不清。</li>
+</ul>
+</li>
+<li><strong>spatial quantization (discrete pixels)（空间量化，离散像素）</strong><ul>
+<li>第四张图像显示了空间量化的效果，图像看起来像是由离散的像素块组成。这种情况通常发生在图像的分辨率较低或者在图像压缩过程中，导致图像细节丢失，呈现出块状的外观。</li>
+</ul>
+</li>
+<li><strong>additive intensity noise（加性强度噪声）</strong><ul>
+<li>最下方的图像展示了加性强度噪声的效果。这种噪声通常表现为图像中随机出现的亮点或暗点，会降低图像的质量和清晰度。</li>
+</ul>
+</li>
+</ol>
+<p><strong>图像复原的背景</strong></p>
+<ul>
+<li>由于成像过程中的畸变（distortions），采集到的数据与真实图像不同。例如：<ul>
+<li>拍摄对象与相机之间的相对运动（Relative motion between subject and camera）</li>
+<li>由于衍射导致的有限带宽图像（Band - limited image due to diffraction）</li>
+<li>噪声干扰（Corruption by noise）</li>
+<li>数据缺失（Missing part of data）</li>
+</ul>
+</li>
+</ul>
+<p><strong>图像复原的目标</strong>：设真实图像为f(x,y)，采集到的图像为g(x,y)，目标是尽可能从g中恢复出f。</p>
+<p><strong>图像复原的方法</strong>：为了实现这一目标，首先需要一个模型（model）来描述和之间的关系。g是采集到的图像，f是恢复后的图像</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202412231928871.png" alt="image-20241223192811839"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202412231931829.png" alt="image-20241223193106797"></p>
+<blockquote>
+<p>在数学上是个不适定问题，解决这类问题依赖于优化和适当的正则化</p>
+</blockquote>
+<h2 id="Noise-only-Model"><a href="#Noise-only-Model" class="headerlink" title="Noise-only Model"></a>Noise-only Model</h2><p>认为h(x,y)&#x3D;1，该模型的关键在于如何描述噪声</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202412231949784.png" alt="image-20241223194941754"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202412231950427.png" alt="image-20241223195035394"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202412231950553.png" alt="image-20241223195052519"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202412231951062.png" alt="image-20241223195108031"></p>
+<p>为什么我们要费心去计算噪声的平均值&#x2F;方差呢？为什么我们要关心这些类型的噪音呢？</p>
+<ol>
+<li><strong>高斯噪声（Gaussian）</strong>描述：电子电路 &#x2F; 传感器因光照不足和 &#x2F; 或高温引起的噪声。</li>
+<li><strong>瑞利噪声（Rayleigh）</strong>描述：距离成像中的噪声现象。</li>
+<li><strong>指数和伽马噪声（Exponential and Gamma）</strong></li>
+<li><strong>椒盐噪声（Pepper - and - Salt）</strong></li>
+</ol>
+<p>周期性噪声：另一种类型的噪声，它发生在图像采集和 &#x2F; 或传输过程中的电气或机电干扰</p>
+<p>你能想到哪些滤波器来消除高斯噪声呢？使用这种过滤器背后的理论支持是什么？</p>
+<h3 id="Spatial-Filters"><a href="#Spatial-Filters" class="headerlink" title="Spatial Filters"></a>Spatial Filters</h3><p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202412232008656.png" alt="image-20241223200837627"></p>
+<h3 id="Spectral-Filters-1"><a href="#Spectral-Filters-1" class="headerlink" title="Spectral Filters"></a>Spectral Filters</h3><p>下图使用陷波滤波器：<img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202412232011292.png" alt="image-20241223201132246"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202412232012872.png" alt="image-20241223201231830"></p>
+<p>用空间filter或者频域filter</p>
+<h2 id="Degradation-only-Model"><a href="#Degradation-only-Model" class="headerlink" title="Degradation-only Model"></a>Degradation-only Model</h2><p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202412232016357.png" alt="image-20241223201618335"></p>
+<p>如果我们知道退化算子h，你能否设计一个流程来从g中恢复f？</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202412232019164.png" alt="image-20241223201952135"></p>
+<p>有两个重要的问题：1.我们如何知道&#x2F;估计退化函数h&#x2F;H？ 2.如果我们有噪音怎么办？</p>
+<h3 id="估计退化函数H"><a href="#估计退化函数H" class="headerlink" title="估计退化函数H"></a>估计退化函数H</h3><ol>
+<li>观测法；2. 实验法；3. 数学建模法</li>
+</ol>
+<p>间接建模：实验法<img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202412232035371.png" alt="image-20241223203510349"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202412232035480.png" alt="image-20241223203504443"></p>
+<p>直接建模：</p>
+<p>case1:对大气湍流进行建模，并且考虑了物理因素（如环境条件）：<img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202412232036900.png" alt="image-20241223203649879"><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202412232037196.png" alt="image-20241223203700160"></p>
+<p>case2:模型是从基本原理推导出来的，比如这里的H(u,v)<img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202412232039322.png" alt="image-20241223203918290"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202412232040778.png" alt="image-20241223204017753"></p>
+<h2 id="Full-Model"><a href="#Full-Model" class="headerlink" title="Full Model"></a>Full Model</h2><h3 id="逆滤波"><a href="#逆滤波" class="headerlink" title="逆滤波"></a>逆滤波</h3><p>H退化函数已知，最简单的复原方法就是直接逆滤波，即G&#x2F;H<img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202412232044945.png" alt="image-20241223204459923"></p>
+<p>low-pass因为模糊<img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202412232046947.png" alt="image-20241223204624892"></p>
+<p>直接逆滤波性能较差，因为没有明确处理噪声，噪声会被放大</p>
+<h3 id="Wiener-Filter"><a href="#Wiener-Filter" class="headerlink" title="Wiener Filter"></a>Wiener Filter</h3><p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202412232110731.png" alt="image-20241223211037696"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202412232111650.png" alt="image-20241223211121625"></p>
+<p>K&#x3D;1&#x2F;信噪比，所以考虑了噪声</p>
+<p>可以推广到几何平均滤波器</p>
+<h1 id="Lec7-彩色图像处理"><a href="#Lec7-彩色图像处理" class="headerlink" title="Lec7 彩色图像处理"></a>Lec7 彩色图像处理</h1><h2 id="彩色基础"><a href="#彩色基础" class="headerlink" title="彩色基础"></a>彩色基础</h2><p>为什么用彩色？</p>
+<ol>
+<li>颜色是一种强大的描述符，可以简化物体检测和识别。例如，利用皮肤颜色进行人脸检测。</li>
+<li>人类对颜色的分辨能力比对灰度级的分辨能力要强得多。事实上，人类可以分辨数千种颜色和色调，但只能分辨二十几种灰度。</li>
+</ol>
+<p>色谱：无颜色突然结束-连续光谱</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202412232119954.png" alt="image-20241223211936917"></p>
+<h3 id="CIE色度图"><a href="#CIE色度图" class="headerlink" title="CIE色度图"></a>CIE色度图</h3><p><strong>CIE XYZ Color Model</strong>是国际照明委员会（CIE）提出的一种色彩模型，用于标准化颜色的表示</p>
+<ol>
+<li>颜色在色度图中均匀分布</li>
+</ol>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202412232124189.png" alt="image-20241223212451158"></p>
+<h2 id="彩色模型和彩色转复术"><a href="#彩色模型和彩色转复术" class="headerlink" title="彩色模型和彩色转复术"></a>彩色模型和彩色转复术</h2><p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202412232138012.png" alt="image-20241223213835983"></p>
+<h3 id="RGB"><a href="#RGB" class="headerlink" title="RGB"></a>RGB</h3><p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202412232141805.png" alt="image-20241223214131767"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202412232142623.png" alt="image-20241223214217585"></p>
+<h3 id="CMY-K"><a href="#CMY-K" class="headerlink" title="CMY(K)"></a>CMY(K)</h3><p>为什么添加黑色？因为用三原色生产黑色很难产生，而是深棕色</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202412232144043.png" alt="image-20241223214408012"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202412232145906.png" alt="image-20241223214547879"></p>
+<p>RGB与CMY的转换：</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202412232204653.png" alt="image-20241223220453625"></p>
+<h3 id="HSI"><a href="#HSI" class="headerlink" title="HSI"></a>HSI</h3><p>ppt没讲转换的公式<img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202412232207933.png" alt="image-20241223220710905"></p>
+<h2 id="彩色图像处理"><a href="#彩色图像处理" class="headerlink" title="彩色图像处理"></a>彩色图像处理</h2><p>两种类型的彩色数字图像处理</p>
+<ul>
+<li>伪彩色图像处理（Pseudo - color image processing）<ul>
+<li>在早期，没有彩色传感器和处理硬件。</li>
+<li>颜色被分配给一系列单色强度。</li>
+</ul>
+</li>
+<li>全彩色图像处理（Full - color image processing）<ul>
+<li>图像是从全彩色传感器或设备获取的。</li>
+<li>到目前为止学到的许多灰度图像处理方法可以很容易地转换为彩色处理（但不总是！）</li>
+</ul>
+</li>
+</ul>
+<h3 id="Pseudo-Color"><a href="#Pseudo-Color" class="headerlink" title="Pseudo Color"></a>Pseudo Color</h3><p>为什么有伪彩色？</p>
+<ol>
+<li><strong>人眼对灰度和颜色的分辨能力</strong><ul>
+<li>在单色（灰度）图像中，我们通常只能分辨出大约 30 种不同的灰度。</li>
+<li>与此同时，我们能够分辨出数百种不同的颜色。</li>
+</ul>
+</li>
+<li><strong>伪彩色的定义</strong><ul>
+<li>伪彩色（Pseudo - coloring）是指人为地将颜色分配给灰度级。</li>
+</ul>
+</li>
+<li><strong>伪彩色的应用目的</strong><ul>
+<li>为了便于人类对灰度级事件的可视化和解读。</li>
+</ul>
+</li>
+</ol>
+<p>强度分层：将图像的强度值进行分区，并为每个分区分配不同的颜色</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202412232216281.png" alt="image-20241223221605252"></p>
+<p>灰度到彩色的转换：</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202412232227265.png" alt="image-20241223222739221"></p>
+<h3 id="Full-Color-Image-Processing"><a href="#Full-Color-Image-Processing" class="headerlink" title="Full Color Image Processing"></a>Full Color Image Processing</h3><p>坐标(x,y)处的一个像素是颜色空间中的一个向量。</p>
+<ul>
+<li>类似于强度变换，颜色变换可以表示为：<img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202412232237056.png" alt="image-20241223223703032"></li>
+<li><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202412232237112.png" alt="image-20241223223713089"></li>
+</ul>
+<p>与component无关的转换：<img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202412232240439.png" alt="image-20241223224026403"></p>
+<p>彩色变换、补色、彩色分层、色调和彩色校正、彩色图像的直方图分析</p>
+<p>彩色图像平滑和锐化（拉普拉斯对每个RGB）</p>
+<p>使用彩色分割图像：HSI并不总是比RGB好。例如，当任务更多地涉及颜色信息时，我们将使用RGB。</p>
+<p>彩色图像中的噪声</p>
+<h1 id="Lec8-图像压缩和水印"><a href="#Lec8-图像压缩和水印" class="headerlink" title="Lec8 图像压缩和水印"></a>Lec8 图像压缩和水印</h1><p>图像压缩</p>
+<ul>
+<li>压缩基础</li>
+<li>无损压缩</li>
+<li>有损压缩</li>
+</ul>
+<p>图像水印</p>
+<h1 id="Lec9-图像分割"><a href="#Lec9-图像分割" class="headerlink" title="Lec9 图像分割"></a>Lec9 图像分割</h1><p>Overview</p>
+<p>间断性检测</p>
+<ul>
+<li>数学工具</li>
+<li>边缘检测</li>
+<li>形成边</li>
+</ul>
+<p>分割</p>
+<ul>
+<li>阈值</li>
+<li>区域分割和合并</li>
+<li>聚类和超像素</li>
+</ul>
+
+        </div>
+
+        
+            <section class="post-copyright">
+                
+                
+                
+                
+
+            </section>
+        
+        <section class="post-tags">
+            <div>
+                <span>标签:</span>
+                <span class="tag">
+                    
+                    
+                        <a href="/tags/%E8%AF%BE%E7%A8%8B/"># 课程</a>
+                    
+                        
+                </span>
+            </div>
+            <div>
+                <a href="javascript:window.history.back();">返回</a>
+                <span>· </span>
+                <a href="/">主页</a>
+            </div>
+        </section>
+        <section class="post-nav">
+            
+                <a class="prev" rel="prev" href="/2025/01/03/%E4%B9%A6%E7%94%9F%E5%A4%A7%E6%A8%A1%E5%9E%8B%E7%AC%AC%E5%9B%9B%E6%9C%9F%E7%AC%94%E8%AE%B0%E4%B8%8E%E5%AE%9E%E8%B7%B5/">书生大模型第四期笔记与实践</a>
+            
+            
+            <a class="next" rel="next" href="/2024/11/01/%E6%95%B0%E6%8D%AE%E5%AD%A6%E4%B9%A0%E8%AF%BE%E7%A8%8B%E7%AC%94%E8%AE%B0/">数据学习课程笔记</a>
+            
+        </section>
+
+
+    </article>
+</div>
+
+
+    <div id="gitalk-container"></div>
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.css">
+<script src="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.min.js"></script>
+<script src="//cdn.bootcss.com/blueimp-md5/2.10.0/js/md5.js"></script>
+<div id="gitalk-container"></div>
+<script type="text/javascript">
+      var gitalk = new Gitalk({
+        clientID: '',
+        clientSecret: '',
+        repo: 'blog_comment',
+        owner: 'lyxx2535',
+        admin: 'lyxx2535',
+        id: md5(location.pathname),
+        labels: 'Gitalk'.split(',').filter(l => l),
+        perPage: 10,
+        pagerDirection: 'last',
+        createIssueManually: true,
+        distractionFreeMode: false
+      })
+      gitalk.render('gitalk-container')
+</script>
+
+            </div>
+            <footer id="footer" class="footer">
+    <div class="copyright">
+        <span>© Annie | Powered by <a href="https://hexo.io" target="_blank">Hexo</a> & <a href="https://github.com/Siricee/hexo-theme-Chic" target="_blank">Chic</a> | 2020 - 2025
+            <br>
+            <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+<span class="site-uv">
+    Total visitors:
+    <i class="busuanzi-value" id="busuanzi_value_site_uv"></i>
+</span>&nbsp;|&nbsp;
+
+
+<span class="site-pv">
+    Total views:
+    <i class="busuanzi-value" id="busuanzi_value_site_pv"></i>
+</span>
+
+          </span>
+    </div>
+</footer>
+
+    </div>
+</body>
+
+</html>
