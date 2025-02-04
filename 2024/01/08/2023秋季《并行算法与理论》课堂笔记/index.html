@@ -1,0 +1,572 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <meta name="author" content="Annie">
+
+
+
+
+
+<title>2023秋季《并行算法与理论》课堂笔记 | Annie&#39;s Blog</title>
+
+
+
+    <link rel="icon" href="/favicon.ico">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+    <script src="/js/tocbot.min.js"></script>
+    
+
+
+
+    
+    
+        
+    
+
+
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+<body>
+    <script>
+        // this function is used to check current theme before page loaded.
+        (() => {
+            const currentTheme = window.localStorage && window.localStorage.getItem('theme') || '';
+            const isDark = currentTheme === 'dark';
+            const pagebody = document.getElementsByTagName('body')[0]
+            if (isDark) {
+                pagebody.classList.add('dark-theme');
+                // mobile
+                document.getElementById("mobile-toggle-theme").innerText = "· Dark"
+            } else {
+                pagebody.classList.remove('dark-theme');
+                // mobile
+                document.getElementById("mobile-toggle-theme").innerText = "· Light"
+            }
+        })();
+    </script>
+
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">Annie&#39;s Blog</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default">
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+        </div>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">Annie&#39;s Blog</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; 菜单</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+            <div class="main">
+                <div class="container">
+    
+    
+        <div class="post-toc">
+    <div class="tocbot-list">
+    </div>
+    <div class="tocbot-list-menu">
+        <a class="tocbot-toc-expand" onclick="expand_toc()">全部展开</a>
+        <a onclick="go_top()">回到顶部</a>
+        <a onclick="go_bottom()">前往底部</a>
+    </div>
+</div>
+
+<script>
+    var tocbot_timer;
+    var DEPTH_MAX = 6; // 为 6 时展开所有
+    var tocbot_default_config = {
+        tocSelector: '.tocbot-list',
+        contentSelector: '.post-content',
+        headingSelector: 'h1, h2, h3, h4, h5',
+        orderedList: false,
+        scrollSmooth: true,
+        onClick: extend_click,
+    };
+
+    function extend_click() {
+        clearTimeout(tocbot_timer);
+        tocbot_timer = setTimeout(function() {
+            tocbot.refresh(obj_merge(tocbot_default_config, {
+                hasInnerContainers: true
+            }));
+        }, 420); // 这个值是由 tocbot 源码里定义的 scrollSmoothDuration 得来的
+    }
+
+    document.ready(function() {
+        tocbot.init(obj_merge(tocbot_default_config, {
+            collapseDepth: 1
+        }));
+    });
+
+    function expand_toc() {
+        var b = document.querySelector('.tocbot-toc-expand');
+        var expanded = b.getAttribute('data-expanded');
+        expanded ? b.removeAttribute('data-expanded') : b.setAttribute('data-expanded', true);
+        tocbot.refresh(obj_merge(tocbot_default_config, {
+            collapseDepth: expanded ? 1 : DEPTH_MAX
+        }));
+        b.innerText = expanded ? 'Expand all' : 'Collapse all';
+    }
+
+    function go_top() {
+        window.scrollTo(0, 0);
+    }
+
+    function go_bottom() {
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+
+    function obj_merge(target, source) {
+        for (var item in source) {
+            if (source.hasOwnProperty(item)) {
+                target[item] = source[item];
+            }
+        }
+        return target;
+    }
+</script>
+    
+
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">2023秋季《并行算法与理论》课堂笔记</h1>
+            
+                <div class="post-meta">
+                    
+                        作者: <a itemprop="author" rel="author" href="/">Annie</a>
+                    
+
+                    
+                        <span class="post-time">
+                        日期: <a href="#">January 8, 2024&nbsp;&nbsp;10:51:05</a>
+                        </span>
+                    
+                    
+                        <span class="post-category">
+                        分类:
+                            
+                                <a href="/categories/%E6%9C%AC%E7%A7%91%E7%94%9F%E8%AF%BE%E7%A8%8B/">本科生课程</a>
+                            
+                        </span>
+                    
+                </div>
+            
+        </header>
+
+        <div class="post-content">
+            <h1 id="课堂笔记"><a href="#课堂笔记" class="headerlink" title="课堂笔记"></a>课堂笔记</h1><h1 id="Models"><a href="#Models" class="headerlink" title="Models"></a>Models</h1><p>串行过程中处理器上同一时间只有一个线程访问内存里的对象</p>
+<p>并发有延迟，程序员不知道哪个在做哪个不在做。</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502041542233.png" alt="image-20231008150840801"></p>
+<h1 id="Algorithms"><a href="#Algorithms" class="headerlink" title="Algorithms"></a>Algorithms</h1><h2 id="1-print-primes"><a href="#1-print-primes" class="headerlink" title="1. print primes"></a>1. print primes</h2><p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502041542795.png" alt="image-20231008160656791"></p>
+<p>这样会让每个核的工作量不平均，因为数字越大素数越少</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502041542854.png" alt="image-20231008160753945"></p>
+<p>这样动态均衡就很好，counter是共享内存中的对象（应该写Counter  counter而不是int counter）</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502041542456.png" alt="image-20231008161717552"></p>
+<p>在并发中，不能这样实现Counter，读和写可能会被分成两步导致出错</p>
+<ul>
+<li>用ReadModifyWrite()</li>
+<li>Java中用synchronized block让这段代码在临界区，可以互斥执行</li>
+</ul>
+<h2 id="2-Alice-Bob"><a href="#2-Alice-Bob" class="headerlink" title="2. Alice&amp;Bob"></a>2. Alice&amp;Bob</h2><p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502041542403.png" alt="image-20231008164116263"></p>
+<p>程序的两大类性质：</p>
+<p>liveness：比如终止性，如果不成立，绝不可能在有限步内发现这个事情</p>
+<p>safety：如果不成立，可以在有限步内发现的</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502041542021.png" alt="image-20231008164340550"></p>
+<p>互斥：可以在有限步内发现，因为不成立时两个都进去，可以发现</p>
+<p>没有死锁：不知道宠物什么时候进湖，类比终止性</p>
+<p>协议设计：</p>
+<ol>
+<li>Simple Protocol：不行，线程之间一定要有显性的交换方式</li>
+<li>Call Phone Protocol：信息传递不行，接收方可能不在。交流应该是永久性的、不是转瞬即逝的</li>
+<li>Can Protocol：发中断的方案，需要无穷多个中断位</li>
+<li>Flag Protocol：表达自己的意向并看对方的意向，后面的人可以看到前面的情况。可以用反证法证明满足Mutual Exclusion和No Deadlock。<img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502041542896.png" alt="image-20231008170723706"></li>
+</ol>
+<p>这个算法不平等，容易饿死。然后需要等待（可能升旗后线程再也不执行了）</p>
+<p>总结：可以用<strong>one-bit shared</strong> variables that can be read or written解决（在写之前读一下当前的占用状态）</p>
+<h2 id="3-Producer-Consumer"><a href="#3-Producer-Consumer" class="headerlink" title="3. Producer-Consumer"></a>3. Producer-Consumer</h2><p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502041541784.png" alt="image-20231008173442534"></p>
+<p>伪代码：通过可乐罐的倾倒与否放宠物&#x2F;放食物（同时也能用旗子解决）</p>
+<p>宠物不会饿死，相对公平</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502041548778.png" alt="image-20250204154844058"></p>
+<p>同样需要等待，而等待可能造成问题。</p>
+<h1 id="Speedup"><a href="#Speedup" class="headerlink" title="Speedup"></a>Speedup</h1><p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502041549278.png" alt="image-20250204154907228"></p>
+<p>锁越细粒度，可并发代码越多，就更能提速。</p>
+<h1 id="Mutual-Exclusion"><a href="#Mutual-Exclusion" class="headerlink" title="Mutual Exclusion"></a>Mutual Exclusion</h1><h2 id="Definitions"><a href="#Definitions" class="headerlink" title="Definitions"></a>Definitions</h2><p>Time：用箭头描述时间，共享统一的时钟</p>
+<p>Event：瞬时发生的，不会有两个同时发生，一定有顺序</p>
+<p>Thread：多个events的顺序</p>
+<p>Threads是状态机里的过程</p>
+<p>State&#x3D;Thread State+System State</p>
+<p>Concurrency：Thread的时间轴有重叠，交替执行。线程之间不一定是独立的，因为代码可以访问共享内存</p>
+<p>Interval：两个event之间的时间区间。区间之间有顺序</p>
+<p>事件event有全序关系，区间interval有偏序关系。</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502041549429.png" alt="image-20250204154918338"></p>
+<p>用锁实现计数器中读写两操作的原子化。</p>
+<p>如果try里有问题（临界区），finally一定会执行释放锁。</p>
+<p><strong>Mutual-exclusion</strong>的定义：两个线程的任意两个临界区一定有先后顺序（不可能2个进程同时进入CS）</p>
+<p><strong>Deadlock-Free</strong>的定义：如果线程调用了lock但不返回，其他线程一定能调用lock和unlock，整个系统还是在前进的（可能某些线程会饿死），有一些线程能拿到锁</p>
+<p><strong>Starvation-Free</strong>（最强）：每个线程都能拿到锁，每个线程都能前进</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502041541771.png" alt="image-20231008201940343"></p>
+<p>性质：满足Mutual-exclusion但是不满足Deadlock-freedom</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502041549691.png" alt="image-20250204154930627"></p>
+<p>如果一个线程在临界区（拿到锁），victim一定为对方。</p>
+<p>性质：满足Mutual-exclusion但是不满足Deadlock-freedom</p>
+<h2 id="Peterson’s-Algorithom"><a href="#Peterson’s-Algorithom" class="headerlink" title="Peterson’s Algorithom"></a>Peterson’s Algorithom</h2><p><strong>2线程版本</strong></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502041541475.png" alt="image-20231008202850941"></p>
+<p>性质：满足Mutual-exclusion也满足Deadlock-freedom也满足Starvation-free</p>
+<p><strong>n线程版本</strong></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502041541505.png" alt="image-20231008212557865"></p>
+<p>从第0层开始，n-1层才能进入临界区，其他都不行</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502041541509.png" alt="image-20231008213252053"></p>
+<p>性质：满足Mutual-exclusion也满足Deadlock-freedom也满足Starvation-free</p>
+<p>Bounded Waiting：是否是先来先拿锁？即如果doorway A-&gt;B，是否有CS A-&gt;B？不满足！线程可以被overtaken任意多次</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502041541782.png" alt="image-20231008214850523"></p>
+<h2 id="Bakery-Algorithm"><a href="#Bakery-Algorithm" class="headerlink" title="Bakery Algorithm"></a>Bakery Algorithm</h2><p>可以 实现First-Come-First-Served</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502041541828.png" alt="image-20231008215825668"></p>
+<p>label小的线程先拿锁。如果label一样，比较唯一的线程id。</p>
+<p>性质：无死锁。先来先服务。满足Mutual Exclusion。公平。</p>
+<p>Y2K千年虫问题：label会overflow，用串行化的时间戳系统代替</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502041541852.png" alt="image-20231009133754586"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502041541336.png" alt="image-20231009134146572"></p>
+<p>k个线程有3^k-1个结点，说明有上界，不会溢出（label的溢出可以解决）</p>
+<p>最终Bakery算法因为空间开销大未投入使用。N个线程-2N个内存单元（flag+label）甚至用graph的话，需要&lt;3N个内存单元</p>
+<p>是否能用小于N种MRSW&#x2F;MRMW实现deadlock-free mutual exclusion？</p>
+<p>不能，否则有至少一个线程没有flag能写，就进入CS了。如果是MRMW也一定会覆盖至少一个进程的状态。</p>
+<ul>
+<li>建立在有covering state的前提下（A马上写Ra，B马上写Rb）</li>
+</ul>
+<p>结论：至少要N个MRMW&#x2F;MRSW寄存器来解决deadlock-free mutual exclusion的问题。</p>
+<h1 id="Concurrent-Objects"><a href="#Concurrent-Objects" class="headerlink" title="Concurrent Objects"></a>Concurrent Objects</h1><h2 id="Lock-Based-Queue"><a href="#Lock-Based-Queue" class="headerlink" title="Lock-Based Queue"></a>Lock-Based Queue</h2><p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502041541726.png" alt="image-20231009193028072"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502041541968.png" alt="image-20231009193059789"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502041541000.png" alt="image-20231009193148890"></p>
+<h2 id="Wait-free-2-Thread-Queue"><a href="#Wait-free-2-Thread-Queue" class="headerlink" title="Wait-free 2-Thread Queue"></a>Wait-free 2-Thread Queue</h2><p>这种实现方式没有锁了</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502041541039.png" alt="image-20231009193801771"></p>
+<p>如何证明算法的正确性？</p>
+<h2 id="Definitions-1"><a href="#Definitions-1" class="headerlink" title="Definitions"></a>Definitions</h2><p>safety：有限步内可以检查</p>
+<p>liveness：有限步内检查不出来</p>
+<p>目前的correct只关心safety，不关心进展性</p>
+<h3 id="Sequential"><a href="#Sequential" class="headerlink" title="Sequential"></a>Sequential</h3><p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502041541415.png" alt="image-20231009194107824"></p>
+<p>而并发后，关心时间的长度，有overlap所以对象不存在2个方法之间的状态，且方法之间会互相影响</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502041541667.png" alt="image-20231010111711822"></p>
+<p>可以将并行算法中临界区执行的时刻method call对应到串行上</p>
+<h3 id="Linearizability"><a href="#Linearizability" class="headerlink" title="Linearizability"></a>Linearizability</h3><p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502041541216.png" alt="image-20231009200558048"></p>
+<p><strong>Linearizable的思想</strong>：虽然并发时method call有overlap，但起作用的时刻是瞬时的。如果所有执行形成了串行序列，那就是object就是串行化的。</p>
+<p>example是否有可能是linearizable？存在一种时刻使串行化就可以了</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502041541664.png" alt="image-20231010115213321"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502041541722.png" alt="image-20231010115627057"></p>
+<p>无论如何取时刻，都不能成立，说明不linearizable。如果能找出一种，就算linearizable。</p>
+<p>取临界区里的任意一行代码，作为take effect的点，方便证明。</p>
+<img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502041541983.png" alt="image-20231010115710838" style="zoom:80%;" />
+
+<p>不关心方法调用是否能终止，只要在开始和结束中找到一个时刻，可以构造出来就行了</p>
+<p>判断算法本身是不是linearizable：无法枚举所有的执行，能不能在方法内部找一条特殊指令，作为take effect的时刻？可以，但是有一些复杂的算法找不到这样的时刻，需要依赖执行</p>
+<h3 id="Executions"><a href="#Executions" class="headerlink" title="Executions"></a>Executions</h3><p>每个method call包含invocation和response</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502041541144.png" alt="image-20231010122043861"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502041541340.png" alt="image-20231010122210876"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502041541654.png" alt="image-20231010123422269"></p>
+<p>Object Projection只看对象，Thread Projection只看线程</p>
+<p>对于pending，可以视作effect，补上response；可以视作没有effect，直接删除。</p>
+<p>如果所有Invocation都有response，认为是complete subhistory</p>
+<h3 id="Sequential-Histories"><a href="#Sequential-Histories" class="headerlink" title="Sequential Histories"></a>Sequential Histories</h3><p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502041541683.png" alt="image-20231010142733448"></p>
+<p>方法调用之间没有交错，最后可以有一个pending invocation</p>
+<p>串行执行时，所有method call的区间是一个total order，必然有先后顺序</p>
+<h3 id="Linearizability-1"><a href="#Linearizability-1" class="headerlink" title="Linearizability"></a>Linearizability</h3><p>一句话总结：能不能将并发序列转换为a legal sequential history</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502041541709.png" alt="image-20231010144140614"></p>
+<ol>
+<li>预处理：对于pending语句，在H结尾加response或者删除，得到G</li>
+<li>equivalent：G和S在每个线程上的投影完全一样</li>
+<li>G和S的顺序被保持</li>
+</ol>
+<p>composability：可组合性。每个object都是串行化，最后也是串行化的。</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502041541733.png" alt="image-20231010151730144"></p>
+<p>在lock后任选一条语句都可以认为是linearization，比如临界区或者unlock语句</p>
+<p>大多数时候选择linearizable point，找不到的时候就枚举执行</p>
+<p>判断不linearizable：找一个特殊执行就行</p>
+<p>Linearizability：不关心算法是否终止</p>
+<h3 id="Linearizable-point"><a href="#Linearizable-point" class="headerlink" title="Linearizable point"></a>Linearizable point</h3><p>将所有并发历史重新排序为顺序历史以判断程序是否可线性化的方法仅在理论上可行。在实践中，我们面临着由几十个线程对同一个方法的大量调用。我们不能对它们的所有历史进行重新排序，我们甚至无法列出一个复杂程序的所有并发历史。</p>
+<p>side effect：如果函数或表达式除了返回值之外，还修改某些状态或与调用函数或外部世界具有可观察的交互，则称为具有副作用。</p>
+<p>线性化点执行完成后，前面内存写入的效果需要<strong>立刻</strong>对其他CPU可见。即操作后可以立即观察到效果。比如enqueue中的tail-&gt;t1&#x3D;node;可以马上观察到链表的增加。</p>
+<p>总之linearizable point要能够代替整个方法的执行，效果也应该按照point的执行顺序来。</p>
+<h2 id="Sequential-Consistency"><a href="#Sequential-Consistency" class="headerlink" title="Sequential Consistency"></a>Sequential Consistency</h2><p>同样描述并发对象的性质</p>
+<p>相比串行化：可以在不同线程上re-order non-overlapping operations，但不能在同一线程上re-order</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502041541089.png" alt="image-20231114231934562"></p>
+<p>不是一个可组合的性质：p&#x2F;q队列单独看可串行，一起看不行</p>
+<p>大部分硬件架构不支持sequential consistency，因为写内存耗时，一般用cache</p>
+<ul>
+<li>但这违背了先写自己的flag，后读别人的并发思想（锁的常见实现，如x86），怎么办？<ul>
+<li>explicit synchronization: 内存屏障、编译器（Java volatile）</li>
+</ul>
+</li>
+</ul>
+<p>以linearizability关心程序是否正确</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502041541170.png" alt="image-20231115185822854"></p>
+<p>前两个使用锁，后两个不使用锁。而且第二个都大于第一个。</p>
+<p>wait：每个线程，每个method call都能终止。lock-free：有一个线程返回就可以了，minimal</p>
+<h1 id="Synchronization-Operations"><a href="#Synchronization-Operations" class="headerlink" title="Synchronization Operations"></a>Synchronization Operations</h1><p>希望能有wait-free的同步</p>
+<p>Consensus的定义：所有线程可以输出一个同样的值（是某个线程输入的值）</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502041541485.png" alt="image-20231115195049258"></p>
+<p>只用锁（读-写寄存器）的话无法实现n个线程的wait-free，连consensus都做不到</p>
+<p>如果想实现multiple dequeuers，怎么实现这样的FIFO queue（也可推广到其他对象上）</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502041541519.png" alt="image-20231115204052759"></p>
+<p>有queue-&gt;consensus，没有r&amp;w-&gt;consensus，所以没有r&amp;w-&gt;queue</p>
+<h2 id="Consensus-Numbers"><a href="#Consensus-Numbers" class="headerlink" title="Consensus Numbers"></a>Consensus Numbers</h2><p>一个对象能解决n个线程的consensus，number为n：可以用来判断互相地实现</p>
+<p>示例：能否实现multiple assignment？</p>
+<p>因为有2&#x2F;3 assignment-&gt;consensus，没有r&amp;w-&gt;consensus，所以没有r&amp;w-&gt;2&#x2F;3 assignment</p>
+<p>也侧面说明了每一个consensus number，都对应一个object，如queue,assignment</p>
+<h2 id="Read-Modify-Write-Objects"><a href="#Read-Modify-Write-Objects" class="headerlink" title="Read-Modify-Write Objects"></a>Read-Modify-Write Objects</h2><p>Atomic Registers：支持原子读写整数值，但不一定支持复杂的，如比较交换（compare-and-swap）或其他 read-modify-write 操作</p>
+<p>RMW Registers：支持在读取变量的同时对其进行修改，然后再写回新值。这些操作是原子的，以确保在多线程环境中不会发生冲突。</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502041541547.png" alt="image-20231115231721464"></p>
+<p>支持这种指令，就叫Read-Modify-Write，大多数并发指令都是RMW，少数不是的也可以转换</p>
+<p>RMW能实现多少种线程？non-trival（不是y&#x3D;x）的对象至少是2</p>
+<p>compareAndSet可以实现任意多个线程并发-Consensus Number为正无穷</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502041541578.png" alt="image-20231116231105713"></p>
+<p><strong>Lock-Freedom</strong>:相比wait-free要求更低，所有wait-free都是lock-free：有一个method call可以终止即可</p>
+<p>Consensus本身是很强的，无论什么计算任务，都可以用Consensus表达</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502041541883.png" alt="image-20231116231721754"></p>
+<h1 id="Spin-Locks-and-Contention"><a href="#Spin-Locks-and-Contention" class="headerlink" title="Spin Locks and Contention"></a>Spin Locks and Contention</h1><p>lock分为两类：</p>
+<ul>
+<li>spin：拿不到锁会一直尝试</li>
+<li>give up：拿不到锁就会释放</li>
+</ul>
+<h2 id="TAS-TTAS"><a href="#TAS-TTAS" class="headerlink" title="TAS&#x2F;TTAS"></a>TAS&#x2F;TTAS</h2><p>只使用一个bit的空间：因为只用一个boolean</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502041541614.png" alt="image-20231118175332552"></p>
+<p>TTAS简单优化，多了一个读，如果空闲的话再设置。</p>
+<p>优化的原因：在自己的处理器上读，没有走总线，而TAS执行GetAndSet必然走总线</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502041541040.png" alt="image-20231118175513475"></p>
+<p>两个都不理想，model与现实世界不够相近，所以用Bus-Based Architectures（也只是简化）</p>
+<p>Cache一致性：数据有很多副本 Write Back协议</p>
+<p>TAS lock实现的Spin Lock的问题：拿到锁或者释放锁都会发invalid消息，同时修改memory里存储的state（表示锁是否空闲）争夺锁的时候因为TAS走总线，也会发invalid</p>
+<h2 id="Exponential-Backoff-Lock"><a href="#Exponential-Backoff-Lock" class="headerlink" title="Exponential Backoff Lock"></a>Exponential Backoff Lock</h2><p>改进：Exponential Backoff Lock，即如果获得锁失败，在再次尝试之前等待一段时间，等待时间以指数级别增长</p>
+<ul>
+<li>缺点是延迟时间的初始参数需要预设，不同机器的参数不同，可移植性不够好</li>
+</ul>
+<p>想法：让线程排好队去拿锁，按顺序通知，无需每次都竞争</p>
+<h2 id="Anderson-Queue-Lock"><a href="#Anderson-Queue-Lock" class="headerlink" title="Anderson Queue Lock"></a>Anderson Queue Lock</h2><p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502041541419.png" alt="image-20231120164959354"></p>
+<p>线程数多时比TTAS线程要好很多</p>
+<p>缺点：需要的空间与线程数量相同，需要提前知道</p>
+<h2 id="CLH-Lock"><a href="#CLH-Lock" class="headerlink" title="CLH Lock"></a>CLH Lock</h2><p>改进：用链表而不是数组存放每个线程的state</p>
+<p>每个线程会分配自己的结点，然后对tail结点做getAndSet。每个线程可以访问两个结点。永远拿到前面的线程分配的结点，都是true。当释放时，将自己分配的结点变成false，排在后面的结点即可发现。</p>
+<p>空间改进：释放过锁后之前的空间没用，可以在后面分配空间时重新使用</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502041541462.png" alt="image-20231120181623774"></p>
+<p> NUMA表现不佳：memory可能距离遥远，增加了时间</p>
+<h2 id="MCS-Lock"><a href="#MCS-Lock" class="headerlink" title="MCS Lock"></a>MCS Lock</h2><p>改进：只在local memory上等待，如果自己的结点从false-&gt;true就说明可以获得锁</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502041541512.png" alt="image-20231120191224465"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502041541687.png" alt="image-20231120191319194"></p>
+<h2 id="Abortable-Locks"><a href="#Abortable-Locks" class="headerlink" title="Abortable Locks"></a>Abortable Locks</h2><p>改进：支持中间等待的lock</p>
+<p>Back-off Lock：不等就在lock()中直接返回</p>
+<p>Queue Lock：因为在排队，不能直接结束（后面的会饿死）自己的结点应该在链上被删除</p>
+<ul>
+<li>由当前不等的线程做的话，比较困难（因为要跟下面的线程交流）自己只是标记，让后面的线程来处理</li>
+</ul>
+<p>Ticket Lock：也让线程排出队列，如果排在前面的线程增加了owner，后面才能拿到锁。</p>
+<ul>
+<li>只用了owner和next，在操作系统中常见。</li>
+</ul>
+<h1 id="Linked-Lists"><a href="#Linked-Lists" class="headerlink" title="Linked Lists"></a>Linked Lists</h1><p>锁&#x2F;并发对象追求的目标：增加线程，耗时并不会最多（如何处理竞争资源）</p>
+<ol>
+<li>细粒度同步：将对象变成很多块数据结构，分别加锁</li>
+<li>乐观同步：先不加锁，后面有需要再加锁，检查是否需要加锁（不需要就释放）</li>
+<li>懒同步：推迟remove？</li>
+<li>不使用锁，使用compareAndSet()：很强大，consensus number无穷大</li>
+</ol>
+<p>用Set实现Linked List：无序、不重复、add&#x2F;remove&#x2F;contains。The List-Based Set从小到大排列，方便插入</p>
+<h2 id="Course-Grained-Locking"><a href="#Course-Grained-Locking" class="headerlink" title="Course Grained Locking"></a>Course Grained Locking</h2><p>粗粒度，所有人竞争同一个锁</p>
+<h2 id="Fine-grained-Locking"><a href="#Fine-grained-Locking" class="headerlink" title="Fine-grained Locking"></a>Fine-grained Locking</h2><p>每个部分有自己的锁，在不相交部分工作的方法无需相互排斥</p>
+<ol>
+<li><p>Hand-over-Hand locking：不断沿着list拿2个锁，直到找到对应位置。为什么一定要拿2把锁？并发时会出错，如同时remove(b)和remove(c)。</p>
+</li>
+<li><p>同时可以证明remove()是串行化的，linearization point是pred.next&#x3D;curr.next，而这个操作被锁了<img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502041541105.png" alt="image-20231120232958533"></p>
+<p>add()：要锁e和前继</p>
+</li>
+<li><p>这种锁的优点：线程可以线性排列；缺点：找到要操作的部分链条很长，也会阻塞其他进程</p>
+</li>
+</ol>
+<h2 id="Optimistic"><a href="#Optimistic" class="headerlink" title="Optimistic"></a>Optimistic</h2><p>先不加锁，找到位置，加锁，然后检查（看链表是否被其他线程影响）</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502041541136.png" alt="image-20231121231734228"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502041541770.png" alt="image-20231121231746093"></p>
+<p>如果失败（curr找错了），会回到retry重新从head开始找</p>
+<p>优点：更少的锁获取&#x2F;释放；缺点：如果失败，需要重新遍历；contains需要加锁。deadlock-free（总是有某个线程能完成）但可能有线程不成功：别人一直在add&#x2F;remove</p>
+<h2 id="Lazy-List"><a href="#Lazy-List" class="headerlink" title="Lazy List"></a>Lazy List</h2><p>区别是只会测试一遍，contains不会加锁</p>
+<p>把remove分为2个阶段：修改结点bit本身(标记为已移除)-修改前继的next</p>
+<p>先找位置-然后加锁（pre&amp;curr）-logical delete-physical delete</p>
+<ul>
+<li>validation无需重新扫描数组，只需看pred未被标记&#x2F;curr未被标记&#x2F;pred指向curr<ul>
+<li>因为没有mark，就肯定从head可达</li>
+</ul>
+</li>
+</ul>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502041541001.png" alt="image-20231122204351847"></p>
+<p>​										<img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502041541257.png" alt="image-20231122204414332"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502041541339.png" alt="image-20231122211752893"></p>
+<p>本身没加锁，但是不好找linearization point</p>
+<ul>
+<li>如果返回false，当成发生的时刻，在curr.marked判断为true的时刻有可能另一个线程将curr add在list上，所以返回false的时刻并不是curr结点不在list上的时刻</li>
+<li>即使如此，若能发现curr被mark，一定有一个并发线程在remove curr在contains之前完成，那么存在一个时刻，curr的结点被认为remove掉，那么返回false没问题，因为存在一个时刻curr不在list中（但这个point不明显，并不一定是检查到curr被mark的时刻）</li>
+<li>只能保证deadlock-free，不保证starvation-free</li>
+</ul>
+<p>优点：contains不加锁，是wait-free，因为contains比add&#x2F;remove调用多，效率提高</p>
+<p>缺点：add和remove失败后还是会重新traverse</p>
+<p>想法：整个算法能不能不加锁去做？因为有锁就有竞争和等待，所以提出Lock-Free</p>
+<h2 id="Lock-free-Lists"><a href="#Lock-free-Lists" class="headerlink" title="Lock-free Lists"></a>Lock-free Lists</h2><p>对Mark-Bit和Pointer一起做CAS，Java提供了AtomicMarkableReference</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502041541956.png" alt="image-20231122224533645"></p>
+<p>如果pred.next返回false也没事，因为Lock-free find在traverse时如果遇见mark为true，会进行remove</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502041542341.png" alt="image-20231122224542368"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502041542685.png" alt="image-20231122224606067"></p>
+<p>和Lazy实现一样，返回false不代表那一刻。执行中有一刻存在，所以是linearizable的</p>
+
+        </div>
+
+        
+            <section class="post-copyright">
+                
+                
+                
+                
+
+            </section>
+        
+        <section class="post-tags">
+            <div>
+                <span>标签:</span>
+                <span class="tag">
+                    
+                    
+                        <a href="/tags/%E8%AF%BE%E7%A8%8B/"># 课程</a>
+                    
+                        
+                </span>
+            </div>
+            <div>
+                <a href="javascript:window.history.back();">返回</a>
+                <span>· </span>
+                <a href="/">主页</a>
+            </div>
+        </section>
+        <section class="post-nav">
+            
+                <a class="prev" rel="prev" href="/2024/01/08/2023%E7%A7%8B%E5%AD%A3%E3%80%8A%E4%BA%BA%E6%9C%BA%E4%BA%A4%E4%BA%92%E7%B3%BB%E7%BB%9F%E3%80%8B%E8%AF%BE%E5%A0%82%E7%AC%94%E8%AE%B0/">2023秋季《人机交互系统》课堂笔记</a>
+            
+            
+            <a class="next" rel="next" href="/2023/07/01/2023%E6%98%A5%E5%AD%A3%E3%80%8A%E6%9C%8D%E5%8A%A1%E7%AB%AF%E5%BC%80%E5%8F%91%E3%80%8B%E8%AF%BE%E7%A8%8B%E7%AC%94%E8%AE%B0/">2023春季《服务端开发》课程笔记</a>
+            
+        </section>
+
+
+    </article>
+</div>
+
+
+    <div id="gitalk-container"></div>
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.css">
+<script src="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.min.js"></script>
+<script src="//cdn.bootcss.com/blueimp-md5/2.10.0/js/md5.js"></script>
+<div id="gitalk-container"></div>
+<script type="text/javascript">
+      var gitalk = new Gitalk({
+        clientID: '',
+        clientSecret: '',
+        repo: 'blog_comment',
+        owner: 'lyxx2535',
+        admin: 'lyxx2535',
+        id: md5(location.pathname),
+        labels: 'Gitalk'.split(',').filter(l => l),
+        perPage: 10,
+        pagerDirection: 'last',
+        createIssueManually: true,
+        distractionFreeMode: false
+      })
+      gitalk.render('gitalk-container')
+</script>
+
+            </div>
+            <footer id="footer" class="footer">
+    <div class="copyright">
+        <span>© Annie | Powered by <a href="https://hexo.io" target="_blank">Hexo</a> & <a href="https://github.com/Siricee/hexo-theme-Chic" target="_blank">Chic</a> | 2020 - 2025
+            <br>
+            <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+<span class="site-uv">
+    Total visitors:
+    <i class="busuanzi-value" id="busuanzi_value_site_uv"></i>
+</span>&nbsp;|&nbsp;
+
+
+<span class="site-pv">
+    Total views:
+    <i class="busuanzi-value" id="busuanzi_value_site_pv"></i>
+</span>
+
+          </span>
+    </div>
+</footer>
+
+    </div>
+</body>
+
+</html>
