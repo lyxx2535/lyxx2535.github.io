@@ -1,0 +1,1230 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <meta name="author" content="Annie">
+
+
+
+
+
+<title>2023春季《软件系统设计》考试重点 | Annie&#39;s Blog</title>
+
+
+
+    <link rel="icon" href="/favicon.ico">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+    <script src="/js/tocbot.min.js"></script>
+    
+
+
+
+    
+    
+        
+    
+
+
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+<body>
+    <script>
+        // this function is used to check current theme before page loaded.
+        (() => {
+            const currentTheme = window.localStorage && window.localStorage.getItem('theme') || '';
+            const isDark = currentTheme === 'dark';
+            const pagebody = document.getElementsByTagName('body')[0]
+            if (isDark) {
+                pagebody.classList.add('dark-theme');
+                // mobile
+                document.getElementById("mobile-toggle-theme").innerText = "· Dark"
+            } else {
+                pagebody.classList.remove('dark-theme');
+                // mobile
+                document.getElementById("mobile-toggle-theme").innerText = "· Light"
+            }
+        })();
+    </script>
+
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">Annie&#39;s Blog</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default">
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+        </div>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">Annie&#39;s Blog</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; 菜单</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+            <div class="main">
+                <div class="container">
+    
+    
+        <div class="post-toc">
+    <div class="tocbot-list">
+    </div>
+    <div class="tocbot-list-menu">
+        <a class="tocbot-toc-expand" onclick="expand_toc()">全部展开</a>
+        <a onclick="go_top()">回到顶部</a>
+        <a onclick="go_bottom()">前往底部</a>
+    </div>
+</div>
+
+<script>
+    var tocbot_timer;
+    var DEPTH_MAX = 6; // 为 6 时展开所有
+    var tocbot_default_config = {
+        tocSelector: '.tocbot-list',
+        contentSelector: '.post-content',
+        headingSelector: 'h1, h2, h3, h4, h5',
+        orderedList: false,
+        scrollSmooth: true,
+        onClick: extend_click,
+    };
+
+    function extend_click() {
+        clearTimeout(tocbot_timer);
+        tocbot_timer = setTimeout(function() {
+            tocbot.refresh(obj_merge(tocbot_default_config, {
+                hasInnerContainers: true
+            }));
+        }, 420); // 这个值是由 tocbot 源码里定义的 scrollSmoothDuration 得来的
+    }
+
+    document.ready(function() {
+        tocbot.init(obj_merge(tocbot_default_config, {
+            collapseDepth: 1
+        }));
+    });
+
+    function expand_toc() {
+        var b = document.querySelector('.tocbot-toc-expand');
+        var expanded = b.getAttribute('data-expanded');
+        expanded ? b.removeAttribute('data-expanded') : b.setAttribute('data-expanded', true);
+        tocbot.refresh(obj_merge(tocbot_default_config, {
+            collapseDepth: expanded ? 1 : DEPTH_MAX
+        }));
+        b.innerText = expanded ? 'Expand all' : 'Collapse all';
+    }
+
+    function go_top() {
+        window.scrollTo(0, 0);
+    }
+
+    function go_bottom() {
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+
+    function obj_merge(target, source) {
+        for (var item in source) {
+            if (source.hasOwnProperty(item)) {
+                target[item] = source[item];
+            }
+        }
+        return target;
+    }
+</script>
+    
+
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">2023春季《软件系统设计》考试重点</h1>
+            
+                <div class="post-meta">
+                    
+                        作者: <a itemprop="author" rel="author" href="/">Annie</a>
+                    
+
+                    
+                        <span class="post-time">
+                        日期: <a href="#">July 1, 2023&nbsp;&nbsp;10:51:05</a>
+                        </span>
+                    
+                    
+                        <span class="post-category">
+                        分类:
+                            
+                                <a href="/categories/%E6%9C%AC%E7%A7%91%E7%94%9F%E8%AF%BE%E7%A8%8B/">本科生课程</a>
+                            
+                        </span>
+                    
+                </div>
+            
+        </header>
+
+        <div class="post-content">
+            <h1 id="设计模式"><a href="#设计模式" class="headerlink" title="设计模式"></a>设计模式</h1><h1 id="1-设计原则"><a href="#1-设计原则" class="headerlink" title="1. 设计原则"></a>1. 设计原则</h1><h2 id="里氏替换原则是什么，他是如何contribute-开闭原则的【2022】"><a href="#里氏替换原则是什么，他是如何contribute-开闭原则的【2022】" class="headerlink" title="里氏替换原则是什么，他是如何contribute 开闭原则的【2022】"></a>里氏替换原则是什么，他是如何contribute 开闭原则的【2022】</h2><p>在软件中如果能够使用基类对象，那么一定能够使用其子类对象。把基类都替换成它的子类，程序将不会产生任何错误和异常。</p>
+<p>里氏代换原则是实现开闭原则的重要方式之一：由于使用基类对象的地方都可以使用子类对象，因此在程序中尽量使用<strong>基类类型</strong>来对对象进行定义，而在<strong>运行时再确定其子类类型</strong>，用子类对象来替换父类对象。</p>
+<h2 id="依赖倒转原则是什么？如何反映在设计模式中？【2021】"><a href="#依赖倒转原则是什么？如何反映在设计模式中？【2021】" class="headerlink" title="依赖倒转原则是什么？如何反映在设计模式中？【2021】"></a>依赖倒转原则是什么？如何反映在设计模式中？【2021】</h2><p>依赖倒转原则：高层模块不应该依赖于低层模块，而都应该依赖于抽象。抽象不应该依赖于具体，细节应该依赖于<strong>抽象</strong>。</p>
+<p>反映：</p>
+<ul>
+<li>策略模式中用一个接口或抽象类封装一组算法</li>
+<li>工厂模式中高层模块只需要依赖于抽象工厂接口：将对象的创建过程封装到一个工厂类中，并通过抽象工厂接口来定义对象的创建方法</li>
+</ul>
+<h2 id="请列出至少3个面向对象原则并解释他们如何在策略模式中被应用【2017】"><a href="#请列出至少3个面向对象原则并解释他们如何在策略模式中被应用【2017】" class="headerlink" title="请列出至少3个面向对象原则并解释他们如何在策略模式中被应用【2017】"></a><strong>请列出至少3个面向对象原则并解释他们如何在策略模式中被应用</strong>【2017】</h2><ol>
+<li>单⼀职责原则：策略模式中，每⼀个具体策略都为了同⼀个单⼀的职责</li>
+<li>开闭原则：策略模式中增加新的策略不需要修改原有的代码</li>
+<li>⾥⽒代换原则：策略模式中引⽤⽗类的地⽅都可以透明使⽤⼦类对象</li>
+<li>依赖倒转原则：策略模式中⾼层模块和细节都依赖于抽象</li>
+<li>接⼝隔离原则</li>
+<li>合成复⽤原则：策略模式使⽤<strong>聚合</strong>来复⽤⽽不是继承</li>
+<li>最⼩知识原则</li>
+</ol>
+<h2 id="设计模式对MVC的影响？【2019】"><a href="#设计模式对MVC的影响？【2019】" class="headerlink" title="设计模式对MVC的影响？【2019】"></a>设计模式对MVC的影响？【2019】</h2><ol>
+<li>MVC模式是架构模式也是设计模式（patterns of patterns）<ol>
+<li>分为model（业务逻辑）、view（处理用户展示，接收用户操作）、controller（对用户操作进行处理，将信息通知给model）（强调模块间约束关系，model不可以直接返回到controller）</li>
+<li>优点：耦合性低，重用性高，生命周期成本低，部署快，可维护性高，方便管理</li>
+<li>缺点：没有明确定义，不适于中小型应用程序，增加实现复杂度，视图和控制器过于紧密，视图对模型访问低效。</li>
+</ol>
+</li>
+<li>MVC模式是观察者模式、策略模式和组合模式的演化<ol>
+<li>观察者模式：model发生变化通知controller，然后更新view</li>
+<li>策略模式：controllers帮助views对不同用户的输入做不同的响应。</li>
+<li>组合模式：view是一组GUI元素的组合，有整体和部分的关系。</li>
+</ol>
+</li>
+</ol>
+<h2 id="最小知识原则在设计模式中的应用？【2019】"><a href="#最小知识原则在设计模式中的应用？【2019】" class="headerlink" title="最小知识原则在设计模式中的应用？【2019】"></a>最小知识原则在设计模式中的应用？【2019】</h2><ol>
+<li>中介者模式：通过创造出一个中介者对象，将系统中有关的对象所引用的其他对象数目<strong>减少到最少</strong>，使得一个对象与其同事之间的<strong>相互作用</strong>被这个对象与中介者对象之间的相互作用所取代。</li>
+<li>外观模式：通过引入一个新的外观类可以降低原有系统的复杂度，同时降低客户类与子系统类的耦合度。</li>
+<li>代理模式：协调调用者和被调用者，在一定程度上降低了系统的耦合度</li>
+</ol>
+<h1 id="2-设计模式"><a href="#2-设计模式" class="headerlink" title="2. 设计模式"></a>2. 设计模式</h1><h2 id="工厂和抽象工厂如何遵守开闭原则【2022】"><a href="#工厂和抽象工厂如何遵守开闭原则【2022】" class="headerlink" title="工厂和抽象工厂如何遵守开闭原则【2022】"></a>工厂和抽象工厂如何遵守开闭原则【2022】</h2><p>简单工厂：工厂类的职责相对过重，增加新的产品需要修改工厂类的判断逻辑，这一点与开闭原则是相违背的</p>
+<p>工厂：在系统中加入新产品时，无须修改抽象工厂和抽象产品提供的接口，无须修改客户端，也无须修改其他的具体工厂和具体产品，而只要添加<strong>一个具体工厂和具体产品</strong>就可以了。完全符合“开闭原则。</p>
+<p>抽象工厂：</p>
+<ol>
+<li>增加产品族：对于增加新的产品族，工厂方法模式很好地支持了“开闭原则”，对于新增加的产品族（如Factory3），只需要对应增加一个新的具体工厂即可，对已有代码无须做任何修改。</li>
+<li>增加新的产品等级结构：对于增加新的产品等级结构（如AbstractProductC），需要修改所有的工厂角色，包括<strong>抽象工厂类</strong>，在所有的工厂类中都需要增加生产新产品的方法，不能很好地支持“开闭原则”。</li>
+</ol>
+<h2 id="为什么要将命令模式中请求调用者和请求接收者解耦，有什么好处【2022】"><a href="#为什么要将命令模式中请求调用者和请求接收者解耦，有什么好处【2022】" class="headerlink" title="为什么要将命令模式中请求调用者和请求接收者解耦，有什么好处【2022】"></a>为什么要将命令模式中请求调用者和请求接收者解耦，有什么好处【2022】</h2><ol>
+<li>降低系统的耦合度。</li>
+<li>新的命令可以很容易地加入到系统中。</li>
+<li>可以比较容易地设计一个<strong>命令队列和宏命令</strong>（组合命令）。</li>
+<li>可以方便地实现对请求的 Undo 和 Redo。</li>
+</ol>
+<h2 id="观察者模式有推模式和拉模式，解释为什么一种要preferable-over另一种，解释权衡点【2022】"><a href="#观察者模式有推模式和拉模式，解释为什么一种要preferable-over另一种，解释权衡点【2022】" class="headerlink" title="观察者模式有推模式和拉模式，解释为什么一种要preferable over另一种，解释权衡点【2022】"></a>观察者模式有推模式和拉模式，解释为什么一种要preferable over另一种，解释权衡点【2022】</h2><p>推模式：Subject<strong>主动</strong>向Observer推送消息，不管对方是否需要，推送的信息通常是目标对象的全部或部分数据，相当于广播通信。</p>
+<ul>
+<li>优点：当有消息时，所有的观察者都会直接得到全部的消息，并进行相应的处理程序，与主体对象没什么关系，两者之间的关系是一种松散耦合。</li>
+<li>缺点：当通知消息的参数有变化时，<strong>所有</strong>的观察者对象都要变化。观察者<strong>不能“按需所取”</strong>。</li>
+</ul>
+<p>拉模式：Subject在通知Observer时只传递<strong>少量</strong>信息，如果观察者需要更具体的信息，再由Observer<strong>主动去拉取</strong>数据。这样的模型实现中会把<strong>Subject自身</strong>通过update方法传入到Observer，这样就可以通过<strong>引用</strong>获取数据了。</p>
+<ul>
+<li>优点：由观察者自己<strong>主动去取消息</strong>，可以只要需要的消息参数，不会像推模式那样得到所有的消息参数。</li>
+<li>缺点：增加了通信开销</li>
+</ul>
+<p>从权衡角度来看，推模式适合于数据量较小、观察者对象需要全部数据的情况，而拉模式适合于数据量较大、观察者对象只需要部分数据的情况。</p>
+<h2 id="结构型和创建型模式有什么不同【2022】【2021】"><a href="#结构型和创建型模式有什么不同【2022】【2021】" class="headerlink" title="结构型和创建型模式有什么不同【2022】【2021】"></a>结构型和创建型模式有什么不同【2022】【2021】</h2><p>创建型模式主要用于创建对象</p>
+<p>结构型模式主要用于处理类或对象的组合</p>
+<p>行为型模式主要用于描述对类或对象怎样交互和怎样分配职责</p>
+<h2 id="软件模式是什么？能提供架构吗？【2021】"><a href="#软件模式是什么？能提供架构吗？【2021】" class="headerlink" title="软件模式是什么？能提供架构吗？【2021】"></a>软件模式是什么？能提供架构吗？【2021】</h2><p>软件模式是将模式的一般概念应用于软件开发领域，即软件开发的<strong>总体指导思路或参照样板</strong>。并非仅限于设计模式，还包括架构模式、分析模式和过程模式等，在软件生存期的每一个阶段都存在一些被<strong>认同</strong>的模式。</p>
+<p>软件模式可以认为是对软件开发这一特定“问题”的“解法”的某种统一表示，<strong>基础结构</strong>由 4 个部分构成：问题描述、前提条件（环境或约束条件）、解法和效果。</p>
+<p>可以提供架构。</p>
+<h2 id="命令模式的适用环境是什么？【2021】"><a href="#命令模式的适用环境是什么？【2021】" class="headerlink" title="命令模式的适用环境是什么？【2021】"></a>命令模式的适用环境是什么？【2021】</h2><ol>
+<li>系统需要将请求调用者和请求接收者解耦，使得调用者和接收者不直接交互。</li>
+<li>系统需要在不同的时间指定请求、将请求排队和执行请求。</li>
+<li>系统需要支持命令的撤销（Undo）操作和恢复（Redo）操作。</li>
+<li>系统需要将一组操作组合在一起，即支持宏命令。</li>
+</ol>
+<h2 id="设计模式是什么？举例说明类模式和对象模式的区别？【2019】"><a href="#设计模式是什么？举例说明类模式和对象模式的区别？【2019】" class="headerlink" title="设计模式是什么？举例说明类模式和对象模式的区别？【2019】"></a>设计模式是什么？举例说明类模式和对象模式的区别？【2019】</h2><ol>
+<li><p>定义：设计模式(Design Pattern)是<strong>一套被反复使用、多数人知晓的、经过分类编目的、代码设计经验的总结</strong>，使用设计模式是为了可重用代码、让代码更容易被他人理解、保证代码可靠性。</p>
+</li>
+<li><p>基本要素：关键元素有</p>
+<ol>
+<li>模式名称</li>
+<li>问题</li>
+<li>解决方案</li>
+<li>效果</li>
+</ol>
+</li>
+<li><p>设计模式分类</p>
+<ol>
+<li><p>根据其<strong>目的</strong>(模式是用来做什么的)可分为：</p>
+<ol>
+<li>创建型模式主要用于创建对象。<ol>
+<li>决定联合使用：创建型和创建型很少联合，创建型和结构型经常联合(与结构相关）</li>
+</ol>
+</li>
+<li>结构型模式主要用于处理类或对象的组合。</li>
+<li>行为型模式主要用于描述对类或对象怎样<strong>交互</strong>和怎样<strong>分配</strong>职责。</li>
+</ol>
+</li>
+<li><p>根据<strong>范围</strong>，即模式主要是用于处理类之间关系还是处理对象之间的关系，可分为类模式和对象模式两种：</p>
+<ol>
+<li>类模式<strong>处理类和子类之间的关系</strong>，这些关系通过继承建立，在编译时刻就被确定下来，是属于静态的。如工厂方法模式。</li>
+<li>对象模式<strong>处理对象间的关系</strong>，这些关系在运行时刻变化，更具动态性。如状态模式。</li>
+</ol>
+</li>
+</ol>
+</li>
+</ol>
+<h2 id="策略模式和状态模式的区别？【2019】"><a href="#策略模式和状态模式的区别？【2019】" class="headerlink" title="策略模式和状态模式的区别？【2019】"></a>策略模式和状态模式的区别？【2019】</h2><ol>
+<li>策略模式中，类的功能是根据当前条件主动更改；状态模式中，类的功能是被动由当前状态更改。</li>
+<li>策略模式中每个行为或算法之间没有关联；状态模式中的状态之间有关联，并且状态本身控制着状态转移。</li>
+<li>策略模式中client负责调用Context类的setState()方法设置策略，对用户<strong>可见</strong>；状态模式中具体状态类的内部调用环境类Context的setState()方法进行状态的转换，对用户<strong>不可见</strong>。状态类与环境类之间通常存在关联或依赖的关系（持有实例或者<strong>作为方法参数</strong>）。</li>
+</ol>
+<h1 id="软件架构"><a href="#软件架构" class="headerlink" title="软件架构"></a>软件架构</h1><h1 id="1-软件架构"><a href="#1-软件架构" class="headerlink" title="1. 软件架构"></a>1. 软件架构</h1><h2 id="软件需求，质量属性，ASR的区别与联系【2022】【2018】"><a href="#软件需求，质量属性，ASR的区别与联系【2022】【2018】" class="headerlink" title="软件需求，质量属性，ASR的区别与联系【2022】【2018】"></a>软件需求，质量属性，ASR的区别与联系【2022】【2018】</h2><p>联系：</p>
+<ol>
+<li>软件需求包括质量属性和ASR</li>
+<li>ASR中大部分是质量属性，也包括一些非常重要的功能需求</li>
+<li>ASR 的实现会对架构状态有深远影响，可能会影响质量属性</li>
+</ol>
+<p>区别：</p>
+<ol>
+<li>软件需求是总体的概念</li>
+<li>质量属性是系统应在其功能需求之上提供的整个系统的合乎需要的特性，是系统的⼀部分内容，强调需要达到的质量</li>
+<li>ASR 是在架构上重要的需求，强调这个需求对于架构有重大影响</li>
+</ol>
+<h2 id="软件设计的通用策略，并为每个战略给出简洁的软件架构示例（如ADD）【2022】【2021】【2017】【2019】TODO"><a href="#软件设计的通用策略，并为每个战略给出简洁的软件架构示例（如ADD）【2022】【2021】【2017】【2019】TODO" class="headerlink" title="软件设计的通用策略，并为每个战略给出简洁的软件架构示例（如ADD）【2022】【2021】【2017】【2019】TODO"></a>软件设计的通用策略，<strong>并为每个战略给出简洁的软件架构示例</strong>（如ADD）【2022】【2021】【2017】【2019】TODO</h2><ol>
+<li>抽象：使用抽象让设计师关注本身结构而不关心实现，比如将系统抽象为组件和连接件或抽象为模块。</li>
+<li>分解：针对某一个系统关注点分解后处理，比如将整个系统分解或将某个模块分解。</li>
+<li>分治：将每个模块分别处理</li>
+<li>生成与测试：将一个特定的设计看作是一个假设；根据测试路径生成测试用例。</li>
+<li>迭代与细化：使用迭代的方法，ADD方法多次迭代直到满足所有ASR</li>
+<li>复用元素：重用在设计过程中出现了可以复用的元素，重用现有架构</li>
+</ol>
+<h2 id="软件架构的来源？列举5个可能的来源【2015】"><a href="#软件架构的来源？列举5个可能的来源【2015】" class="headerlink" title="软件架构的来源？列举5个可能的来源【2015】"></a>软件架构的来源？列举5个可能的来源【2015】</h2><ol>
+<li>功能性需求</li>
+<li>NFRs非功能性需求：一般包括约束和质量属性</li>
+<li>ASRs架构重要需求</li>
+<li>Quality Requirements质量需求：在功能需求的基础上需要满足的特征</li>
+<li>Stakeholders涉众&#x2F;利益相关者</li>
+<li>Organisations开发组织</li>
+<li>Technical Environments技术环境</li>
+<li>商业因素：商业和技术决定的集合</li>
+</ol>
+<h2 id="架构活动"><a href="#架构活动" class="headerlink" title="架构活动"></a>架构活动</h2><ol>
+<li>创造系统的商业案例。</li>
+<li>了解用户需求。</li>
+<li>创造和选择架构。</li>
+<li>与包括开发者在内的涉众沟通架构。</li>
+<li>分析或评估架构。</li>
+<li>实现架构。</li>
+<li>确保架构符合要求。</li>
+</ol>
+<h2 id="简单描述下软件architecture-process中的各个步骤，并写出每个的输入和输出【2015】【2017】"><a href="#简单描述下软件architecture-process中的各个步骤，并写出每个的输入和输出【2015】【2017】" class="headerlink" title="简单描述下软件architecture process中的各个步骤，并写出每个的输入和输出【2015】【2017】"></a><strong>简单描述下软件architecture process中的各个步骤，并写出每个的输入和输出</strong>【2015】【2017】</h2><p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502041422975.png" alt="image-20250204142156411"></p>
+<ol>
+<li>识别ASR：排序、描述scenario</li>
+<li>架构设计：确定pattern、tactic</li>
+<li>文档化：每一个迭代都会生成视图，进行视图的排序、筛选、合并，视图里也包含了信息，总结到文档（SEI架构文档）</li>
+<li>架构评估：进一步选择，引入更多stackholder，如果有遗漏回到第一步</li>
+</ol>
+<h2 id="描述4-1视图【2015】【2017】"><a href="#描述4-1视图【2015】【2017】" class="headerlink" title="描述4+1视图【2015】【2017】"></a>描述4+1视图【2015】【2017】</h2><ol>
+<li>逻辑视图：描述了对架构而言重要的元素和他们之间的关系（功能需求）</li>
+<li>过程视图：描述了元素之间的并发和交互。</li>
+<li>物理视图：描述了主要过程和组件是如何被映射到硬件上的。</li>
+<li>发展视图：描述了软件组件的内部组织联系（比如使用配置管理工具存储）。</li>
+<li>用例场景（Use Case）：捕获架构需求，与一个或多个特定视图相关。</li>
+</ol>
+<p><img src="https://spricoder.oss-cn-shanghai.aliyuncs.com/2021-Software-System-Design/img/exam0/4.png"></p>
+<h2 id="Architecture，structure和Design的区别？【2019】"><a href="#Architecture，structure和Design的区别？【2019】" class="headerlink" title="Architecture，structure和Design的区别？【2019】"></a>Architecture，structure和Design的区别？【2019】</h2><ol>
+<li>Design 包含 Architecture，Architecture 包含 Structure</li>
+<li>结构是静态的、逻辑的，是关于系统如何构成的</li>
+<li>体系结构除包含架构，还会包含组件之间的相关的关系结构，并定义一些动态的行为。</li>
+<li>体系结构是关于软件设计的，所有体系结构都是设计，但是不是所有的设计都是体系结构，体系结构是软件设计的一个部分</li>
+</ol>
+<h1 id="2-质量属性"><a href="#2-质量属性" class="headerlink" title="2. 质量属性"></a>2. 质量属性</h1><h2 id="如何构建质量属性情景？画出两个质量属性的刺激响应图【2015】【2017】【2018】【2019】"><a href="#如何构建质量属性情景？画出两个质量属性的刺激响应图【2015】【2017】【2018】【2019】" class="headerlink" title="如何构建质量属性情景？画出两个质量属性的刺激响应图【2015】【2017】【2018】【2019】"></a><strong>如何构建质量属性情景？画出两个质量属性的刺激响应图</strong>【2015】【2017】【2018】【2019】</h2><p>已考：可用性、性能、可修改性、互操作性</p>
+<p><img src="https://spricoder.oss-cn-shanghai.aliyuncs.com/2021-Software-System-Design/img/exam0/3.png"></p>
+<h2 id="以质量属性来定义可用性，MTBF-MTTR-表示什么，如何计算可用性【2022】"><a href="#以质量属性来定义可用性，MTBF-MTTR-表示什么，如何计算可用性【2022】" class="headerlink" title="以质量属性来定义可用性，MTBF,MTTR 表示什么，如何计算可用性【2022】"></a>以质量属性来定义可用性，MTBF,MTTR 表示什么，如何计算可用性【2022】</h2><p>可用性：在指定的时间间隔内它将在要求的范围内提供指定服务的概率</p>
+<p>MTBF：平均无故障时间</p>
+<p>MTTR：平均维修时间</p>
+<p>Availability &#x3D; (MTBF &#x2F; (MTBF + MTTR)) x 100</p>
+<h1 id="3-架构模式"><a href="#3-架构模式" class="headerlink" title="3. 架构模式"></a>3. 架构模式</h1><h2 id="组件-连接器样式的本质是什么？以-SOA-模式为例说明。【2021】TODO"><a href="#组件-连接器样式的本质是什么？以-SOA-模式为例说明。【2021】TODO" class="headerlink" title="组件-连接器样式的本质是什么？以 SOA 模式为例说明。【2021】TODO"></a>组件-连接器样式的本质是什么？以 SOA 模式为例说明。【2021】TODO</h2><p>组件连接器的本质：运行时行为和交互的元素；“连接”关系指明了哪些连接器连接到哪些组件</p>
+<ul>
+<li>组件-连接器样式回答了“如何被构造称一组具有运行时行为和交互的元素”这个 问题，显示一些运行时存在的元素，“连接”关系指明了哪些连接器连接到哪些组件，将连接器的端点连接到组件的端点</li>
+<li>SOA的计算由一组使用服务的协作组件实 现;包括服务提供者(通过接口发布 一个或多个服务)，服务使用者，企 业服务总线，服务注册表，编排服务 器，用rest或soap等连接器</li>
+</ul>
+<h2 id="描述组件-连接件视图的性质和特征，以-MVC-pattern-举例【2018】TODO"><a href="#描述组件-连接件视图的性质和特征，以-MVC-pattern-举例【2018】TODO" class="headerlink" title="描述组件-连接件视图的性质和特征，以 MVC pattern 举例【2018】TODO"></a><strong>描述组件-连接件视图的性质和特征，以 MVC pattern 举例</strong>【2018】TODO</h2><ol>
+<li>组件-连接器样式回答了“如何被构造称⼀组具有运行时行为和交互的元素”这个问题，显示⼀些运行时存在的元素，“连接”关系指明了哪些连接器连接到哪些组件，将连接器的端点连接到组件的端点</li>
+<li>MVC 模式将系统功能拆分成三个组件：模型、视图和在模型和视图之间中介的控制器，“通知关系”连接了模型、视图和控制器的实例，通知相关状态改变的元素</li>
+</ol>
+<h2 id="简单描述下SOA的基本原则，并讨论SOA对各个质量属性的影响（如互操作性、可扩展性、安全性）【2015】TODO"><a href="#简单描述下SOA的基本原则，并讨论SOA对各个质量属性的影响（如互操作性、可扩展性、安全性）【2015】TODO" class="headerlink" title="简单描述下SOA的基本原则，并讨论SOA对各个质量属性的影响（如互操作性、可扩展性、安全性）【2015】TODO"></a><strong>简单描述下SOA的基本原则，并讨论SOA对各个质量属性的影响</strong>（如互操作性、可扩展性、安全性）【2015】TODO</h2><p>原则：</p>
+<ol>
+<li>服务<strong>解耦</strong>：服务之间的关系最⼩化，只是相互知道接⼝</li>
+<li>服务契约：服务按照描述⽂档所定义的服务契约⾏事</li>
+<li>服务封装：除了服务契约所描述内容，服务将对外部隐藏实现逻辑</li>
+<li>服务重⽤：将逻辑分布在不同的服务中，以提⾼服务的重⽤性</li>
+<li>服务组合：⼀组服务可以协调⼯作，组合起来形成定制组合业务需求</li>
+<li>服务⾃治：服务对所封装的逻辑具有控制权</li>
+<li>服务⽆状态：服务将⼀个活动所需保存的资讯最⼩化</li>
+</ol>
+<p>对质量属性：</p>
+<ol>
+<li>良好的互操作性，符合开放标准</li>
+<li>服务动态识别、注册、调⽤，可伸缩性⾼</li>
+<li>模组化，可重⽤性⾼</li>
+<li>服务⾃身⾼内聚、服务间松耦合，最⼩化开发维护中的相互影响，可修改性⾼</li>
+<li>单个服务的规模变⼩，可维护性⾼</li>
+<li>使⽤消息机制及异步机制，可靠性⾼</li>
+<li>分布式系统，可扩展性、可⽤性⾼</li>
+<li>各独⽴服务演化不可控，安全性不⾼</li>
+<li>难以测试验证，可测试性不⾼</li>
+</ol>
+<blockquote>
+<ol>
+<li>OA对互操作性的影响<ol>
+<li>SOA具有更高的互操作性：符合开放标准，可以更好的重用服务</li>
+<li>支持服务的自动识别、发现、注册和调用等等</li>
+</ol>
+</li>
+<li>SOA对可伸缩性的影响<ol>
+<li>SOA具有更高的可伸缩性：服务自身高内聚、服务间松耦合，最小化维护的影响</li>
+<li>但是SOA也会带来系统复杂度较高的问题</li>
+</ol>
+</li>
+<li>SOA对安全性的影响：<ol>
+<li>中间件可能会成为性能的瓶颈</li>
+<li>ESB等中间件都可以成为被攻击的目标</li>
+<li>多服务导致攻击的跟踪、溯源和防御成为困难。</li>
+</ol>
+</li>
+</ol>
+</blockquote>
+<h2 id="微服务-和-SOA-的区别，相同点【2019】TODO"><a href="#微服务-和-SOA-的区别，相同点【2019】TODO" class="headerlink" title="微服务 和 SOA 的区别，相同点【2019】TODO"></a><strong>微服务 和 SOA 的区别，相同点</strong>【2019】TODO</h2><ol>
+<li>区别<ol>
+<li>SOA 采⽤企业服务总线通信，微服务采⽤轻量级通信机制</li>
+<li>SOA 的每个服务职责较重，微服务的每个服务职责单⼀</li>
+<li>SOA 强调中央管理，微服务去中⼼化</li>
+<li>微服务的服务间耦合⽐ SOA 更⼩</li>
+</ol>
+</li>
+<li>相同点</li>
+<li>都采取了分布式组件的形式</li>
+<li>各个组件可以相互服务⽽⽆需知道实现细节</li>
+<li>服务⾃身⾼内聚、服务间松耦合</li>
+<li>微服务是 SOA 的⼀种</li>
+</ol>
+<blockquote>
+<ol>
+<li>相同点：微服务和SOA都是<strong>分布式</strong>架构，微服务是SOA的一种扩展，都包含了服务契约、服务封装、服务重用、服务组合、服务自治和服务无状态等基本特点。</li>
+<li>微服务去掉了SOA架构中的ESB，采用轻量级通信机制(HTTP、REST)进行服务之间的通信。</li>
+<li>微服务的管理和部署结合DevOps实现自动化，可以对服务进行自动化部署和监控预警。</li>
+<li>微服务引入了API网关、对客户端屏蔽访问各项服务的问题。</li>
+<li>微服务引入了熔断器：避免出现服务失效或网络问题等导致的级联故障。</li>
+</ol>
+<p>Extend:</p>
+<ol>
+<li>SOA 的每个服务职责较重，微服务的每个服务职责单⼀ </li>
+<li>SOA 强调中央管理，微服务去中⼼化</li>
+</ol>
+</blockquote>
+<h2 id="分层模式和多层模式的区别【2018】"><a href="#分层模式和多层模式的区别【2018】" class="headerlink" title="分层模式和多层模式的区别【2018】"></a>分层模式和多层模式的区别【2018】</h2><ol>
+<li><p>分层模式是⼀种模块视图；多层模式是⼀种分配视图</p>
+</li>
+<li><p>分层强调的是单向的层与层之间的关系，每层是⼀个整体；多层的层是分组，将组件按照类型、环境等进行分类得到的分组，包含很多组件，允许相互访问</p>
+</li>
+<li><p>分层强调的是代码的组织形式；多层强调的是代码的执行位置</p>
+</li>
+<li><p>分层的每个层通常在同⼀机器运行；多层的每个层可能在不同的机器上运行</p>
+</li>
+</ol>
+<h2 id="解释Broker的内容、优点和缺点【2015】【2019】"><a href="#解释Broker的内容、优点和缺点【2015】【2019】" class="headerlink" title="解释Broker的内容、优点和缺点【2015】【2019】"></a>解释Broker的内容、优点和缺点【2015】【2019】</h2><p>上下文：多个同步或异步交互的远程对象组成的系统，broker模式已定义了运行时组件broker，它协调多个<strong>客户机和服务器</strong>之间的通讯。</p>
+<p>好处：</p>
+<ol>
+<li>提高了Client和Server之间的<strong>交互性</strong>（根本目的）</li>
+<li>提高可伸缩性和可扩展性</li>
+<li>解决了单体应用的性能瓶颈</li>
+<li>大规模集群的性能提高，但是单点性能会下降</li>
+</ol>
+<p>缺点：</p>
+<ol>
+<li>代理增加了前期复杂度、可能成为通信的屏障</li>
+<li>可能成为攻击的目标</li>
+<li>难以测试</li>
+</ol>
+<h2 id="描述架构模式和战术的联系，列出4个战术名并描述他们的用途【2015】"><a href="#描述架构模式和战术的联系，列出4个战术名并描述他们的用途【2015】" class="headerlink" title="描述架构模式和战术的联系，列出4个战术名并描述他们的用途【2015】"></a><strong>描述架构模式和战术的联系，列出4个战术名并描述他们的用途</strong>【2015】</h2><p>架构模式：是在实践中反复发现的一套设计决策，具有允许重复使用的已知属性，并且描述了一类架构 </p>
+<p>战术：影响<strong>质量属性</strong>响应控制的设计决策，例如冗余。</p>
+<p>关系：</p>
+<ol>
+<li>战术是实现架构模式的具体方式，可以帮助开发人员更好地理解和应用架构模式</li>
+<li>大多数模式由几个不同的战术实现</li>
+<li>都是架构师的主要工具</li>
+<li>像模式一样，策略也可以由其他策略组成</li>
+</ol>
+<p>战术名：</p>
+<ol>
+<li>减小模块大小：用拆分模块的方式尽可能地控制包的大小，让每个包拥有的功能尽可能小，降低修改成本。</li>
+<li>延迟绑定：在生命周期中与初始定义阶段不同的阶段绑定某些参数的值，提高可修改性。</li>
+<li>检测攻击：通过检测入侵、检测服务拒绝、哈希校验等策略来检测攻击，提高安全性。</li>
+<li>限制复杂度：通过限制结构的复杂性来避免、减少或解决组件之间的依赖关系，提升可测试性。</li>
+</ol>
+<h1 id="4-ASR-ADD"><a href="#4-ASR-ADD" class="headerlink" title="4. ASR&amp;ADD"></a>4. ASR&amp;ADD</h1><h2 id="什么是ASR，列出4个提取和识别ASR的来源和方法【2017】【2019】"><a href="#什么是ASR，列出4个提取和识别ASR的来源和方法【2017】【2019】" class="headerlink" title="什么是ASR，列出4个提取和识别ASR的来源和方法【2017】【2019】"></a>什么是ASR，列出4个提取和识别ASR的来源和方法【2017】【2019】</h2><blockquote>
+<p>另一种文法：什么种类的需求对架构很重要？哪里具体说明了这种需求？</p>
+</blockquote>
+<p>ASR：架构重要需求，是⼀种在架构上有深刻影响的需求，如果没有这种需求，架构可能会有很大的不同。质量属性需求越困难、越重要，就越有可能对架构产⽣重大影响，因此成为ASR。</p>
+<ul>
+<li>大部分是质量属性，也包括一些非常重要的功能需求</li>
+</ul>
+<p>来源：</p>
+<ol>
+<li>从需求文档收集：如果需求影响了关键架构设计决定的制定，根据定义就是ASR</li>
+<li>采访涉众：质量属性研讨会，包括⼀个架构驱动因素列表和⼀组 QA 场景，这些场景由涉众（作为⼀个优先组）确定</li>
+<li>理解业务目标</li>
+<li>Utility Tree捕获ASR</li>
+</ol>
+<h2 id="描述ADD过程【2018】"><a href="#描述ADD过程【2018】" class="headerlink" title="描述ADD过程【2018】"></a>描述ADD过程【2018】</h2><ol>
+<li>确定有足够的需求信息</li>
+<li>选择要分解的系统要素</li>
+<li>确定所选的元素的ASR</li>
+<li>选择符合ASR的设计<ol>
+<li>找出设计问题</li>
+<li>列出子关注点替代模式&#x2F;决策</li>
+<li>从清单中选择模式&#x2F;决策</li>
+<li>确定模式&#x2F;决策与ASR之间的关系</li>
+<li>记录初步的架构视图</li>
+<li>评估并解决不一致的问题</li>
+</ol>
+</li>
+<li>实例化架构元素并分配职责</li>
+<li>实例化元素定义接口</li>
+<li>验证和完善需求</li>
+<li>重复进行2-7步直到满足所有的ASR</li>
+</ol>
+<h2 id="ADD的输入输出"><a href="#ADD的输入输出" class="headerlink" title="ADD的输入输出"></a>ADD的输入输出</h2><p>输入：需求</p>
+<p>输出：</p>
+<ol>
+<li>软件元素：完成各种决策和职责、定义属性并与其他软件元素相关以组成系统架构的计算或开发工件。</li>
+<li>角色：一组相关的职责。</li>
+<li>职责：软件提供的功能、数据或信息。</li>
+<li>属性：有关软件元素的附加信息。</li>
+<li>关系：两个软件元素之间如何相互关联和交互的定义。</li>
+</ol>
+<h2 id="7类设计决策checklist"><a href="#7类设计决策checklist" class="headerlink" title="7类设计决策checklist"></a>7类设计决策checklist</h2><ol>
+<li>职责 Allocation of Responsibility</li>
+<li>协调 Coordination Model</li>
+<li>数据 Data Model</li>
+<li>资源 Resource Management</li>
+<li>元素映射 Mapping among Architecture Elements</li>
+<li>绑定时间 Binding Time</li>
+<li>科技 Choice of Technology</li>
+</ol>
+<h1 id="5-Views-Document"><a href="#5-Views-Document" class="headerlink" title="5. Views&amp;Document"></a>5. Views&amp;Document</h1><h2 id="软件架构风格"><a href="#软件架构风格" class="headerlink" title="软件架构风格"></a>软件架构风格</h2><ol>
+<li>module Styles：认为体系结构是由模块组成。模块是实现单元的集合，它提供了一组一致的职责。</li>
+<li>C &amp; C Styles 认为体系结构是由组件(主要的处理单元和数据存储)、连接件(组件之间的交互路径)组成的。</li>
+<li>Allocation Styles 认为体系结构是由软件元素(软件元素具有环境所需的属性)和环境元素(环境元素有提供给软件的属性)组成的，展示了软件如何与环境关联。</li>
+</ol>
+<h2 id="连线，为每个风格列出4个视图-【2015】【2017】【2018】【2019】"><a href="#连线，为每个风格列出4个视图-【2015】【2017】【2018】【2019】" class="headerlink" title="连线，为每个风格列出4个视图 【2015】【2017】【2018】【2019】"></a>连线，为每个风格列出4个视图 【2015】【2017】【2018】【2019】</h2><p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502041423926.png" alt="image-20250204142309525"></p>
+<ol>
+<li>它如何被构造成⼀组实现单元？ Module styles<ol>
+<li>分解视图、使用视图、泛化视图、分层视图、领域视图、数据模型视图</li>
+</ol>
+</li>
+<li>它如何被构造成⼀组有运行时行为和交互的元素？Component-connector styles<ol>
+<li>管道-过滤器视图、客户机-服务端视图、点对点视图、面向服务架构视图、发布-订阅视图、共享数据视图、多层视图</li>
+</ol>
+</li>
+<li>它如何与它环境中的非软件结构关联？Allocation styles<ol>
+<li>部署视图、安装视图、工作安排视图、其他分配视图</li>
+</ol>
+</li>
+</ol>
+<h2 id="为什么软件系统架构需要使用不同视图来文档化？给出4种示例视图的名称和目的。【2022】【2018】【2015】"><a href="#为什么软件系统架构需要使用不同视图来文档化？给出4种示例视图的名称和目的。【2022】【2018】【2015】" class="headerlink" title="为什么软件系统架构需要使用不同视图来文档化？给出4种示例视图的名称和目的。【2022】【2018】【2015】"></a>为什么软件系统架构需要使用不同视图来文档化？给出4种示例视图的名称和目的。【2022】【2018】【2015】</h2><p>视图是⼀组系统元素及其关系的表示，这些元素不⼀定是全部系统元素，而是<strong>特定类型</strong>的元素。视图让我们将系统实体划分成感兴趣和易于管理的系统表示。</p>
+<ul>
+<li>不同的视图支持不同的目标和用户，突出不同系统元素和关系。</li>
+<li>不同视图在不同程度上展现不同的质量属性</li>
+</ul>
+<p>视图：</p>
+<ol>
+<li>模块视图 Module View：提供一组连贯职责的实现单元</li>
+<li>组件和连接器视图 C &amp; C View：显示具有某些运行时存在的元素</li>
+<li>分配视图 Allocation View：描述了软件单元到软件开发或执行环境<strong>元素的映射</strong></li>
+<li>质量视图 Quality Views，安全视图、性能视图、可靠性视图、沟通视图、异常（错误处理）视图</li>
+<li>组合视图：将上述视图进行组合</li>
+</ol>
+<h2 id="一个典型的软件架构文档包应该包括什么-简要描述每个组件及其用途。【2017】【2019】"><a href="#一个典型的软件架构文档包应该包括什么-简要描述每个组件及其用途。【2017】【2019】" class="headerlink" title="一个典型的软件架构文档包应该包括什么?简要描述每个组件及其用途。【2017】【2019】"></a><strong>一个典型的软件架构文档包应该包括什么?简要描述每个组件及其用途。</strong>【2017】【2019】</h2><ol>
+<li>包含View和Beyond</li>
+<li>Beyond部分：分为架构文档信息和架构信息<ol>
+<li>架构文档信息<ol>
+<li>文档路线图</li>
+<li>视图的文档组织方式</li>
+</ol>
+</li>
+<li>架构信息<ol>
+<li>系统概述</li>
+<li>视图之间的映射关系</li>
+<li>系统原理</li>
+<li>目录-索引、词汇表、缩略词表</li>
+</ol>
+</li>
+</ol>
+</li>
+<li>View部分：包含模块视图和结构视图<ol>
+<li>选择视图的三步骤<ol>
+<li>步骤 1：构建涉众&#x2F;视图表</li>
+<li>步骤 2：合并视图</li>
+<li>步骤 3：确定优先级和阶段</li>
+</ol>
+</li>
+<li>每一个View的内容<ol>
+<li>主要介绍：视图展示</li>
+<li>元素介绍，详细介绍第一部分中描述的元素、元素属性、关系属性和元素接口和行为。</li>
+<li>上下文图</li>
+<li>可变性指南</li>
+<li>基本原理</li>
+</ol>
+</li>
+</ol>
+</li>
+</ol>
+<h1 id="6-ATAM"><a href="#6-ATAM" class="headerlink" title="6. ATAM"></a>6. ATAM</h1><h2 id="ATAM每个阶段的输出【2021】【2015】【2017】"><a href="#ATAM每个阶段的输出【2021】【2015】【2017】" class="headerlink" title="ATAM每个阶段的输出【2021】【2015】【2017】"></a>ATAM每个阶段的输出【2021】【2015】【2017】</h2><p><strong>阶段-0：准备和建立团队</strong>（输入是架构设计文档）</p>
+<p>输出：评估计划</p>
+<ol>
+<li>谁：涉众的初步名单</li>
+<li>逻辑：何时？何地？如何？</li>
+<li>评估报告何时交付给何人</li>
+<li>评估报告包含何种信息</li>
+</ol>
+<p><strong>阶段-1：评估(1)</strong></p>
+<p>输出：</p>
+<ol>
+<li>架构的简明介绍</li>
+<li>业务目标（驱动因素）的阐释</li>
+<li>作为场景实现的特定质量属性要求的优先级列表</li>
+<li>Utility Tree 效用树</li>
+<li>风险和无风险点</li>
+<li>敏感点和权衡点</li>
+</ol>
+<p><strong>阶段-2：评估(2)</strong></p>
+<p>输出：</p>
+<ol>
+<li>涉众们的优先级场景列表</li>
+<li>风险主题和业务驱动因素各自受到的威胁</li>
+</ol>
+<p><strong>阶段-3：后续</strong></p>
+<ol>
+<li>最终的评估报告</li>
+</ol>
+<h2 id="ATAM的整体输出"><a href="#ATAM的整体输出" class="headerlink" title="ATAM的整体输出"></a>ATAM的整体输出</h2><ol>
+<li>架构的简明展示</li>
+<li>业务目标的阐述</li>
+<li>表示为质量属性场景的优先质量属性要求</li>
+<li>引用树</li>
+<li>一组风险和非风险 </li>
+<li>一组风险主题</li>
+<li>将架构决策映射到质量要求</li>
+<li>一组确定的敏感度和权衡点</li>
+<li>最终的评估报告</li>
+</ol>
+<h2 id="描述在ATAM的每一个过程中有哪些stake-holder-和他们的职责【2019】"><a href="#描述在ATAM的每一个过程中有哪些stake-holder-和他们的职责【2019】" class="headerlink" title="描述在ATAM的每一个过程中有哪些stake holder 和他们的职责【2019】"></a><strong>描述在</strong>ATAM的每一个过程中有哪些<strong>stake holder</strong> <strong>和他们的职责</strong>【2019】</h2><p><strong>阶段-0：准备和建立团队</strong></p>
+<ol>
+<li>参与者：评估团队领导和关键项目决策者</li>
+<li>职责：根据架构设计文档生成评估计划，(WHO WHEN TO WHO)包括谁参加评估、如何何时何地开展评估、最后评估报告会被呈递给谁。</li>
+</ol>
+<p><strong>阶段-1：评估(1)</strong></p>
+<ol>
+<li>参与者：评估团队和项目决策者</li>
+<li>职责：<ol>
+<li>第一步，评估负责人介绍ATAM方法</li>
+<li>第二步，项目经理或客户从业务角度介绍业务驱动因素</li>
+<li>第三步，首席架构师介绍体系结构</li>
+<li>第四步，评估团队确定架构方法</li>
+<li>第五步，评估团队和项目决策者生成质量属性效用树(Utiltiy Tree)</li>
+<li>第六步，评估团队分析架构方法</li>
+</ol>
+</li>
+</ol>
+<p><strong>阶段-2：评估(2)</strong></p>
+<ol>
+<li>参与者：评估团队、项目决策者和项目涉众</li>
+<li>职责：<ol>
+<li>第一步，评估负责人介绍ATAM方法和之前已经取得的成果</li>
+<li>第七步，涉众头脑风暴并确定场景优先级</li>
+<li>第八步，评估团队分析架构方法，类似第六步</li>
+<li>第九步，评估团队展示评估结果，并呈递给涉众</li>
+</ol>
+</li>
+</ol>
+<p><strong>阶段-3：后续</strong></p>
+<ol>
+<li>参与者：评估团队、主要涉众</li>
+<li>职责：评估团队制作最终评估报告，发给主要涉众审核通过后，将报告呈递给委托评估的人。</li>
+</ol>
+<h2 id="与软件架构相关的风险点，敏感点，权衡点是什么，各举一个例子【2022】【2018】"><a href="#与软件架构相关的风险点，敏感点，权衡点是什么，各举一个例子【2022】【2018】" class="headerlink" title="与软件架构相关的风险点，敏感点，权衡点是什么，各举一个例子【2022】【2018】"></a>与软件架构相关的风险点，敏感点，权衡点是什么，各举一个例子【2022】【2018】</h2><ol>
+<li>识别风险：发现可能对所需质量属性产生<strong>负面影响</strong>的架构决策，比如一些微小改动对架构、文档造成大量影响，参数让系统从可用到不可用，使用分层模式可能带来性能损耗。</li>
+<li>发现权衡：影响<strong>多个质量属性</strong>的架构决策，往往<strong>既有正面又有负面影响</strong>。例如使用分层模式可能会带来性能损耗，但是也会解耦增加系统的可修改性。</li>
+<li>发现敏感点：<strong>特定质量属性</strong>对其敏感的架构决策，比如在对性能敏感的系统中，决定使用缓存中间件。</li>
+</ol>
+<h1 id="7-其他"><a href="#7-其他" class="headerlink" title="7. 其他"></a>7. 其他</h1><h2 id="软件架构的关注点有哪些？涉众有哪些【2018】"><a href="#软件架构的关注点有哪些？涉众有哪些【2018】" class="headerlink" title="软件架构的关注点有哪些？涉众有哪些【2018】"></a>软件架构的关注点有哪些？涉众有哪些【2018】</h2><ol>
+<li>软件架构的关注点<ol>
+<li>利益相关者 Stakeholders addressed</li>
+<li>解决的问题 Concerns addressed</li>
+<li>语言，建模技巧 Language, modeling techniques</li>
+<li>决策，模式 Tactics, Pattern</li>
+</ol>
+</li>
+<li>利益相关方有哪些？<ol>
+<li>顾客 Customer</li>
+<li>用户 User</li>
+<li>建筑师 Architect</li>
+<li>需求工程师 Requirements engineer</li>
+<li>设计师 Designer</li>
+<li>实施者 Implementer</li>
+<li>测试师，集成师 Tester, integrator</li>
+<li>维护者 Maintainer</li>
+<li>产品经理 Product manager</li>
+<li>质量保证人 Quality assurance people</li>
+</ol>
+</li>
+</ol>
+<h2 id="软件设计的的三个变化维度，每个维度的变化点。不同的绑定时间如何影响可修改性和可测试性【2017】"><a href="#软件设计的的三个变化维度，每个维度的变化点。不同的绑定时间如何影响可修改性和可测试性【2017】" class="headerlink" title="软件设计的的三个变化维度，每个维度的变化点。不同的绑定时间如何影响可修改性和可测试性【2017】"></a><strong>软件设计的的三个变化维度，每个维度的变化点。</strong>不同的绑定时间如何影响可修改性和可测试性<strong>【2017】</strong></h2><ol>
+<li>三个变化维度：<ol>
+<li>面向对象 OOP，强调重用性、灵活性和扩展性。</li>
+<li>面向方面 AOP，满足扩展的需求，可以在程序中自由的扩展功能</li>
+<li>面向服务 SOA，是系统发布功能的一种方式，且基于这种方式下不同的系统之间可以有效的沟通、协作。</li>
+</ol>
+</li>
+<li>设计时，开发时，测试时，发布时，运行时：可修改性降低，可测试性升高</li>
+</ol>
+<h2 id="为什么设计决定对架构很重要？说出你对“软件架构-设计（如，组件-连接器）-设计决定”的理解。【2021】TODO"><a href="#为什么设计决定对架构很重要？说出你对“软件架构-设计（如，组件-连接器）-设计决定”的理解。【2021】TODO" class="headerlink" title="为什么设计决定对架构很重要？说出你对“软件架构&#x3D;设计（如，组件-连接器）+设计决定”的理解。【2021】TODO"></a>为什么设计决定对架构很重要？说出你对“软件架构&#x3D;设计（如，组件-连接器）+设计决定”的理解。【2021】TODO</h2><ul>
+<li>一个系统通常是由元件组成的，而这些元件如何形成、相互之间如何发生作用，则是关于这个系统本身结构的重要信息。详细地说，就是要包括架构元件（Architecture Component）、联结器（Connector）、任务流（Task-flow）。所谓架构元素，也就是组成系统的核心”砖瓦”，而联结器则描述这些元件之间通讯的路径、通讯的机制、通讯的预期结果，任务流则描述系统如何使用这些元件和联结器完成某一项需求。</li>
+<li>其次，建造一个系统需要作出的最高层次的、以后难以更改的，商业的和技术的决定。在进行软件设计需要做出的决定中，必然会包括逻辑结构、物理结构，以及它们如何影响到系统的所有非功能性特征。这些决定中会有很多是一旦作出，就很难更改的。</li>
+<li>显然，设计决定必定是有关系统设计成败的，所以对架构来说很重要。</li>
+</ul>
+<h1 id="UML基础"><a href="#UML基础" class="headerlink" title="UML基础"></a>UML基础</h1><p>依赖：表示比关联较弱的关系，如方法的形参、局部变量。</p>
+<p>单向关联：A持有B类型的属性</p>
+<p>聚合：A与B有<strong>整体和部分</strong>的关系。B可以脱离A单独存在。</p>
+<p>组合：整体与部分不可分</p>
+<p>实现：一个类实现自某个接口。</p>
+<p>继承（泛化）：一个类继承自某个类</p>
+<h1 id="1-设计原则-1"><a href="#1-设计原则-1" class="headerlink" title="1. 设计原则"></a>1. 设计原则</h1><p>可复用、可维护</p>
+<p>单一职责：一个对象只包含单一职责，且该职责被完整封装在一个类中</p>
+<ul>
+<li>数据职责（属性）+行为职责（方法）</li>
+<li>高内聚、低耦合</li>
+</ul>
+<p>开闭原则：在不修改旧代码的情况下添加新代码</p>
+<ul>
+<li><p>抽象化</p>
+</li>
+<li><p>更具体：对可变性封装原则，找到系统的可变因素并将其封装</p>
+</li>
+</ul>
+<p>里氏代换原则：软件中如果能使用基类对象，那么一定能使用其子类对象</p>
+<p>依赖倒转原则：针对接口编程，不要针对实现编程</p>
+<ul>
+<li>类之间的耦合：抽象耦合</li>
+</ul>
+<p>接口隔离原则：使用多个专门的接口，而不使用单一的总接口</p>
+<ul>
+<li>首先必须满足单一职责原则</li>
+</ul>
+<p>合成复用原则：尽量使用对象组合，而不是继承来达到复用的目的</p>
+<ul>
+<li>组合&#x2F;聚合更灵活、耦合度降低，而从基类继承的实现是静态的</li>
+<li>继承复用接口，合成复用实现</li>
+</ul>
+<p>迪米特法则（最小知识原则）：尽可能少的与其他实体发生相互作用</p>
+<ul>
+<li>狭义：如果两个类之间不必彼此直接通信，那么这两个类就不应当发生直接的相互作用。用第三者转发（controller、wrapper）</li>
+</ul>
+<p><strong>设计题</strong>：看6个实例的改法！</p>
+<p>目标：开闭原则</p>
+<p>指导：最小知识原则</p>
+<p>基础：单一职责原则、可变性封装原则</p>
+<p>实现：依赖倒转原则、合成复用原则、里氏代换原则、接口隔离原则</p>
+<h1 id="2-13个设计模式"><a href="#2-13个设计模式" class="headerlink" title="2. 13个设计模式"></a>2. 13个设计模式</h1><p>问题、前提条件、约束、解法（几个角色）、效果、优缺点、关联的解法（与其他模式的差异）、其他相关模式</p>
+<p><strong>背zhy的表，并看实例</strong></p>
+<p>装饰者的两个缺点：很多小类、难以排查错误</p>
+<p>模式一般都有的缺点</p>
+<ol>
+<li>增加设计的复杂性和增加类的个数(增加辅助类)</li>
+<li>增加隔阂、方法调用，降低软件运行的效率，但是已经不是目前主要的问题</li>
+</ol>
+<p>增加新的鸭叫统计次数(不允许修改原本代码)：装饰器模式</p>
+<p>引入设计模式的作用</p>
+<ol>
+<li>设计模式提供了与其他开发人员共享的词汇表。</li>
+<li>通过在模式级别（而不是实质性对象级别）进行思考，提高对体系结构的思考（但不要迷失在细节中）</li>
+</ol>
+<h2 id="选择模式"><a href="#选择模式" class="headerlink" title="选择模式"></a>选择模式</h2><ol>
+<li><p>一个温度系统有3个恒温器，一个恒温器可以调整和显示温度，2个恒温器只能手动调节，1个恒温器可以手动、计时器调节：中介者、策略</p>
+<ol>
+<li>模板方法：先调整、再显示(用户直接复用模板方法，而本例中复用的是实现)</li>
+</ol>
+</li>
+<li><p>一个队伍有1个管理者和25个队员，每一个队员可以有一个位置，有的特别强的队员可以有多个位置：策略、原型</p>
+<ol>
+<li>策略独立于Player，所以Player是一样的</li>
+<li>模板方法模式是解决步骤的问题</li>
+</ol>
+</li>
+<li><p>积分会员制，积分比较高则为高级会员，积分比较低则为低级会员</p>
+</li>
+<li><p><img src="https://spricoder.oss-cn-shanghai.aliyuncs.com/2021-Software-System-Design/img/Tec1/1.png"></p>
+<ol>
+<li>A 适配器模式</li>
+<li>J 模板方法模式</li>
+<li>G 工厂方法模式</li>
+<li>L 单例模式(不考)</li>
+<li>E 策略模式</li>
+<li>K 组合</li>
+<li>B 状态</li>
+<li>C 迭代器(不考)</li>
+<li>D 外观</li>
+<li>H 装饰者(增加额外行为，但是接口不变)</li>
+<li>F 观察者(是一对多的依赖关系，而不是信息传送，是信息同步机制)</li>
+<li>I 命令</li>
+</ol>
+</li>
+</ol>
+<h1 id="3-表驱动"><a href="#3-表驱动" class="headerlink" title="3. 表驱动"></a>3. 表驱动</h1><p>表驱动法：一种编程模式</p>
+<ol>
+<li>目的：表驱动法适用于复杂逻辑，将复杂逻辑从代码中独立出来方便单独维护</li>
+<li>原理：从表里面查找信息而不使用逻辑语句(if和else)</li>
+<li>如何快速从表中查询条目<ol>
+<li>直接访问：通过<strong>索引值</strong>（如下标）可以直接从表中找到对应的条目</li>
+<li>索引访问：先用一个基本类型的数据从一张<strong>索引表</strong>中查出一个<strong>键值</strong>，然后再用这一键值查出你感兴趣的主数据<ol>
+<li>优点：节约空间、即使没有有时也更方便更廉价、数据更容易维护</li>
+</ol>
+</li>
+<li>阶梯访问：通过确定每项命中的<strong>阶梯层次</strong>确定其归类，是连续性条件方法</li>
+</ol>
+</li>
+</ol>
+<h1 id="4-软件架构"><a href="#4-软件架构" class="headerlink" title="4. 软件架构"></a>4. 软件架构</h1><p><strong>软件架构的定义&#x2F;学院派与实践派的区别</strong></p>
+<p>学院派：程序或计算系统的软件体系结构是系统的一个或多个结构，其中包括软件组件，这些组件的外部可见属性以及它们之间的关系。</p>
+<p>实践派：架构是一系列重要的决定。不强调架构的组成，而是软件研发中重要的设计决定都是架构。</p>
+<p><strong>架构和设计的关系？</strong>（T29）</p>
+<ol>
+<li>所有的体系结构都是软件设计，但不是所有的软件设计都是体系结构</li>
+<li>体系结构是设计过程的一个过程，是更高层的设计，是设计决策的组合</li>
+<li>架构解决设计的早期阶段，一些最重要的设计</li>
+</ol>
+<p>元素包括部件和连接件，关系包括静态和动态</p>
+<p><strong>架构和结构的关系？</strong>（T29）</p>
+<ul>
+<li>架构在运行时会发送变化，而结构不会。可以类比软件和建筑的关系。软件有runtime（会发生变化），建筑在生命周期中不发生变化（盖完后不变了）</li>
+<li>架构由结构、元素、关系、设计组成。架构是包括结构信息的，因为结构是一种静态的、逻辑的、是关于系统如何构成。但是架构除了包含结构，还会增加组件的相互之间的关系接口，还会定义一些动态的行为（一个组件可能和谁进行交互）</li>
+</ul>
+<p><strong>架构从哪里来？</strong>（T12）</p>
+<ol>
+<li>功能性需求</li>
+<li>NFRs非功能性需求：包括技术约束、商业约束、质量属性</li>
+<li>ASRs架构重要需求：<ol>
+<li>大部分是质量需求，也包括一些非常重要的功能需求</li>
+<li>衡量标准：加ASR会对架构状态有深远影响</li>
+<li>来源：需求文档，stackholder</li>
+</ol>
+</li>
+<li>Quality Requirements质量需求：在功能需求的基础上需要满足的特征</li>
+<li>Stakeholders涉众&#x2F;利益相关者</li>
+<li>Organisations开发组织</li>
+<li>Technical Environments技术环境</li>
+<li>商业因素：商业和技术决定的集合</li>
+</ol>
+<p><strong>Generic Design Strategies</strong>（T3）</p>
+<ol>
+<li>分解</li>
+<li>抽象</li>
+<li>分治</li>
+<li>生成和测试 </li>
+<li>迭代与细化 </li>
+<li>重用元素</li>
+</ol>
+<p><strong>4+1视图</strong>（视图是架构的表示形式）（T30）</p>
+<ol>
+<li>逻辑视图：描述了体系结构中在体系结构上<strong>明显重要的元素</strong>以及他们之间的关系<ol>
+<li>静态的、结构化的系统视角，不会随开发和时间变化而变化，除非改变设计图，否则信息固定不变</li>
+</ol>
+</li>
+<li>过程视图：描述了体系结构中的<strong>并发和交流</strong>元素 <ol>
+<li>针对软件运行态，依赖关系、状态迁移等</li>
+</ol>
+</li>
+<li>物理视图：描述了主要过程和部件是如何映射到应用硬件上的 <ol>
+<li>软件元素与外部物理世界的对应关系，对外界的影响等</li>
+</ol>
+</li>
+<li>开发视图：描述了软件部件是如何在软件内部组织的，比如配置管理工具<ol>
+<li>如何进行开发，元素间的依赖关系如何</li>
+</ol>
+</li>
+<li>体系结构用例：描述了体系结构的需求，关系到了超过一个常规的视图。是四个视图在某一个场景下进行描述</li>
+</ol>
+<p><strong>架构师做什么？</strong></p>
+<ol>
+<li>联络人 ：在客户、技术团队和商业&#x2F;需求分析师之间，包含管理和市场分析</li>
+<li>软件工程：软件工程的最佳实践 </li>
+<li>技术知识：深入理解技术领域</li>
+<li>风险管理：与设计、技术决策相关的风险</li>
+</ol>
+<p><strong>Architecture Activities</strong>（T13）</p>
+<ol>
+<li>创建系统的商业案例</li>
+<li>理解需求</li>
+<li>创建和选择体系结构</li>
+<li>沟通体系结构（涉众，包括开发商）</li>
+<li>分析或评估体系结构<ol>
+<li>整体的方法论</li>
+<li>具体技术的质量</li>
+</ol>
+</li>
+<li>实现体系结构</li>
+<li>保证和体系结构的一致性</li>
+</ol>
+<p><strong>Software Architecture Process</strong></p>
+<ol>
+<li>通过 StakeHolder 获取到 ASRs（架构攸关的需求）</li>
+<li>通过分析得到 Prioritized Quality Attribute Scenarios（高优先级质量属性解决方案）和需求、约束，结合模式和策略，综合可以得到架构的设计</li>
+<li>根据架构的设计得到由<strong>模式决定的候选视图的示意图</strong>，之后完成文档化</li>
+<li>选择、组合视图，将文档进行进一步的评估，这一部分需要 StakeHolders 的参与、也需要 Prioritized Quality Attribute Scenarios 和文档等作为参考。</li>
+</ol>
+<h1 id="5-质量属性"><a href="#5-质量属性" class="headerlink" title="5. 质量属性"></a>5. 质量属性</h1><p>T1软件需求：功能需求+非功能需求（质量需求+约束）</p>
+<ul>
+<li><p>功能性需求：定义系统必须做什么，并且强调系统如何提供价值给涉众。</p>
+</li>
+<li><p>质量需求&#x2F;质量属性：是系统应在其功能需求之上提供的整个系统的合乎需要的特性</p>
+<ul>
+<li><p>非功能要求或体系结构要求是用于质量属性的<strong>替代</strong>术语</p>
+</li>
+<li><p>在执行过程中<strong>可观察</strong>（外部）：性能，安全性，可用性，易用性等</p>
+</li>
+<li><p>执行期间<strong>不可观察</strong>（内部）：可修改性，可移植性，可重用性，可测试性等</p>
+</li>
+</ul>
+</li>
+</ul>
+<p>ASR：大部分是质量需求，也包括一些非常重要的功能需求</p>
+<p><strong>Modeling Quality Attribute Scenarios</strong></p>
+<p>general scenario和concrete scenario，如何解决与提高质量属性的tactic（解决质量属性的最小单位）</p>
+<ol>
+<li>可用性（T2）：以所需的可用时间比例来衡量<ol>
+<li>在指定的时间间隔内它将在要求的范围内提供指定服务的概率</li>
+</ol>
+</li>
+<li>互操作性：两个或多个系统可以在特定上下文中通过接口完全交换有意义的信息的程度</li>
+<li>可修改性：更改以及进行更改所花费的时间或金钱，包括这种可更改性影响其他功能或质量属性的程度<ol>
+<li>N × 不使用机械装置进行更改的成本 ≤ 安装机械装置的成本 +(N × 使用机械装置进行更改的成本）</li>
+</ol>
+</li>
+<li>性能：与时间有关，软件与系统满足时序要求的能力有关<ol>
+<li>处理时间（系统正在响应时）</li>
+<li>阻塞时间（系统无法响应时）</li>
+</ol>
+</li>
+<li>安全性：衡量系统保护数据和信息免遭未授权访问的能力，同时仍提供对授权人员和系统的访问权限<ol>
+<li>机密性</li>
+<li>完整性</li>
+<li>可用性</li>
+</ol>
+</li>
+<li>可测试性：可以使软件通过（通常基于执行）测试来证明其故障的难易程度</li>
+<li>易用性：与用户完成所需任务的难易程度以及系统提供的用户支持的类型有关</li>
+</ol>
+<p>tactic：影响<strong>质量属性</strong>响应控制的设计决策，例如冗余。</p>
+<h1 id="6-架构模式"><a href="#6-架构模式" class="headerlink" title="6. 架构模式"></a>6. 架构模式</h1><p>定义：是在实践中反复发现的一套设计决策，具有允许重复使用的已知属性，并且描述了一类架构 </p>
+<p>建立的关系：</p>
+<ol>
+<li>背景、上下文（Context）：世界上经常发生问题的<strong>场景</strong>。</li>
+<li>问题（Problem）：在给定上下文中出现经过适当<strong>概括的问题</strong>。</li>
+<li>解决方案（Element + Relations + Constraints）：针对问题的成功的经过适当抽象的<strong>解决方案</strong>。</li>
+</ol>
+<p>常见的架构模式：</p>
+<h2 id="模块视图"><a href="#模块视图" class="headerlink" title="模块视图"></a>模块视图</h2><p>layered</p>
+<p>micro-kernel：用一系列插件实现具体的功能，微服务可以实现插件的管理和协调</p>
+<h3 id="lss微服务架构部分"><a href="#lss微服务架构部分" class="headerlink" title="*lss微服务架构部分"></a>*lss微服务架构部分</h3><h4 id="基础知识"><a href="#基础知识" class="headerlink" title="基础知识"></a>基础知识</h4><p>定义：微服务架构是把应用程序<strong>功能性分解</strong>为一组服务的架构风格，每一个服务都是由一组<strong>专注、内聚</strong>的功能职责组成。</p>
+<ul>
+<li>本质是微，拆完后，可以把每个微服务当做独立的应用</li>
+</ul>
+<p>六大主要特性：会考某一个特性或者某几个特性的理解</p>
+<ol>
+<li>通过服务组件化：组件是可以独立替换和升级的软件单元，分为进程内和进程外组件。微服务架构中的独立服务属于<strong>进程外组件</strong>，拥有<strong>轻量级的消息传递机制</strong>。组件化提升了可伸缩性、可维护性、可扩展性，耦合度低、隔离性好。</li>
+<li>内聚和解耦：微服务架构关注服务之间的高内聚低耦合，确定服务边界，使每个微服务负责独立的业务能力。</li>
+<li>围绕业务能力组织：团队组织是围绕业务的，而每个微服务服务负责独立的业务，服务内部是单一职责。</li>
+<li>去中心化：采用去中心化治理、数据存储、数据管理，优点是每个微服务可以选择自己的技术栈、数据库，服务之间只需约定接口，无需关注内部实现。缺点是分布式容易产生数据一致性的问题，需要权衡更大一致性的业务损失与修复错误的代价。</li>
+<li>基础设施自动化：依赖自动化的基础设施、持续部署和交付、测试，降低了开发和运维微服务的操作复杂度。</li>
+<li>服务设计与演进：高可用设计（关心故障发送、失败时怎么设计）、演进式设计（合理设计，实现快速且控制良好的增量变更和演化）</li>
+</ol>
+<h4 id="核心设计模式"><a href="#核心设计模式" class="headerlink" title="核心设计模式"></a>核心设计模式</h4><p>考题：谈一谈其中某一个问题的理解。描述问题的上下文、需求约束有哪些、有哪些可以用的模式、模式之间的关系。</p>
+<p><strong>微服务的拆分和定义</strong></p>
+<p>关键步骤：</p>
+<ol>
+<li>识别系统操作</li>
+<li>服务拆分<ol>
+<li>根据<strong>业务能力</strong>，与2互为相关模式</li>
+<li>根据<strong>子域</strong>（通过领域驱动设计，类似于划分边界）</li>
+<li>根据<strong>动静态调用关系</strong></li>
+</ol>
+</li>
+<li>定义API：将系统操作映射到服务，确定在处理每一个系统操作时，服务之间如何交互</li>
+</ol>
+<p>需求：</p>
+<ol>
+<li>基本原则：高内聚低耦合</li>
+<li>单一职责</li>
+<li>共同封闭：变更频率相同的，放在同一个服务里面</li>
+<li>双披萨团队开发：微服务数量不要太多，否则资源不够</li>
+<li>团队自治：独立和自我治理</li>
+</ol>
+<p><strong>进程间通信机制复杂性</strong></p>
+<p><strong>问题1：同步通信中避免故障蔓延到其他服务？</strong></p>
+<p>上下文：</p>
+<ul>
+<li>微服务，分布式，进程间调用</li>
+<li>服务请求可能面临局部故障（故障&#x2F;停机&#x2F;过载）</li>
+<li>同步通信客户端等待响应被阻塞，蔓延</li>
+</ul>
+<p>需求：</p>
+<ul>
+<li>处理网络超时&#x2F;无响应服务的能力</li>
+<li>限制客户端向服务器发出请求的数量</li>
+<li>决定如何从失败的远程服务中恢复</li>
+</ul>
+<p>模式：断路器。有闭合、断开、半断开状态，可以防止不断地尝试执行可能会失败的操作。</p>
+<p>相关模式：API网关模式、服务器端服务发现模式</p>
+<p><strong>问题2：客户端如何在网络上发现服务实例的位置？</strong></p>
+<p>上下文：</p>
+<ul>
+<li>不同微服务之间通常需要进程间调用</li>
+<li>在传统的分布式系统部署下，服务在固定且已知的位置（主机与端口）运行，从而确保各服务可利用REST或RPC机制进行相互调用</li>
+<li>微服务通常在虚拟化或者容器化环境中运行，服务实例数量和位置动态变化</li>
+</ul>
+<p>需求：</p>
+<ul>
+<li>每一服务实例的特定位置（主机与端口）信息</li>
+<li>服务端实例的具体数量及位置动态变化信息</li>
+<li>虚拟机与容器分配的动态IP地址信息</li>
+<li>服务实例的数量信息的（EC自动伸缩组会根据负载情况随时调整实例数量）</li>
+</ul>
+<p>模式：应用层服务发现模式</p>
+<p>相关模式：替代模式：平台层服务发现模式</p>
+<p><strong>问题3：如何处理外部客户端与服务之间的通讯？</strong></p>
+<p>上下文：</p>
+<ul>
+<li>多个版本客户端需要开发多个适配的用户界面</li>
+<li>产品信息通过API访问</li>
+<li>数据分布在多项服务之间</li>
+</ul>
+<p>需求：</p>
+<ul>
+<li>微服务通常提供的是细粒度API，客户端需要同多项服务进行交互</li>
+<li>不同客户端需要不同的数据（桌面浏览器版本通常较复杂</li>
+<li>不同客户端的网络性能亦有所区别（移动网络速度更慢）。服务器端Web应用能够向后端服务发送多条请求，不会影响用户体验，但移动客户端则只能发送少量请求</li>
+<li>服务实例数量与其位置（主机与端口）会发生动态变化</li>
+<li>服务的划分方式会随时间的推移而改变，且不应被客户端所感知</li>
+</ul>
+<p>模式：API Gateway模式&#x2F;后端前置模式</p>
+<p>相关模式：后续模式：断路器模式、服务发现模式&#x2F;API Gateway模式</p>
+<h2 id="组件-连接器视图"><a href="#组件-连接器视图" class="headerlink" title="组件-连接器视图"></a>组件-连接器视图</h2><ol>
+<li>性质：<ol>
+<li>组件和连接器之间的关系是松散的、动态的，允许系统在<strong>运行时</strong>进行变化。</li>
+<li>组件的接口定义了组件与外部世界的通信方式。</li>
+<li>通过引入连接器，实现组件间的相互作用和数据流动。</li>
+</ol>
+</li>
+<li>特征：connector不能单独出现，因为它没有功能，只是把上一个的component的输出传递到下一个component的输入</li>
+<li>本质：将系统分解为独立的组件，并定义它们之间的交互方式。</li>
+</ol>
+<p><strong>Broker模型</strong>：协调多个客户机和服务器之间的通讯。</p>
+<p>提升：</p>
+<ol>
+<li><strong>Interoperability：根本目的</strong>，提高 Server-Client 之间的交互性</li>
+<li>Scaliability：可伸缩</li>
+<li>Modifiabiliy：可扩展</li>
+</ol>
+<p>下降：</p>
+<ol>
+<li>Security：Broker容易成为被攻击的对象而单点失效</li>
+<li>Performance：引入中间人后，局部单点性能会下降</li>
+<li>Tesability：因为组合关系动态变化，延迟绑定，所以不好测试</li>
+</ol>
+<p><strong>Client-Server模式</strong>：将应用程序分为客户端和服务器两个部分，并通过网络进行通信。</p>
+<p>提升：</p>
+<ol>
+<li>可扩展性：可以实现横向扩展，使得系统可以根据需要添加更多的服务器来支持更多的客户端，满足不断增长的用户需求。</li>
+<li>可靠性：业务逻辑分离后，服务器能够专注于处理请求并保证响应正确无误，而客户端则只需负责界面和用户交互。</li>
+<li>安全性：分离后更好进行访问控制和身份验证等安全机制。</li>
+</ol>
+<p>下降：</p>
+<ol>
+<li>性能：分离后存在网络延迟和额外开销</li>
+<li>可用性：由于客户端和服务器之间的依赖关系，如果其中一个组件出现故障，整个系统可能会变得不可用。</li>
+</ol>
+<p><strong>SOA</strong>：面向服务的架构，旨在将应用程序设计为可重用、可组合和可互操作的服务的集合</p>
+<p>提升：</p>
+<ol>
+<li>互操作性</li>
+<li>可伸缩性：服务动态识别、注册、调用</li>
+<li>可重用性：模组化</li>
+<li>可修改性：服务自身高内聚，服务间松耦合</li>
+<li>可维护性：单个服务的规模变小</li>
+</ol>
+<p>下降：</p>
+<ol>
+<li>安全性：各独立服务演化不可控</li>
+<li>可测试性：难以测试验证</li>
+</ol>
+<h2 id="分配视图"><a href="#分配视图" class="headerlink" title="分配视图"></a>分配视图</h2><p><strong>map-reduce</strong>：充分引入并行，通过不同计算资源引入部署，提高数据处理的性能</p>
+<p><strong>multi-tier</strong>：一组运行在相同计算资源上的元素划分成逻辑的组合，这个组合是一个tier。内部的tier并不是独立封装的，单纯的因为利用相同计算资源</p>
+<h1 id="7-文档化"><a href="#7-文档化" class="headerlink" title="7. 文档化"></a>7. 文档化</h1><p><strong>Styles vs. Patterns vs. Views</strong></p>
+<p>架构风格是元素和关系类型的特殊化，以及关于如何使用它们的一组约束</p>
+<ul>
+<li>侧重于<strong>架构方法</strong>，对特定风格何时有用或无用提供更<strong>轻量级</strong>的指导。</li>
+</ul>
+<p>架构模式表达了软件系统的基本结构组织模式</p>
+<ul>
+<li>关注<strong>问题和上下文</strong>，以及如何在该上下文中<strong>解决问题</strong>。</li>
+</ul>
+<p>视图是一组系统元素和它们之间关系的表示</p>
+<ul>
+<li>关注从不同角度突出不同的<strong>系统元素和关系</strong></li>
+</ul>
+
+        </div>
+
+        
+            <section class="post-copyright">
+                
+                
+                
+                
+
+            </section>
+        
+        <section class="post-tags">
+            <div>
+                <span>标签:</span>
+                <span class="tag">
+                    
+                    
+                        <a href="/tags/%E8%AF%BE%E7%A8%8B/"># 课程</a>
+                    
+                        
+                </span>
+            </div>
+            <div>
+                <a href="javascript:window.history.back();">返回</a>
+                <span>· </span>
+                <a href="/">主页</a>
+            </div>
+        </section>
+        <section class="post-nav">
+            
+                <a class="prev" rel="prev" href="/2023/07/01/2023%E6%98%A5%E5%AD%A3%E3%80%8A%E6%95%B0%E6%8D%AE%E5%BA%93%E5%BC%80%E5%8F%91%E3%80%8B%E8%80%83%E8%AF%95%E9%87%8D%E7%82%B9/">2023春季《数据库开发》考试重点</a>
+            
+            
+            <a class="next" rel="next" href="/2023/01/14/2022%E7%A7%8B%E5%AD%A3%E3%80%8A%E9%9C%80%E6%B1%82%E4%B8%8E%E5%95%86%E4%B8%9A%E6%A8%A1%E5%BC%8F%E3%80%8B%E8%AF%BE%E7%A8%8B%E7%AC%94%E8%AE%B0/">2022秋季《需求与商业模式》课程笔记</a>
+            
+        </section>
+
+
+    </article>
+</div>
+
+
+    <div id="gitalk-container"></div>
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.css">
+<script src="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.min.js"></script>
+<script src="//cdn.bootcss.com/blueimp-md5/2.10.0/js/md5.js"></script>
+<div id="gitalk-container"></div>
+<script type="text/javascript">
+      var gitalk = new Gitalk({
+        clientID: '',
+        clientSecret: '',
+        repo: 'blog_comment',
+        owner: 'lyxx2535',
+        admin: 'lyxx2535',
+        id: md5(location.pathname),
+        labels: 'Gitalk'.split(',').filter(l => l),
+        perPage: 10,
+        pagerDirection: 'last',
+        createIssueManually: true,
+        distractionFreeMode: false
+      })
+      gitalk.render('gitalk-container')
+</script>
+
+            </div>
+            <footer id="footer" class="footer">
+    <div class="copyright">
+        <span>© Annie | Powered by <a href="https://hexo.io" target="_blank">Hexo</a> & <a href="https://github.com/Siricee/hexo-theme-Chic" target="_blank">Chic</a> | 2020 - 2025
+            <br>
+            <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+<span class="site-uv">
+    Total visitors:
+    <i class="busuanzi-value" id="busuanzi_value_site_uv"></i>
+</span>&nbsp;|&nbsp;
+
+
+<span class="site-pv">
+    Total views:
+    <i class="busuanzi-value" id="busuanzi_value_site_pv"></i>
+</span>
+
+          </span>
+    </div>
+</footer>
+
+    </div>
+</body>
+
+</html>
