@@ -1,0 +1,582 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <meta name="author" content="Annie">
+
+
+
+
+
+<title>2023春季《数据库开发》考试重点 | Annie&#39;s Blog</title>
+
+
+
+    <link rel="icon" href="/favicon.ico">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+    <script src="/js/tocbot.min.js"></script>
+    
+
+
+
+    
+    
+        
+    
+
+
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+<body>
+    <script>
+        // this function is used to check current theme before page loaded.
+        (() => {
+            const currentTheme = window.localStorage && window.localStorage.getItem('theme') || '';
+            const isDark = currentTheme === 'dark';
+            const pagebody = document.getElementsByTagName('body')[0]
+            if (isDark) {
+                pagebody.classList.add('dark-theme');
+                // mobile
+                document.getElementById("mobile-toggle-theme").innerText = "· Dark"
+            } else {
+                pagebody.classList.remove('dark-theme');
+                // mobile
+                document.getElementById("mobile-toggle-theme").innerText = "· Light"
+            }
+        })();
+    </script>
+
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">Annie&#39;s Blog</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default">
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+        </div>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">Annie&#39;s Blog</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; 菜单</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+            <div class="main">
+                <div class="container">
+    
+    
+        <div class="post-toc">
+    <div class="tocbot-list">
+    </div>
+    <div class="tocbot-list-menu">
+        <a class="tocbot-toc-expand" onclick="expand_toc()">全部展开</a>
+        <a onclick="go_top()">回到顶部</a>
+        <a onclick="go_bottom()">前往底部</a>
+    </div>
+</div>
+
+<script>
+    var tocbot_timer;
+    var DEPTH_MAX = 6; // 为 6 时展开所有
+    var tocbot_default_config = {
+        tocSelector: '.tocbot-list',
+        contentSelector: '.post-content',
+        headingSelector: 'h1, h2, h3, h4, h5',
+        orderedList: false,
+        scrollSmooth: true,
+        onClick: extend_click,
+    };
+
+    function extend_click() {
+        clearTimeout(tocbot_timer);
+        tocbot_timer = setTimeout(function() {
+            tocbot.refresh(obj_merge(tocbot_default_config, {
+                hasInnerContainers: true
+            }));
+        }, 420); // 这个值是由 tocbot 源码里定义的 scrollSmoothDuration 得来的
+    }
+
+    document.ready(function() {
+        tocbot.init(obj_merge(tocbot_default_config, {
+            collapseDepth: 1
+        }));
+    });
+
+    function expand_toc() {
+        var b = document.querySelector('.tocbot-toc-expand');
+        var expanded = b.getAttribute('data-expanded');
+        expanded ? b.removeAttribute('data-expanded') : b.setAttribute('data-expanded', true);
+        tocbot.refresh(obj_merge(tocbot_default_config, {
+            collapseDepth: expanded ? 1 : DEPTH_MAX
+        }));
+        b.innerText = expanded ? 'Expand all' : 'Collapse all';
+    }
+
+    function go_top() {
+        window.scrollTo(0, 0);
+    }
+
+    function go_bottom() {
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+
+    function obj_merge(target, source) {
+        for (var item in source) {
+            if (source.hasOwnProperty(item)) {
+                target[item] = source[item];
+            }
+        }
+        return target;
+    }
+</script>
+    
+
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">2023春季《数据库开发》考试重点</h1>
+            
+                <div class="post-meta">
+                    
+                        作者: <a itemprop="author" rel="author" href="/">Annie</a>
+                    
+
+                    
+                        <span class="post-time">
+                        日期: <a href="#">July 1, 2023&nbsp;&nbsp;10:51:05</a>
+                        </span>
+                    
+                    
+                        <span class="post-category">
+                        分类:
+                            
+                                <a href="/categories/%E6%9C%AC%E7%A7%91%E7%94%9F%E8%AF%BE%E7%A8%8B/">本科生课程</a>
+                            
+                        </span>
+                    
+                </div>
+            
+        </header>
+
+        <div class="post-content">
+            <h1 id="2023春数据库开发复习"><a href="#2023春数据库开发复习" class="headerlink" title="2023春数据库开发复习"></a>2023春数据库开发复习</h1><p>110&#x3D;100+10</p>
+<p>100：6道题</p>
+<h2 id="T1-视图可以用的几个场景？"><a href="#T1-视图可以用的几个场景？" class="headerlink" title="T1 视图可以用的几个场景？"></a>T1 视图可以用的几个场景？</h2><ol>
+<li><p>不同表字段聚合、信息重组：当某个查询涉及多表连接、次数频繁时，可以创建视图隐藏底层表的复杂性，简化查询。</p>
+</li>
+<li><p>控制权限：根据不同用户的权限，可以建立不同的视图，让用户查看部分数据（如只公开非敏感数据）。</p>
+</li>
+<li><p>安全性需要：用户无法对视图进行随意的修改和删除，只能在只读视图中检索数据，增加了安全性。</p>
+</li>
+<li><p>更新&#x2F;重构数据库，同时满足原来原有应用的访问：当数据库需要重构（如删除了一些旧表，创建了一些新表），但不希望这些更改影响之前的应用程序时，可以使用与已删除、修改的旧表相同的表结构创建数据库视图。因为视图保留了原有的表架构，应用程序可以访问视图来完成此前功能而无需修改。</p>
+</li>
+<li><p>计算列需要：数据库设计范式要求减少冗余字段，所以数据库表大多没有计算列。但报表中通常需要总销售额等计算列字段，所以可以创建一个含有计算列字段的视图。</p>
+</li>
+</ol>
+<h2 id="T2-不能把数据库当“黑盒”使用，为什么？"><a href="#T2-不能把数据库当“黑盒”使用，为什么？" class="headerlink" title="T2 不能把数据库当“黑盒”使用，为什么？"></a>T2 不能把数据库当“黑盒”使用，为什么？</h2><ol>
+<li><p>因为每个数据库都是不相同的。在一个数据库上取得的经验也许可以部分用于另一个数据库，但必须有心理准备，二者可能存在一些基本差别，可能还有一些细微差别。</p>
+</li>
+<li><p>细微差别（如对null的处理）与基本差别（并发控制机制）可能有同样显著的影响</p>
+</li>
+<li><p>所以我们应当了解数据库，知道它如何工作，其特性如何实现，这是解决这些问题的唯一途径</p>
+</li>
+</ol>
+<p>不同数据库在性能、安全、连接、锁机制、空值等方面有不同，下面以空值处理和锁机制为例：</p>
+<h3 id="空值处理"><a href="#空值处理" class="headerlink" title="空值处理"></a>空值处理</h3><p>不同的数据库系统可能会对空值的处理有所不同，有四种场景：</p>
+<ol>
+<li>unknown：几乎所有的关系型数据库都认为空值为unknown，如MySQL、Oracle 和 SQL Server，它们遵循SQL标准。</li>
+<li>null：SQLite 数据库则将空值视为 NULL，并支持将 NULL 视为一个特殊的值来进行处理</li>
+<li>不包括：一些 NoSQL 数据库不包括空值（或者叫做缺失值），因为它们的数据模型可能不需要将所有属性都定义为必填的，此时数据项缺少某些属性时，将不会存储空值。</li>
+<li>实数：一些数据库可能允许在对实数列进行聚合操作时将空值视为0，这样可以避免在计算总和或平均值时出现错误。这取决于数据库的实现和特性，而不是标准的行为。</li>
+</ol>
+<h3 id="锁机制"><a href="#锁机制" class="headerlink" title="锁机制"></a>锁机制</h3><p>锁机制是实现并发控制机制的一种主要手段。不同的数据库，实现锁机制是不一样的。</p>
+<p>比如Oracle采取多版本控制（MVVC），读一致性的并发模型，支持读一致查询和非阻塞查询，有以下特性：</p>
+<ul>
+<li>只有修改才加行级锁</li>
+<li>Read绝对不会对数据加锁</li>
+<li>Writer不会阻塞Reader</li>
+<li>读写器绝对不会阻塞写入器</li>
+</ul>
+<p>这种机制让Oracle存在有时读不到正确数据的现象，因为在读取时可能会读到已提交的旧版本数据，而不像其他数据库一样选择检查时间戳和退回。</p>
+<p>此外，读不阻塞写可以极大提高数据库的吞吐能力，所以Oracle拥有散回特性。但其他数据库可能不是这样的，比如SQLite不支持非阻塞查询。</p>
+<p>此外，因为锁粒度、锁类型、事务隔离级别等不同，Oracle与其他数据库的锁机制还有很多不同。</p>
+<p>总之，我们不能简单把数据库当黑盒，否则可能会出错，比如Oracle的无阻塞设计有一个副作用，若想保证一次最多只有一个用户访问一行数据，就需要开发人员自己一些做工作。</p>
+<h2 id="T3-索引"><a href="#T3-索引" class="headerlink" title="T3 索引"></a>T3 索引</h2><h3 id="MySQL为什么不用BST，而是用B-树？"><a href="#MySQL为什么不用BST，而是用B-树？" class="headerlink" title="MySQL为什么不用BST，而是用B+树？"></a>MySQL为什么不用BST，而是用B+树？</h3><p>已知在数据库系统中，通常采用磁盘来存储索引数据，以支持对大量数据的高效查询操作。</p>
+<p>因为索引是顺序结构，可以用二分搜索树构建索引。但是当N比较大的时候，树的深度比较高。数据查询的时间主要依赖于磁盘IO的次数，二叉树深度越大，查找的次数越多，性能越差。最坏的情况是退化成了链表。即使做Tree Balancing，也比较耗时。其存储上的不连续性，也会导致存储空间的浪费。</p>
+<p>而B+树有高扇出和低高度的特性，更适合磁盘实现。</p>
+<ul>
+<li>高扇出：指在数据库索引中，每个父节点下包含的子节点数量较大，可以改善临近键的数据局限性。</li>
+<li>低高度：遍历深度小，可以减少遍历期间的寻道次数。</li>
+</ul>
+<h3 id="B-树结构"><a href="#B-树结构" class="headerlink" title="B+树结构"></a>B+树结构</h3><img src="https://spricoder.oss-cn-shanghai.aliyuncs.com/2021-Database-Development/img/lec3/1.png" alt="img" style="zoom:33%;" />
+
+<ol>
+<li><p><strong>基本结构：</strong></p>
+<ol>
+<li>一个结点是一个page</li>
+<li>B+树中的<strong>所有数据</strong>均保存在叶子结点，且根结点和内部结点均只是充当控制查找记录的媒介，并不代表数据本身，所有的内部结点元素都<strong>同时存在</strong>于子结点中。</li>
+<li>叶子节点之间通过指针链接，可以<strong>实现连续范围查找</strong>，适合范围查询和分页查找等场景。<img src="https://pic4.zhimg.com/80/v2-25c1c0b8a4ea8c300e180e3d87339bfb_1440w.webp" alt="img"></li>
+</ol>
+</li>
+<li><p><strong>使用方式：</strong></p>
+<ol>
+<li>从根节点开始，根据该节点的关键字和待查找数据键值的大小比较，决定应该搜索该节点的哪个子节点。如果关键字都相等，则可以直接在叶子节点返回查询结果。如果比较较大，则到右子树查找；如果比较较小，则到左子树查找。</li>
+<li>在选中的子节点中，重复执行第一步，直到搜索到一个叶子节点，即数据所在的节点。</li>
+<li>在叶子节点中，按照<strong>存储顺序</strong>直接查找，或在<strong>叶子节点之间的指针链接进行有序的连续范围扫描</strong>，直到找到满足条件的数据记录。<ol>
+<li>前者是排序后直接定位需要查找的记录所在的位置，后者适合连续场景。</li>
+</ol>
+</li>
+</ol>
+</li>
+<li><p><strong>使用场景：</strong></p>
+<ol>
+<li>全键值 Where x &#x3D; 123 (depth + 1次的固定次数)</li>
+<li>键值范围 Where 45 &lt; x &lt; 123 (先进行x&#x3D;45，然后顺序读取直到x&gt;&#x3D;123)</li>
+<li>键前缀查找 where x LIKE J%’</li>
+</ol>
+</li>
+</ol>
+<h3 id="结点分裂"><a href="#结点分裂" class="headerlink" title="结点分裂"></a>结点分裂</h3><p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502041347674.png" alt="image-20250204134706640"></p>
+<p>B+树自下而上构建，随着叶结点的数量增加，内部节点的数量和树的高度也增加。</p>
+<p>分裂涉及到两层：下面分裂，上面增加。移动的是中间值。</p>
+<p>叶结点分裂和非叶结点分裂的区别：因为B+树中的所有数据均保存在叶子结点，13移动到内部结点后，也同时存在于叶子结点。而非叶结点分裂时，13上升后不会出现在原有层。</p>
+<h3 id="索引访问基本表"><a href="#索引访问基本表" class="headerlink" title="索引访问基本表"></a>索引访问基本表</h3><p>先访问索引再访问基本表，索引只是查询工作的第⼀步，读取基本表中的数据才是查询的结束。</p>
+<p>同样的索引，但不同的物理结构，可能会引起查询效率的千差万别：</p>
+<ul>
+<li>磁盘访问的速率</li>
+<li>物理I&#x2F;O很可能是内存访问</li>
+<li>记录存储</li>
+</ul>
+<h4 id="主键索引"><a href="#主键索引" class="headerlink" title="主键索引"></a>主键索引</h4><p>主键索引肯定存在，和基本表有对应关系：如文件偏移量对应，记录的是该记录在文件中偏移的字节数       <img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502041339158.png" alt="image-20230411171045571"></p>
+<h4 id="二级索引"><a href="#二级索引" class="headerlink" title="二级索引"></a>二级索引</h4><p>二级索引是非主键的其他键值构建的索引，有两种构建方法：</p>
+<ol>
+<li>直接指向主数据文件<ol>
+<li>优点：访问快，直接</li>
+<li>缺点：物理组织更新时两边都要处理（2次写）</li>
+</ol>
+</li>
+<li>指向主键索引，间接访问主数据文件（可以用文件偏移量对应）<ol>
+<li>优点：物理组织更新只需要改主键索引，二级索引会随着主键索引的更新而更新，因为不直接对应偏移量</li>
+<li>缺点：多了一次I&#x2F;O，因为每次读都要经过主键索引</li>
+</ol>
+</li>
+</ol>
+<p>不同数据库选择不同，如MySQL选第二种。</p>
+<h2 id="T4-物理组织形式"><a href="#T4-物理组织形式" class="headerlink" title="T4 物理组织形式"></a>T4 物理组织形式</h2><h3 id="原始"><a href="#原始" class="headerlink" title="原始"></a>原始</h3><p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502041339350.png" alt="image-20230411191517919"></p>
+<p>在数据库中，通常将存储空间划分为多个page，每个page包含多个数据块，数据块中包含多个三元组，其中每个三元组对应一个数据项：</p>
+<ul>
+<li><p>关键字（Key）：唯一标识每个数据项；</p>
+</li>
+<li><p>相关值（Value）：与关键字对应的具体数据信息；</p>
+</li>
+<li><p>指针（Pointer）：指向与当前数据项相关的数据块或其他地址信息。</p>
+</li>
+</ul>
+<p>在数据的读写过程中，通过k找到对应的v和p，从而实现数据的定位和操作。</p>
+<p>优点：</p>
+<ul>
+<li>记录<strong>定长</strong>数据</li>
+<li>实现灵活存储和快速检索数据，提高数据管理的效率。</li>
+</ul>
+<p>缺点：</p>
+<ol>
+<li>除非最右侧插入数据，否则需要移动前面的数据</li>
+<li>无法有效管理变长的字段</li>
+</ol>
+<h3 id="分槽页"><a href="#分槽页" class="headerlink" title="分槽页"></a><strong>分槽页</strong></h3><p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502041347880.png" alt="image-20250204134745803"></p>
+<ul>
+<li>header：包括页码、记录的数量和页的其他一些元信息</li>
+<li>pointer：指向下一个空闲槽的指针</li>
+<li>cells：存储实际记录的槽</li>
+</ul>
+<h4 id="需要满足的需求"><a href="#需要满足的需求" class="headerlink" title="需要满足的需求"></a><strong>需要满足的需求</strong></h4><ul>
+<li>最小开销的变长存储需求 </li>
+<li>回收已删除记录的空间 </li>
+<li>引用页中的记录，无论它在哪</li>
+</ul>
+<h4 id="好处"><a href="#好处" class="headerlink" title="好处"></a>好处</h4><ul>
+<li><p>可以根据指针快速查找到记录的位置；</p>
+</li>
+<li><p><strong>两边可以伸缩</strong></p>
+</li>
+<li><p>最小开销：唯一额外开销是一个指针数组，用于保存记录实际所在位置偏移量</p>
+</li>
+<li><p>空间回收：通过对页进行碎片整理和重写，可以回收空间</p>
+</li>
+<li><p>动态布局：从页外部只能通过槽ID引用槽，确切位置由页内部决定</p>
+</li>
+</ul>
+<h4 id="更新情况"><a href="#更新情况" class="headerlink" title="更新情况"></a>更新情况</h4><ul>
+<li>只重排指针</li>
+<li>记录从后往前放</li>
+</ul>
+<h4 id="迁移情况：溢出、两边迁移怎么办"><a href="#迁移情况：溢出、两边迁移怎么办" class="headerlink" title="迁移情况：溢出、两边迁移怎么办"></a>迁移情况：溢出、两边迁移怎么办</h4><p>当第一次数据溢出迁移时，系统会将数据存储到其他的块或页中，但是由于系</p>
+<p>统自身的机制，可能会出现数据<strong>不平均地分布</strong>在多个块或页中的情况。</p>
+<p>后面再需要进行迁移时，系统会将两端的无效数据都删除掉，只保留有效数</p>
+<p>据，然后将数据存储到新的块或页（溢出页）中。</p>
+<p><strong>区别</strong></p>
+<p>行迁移是原来的页中还会存一部分的数据和指针，而行溢出是原来的页只存指</p>
+<p>针。（优先进行行迁移）</p>
+<p><strong>为什么同一个分槽页中行迁移只会发生一次</strong></p>
+<p>由于数据页中的数据是按照<strong>主键值</strong>排序的，因此当某个数据行被迁移时，会导致该数据页中的其他数据行的位置发生改变。</p>
+<p>因此多次数据迁移操作可能会导致数据页中的数据行位置变得十分混乱，甚至可能会影响查询性能。</p>
+<p>所以如果之后的超额数据都将存储在溢出页中，可以减少数据行位置变化的次数，提高查询性能。</p>
+<h4 id="freeblock"><a href="#freeblock" class="headerlink" title="freeblock"></a>freeblock</h4><ol>
+<li>为什么要有freeblock？避免更多可能出现的行迁移。留一块空白，update就可以在本页中直接操作</li>
+<li>遵循70%&#x2F;30%原则，即留出30%空白</li>
+</ol>
+<h4 id="管理版本"><a href="#管理版本" class="headerlink" title="管理版本"></a>管理版本</h4><ol>
+<li>在文件名中加入版本前缀</li>
+<li>版本使用专门文件存储，PostgreSQL将版本存在PG_VERSION</li>
+<li>直接存在每⼀个具体文件（索引）的头部，头部按照不变格式编码</li>
+</ol>
+<h4 id="映射校验"><a href="#映射校验" class="headerlink" title="映射校验"></a>映射校验</h4><p>映射校验通常用于大规模数据的验证。</p>
+<p>映射校验将数据划分为多个任务，然后在每个任务内部通过计算生成<strong>本地校验</strong></p>
+<p><strong>和</strong>（Local Checksum）。最后，在一个Reduce节点上将所有本地校验和进行</p>
+<p>合并计算，以生成最终的<strong>全局校验和</strong>。</p>
+<p>分槽页一定要有校验，一页存一个校验和。这样可以尽早识别磁盘文件问题，避免传播到其他子系统和节点。</p>
+<p>XOR和CRC是常见的计算校验和方法：</p>
+<ul>
+<li>XOR：简单快速，对每个字节做异或运算</li>
+<li>CRC循环冗余校验：检测连续比特位的损坏</li>
+</ul>
+<h2 id="T5-6-sql"><a href="#T5-6-sql" class="headerlink" title="T5&#x2F;6 sql"></a>T5&#x2F;6 sql</h2><h3 id="船只租赁"><a href="#船只租赁" class="headerlink" title="船只租赁"></a>船只租赁</h3><p>设有一个船员租赁船只系统，表结构如下：</p>
+<p>有<code>sailors</code>表，</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">+--------------+---------+</span><br><span class="line">| Column Name  | Type    |</span><br><span class="line">+--------------+---------+</span><br><span class="line">|  sid         | int     |</span><br><span class="line">|  sname       | varchar |</span><br><span class="line">|  rating      | int     |</span><br><span class="line">|  age         | int     |</span><br><span class="line">+--------------+---------+</span><br><span class="line">sid为该表主键。</span><br><span class="line">该表包含船员的编号，姓名，等级和年龄</span><br></pre></td></tr></table></figure>
+
+<p>有<code>boats</code>表，</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">+--------------+---------+</span><br><span class="line">| Column Name  | Type    |</span><br><span class="line">+--------------+---------+</span><br><span class="line">|  bid         | int     |</span><br><span class="line">|  bname       | varchar |</span><br><span class="line">|  color       | varchar |</span><br><span class="line">+--------------+---------+</span><br><span class="line">bid为该表主键。</span><br><span class="line">该表包含船只编号，船只名称和船只颜色</span><br></pre></td></tr></table></figure>
+
+<p>有<code>reserves</code>表，</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">+---------------+---------+</span><br><span class="line">| Column Name   | Type    |</span><br><span class="line">+---------------+---------+</span><br><span class="line">|  sid          | int     |</span><br><span class="line">|  bid          | int     |</span><br><span class="line">|  reserve_date | date    |</span><br><span class="line">+---------------+---------+</span><br><span class="line">(sid,bid)为该表主键。</span><br><span class="line">该表包含船员编号，船员预定的船只编号，船员预定船只的日期</span><br></pre></td></tr></table></figure>
+
+<ol>
+<li><p>编写一个sql语句，找出年龄在35以上的并且在2020-09-01至2020-09-30期间没有预定红色（RED）船只的水手，结果返回水手姓名sname。</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> sailors.sname <span class="keyword">from</span> sailors </span><br><span class="line"><span class="keyword">where</span> sailors.age <span class="operator">&gt;</span> <span class="number">35</span> <span class="keyword">and</span> sailors.sid <span class="keyword">not</span> <span class="keyword">in</span> (</span><br><span class="line">  <span class="keyword">select</span> reserves.sid <span class="keyword">from</span> reserves, boats </span><br><span class="line">  <span class="keyword">where</span> reserves.bid <span class="operator">=</span> boats.bid <span class="keyword">and</span> boats.color <span class="operator">=</span> <span class="string">&#x27;RED&#x27;</span> <span class="keyword">and</span> </span><br><span class="line">  reserves.reserve_date <span class="keyword">between</span> <span class="string">&#x27;2020-09-01&#x27;</span> <span class="keyword">and</span> <span class="string">&#x27;2020-09-30&#x27;</span></span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>编写一个sql语句，找出预定了所有船的水手，结果返回水手姓名sname。</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> s.sname <span class="keyword">from</span> sailors s <span class="keyword">where</span> <span class="keyword">not</span> <span class="keyword">exists</span> (</span><br><span class="line">  <span class="keyword">select</span> <span class="operator">*</span> <span class="keyword">from</span> boats b <span class="keyword">where</span> <span class="keyword">not</span> <span class="keyword">exists</span>(</span><br><span class="line">    <span class="keyword">select</span> <span class="operator">*</span> <span class="keyword">from</span> reserves r <span class="keyword">where</span> b.bid <span class="operator">=</span> r.bid <span class="keyword">and</span> s.sid <span class="operator">=</span> r.sid</span><br><span class="line">  )</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>编写一个sql语句，找出2020-05-01至2020-05-31期间预定过绿色船（GREEN）的等级最高的水手，结果返回水手姓名sname。</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> sailors.sname <span class="keyword">from</span> sailors </span><br><span class="line"><span class="keyword">where</span> sailors.sid <span class="keyword">in</span> (</span><br><span class="line">  <span class="keyword">select</span> reserves.sid <span class="keyword">from</span> reserves, boats </span><br><span class="line">  <span class="keyword">where</span> reserves.bid <span class="operator">=</span> boats.bid <span class="keyword">and</span> boats.color <span class="operator">=</span> <span class="string">&#x27;GREEN&#x27;</span> <span class="keyword">and</span> </span><br><span class="line">  reserves.reserve_date <span class="keyword">between</span> <span class="string">&#x27;2020-05-01&#x27;</span> <span class="keyword">and</span> <span class="string">&#x27;2020-05-31&#x27;</span></span><br><span class="line">) </span><br><span class="line"><span class="keyword">and</span> sailors.rating <span class="operator">&gt;=</span> <span class="keyword">ALL</span>(</span><br><span class="line">  <span class="keyword">select</span> sailors.rating <span class="keyword">from</span> sailors <span class="keyword">where</span> sailors.sid <span class="keyword">in</span> (</span><br><span class="line">    <span class="keyword">select</span> reserves.sid <span class="keyword">from</span> reserves, boats </span><br><span class="line">    <span class="keyword">where</span> reserves.bid <span class="operator">=</span> boats.bid <span class="keyword">and</span> boats.color <span class="operator">=</span> <span class="string">&#x27;GREEN&#x27;</span> <span class="keyword">and</span> </span><br><span class="line">    reserves.reserve_date <span class="keyword">between</span> <span class="string">&#x27;2020-05-01&#x27;</span> <span class="keyword">and</span> <span class="string">&#x27;2020-05-31&#x27;</span></span><br><span class="line">  )</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>编写一个sql语句，找出年龄在35岁以上，并且在2020-08-01至2020-08-31期间同时预定了红色船（RED）和绿色船（GREEN）的水手，结果返回水手姓名sname。</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> sailors.sname <span class="keyword">from</span> sailors </span><br><span class="line"><span class="keyword">where</span> sailors.age <span class="operator">&gt;</span> <span class="number">35</span> <span class="keyword">and</span> sailors.sid <span class="keyword">in</span> (</span><br><span class="line">  <span class="keyword">select</span> r.sid <span class="keyword">from</span> reserves r, boats b</span><br><span class="line">  <span class="keyword">where</span> r.bid <span class="operator">=</span> b.bid <span class="keyword">and</span> b.color <span class="operator">=</span> <span class="string">&#x27;GREEN&#x27;</span> <span class="keyword">and</span> </span><br><span class="line">  r.reserve_date <span class="keyword">between</span> <span class="string">&#x27;2020-08-01&#x27;</span> <span class="keyword">and</span> <span class="string">&#x27;2020-08-31&#x27;</span></span><br><span class="line">) <span class="keyword">and</span> sailors.sid <span class="keyword">in</span> (</span><br><span class="line">  <span class="keyword">select</span> r.sid <span class="keyword">from</span> reserves r, boats b</span><br><span class="line">  <span class="keyword">where</span> r.bid <span class="operator">=</span> b.bid <span class="keyword">and</span> b.color <span class="operator">=</span> <span class="string">&#x27;RED&#x27;</span> <span class="keyword">and</span> </span><br><span class="line">  r.reserve_date <span class="keyword">between</span> <span class="string">&#x27;2020-08-01&#x27;</span> <span class="keyword">and</span> <span class="string">&#x27;2020-08-31&#x27;</span></span><br><span class="line">)</span><br></pre></td></tr></table></figure></li>
+</ol>
+<h3 id="比昨天温度高"><a href="#比昨天温度高" class="headerlink" title="比昨天温度高"></a>比昨天温度高</h3><p>表 Weather</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">+---------------+---------+</span><br><span class="line">| Column Name   | Type    |</span><br><span class="line">+---------------+---------+</span><br><span class="line">| id            | int     |</span><br><span class="line">| recordDate    | date    |</span><br><span class="line">| temperature   | int     |</span><br><span class="line">+---------------+---------+</span><br></pre></td></tr></table></figure>
+
+<p>id 是这个表的主键</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> tod.`Id` <span class="keyword">AS</span> Id</span><br><span class="line"><span class="keyword">FROM</span> Weather yes</span><br><span class="line"><span class="keyword">JOIN</span> Weather tod</span><br><span class="line"><span class="keyword">ON</span> DATEDIFF(tod.`RecordDate`, yes.`RecordDate`) <span class="operator">=</span> <span class="number">1</span></span><br><span class="line"><span class="keyword">WHERE</span> tod.`Temperature` <span class="operator">&gt;</span> yes.`Temperature` </span><br></pre></td></tr></table></figure>
+
+<h3 id="平均值、中位数、replace"><a href="#平均值、中位数、replace" class="headerlink" title="平均值、中位数、replace"></a>平均值、中位数、replace</h3><ol>
+<li>删除不想要的字符：replace</li>
+</ol>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">UPDATE</span> tbl_name </span><br><span class="line"><span class="keyword">SET</span> </span><br><span class="line">    field_name <span class="operator">=</span> REPLACE(field_name, string_to_find, string_to_replace)</span><br><span class="line"><span class="keyword">WHERE</span></span><br><span class="line">    conditions;</span><br><span class="line">    </span><br><span class="line"><span class="keyword">UPDATE</span> products <span class="comment">--表名</span></span><br><span class="line"><span class="keyword">SET</span> </span><br><span class="line">    productDescription <span class="operator">=</span> REPLACE(productDescription, <span class="string">&#x27;abuot&#x27;</span>, <span class="string">&#x27;about&#x27;</span>);  <span class="comment">--列名</span></span><br></pre></td></tr></table></figure>
+
+<p>查询查找所有出现的拼写错误词：<code>abuot</code>，并通过<code>products</code>表的<code>productDescription</code>列中使用正确单词将其替换</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502041339321.png" alt="image-20230411233433132"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502041339304.png" alt="image-20230411233530498"></p>
+<ol start="2">
+<li>计算平均值，最大最小值</li>
+</ol>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502041339264.png" alt="image-20230411232834102"></p>
+<p>coalesce(num,0) &#x2F;&#x2F; 去除null</p>
+<ol start="3">
+<li>计算中位数</li>
+</ol>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502041339291.png" alt="image-20230411234600388"></p>
+<ol start="4">
+<li>计算众数</li>
+</ol>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502041339341.png" alt="image-20230411235007016"></p>
+<p>count(*)包括了所有的列，相当于行数，不会忽略列值为NULL</p>
+<p>count(列名)只包括列名那一列，在统计结果的时候，会忽略列值为空</p>
+<h2 id="T7-BOM问题"><a href="#T7-BOM问题" class="headerlink" title="T7 BOM问题"></a>T7 BOM问题</h2><h3 id="存储简单树"><a href="#存储简单树" class="headerlink" title="存储简单树"></a>存储简单树</h3><p>简单树：单一结点只有一个父节点</p>
+<ul>
+<li>邻接模型：父节点id作为子节点id的一个<strong>属性</strong></li>
+<li>物化路径：把树中的每个节点和它在树中的<strong>描述数据</strong>相结合（描述数据是从根节点到直接父节点的串联序列，类似1 -&gt;1.1-&gt;1.1.1)</li>
+<li>嵌套集合模型：每个节点被赋予一对数字，其中父节点的两个数字包含其所有节点的左右数字，然后一层一层这样包含下去。<img src="https://pic3.zhimg.com/80/v2-8ef7105a7cc1cf017ba7aa5420ca9ef6_1440w.webp" alt="img"></li>
+<li>嵌套间隔模型：以两个数字为特定节点的路径编码，这个数字被解释成有理数的分子和分母（不常用，可以忽略）</li>
+</ul>
+<h3 id="存储多父节点的树"><a href="#存储多父节点的树" class="headerlink" title="存储多父节点的树"></a>存储多父节点的树</h3><p>BOM：单一结点可能有多个父节点。</p>
+<p>一定通过多表，一张表存不了。一个表存内容，一个表存关系。</p>
+<p>如下图Components存内容，Composition存关系。</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502041348668.png" alt="image-20250204134819585"></p>
+<p>以邻接表模型为例：使用两个表来存储多父节点的树：</p>
+<ul>
+<li>存储节点的信息的表：记录节点的各种属性。</li>
+<li>存储父子关系的表：记录节点间的父子关系。<ul>
+<li>增加一个额外的字段，用于存储每个父子关系在多父树中的顺序。</li>
+</ul>
+</li>
+</ul>
+<p>Node表：</p>
+<p>| id | value | … |</p>
+<p>Relationship表：</p>
+<p>| id | parent_id | child_id | order |</p>
+<h3 id="计算百分比"><a href="#计算百分比" class="headerlink" title="计算百分比"></a>计算百分比</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">--先查询初始成分的占比，再对其他部分计算实际占比</span></span><br><span class="line"><span class="keyword">with</span> recursive_composition(actual_pct, component_id)</span><br><span class="line"><span class="keyword">as</span> (<span class="keyword">select</span> a.pct, a.component_id</span><br><span class="line"><span class="keyword">from</span> composition a, components b</span><br><span class="line"><span class="keyword">where</span> b.component_id <span class="operator">=</span> a.recipe_id</span><br><span class="line"><span class="keyword">and</span> b.component_name <span class="operator">=</span> <span class="string">&#x27;Philter #5&#x27;</span></span><br><span class="line"><span class="keyword">union</span> <span class="keyword">all</span></span><br><span class="line"><span class="keyword">select</span> parent.pct <span class="operator">*</span> child.pct, child.component_id</span><br><span class="line"><span class="keyword">from</span> recursive_composition parent, composition child</span><br><span class="line"><span class="keyword">where</span> child.recipe_id <span class="operator">=</span> parent.component_id)</span><br><span class="line"></span><br><span class="line"><span class="comment">--主查询，去重</span></span><br><span class="line"><span class="keyword">select</span> x.component_name, <span class="built_in">sum</span>(y.actual_pct)</span><br><span class="line"><span class="keyword">from</span> recursive_composition y, components x</span><br><span class="line"><span class="keyword">where</span> x.component_id <span class="operator">=</span> y.component_id</span><br><span class="line"><span class="keyword">and</span> x.component_type <span class="operator">=</span> <span class="string">&#x27;I&#x27;</span></span><br><span class="line"><span class="keyword">group</span> <span class="keyword">by</span> x.component_name</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="附加题-回忆一下上课时听到的感兴趣的知识点？"><a href="#附加题-回忆一下上课时听到的感兴趣的知识点？" class="headerlink" title="附加题 回忆一下上课时听到的感兴趣的知识点？"></a>附加题 回忆一下上课时听到的感兴趣的知识点？</h2><p>我对函数索引中<code>where f(indexed_col)=&#39;some value&#39;</code>这样的检索条件会使索引无法发挥作用感兴趣。</p>
+<p>老师上课以日期函数为例，说第一种写法会导致 MySQL 无法使用 <code>order_date</code> 上的索引，因为需要对每一行记录执行 <code>DATE_FORMAT</code> 函数，这个过程无法利用索引。</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="built_in">COUNT</span>(<span class="operator">*</span>) <span class="keyword">FROM</span> orders <span class="keyword">WHERE</span> DATE_FORMAT(order_date, <span class="string">&#x27;%Y-%m-%d&#x27;</span>) <span class="operator">=</span> <span class="string">&#x27;2023-03-08&#x27;</span>;</span><br><span class="line"><span class="keyword">SELECT</span> <span class="built_in">COUNT</span>(<span class="operator">*</span>) <span class="keyword">FROM</span> orders <span class="keyword">WHERE</span> order_date <span class="operator">&gt;=</span> <span class="string">&#x27;2023-03-08 00:00:00&#x27;</span> <span class="keyword">AND</span> order_date <span class="operator">&lt;=</span> <span class="string">&#x27;2023-03-08 23:59:59&#x27;</span>;</span><br></pre></td></tr></table></figure>
+
+<p>隐式类型转换因为触发了CAST函数，也无法发挥作用。因此应该尽量避免在<strong>查询条件或者查询字段</strong>中使用函数，以便能够充分利用索引提高查询性能。</p>
+<p>我好奇背后的原因，通过课下学习，发现B+ 树提供的这个快速定位能力，来源于同一层兄弟节点的有序性。而运行函数后的值会被修改或者变形，可能与实际存储在B+树中的原始值不同。比如假设树的第一层数据是<code>2018-1-1,2019-9-1,2020-7-1</code>，对每个值执行<code>month()</code>函数，得到的值<code>(1,9,7)</code>，破坏了有序的前提。</p>
+<p>mysql中规定只要对索引字段使用函数操作（无论是否破坏了了有序性），就放弃走树搜索功能，所以效率降低。</p>
+
+        </div>
+
+        
+            <section class="post-copyright">
+                
+                
+                
+                
+
+            </section>
+        
+        <section class="post-tags">
+            <div>
+                <span>标签:</span>
+                <span class="tag">
+                    
+                    
+                        <a href="/tags/%E8%AF%BE%E7%A8%8B/"># 课程</a>
+                    
+                        
+                </span>
+            </div>
+            <div>
+                <a href="javascript:window.history.back();">返回</a>
+                <span>· </span>
+                <a href="/">主页</a>
+            </div>
+        </section>
+        <section class="post-nav">
+            
+                <a class="prev" rel="prev" href="/2023/07/01/2023%E6%98%A5%E5%AD%A3%E3%80%8A%E6%9C%8D%E5%8A%A1%E7%AB%AF%E5%BC%80%E5%8F%91%E3%80%8B%E8%AF%BE%E7%A8%8B%E7%AC%94%E8%AE%B0/">2023春季《服务端开发》课程笔记</a>
+            
+            
+            <a class="next" rel="next" href="/2023/01/14/2022%E7%A7%8B%E5%AD%A3%E3%80%8A%E9%9C%80%E6%B1%82%E4%B8%8E%E5%95%86%E4%B8%9A%E6%A8%A1%E5%BC%8F%E3%80%8B%E8%AF%BE%E7%A8%8B%E7%AC%94%E8%AE%B0/">2022秋季《需求与商业模式》课程笔记</a>
+            
+        </section>
+
+
+    </article>
+</div>
+
+
+    <div id="gitalk-container"></div>
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.css">
+<script src="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.min.js"></script>
+<script src="//cdn.bootcss.com/blueimp-md5/2.10.0/js/md5.js"></script>
+<div id="gitalk-container"></div>
+<script type="text/javascript">
+      var gitalk = new Gitalk({
+        clientID: '',
+        clientSecret: '',
+        repo: 'blog_comment',
+        owner: 'lyxx2535',
+        admin: 'lyxx2535',
+        id: md5(location.pathname),
+        labels: 'Gitalk'.split(',').filter(l => l),
+        perPage: 10,
+        pagerDirection: 'last',
+        createIssueManually: true,
+        distractionFreeMode: false
+      })
+      gitalk.render('gitalk-container')
+</script>
+
+            </div>
+            <footer id="footer" class="footer">
+    <div class="copyright">
+        <span>© Annie | Powered by <a href="https://hexo.io" target="_blank">Hexo</a> & <a href="https://github.com/Siricee/hexo-theme-Chic" target="_blank">Chic</a> | 2020 - 2025
+            <br>
+            <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+<span class="site-uv">
+    Total visitors:
+    <i class="busuanzi-value" id="busuanzi_value_site_uv"></i>
+</span>&nbsp;|&nbsp;
+
+
+<span class="site-pv">
+    Total views:
+    <i class="busuanzi-value" id="busuanzi_value_site_pv"></i>
+</span>
+
+          </span>
+    </div>
+</footer>
+
+    </div>
+</body>
+
+</html>
