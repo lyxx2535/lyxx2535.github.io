@@ -1,0 +1,1317 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <meta name="author" content="Annie">
+
+
+
+
+
+<title>2022秋季《需求与商业模式》课程笔记 | Annie&#39;s Blog</title>
+
+
+
+    <link rel="icon" href="/favicon.ico">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+    <script src="/js/tocbot.min.js"></script>
+    
+
+
+
+    
+    
+        
+    
+
+
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+<body>
+    <script>
+        // this function is used to check current theme before page loaded.
+        (() => {
+            const currentTheme = window.localStorage && window.localStorage.getItem('theme') || '';
+            const isDark = currentTheme === 'dark';
+            const pagebody = document.getElementsByTagName('body')[0]
+            if (isDark) {
+                pagebody.classList.add('dark-theme');
+                // mobile
+                document.getElementById("mobile-toggle-theme").innerText = "· Dark"
+            } else {
+                pagebody.classList.remove('dark-theme');
+                // mobile
+                document.getElementById("mobile-toggle-theme").innerText = "· Light"
+            }
+        })();
+    </script>
+
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">Annie&#39;s Blog</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default">
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+        </div>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">Annie&#39;s Blog</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; 菜单</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+            <div class="main">
+                <div class="container">
+    
+    
+        <div class="post-toc">
+    <div class="tocbot-list">
+    </div>
+    <div class="tocbot-list-menu">
+        <a class="tocbot-toc-expand" onclick="expand_toc()">全部展开</a>
+        <a onclick="go_top()">回到顶部</a>
+        <a onclick="go_bottom()">前往底部</a>
+    </div>
+</div>
+
+<script>
+    var tocbot_timer;
+    var DEPTH_MAX = 6; // 为 6 时展开所有
+    var tocbot_default_config = {
+        tocSelector: '.tocbot-list',
+        contentSelector: '.post-content',
+        headingSelector: 'h1, h2, h3, h4, h5',
+        orderedList: false,
+        scrollSmooth: true,
+        onClick: extend_click,
+    };
+
+    function extend_click() {
+        clearTimeout(tocbot_timer);
+        tocbot_timer = setTimeout(function() {
+            tocbot.refresh(obj_merge(tocbot_default_config, {
+                hasInnerContainers: true
+            }));
+        }, 420); // 这个值是由 tocbot 源码里定义的 scrollSmoothDuration 得来的
+    }
+
+    document.ready(function() {
+        tocbot.init(obj_merge(tocbot_default_config, {
+            collapseDepth: 1
+        }));
+    });
+
+    function expand_toc() {
+        var b = document.querySelector('.tocbot-toc-expand');
+        var expanded = b.getAttribute('data-expanded');
+        expanded ? b.removeAttribute('data-expanded') : b.setAttribute('data-expanded', true);
+        tocbot.refresh(obj_merge(tocbot_default_config, {
+            collapseDepth: expanded ? 1 : DEPTH_MAX
+        }));
+        b.innerText = expanded ? 'Expand all' : 'Collapse all';
+    }
+
+    function go_top() {
+        window.scrollTo(0, 0);
+    }
+
+    function go_bottom() {
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+
+    function obj_merge(target, source) {
+        for (var item in source) {
+            if (source.hasOwnProperty(item)) {
+                target[item] = source[item];
+            }
+        }
+        return target;
+    }
+</script>
+    
+
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">2022秋季《需求与商业模式》课程笔记</h1>
+            
+                <div class="post-meta">
+                    
+                        作者: <a itemprop="author" rel="author" href="/">Annie</a>
+                    
+
+                    
+                        <span class="post-time">
+                        日期: <a href="#">January 14, 2023&nbsp;&nbsp;10:51:05</a>
+                        </span>
+                    
+                    
+                        <span class="post-category">
+                        分类:
+                            
+                                <a href="/categories/%E6%9C%AC%E7%A7%91%E7%94%9F%E8%AF%BE%E7%A8%8B/">本科生课程</a>
+                            
+                        </span>
+                    
+                </div>
+            
+        </header>
+
+        <div class="post-content">
+            <h1 id="商业模式部分"><a href="#商业模式部分" class="headerlink" title="商业模式部分"></a>商业模式部分</h1><p><a target="_blank" rel="noopener" href="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230210202517490.png"><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230210202517490.png" alt="image-20230210202517490"></a></p>
+<h2 id="1-商业模式画布绘制-需求类型-20分"><a href="#1-商业模式画布绘制-需求类型-20分" class="headerlink" title="1. 商业模式画布绘制+需求类型(20分)"></a>1. 商业模式画布绘制+需求类型(20分)</h2><h3 id="商业模式画布"><a href="#商业模式画布" class="headerlink" title="商业模式画布"></a>商业模式画布</h3><p><a target="_blank" rel="noopener" href="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230211101538231.png"><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230211101538231.png" alt="image-20230211101538231"></a></p>
+<ol>
+<li>客户细分：<ul>
+<li>目标人群、取舍与细分</li>
+<li>细分条件：新供给、新分销、新模型、利润率不同、特殊改进</li>
+<li>群体划分：大众市场、小众市场、求同存异的客户群体、多元化的客户群体、多边平台（<strong>强调客户自己吸引客户，即多边关系</strong>）</li>
+</ul>
+</li>
+<li>价值主张：<ul>
+<li>有价值的产品和服务（具有<strong>排他性</strong>）</li>
+<li>让事情更简单（价格、缩减成本、便利性）、更复杂（定制、设计、品牌地位、可获得性）、更透明（风险控制、一站式服务）</li>
+<li>有益于客户价值创造的因素：创新、性能、定制、保姆式服务、设计、品牌&#x2F;地位、价格、缩减成本、风险控制、可获得性、便利性&#x2F;实用性</li>
+</ul>
+</li>
+<li>渠道通路：<ul>
+<li>价值主张通过沟通、分发以及销售渠道传给客户（渠道通路连接客户与价值）</li>
+<li>五大渠道阶段：知名度-评价-购买-传递-售后**(背！！)**</li>
+<li>自身强渠道、合作方渠道、混用**(背！！)**</li>
+</ul>
+</li>
+<li>客户关系：<ul>
+<li>以客户群为单位建立</li>
+<li>驱动驱动的动机（提升客户<strong>质量</strong>）<ul>
+<li>量-开发新的客户</li>
+<li>量-留住原有的客户</li>
+<li>质-增加销售量</li>
+</ul>
+</li>
+<li>客户关系类型：<ul>
+<li>成本导向（自助服务、自动化服务）</li>
+<li>价值导向（私人服务、专属私人服务、客户共同创造）</li>
+<li>兼顾（社区）</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>收入来源：<ul>
+<li>用户真正愿意付费的点（定价机制：<strong>固定价格\浮动价格</strong>）</li>
+<li>收入来源<ul>
+<li>资产销售</li>
+<li>使用费</li>
+<li>会员费</li>
+<li>租赁</li>
+<li>许可使用费</li>
+<li>经纪人佣金</li>
+<li>广告费用</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>核心资源：<ul>
+<li>保证<strong>价值主张</strong>运行的最重要资产(品牌也算)</li>
+<li>核心资源<ul>
+<li>实物资源（固定资产、分销渠道）</li>
+<li>知识性资源(产权、品牌、专利)</li>
+<li>人力资源</li>
+<li>金融资源（内部租赁平台、外部资本融资）</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>关键业务：<ul>
+<li>保障其商业模式正常运行所需做的最重要的事情</li>
+<li>关键业务类型<ul>
+<li>生产：包括分销</li>
+<li>解决方案</li>
+<li>平台&#x2F;网络：纯润滑</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>重要合作：<ul>
+<li>供应商和合作伙伴网络</li>
+<li>分类<ul>
+<li>非竞争者的战略联盟</li>
+<li>竞争者的战略联盟(合作&#x2F;<strong>多见垄断</strong>)</li>
+<li>为新业务建立合资公司</li>
+<li>为可靠供应商建立供应商和采购商关系</li>
+</ul>
+</li>
+<li>动机（依旧是质量）<ul>
+<li>优化以及规模效应</li>
+<li>降低风险和不确定性</li>
+<li>特殊资源及活动的获得</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>成本结构：<ul>
+<li>固定成本（包括固定工资、租金）</li>
+<li>可变成本（加班费、水电、广告推广）</li>
+<li>规模经济（大宗采购、大规模生产）</li>
+<li>范围经济（渠道复用）</li>
+</ul>
+</li>
+</ol>
+<h3 id="需求类型"><a href="#需求类型" class="headerlink" title="需求类型"></a>需求类型</h3><p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502041318291.png" alt="image-20230216134243515"></p>
+<p><strong>需求的层次性</strong></p>
+<ul>
+<li>业务需求：解决方案与系统特性<ul>
+<li>在系统使用3个月后，销售人员工作效率提高50%</li>
+</ul>
+</li>
+<li>用户需求：问题域知识<ul>
+<li>xx用户可以使用系统完成xx任务</li>
+</ul>
+</li>
+<li>系统级需求：系统工程的需求，用户对系统行为的期望</li>
+</ul>
+<p><strong>需求的分类</strong></p>
+<ul>
+<li>软件需求<ul>
+<li>功能需求：内容最多、最为复杂</li>
+<li>性能需求：速度、容量、吞吐量、负载、实时性等<img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502041318194.png" alt="image-20230216150105111"></li>
+<li>质量属性：可靠性、可用性、安全性、可维护性、易用性<img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502041318273.png" alt="image-20230216150139950"><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502041318277.png" alt="image-20230216150118290"></li>
+<li>对外接口：硬件、软件、数据库接口、用户界面、通信接口</li>
+<li>约束：限制开发人员设计和构建系统时的选择范围<ul>
+<li>系统开发及运行的环境</li>
+<li>问题域内的相关标准：法律法规等</li>
+<li>商业规则：如反垄断法</li>
+<li>社会性因素</li>
+</ul>
+</li>
+<li>其他需求：安装需求、培训需求、数据需求（功能需求没有描述的补充）</li>
+</ul>
+</li>
+</ul>
+<h2 id="2-商业模式类型讨论-10分"><a href="#2-商业模式类型讨论-10分" class="headerlink" title="2. 商业模式类型讨论(10分)"></a>2. 商业模式类型讨论(10分)</h2><p><a target="_blank" rel="noopener" href="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230211232143142.png"><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230211232143142.png" alt="image-20230211232143142"></a></p>
+<h3 id="分拆商业模式（Unbundled）"><a href="#分拆商业模式（Unbundled）" class="headerlink" title="分拆商业模式（Unbundled）"></a>分拆商业模式（Unbundled）</h3><p>企业内部存在三类规则：经济、竞争与文化，由此可以区分三种活动</p>
+<ol>
+<li>客户关系管理</li>
+<li>新产品开发</li>
+<li>基础设施管理</li>
+</ol>
+<p>三种活动对应三种价值信条：亲近顾客、产品领先、运营卓越<img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502041318260.png" alt="image-202112301954085 19"></p>
+<p>三类活动驱动因素不同，彼此之间冲突，企业内部消长，可<strong>以分拆</strong>为独立且互补的三部分</p>
+<h3 id="开放式的商业模式（Open）"><a href="#开放式的商业模式（Open）" class="headerlink" title="开放式的商业模式（Open）"></a>开放式的商业模式（Open）</h3><p>系统性与外部伙伴合作，企业的研发流程对外敞开</p>
+<ol>
+<li>“由外到内”：将外部的<strong>理念、技术或知识产权</strong>引入内部</li>
+<li>“由内到外”：将内部的<strong>知识产权或技术</strong>，特别是闲置资产向外出售</li>
+<li>可能有的人才合作：连接器将<strong>搜索答案的人</strong>（企业）和<strong>解决问题的人</strong>（科学家）连接（以多边平台为基础，降低搜索成本）</li>
+</ol>
+<h3 id="长尾商业模式（Long-tail）"><a href="#长尾商业模式（Long-tail）" class="headerlink" title="长尾商业模式（Long-tail）"></a>长尾商业模式（Long-tail）</h3><p>提供相当多种类的小众产品，每类卖出量相对很少，但汇总的销售收入可以与传统模式销售媲美</p>
+<p>在高效的互联网渠道加持下，专注某领域的部分单品销售也能构成长尾</p>
+<p>二八定律，图书、乐高、联名、网飞</p>
+<p>实际方式：</p>
+<ol>
+<li>小众商品的累加：销售多种类产品，每种销量都较小</li>
+<li>热销商品+多样非热销商品</li>
+<li>需要同时找到小众客户与小众产品的提供者</li>
+<li><strong>依赖多边平台连接小众客户与产品</strong>（如lulu.com）</li>
+<li>收入来源多样化</li>
+</ol>
+<p>出现的原因：</p>
+<ol>
+<li>生产工具的普及</li>
+<li>销售渠道的普及</li>
+<li>连接供需双方的搜索成本降低</li>
+</ol>
+<h3 id="多边商业模式（Multisided）"><a href="#多边商业模式（Multisided）" class="headerlink" title="多边商业模式（Multisided）"></a>多边商业模式（Multisided）</h3><p><strong>将两个或更多独立但相互依存</strong>的客户群体连接到一起。</p>
+<ul>
+<li>平台对于其中某一客户群体的价值：<strong>其它群体的存在</strong></li>
+<li>平台通过促进不同群体之间的互动而创造价值</li>
+<li>一个多边平台的价值提升在于它所吸引的用户数量的增加</li>
+</ul>
+<p>内容：</p>
+<ol>
+<li>价值主张：吸引用户、群体配对、平台交易降低成本<ul>
+<li>平台对某一群体的价值可能是<strong>其他群体的存在</strong></li>
+</ul>
+</li>
+<li><strong>核心资源是平台本身</strong></li>
+<li>关键业务：平台管理\服务实现\平台升级</li>
+<li>成本结构：<strong>平台管理及开发</strong>以及<strong>可能的对用户补贴</strong></li>
+<li>运营核心是贴补<strong>正确</strong>的客户群(先吸引某一个群体加入平台，明确群体加入平台的目的。)</li>
+<li>困难：先有鸡还是先有蛋：多边平台众多的“边”中，哪一“边”是需要给予补贴的，如何用合适的价格吸引</li>
+</ol>
+<h3 id="免费商业模式（Free）"><a href="#免费商业模式（Free）" class="headerlink" title="免费商业模式（Free）"></a>免费商业模式（Free）</h3><p>在免费商业模式，至少有一个关键的客户群体是可以持续免费地享受服务。</p>
+<p>三种：</p>
+<ol>
+<li>广告商业模式（好产品+高流量）	<ul>
+<li>好的产品和服务以及高流量会吸引广告商，进而补贴产品和服务</li>
+<li>成本：平台费用、客户开发成本</li>
+</ul>
+</li>
+<li>免费增值：保险（大量免费、少量增值）<ul>
+<li>大量用户从免费服务获益，少量用户为增值服务付费，eg.百度网盘</li>
+<li>重要指标：免费用户的平均服务成本、免费用户向付费用户的转化率</li>
+<li>成本：可观的固定成本、免费账户低边际成本服务、增值用户成本</li>
+</ul>
+</li>
+<li>诱饵&amp;陷阱专利阻断<ul>
+<li>产品与后续产品之间要有紧密连接，从而使得极小收益的初始购买为后续高收益产品或服务的重复购买创造可能</li>
+</ul>
+</li>
+</ol>
+<h3 id="对比总结"><a href="#对比总结" class="headerlink" title="对比总结"></a>对比总结</h3><p><img src="https://spricoder.oss-cn-shanghai.aliyuncs.com/2020-Demand-and-business-model-innovation/img/exam/16.png"></p>
+<h2 id="3-商业模式设计-10分"><a href="#3-商业模式设计-10分" class="headerlink" title="3. 商业模式设计(10分)"></a>3. 商业模式设计(10分)</h2><h3 id="客户洞察（customer-insights）"><a href="#客户洞察（customer-insights）" class="headerlink" title="客户洞察（customer insights）"></a>客户洞察（customer insights）</h3><p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502041318240.png" alt="image-20230216151502942"></p>
+<ul>
+<li>看：描述该客户在她所处的环境中所<strong>看到的东西</strong>，同类产品、朋友、看我们的产品<ul>
+<li>产品，往往是<strong>对应痛点</strong></li>
+</ul>
+</li>
+<li>听：描述环境如何<strong>影响到这个客户</strong></li>
+<li>想&amp;感受：尝试勾勒你的<strong>客户思维</strong>的过程，重要、打动</li>
+<li>说&amp;做：想象客户可能的<strong>言辞</strong>，或公共场合的<strong>行为</strong></li>
+<li>痛点：<strong>已遭受的挫折、正遇到的阻碍、怕承担的风险</strong></li>
+<li>收益：<strong>预期成就、成功衡量标准、实现目标所采用的策略</strong></li>
+</ul>
+<h3 id="构思（ideation）"><a href="#构思（ideation）" class="headerlink" title="构思（ideation）"></a>构思（ideation）</h3><p>一个能够产生大量商业模式创意，并成功识别出其中最佳创意的流程被称作构思（ideation）</p>
+<ul>
+<li>灵感、构思、实施</li>
+<li>头脑风暴法</li>
+<li>（步骤一，寻找）创新焦点：<ul>
+<li>资源驱动：创新来源于组织<strong>现有</strong>的基础设施或合作伙伴资源(现有资源延伸)</li>
+<li>供给驱动：创造全新的价值主张，并影响到其它模块（全新的价值主张）</li>
+<li>客户驱动：基于<strong>客户</strong>需求、可获得性或便利性的提升，并影响其他模块（跟客户有关）</li>
+<li>财务驱动：由新收益来源、定价机制或者被缩减的成本驱动的创新（跟<strong>钱</strong>有关）</li>
+<li>多点驱动：多焦点驱动的创新，并对其它模块产生深远影响（如财务+供给，不止一个驱动）</li>
+</ul>
+</li>
+<li>（步骤二、提问）<strong>如果…会怎么样？</strong></li>
+</ul>
+<h3 id="视觉化思考（visual-thinking）"><a href="#视觉化思考（visual-thinking）" class="headerlink" title="视觉化思考（visual thinking）"></a>视觉化思考（visual thinking）</h3><ul>
+<li><strong>抽象的东西具体化、复杂的概念简单化</strong></li>
+<li>过程：理解、对话、探索、沟通</li>
+<li>便利贴 + 绘画<ul>
+<li>三个指导方针：粗的马克笔+只写一项元素+只用少量文字抓住关键点</li>
+<li>便利贴的重要性：随意的添加、删除、移动<ul>
+<li>CRC卡片（正面对象状态+行为与协作者，背面简短描述）</li>
+<li>Story Card（正面故事描述，背面故事实现的理由）</li>
+</ul>
+</li>
+<li>绘画的强大表现力：人对图像的反应要比文字强烈的多</li>
+</ul>
+</li>
+<li>作用<ol>
+<li>理解商业模式的本质</li>
+<li>提升对话效率</li>
+<li>探索创意</li>
+<li>提升沟通</li>
+</ol>
+</li>
+<li>如何讲述：<ol>
+<li>图像+文字描绘每一个商业模式元素</li>
+<li>设计故事主线：讲故事时先贴哪张便利贴。可以从<strong>不同的元素</strong>开始。</li>
+<li>一张接一张地讲述你的商业模式故事</li>
+</ol>
+</li>
+</ul>
+<h3 id="模型构建（prototyping）"><a href="#模型构建（prototyping）" class="headerlink" title="模型构建（prototyping）"></a>模型构建（prototyping）</h3><p>这里的“模型”：用于讨论、探究或概念验证的工具，目标是探索未来潜在的商业模式，可以是草图、画布或财务报表</p>
+<ol>
+<li>建模-（疑问点明确化、视觉化）-添加、删除或修改元素-观察结果</li>
+<li>设计态度：专注探索，全面考虑，快速放弃，选出值得优化的想法，接受不确定性</li>
+<li>控制规模<ol>
+<li>随手素描：快速勾勒想法</li>
+<li>精心描绘的画布：完成创意所需要的因素</li>
+<li>商业案例：可存活度</li>
+<li>实地验证：客户可接受度</li>
+</ol>
+</li>
+<li>Exam:黄油盘+滚轮鼠标</li>
+<li>结构：<ol>
+<li>商业模式画布9个点的介绍</li>
+<li>关系：纵向关系、跨越的关系、联系的联系</li>
+<li>市场潜力预估（证明自己的商业模式）</li>
+<li>基本事实分析（新闻&#x2F;财报+分析）</li>
+</ol>
+</li>
+</ol>
+<h3 id="讲故事（storytelling）"><a href="#讲故事（storytelling）" class="headerlink" title="讲故事（storytelling）"></a>讲故事（storytelling）</h3><p>故事是一个理想的热身工具，为深度讨论商业模式与其内在逻辑做好准备</p>
+<ul>
+<li>将故事与画布结合，利用叙事性克服听众对不熟悉模式的抵触，放下对陌生事物的怀疑</li>
+</ul>
+<p>为什么要讲故事</p>
+<ul>
+<li>介绍新想法：尝试融入组织战略</li>
+<li>向投资人推销：争取外部资源（是什么，为谁服务，如何获得收益）</li>
+<li>吸引员工（成员）：抓住组员的注意力和好奇心，为下一步探讨准备</li>
+<li>让未来触手可及：激发创意、辩证变革</li>
+</ul>
+<p><strong>三种视角</strong></p>
+<ol>
+<li>公司视角（员工视角）<ul>
+<li>观察到的新商业模式所解决的客户问题（为什么新的商业模式是有价值的）</li>
+<li>新商业模式如何比旧模式更好的利用资源、业务和伙伴关系（<strong>降本增效、开源节流</strong>）</li>
+<li>员工承载了<strong>组织内部工作</strong>与商业模式，以及转<strong>向新模式的原因</strong></li>
+</ul>
+</li>
+<li>客户视角<ul>
+<li>客户面临的挑战与必须完成的工作，以及组织如何为其创造价值</li>
+<li>描述她得到的东西、这些东西如何融入她的生活、以及她愿意为哪些东西付费</li>
+<li><strong>可以添加一些戏剧性和情感因素，描述你的组织如何让她的生活更简单</strong>，并尝试加入组织如何提供帮助，并需要哪些资源和活动</li>
+<li>故事需要真实可信，避免油腔滑调或居高临下的口吻</li>
+</ul>
+</li>
+<li>未来视角</li>
+</ol>
+<h3 id="场景（scenarios）"><a href="#场景（scenarios）" class="headerlink" title="场景（scenarios）"></a>场景（scenarios）</h3><p>将模型构建中明确的方向具体化，从而给出有见地的设计</p>
+<p>两种场景</p>
+<ul>
+<li>不同客户结构，由场景决定选择哪款产品而放弃其它产品（价值主张的排他性）</li>
+<li>未来可能的竞争环境：想象未来可能的具体细节，品味特定条件下商业模式如何演进</li>
+</ul>
+<p>为故事补充场景</p>
+<ol>
+<li>了解与评估：机上杂志</li>
+<li>购买与传递：落地租赁</li>
+<li>获得：如在应用商店下载</li>
+<li>交互：语音向导</li>
+<li>售后：无理由退货、随时解除会员</li>
+<li>评价：产品的优点等</li>
+<li>复购：买周边&#x2F;续费产品</li>
+<li>独特性：相比…更能…</li>
+</ol>
+<p>场景的IP：（<strong>独特性</strong>——以及对应的设计要点）[如B站-弹幕-弹幕质量管理]</p>
+<p>场景的分发：引导用户体验场景</p>
+<h2 id="4-商业模式评估-10分"><a href="#4-商业模式评估-10分" class="headerlink" title="4. 商业模式评估(10分)"></a>4. 商业模式评估(10分)</h2><h3 id="环境评估"><a href="#环境评估" class="headerlink" title="环境评估"></a>环境评估</h3><p>市场影响力（市场分析）</p>
+<ul>
+<li>市场问题 - 从客户和供给的角度识别出驱动和改变你的市场的关键问题</li>
+<li>市场分类 - 识别主要的市场群体，描述他们的兴趣点，尝试发现新的群体</li>
+<li>需求和诉求 - 列举市场需求并分析这些需求被满足的程度</li>
+<li>切换成本 - 客户转投竞争对手（比如你自己），需要改变哪些方面</li>
+<li>收入影响力 - 识别与收入吸引力和定价能力相关的因素</li>
+</ul>
+<p>关键趋势（远见）</p>
+<ul>
+<li>技术趋势 - 威胁和推动发展当前商业模式的技术趋势</li>
+<li>行业管理趋势 - 影响（你的）商业模式的管理规定和管理趋势</li>
+<li>社会和文化趋势 - 可能影响（你的）商业模式的社会趋势</li>
+<li>社会经济趋势 - 总结和你的商业模式有关的主要社会经济趋势</li>
+</ul>
+<p>行业影响力（竞争分析）</p>
+<ul>
+<li>主流竞争对手 - 识别它们以及它们的相对优势</li>
+<li>挑战者 - 新出现的玩家以及它们商业模式的不同</li>
+<li><strong>替代品和服务</strong> - （包括其它市场和行业在内的）替代产品与服务</li>
+<li><strong>供应商与价值链上的其他厂商</strong> - 当前价值链上的关键玩家与新兴玩家</li>
+<li>利益相关者 - 哪些人会影响你的组织和商业模式</li>
+</ul>
+<p>宏观经济影响（宏观经济）</p>
+<ul>
+<li>全球市场情况 – 从宏观经济角度总结当前整体情况</li>
+<li>资本市场 – 与你的资本需求相关的当前资本市场情况</li>
+<li><strong>大宗商品和其他资源</strong> – 关注你的商业模式所需的资源价格与趋势</li>
+<li>经济基础设施 – 你的业务市场的经济基础设施</li>
+</ul>
+<h3 id="SWOT评估"><a href="#SWOT评估" class="headerlink" title="SWOT评估"></a>SWOT评估</h3><p>总体评估商业模式画布：（整体角度，围绕画布元素说）</p>
+<ol>
+<li>加分项</li>
+<li>减分项</li>
+<li>核心（论述价值主张、成本收入、基础设施、客户界面这四类画布元素集合中哪一类是你提出的商业模式的核心）</li>
+</ol>
+<p><strong>SWOT评估</strong></p>
+<ul>
+<li><p>评估优势、劣势</p>
+<ol>
+<li>价值主张：匹配客户需求、有网络效应（相互关联促进）、产品和服务强耦合、让客户满意</li>
+<li>成本&#x2F;收入:（与成本结构，收入来源有关）<ol>
+<li>利润高、收入可预期、<strong>很多回头客</strong>、收入可持续、收入多样化、支出前有进账、抓住客户购买意愿、想要的和提供的一致</li>
+<li>成本可预测，成本结构匹配，效率高，规模经济获益</li>
+</ol>
+</li>
+<li>基础设施：（与核心资源、关键业务、重要合作相关）<ul>
+<li><strong>竞争对手很难复制核心资源</strong>、资源需求可预测、合适时间部署合适资源</li>
+<li><strong>有效执行关键业务、关键业务难以被复制</strong>、执行质量高、自有和外包活动平衡</li>
+<li>必要时合作、融洽的合作关系</li>
+</ul>
+</li>
+<li>客户界面：（与客户关系、客户细分、渠道通路有关）<ul>
+<li>客户流失率低、客户良好分类、不断获得新客户</li>
+</ul>
+</li>
+</ol>
+<ul>
+<li>渠道的效率、效果好、连接客户能力强、客户可以轻易看到渠道、渠道被<strong>高度整合</strong>、渠道产生规模经济、渠道匹配客户群体<ul>
+<li>客户关系强、关系质量匹配客户群体、切换成本高（绑定了关系）、品牌强</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>威胁</p>
+<ol>
+<li>价值主张：可替代性</li>
+<li>成本&#x2F;收入：利润的威胁、收益是否单一、未来哪些利润会消失、成本无法预测、成本增加快过收入</li>
+<li>基础设施：资源供应不足、关键业务被干扰、合作关系波动</li>
+<li>客户界面：竞争对手威胁市场份额、渠道威胁、客户关系恶化</li>
+</ol>
+</li>
+<li><p>机会</p>
+<ol>
+<li>价值主张：更优地整合产品与服务、还能满足哪些额外需求</li>
+<li>成本&#x2F;收入：一次性收入改成重复性收入、创造新的收入来源、削减成本</li>
+<li>基础设施：<ol>
+<li>用成本更低廉的资源获得同样的效果，哪些核心资源开发不足，哪些适合转移给合作伙伴</li>
+<li>关键业务标准化，提升整体效率</li>
+<li>扩大合作有用吗，合作渠道能更好连接客户，补充价值主张吗</li>
+</ol>
+</li>
+<li>客户界面：<ol>
+<li>找到增长的市场、客户细分(服务新用户、更细致分类)</li>
+<li>提升渠道效率，整合渠道，去中间商</li>
+<li>加强客户关系，提升切换成本</li>
+</ol>
+</li>
+</ol>
+</li>
+</ul>
+<h3 id="商业模式视角下的蓝海战略"><a href="#商业模式视角下的蓝海战略" class="headerlink" title="商业模式视角下的蓝海战略"></a>商业模式视角下的蓝海战略</h3><ul>
+<li>蓝海战略：通过<strong>根本性的差异化</strong>来创造全新的行业，而不是通过<strong>模仿现有商业模式在当前行业中竞争</strong>（价值创新）</li>
+<li>四项行动架构：增加价值、减少成本。<ol>
+<li>删除（行业中哪些理所当然的要素应被删除）</li>
+<li>削减（哪些要素应被大幅消减至行业标准以下）</li>
+<li>提升（哪些要素应该被大幅调整到行业标准之上）</li>
+<li>创造（哪些行业中从未提供的要素是应该被创造出来的）</li>
+</ol>
+</li>
+<li>建议从三个视角出发，起点不同<ol>
+<li>客户群体</li>
+<li>价值主张</li>
+<li>成本</li>
+</ol>
+</li>
+<li>蓝海精神：持续打造和运营产品体系</li>
+</ul>
+<h3 id="管理多种商业模式"><a href="#管理多种商业模式" class="headerlink" title="管理多种商业模式"></a>管理多种商业模式</h3><ul>
+<li>组织的艰巨任务：如何在实施和管理新商业模式的同时维持现有的商业模式<ul>
+<li>成功应对的话叫做<strong>二元组织</strong></li>
+<li>将新商业模式剥离成一个独立的实体，或者成立独立的业务单元，或维持现状</li>
+<li><em>拆分商业模式：基础服务、客户关系、新业务</em></li>
+</ul>
+</li>
+<li>双变量准则(衡量是否拆分的双变量)：判断如何同时管理<strong>新商业模式和传统模式</strong>。<ol>
+<li>第一个变量描述了两种模式之间冲突的严重程度</li>
+<li>第二个变量描述了它们战略的相似性。</li>
+</ol>
+</li>
+</ul>
+<p>风险是第三个变量</p>
+<p>选择也会随着时间而不断演进：可能一个时段内整合运行，另一个时段内分开管理。</p>
+<p>三个例子考察整合还是剥离：</p>
+<ol>
+<li>瑞士手表<strong>整合</strong>：垂直整合架构，旗下每个品牌独立，画布也是独立的只有CS客户群体不同<ol>
+<li>浪琴…：高端和奢侈品市场客户</li>
+<li>TISSOT…：中端市场客户</li>
+<li>SWATCH…：大众市场</li>
+</ol>
+</li>
+<li>雀巢<strong>独立</strong>运营胶囊咖啡：速溶和胶囊咖啡的分销渠道不同，把胶囊咖啡变成高端客户<ol>
+<li>两个画布完全不重合</li>
+</ol>
+</li>
+<li>德国汽车还没有为它的car2go汽车租赁业务选择好发展路径</li>
+</ol>
+<p>画图时：将现有商业模式和新模式的两个画布结合，总之就是<strong>整合</strong></p>
+<h1 id="需求部分"><a href="#需求部分" class="headerlink" title="需求部分"></a>需求部分</h1><p><a target="_blank" rel="noopener" href="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230208183635000.png"><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230208183635000.png" alt="image-20230208183635000"></a></p>
+<h2 id="1-确定项目前景与范围-10分"><a href="#1-确定项目前景与范围-10分" class="headerlink" title="1. 确定项目前景与范围(10分)"></a>1. 确定项目前景与范围(10分)</h2><h3 id="1-1-目标模型"><a href="#1-1-目标模型" class="headerlink" title="1.1 目标模型"></a>1.1 目标模型</h3><p>目标：系统被开发的目的</p>
+<p>软目标：无法清晰判断是否可以满足的目标，可维护性，<strong>云朵表示</strong></p>
+<p>硬目标：通过技术确认是否满足的目标，性能指标，<strong>矩形表示</strong></p>
+<p>目标规格的基本模式</p>
+<ul>
+<li>实现（Achieve）：P ⇒ ◊Q &#x2F;&#x2F;如果将来某一时刻Q为真（被满足），则目标实现</li>
+<li>终止（Cease）： P ⇒ ◊¬Q &#x2F;&#x2F;如果将来某一时刻Q为假（被终止），则目标实现</li>
+<li>保持（Maintain）： P ⇒ □Q &#x2F;&#x2F;将来任一时刻Q都为真，则目标实现</li>
+<li>避免（Avoid）： P ⇒ □¬Q &#x2F;&#x2F;将来任一时刻Q都为假，则目标实现</li>
+<li>优化（Optimize）：最大化 Maximize (目标功能) 或 最小化 Minimize (目标功能)</li>
+</ul>
+<p>目标模型的关系：</p>
+<ul>
+<li><p>精化：</p>
+<ul>
+<li>AND 精化：子目标完成保证父目标完成，合并画<strong>实心圆</strong></li>
+<li>OR 精化：子目标之间是可以相互替代的，分开画<strong>空心圆</strong></li>
+</ul>
+</li>
+<li><p>阻碍：</p>
+<ul>
+<li><p>子目标达成会导致父目标失败，允许继续反向精化（AND&#x2F;OR）</p>
+<p><a target="_blank" rel="noopener" href="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230208214453744.png"><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230208214453744.png" alt="image-20230208214453744"></a></p>
+</li>
+</ul>
+</li>
+<li><p>支持与冲突</p>
+<ul>
+<li>支持(Support)：某一个目标达成会支持促进其他目标（可以被处理为 OR 关系）</li>
+<li>冲突(Conflict)：某一个目标对于其他目标的实现有阻碍作用</li>
+<li>通常会通过文字+符号表示<ul>
+<li><code>++</code> 保证</li>
+<li><code>+</code> 更容易</li>
+<li><code>-</code> 更困难</li>
+<li><code>--</code> 导致失败</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p>目标与主体：</p>
+<ol>
+<li>OR 关系：多个主体中的一个完成</li>
+<li>AND 关系：多个主体一起共同完成</li>
+</ol>
+<p>目标与操作：操作也可以 OR 和 AND 精化</p>
+<p>目标分析过程（例子）：</p>
+<p>BR1：在系统使用6个月后，商品积压、缺货和报废的现象要减少50%</p>
+<p>BR2：在系统使用3个月后，销售人员工作效率提高50%</p>
+<p>BR3：在系统使用6个月后，店铺运营成本要降低15%</p>
+<p>BR4：在系统使用6个月后，销售额度要提高20%</p>
+<p><a target="_blank" rel="noopener" href="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230208215311046.png"><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230208215311046.png" alt="image-20230208215311046"></a></p>
+<h2 id="2-涉众分析-10分"><a href="#2-涉众分析-10分" class="headerlink" title="2. 涉众分析(10分)"></a>2. 涉众分析(10分)</h2><h3 id="2-1-涉众识别之ADM模型"><a href="#2-1-涉众识别之ADM模型" class="headerlink" title="2.1 涉众识别之ADM模型"></a>2.1 涉众识别之ADM模型</h3><p>主体依赖模型 ADM（Actor Dependency Model），<strong>主体用圆表示</strong></p>
+<ul>
+<li><strong>目标依赖</strong>（goal dependency）：依赖者希望被依赖者满足一个条件，但不会规定怎样满足该条件。<ul>
+<li>有选择权</li>
+<li><strong>用椭圆表示</strong>（红色）</li>
+</ul>
+</li>
+<li><strong>软目标依赖</strong>（soft goal dependency）：一种特殊类型的目标依赖，其条件是无法量化描述的。<ul>
+<li><strong>用两个圈表示</strong>（黄色）</li>
+</ul>
+</li>
+<li><strong>任务依赖</strong>（task dependency）：依赖者希望被依赖者执行特定任务。任务依赖比目标依赖更加具体，因为满足目标可以执行很多任务，被依赖者有自己的选择权。而任务依赖直接为被依赖者规定了任务。<ul>
+<li>无选择权，比目标更具体</li>
+<li><strong>用六边形表示</strong>（绿色）</li>
+</ul>
+</li>
+<li><strong>资源依赖</strong>（resource dependency）：依赖者希望被依赖者提供资源实体（抽象信息或者实物材料）为自己所用，但不关注提供资源需要被依赖者执行的行为和解决的问题。<ul>
+<li><strong>用正方形表示</strong>（蓝色）</li>
+</ul>
+</li>
+</ul>
+<p><a target="_blank" rel="noopener" href="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230209145830725.png"><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230209145830725.png" alt="image-20230209145830725"></a></p>
+<p>举例：B站（2017）的关键涉众类别</p>
+<p><a target="_blank" rel="noopener" href="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230209150351375.png"><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230209150351375.png" alt="image-20230209150351375"></a></p>
+<h3 id="2-2-涉众评估之Power-Interest、Power-Attitude模型"><a href="#2-2-涉众评估之Power-Interest、Power-Attitude模型" class="headerlink" title="2.2 涉众评估之Power-Interest、Power-Attitude模型"></a>2.2 涉众评估之Power-Interest、Power-Attitude模型</h3><p>基于涉众特征与态度化解涉众风险策略（对系统的兴趣和态度）</p>
+<ul>
+<li>基于特征化解举例：亲子兴趣班<ul>
+<li>大人与小朋友一起参与：环境设定者（客户）-&gt; 参与者（用户）</li>
+<li>良好的产品体验打造亲子品牌：被影响者（潜在用户&#x2F;客户） -&gt; 参与者</li>
+</ul>
+</li>
+<li>基于态度化解举例：电子竞技产业<ul>
+<li>与地方政府文化产业发展相结合：强反对者 -&gt; 强支持者</li>
+<li>成功的赛事运营与未成年人游戏时长限制：弱反对者 -&gt; 弱支持者</li>
+</ul>
+</li>
+</ul>
+<p><a target="_blank" rel="noopener" href="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230209173546242.png"><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230209173546242.png" alt="image-20230209173546242"></a></p>
+<p>出于化解风险的考虑, 可以制定合适的项目策略, 一方面<strong>提高环境设定者对系统的关注</strong>,将他们转变为参与者; 另一方面<strong>消除强反对者的反对原因</strong>, 将他们变为强支持者。此外, <strong>给予被影响者一些充分发表和实现自身意见的权力</strong>, <strong>化解弱反对者的忧虑</strong>, 也会有利于控制项目因涉众而可能产生的风险。</p>
+<p>“出圈”时B站涉众的风险评估与化解</p>
+<p><a target="_blank" rel="noopener" href="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230209174409918.png"><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230209174409918.png" alt="image-20230209174409918"></a></p>
+<h3 id="2-3-涉众共赢之Stackholder-Issue模型"><a href="#2-3-涉众共赢之Stackholder-Issue模型" class="headerlink" title="2.3 涉众共赢之Stackholder-Issue模型"></a>2.3 涉众共赢之Stackholder-Issue模型</h3><p>Stakeholder&#x2F;Issue关系图</p>
+<ul>
+<li>列出系统的所有涉众类别，明确描述他们的兴趣和对系统的期望</li>
+<li>从涉众们的兴趣和期望中发现背后涉及的<strong>共同问题</strong>（Issue）</li>
+<li>建立涉众类别和问题的关联，如果某个涉众类别对一个Issue存在兴趣，那么该涉众类别和这个Issue就存在关联关系</li>
+<li>对每一个Stakeholder-Issue关系，标明该关系上面所被寄予的期望</li>
+</ul>
+<p><a target="_blank" rel="noopener" href="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230209175109884.png"><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230209175109884.png" alt="image-20230209175109884"></a></p>
+<p>基于Stakeholder&#x2F;Issue关系图的共赢分析</p>
+<ul>
+<li>如果某个Stakeholder-Issue关系上所寄予的期望与项目的业务需求无法保持一致，那么它关联的涉众就在该Issue的问题上和项目整体目标存在冲突</li>
+<li>如果Stakeholder&#x2F;Issue关系图中某个Issue所关联的不同关系标识有互相冲突的期望，那么就意味着它所关联的涉众在该Issue上存在需求冲突</li>
+</ul>
+<p>举例：阅文的免费模式能否与订阅模式共赢?</p>
+<ul>
+<li>Issue：免费带来的更多流量与写手身份转换</li>
+<li>Stakeholder对上述Issue的意见：<ul>
+<li>头部与底部写手、普通读者：可以接受</li>
+<li>腰部写手：影响收入，进一步弱化保障</li>
+<li>核心读者：担忧文章质量下降</li>
+</ul>
+</li>
+<li><strong>如何共赢：</strong>免费与订阅在多大程度上共存<ul>
+<li>免费创作与订阅写作区分开，但共存</li>
+<li>允许作者同时成为免费与订阅（特定连载小说）写手，或新手作者需先从免费写手做起</li>
+<li>其它可能达成共赢的Issue：利用免费阅读模式为平台引流（并分享给腰部及以下写手）</li>
+<li><em>其它较难达成共赢的<strong>Issue</strong>：平台对<strong>IP</strong>的强力掌控与作者本身的著作权主张</em></li>
+</ul>
+</li>
+</ul>
+<h2 id="3-需求获取下半段-10分"><a href="#3-需求获取下半段-10分" class="headerlink" title="3. 需求获取下半段(10分)"></a>3. 需求获取下半段(10分)</h2><h3 id="3-1-面谈、原型、观察三大获取手段的联系与区别"><a href="#3-1-面谈、原型、观察三大获取手段的联系与区别" class="headerlink" title="3.1 面谈、原型、观察三大获取手段的联系与区别"></a>3.1 面谈、原型、观察三大获取手段的联系与区别</h3><h4 id="面谈"><a href="#面谈" class="headerlink" title="面谈"></a>面谈</h4><ul>
+<li><p>面对面的会见被认为是最具丰富内容的交流方法</p>
+</li>
+<li><p>过程：准备面谈 → 主持面谈 → 整理面谈报告</p>
+</li>
+<li><p>优点：1. 简单、成本低；2. 能获得事实、问题、观点等信息；3. 建立友好关系；4. 被会见者会产生参与感和贡献感，提高热情；</p>
+</li>
+<li><p>缺点：1. 耗时、时间成本高；2. 会谈者地理分散的情况下难以实现；3. 对参与者的记忆力和工程师的人际交流能力有要求；4. 交谈中产生偏差可能会影响面谈的结果；5. 不了解被会见者认知结构的情况下，难以取得令人满意的效果；</p>
+</li>
+</ul>
+<h4 id="面谈的核心"><a href="#面谈的核心" class="headerlink" title="面谈的核心"></a>面谈的核心</h4><p>取得“共情”与“目标”的平衡</p>
+<h4 id="面谈的准备"><a href="#面谈的准备" class="headerlink" title="面谈的准备"></a><strong>面谈的准备</strong></h4><ol>
+<li><p>阅读背景资料</p>
+</li>
+<li><p>确定面谈主题和目标</p>
+</li>
+<li><p>选择被会见者</p>
+</li>
+<li><p>通知被会见者：<strong>电话或邮件等正式的途径</strong> </p>
+</li>
+<li><p>确定问题和类型：关键是<strong>问题类型</strong></p>
+<ol>
+<li>开放式：你觉得、请解释、看法（前期）</li>
+<li>封闭式：答案收到限制（后期，针对性）</li>
+<li>探究式：配合开放式，为什么&#x2F;举例子</li>
+<li>诱导式：不太好，但有使用场景</li>
+<li>双筒问题：不好，有两个问题，需要拆解</li>
+<li>元问题：问问题设计的问题</li>
+</ol>
+</li>
+</ol>
+<p><strong>主持</strong></p>
+<ul>
+<li>开始：氛围（开场仪式：握手）</li>
+<li>主体：提问、倾听</li>
+<li>结束：感谢</li>
+</ul>
+<p><strong>报告整理</strong></p>
+<p>复查记录、总结信息、完成报告</p>
+<p><strong>类型</strong></p>
+<ul>
+<li>结构化</li>
+<li>半结构化</li>
+<li>非结构化：没有事先的安排，没有准备好问题也要去</li>
+</ul>
+<p><strong>相关方法</strong></p>
+<ul>
+<li>群体面谈</li>
+<li>调查问卷：基于选择题的开放式问题与基于主观题的封闭式问题</li>
+<li>头脑风暴</li>
+</ul>
+<h4 id="原型"><a href="#原型" class="headerlink" title="原型"></a>原型</h4><ul>
+<li>原型是软件开发当中消除不确定性风险的有效工具，是一种有效的需求获取方法<ul>
+<li>帮助需求工程师及早解决需求的不确定性：细节需求、整体方案、可行性、创新性等</li>
+</ul>
+</li>
+<li>原型方法的应用可能会给项目带来相应的风险，需要妥善的加以解决</li>
+<li>“原型是一个系统，它内化了一个更迟系统的本质特征。原型系统通常被构造为不完整的系统，以在将来进行改进、补充或者替代。”</li>
+<li><em>原型一定要开发的容易修改！</em></li>
+<li>过程：</li>
+</ul>
+<p><a target="_blank" rel="noopener" href="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230210151936579.png"><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230210151936579.png" alt="image-20230210151936579"></a></p>
+<ol>
+<li>确定原型需求：界面不确定性，确定不确定的维度</li>
+<li>原型开发</li>
+<li>原型评估</li>
+<li>原型修正：一定要开发的容易修改</li>
+</ol>
+<p><a target="_blank" rel="noopener" href="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230210152401769.png"><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230210152401769.png" alt="image-20230210152401769"></a><strong>分类</strong></p>
+<ol>
+<li><p>抛弃式原型：探索式和实验式方法产生的原型产品</p>
+<ol>
+<li>要坚决地抛弃</li>
+</ol>
+</li>
+<li><p>演化式原型：演化式原型方法产生的原型产品</p>
+<ol>
+<li>质量要从一开始就能达到最终系统的要求</li>
+</ol>
+</li>
+</ol>
+<p><strong>方法</strong></p>
+<ol>
+<li><p>水平原型方法：实现选定功能所有层次中的某些特定层次（控制原型开发成本）</p>
+</li>
+<li><p>垂直原型方法：触及到选定功能实现的所有层次，保证真实实现它的各种功能</p>
+</li>
+</ol>
+<p><strong>故事板原型</strong></p>
+<p>原型和用例&#x2F;场景通常结合使用</p>
+<ol>
+<li><p>明确故事板原型要素</p>
+<ol>
+<li>角色（Who）</li>
+<li>内容（What）</li>
+<li>方法（How）</li>
+</ol>
+</li>
+<li><p>建不同类型的故事板原型</p>
+<ol>
+<li>被动（Passive）故事板原型 - <em>连环画</em></li>
+<li>主动（Active）故事板原型 – <em>漫画</em></li>
+<li>交互（Interactive）故事板原型 – <em>网页</em></li>
+</ol>
+</li>
+</ol>
+<h4 id="观察和文档审查"><a href="#观察和文档审查" class="headerlink" title="观察和文档审查"></a>观察和文档审查</h4><ul>
+<li>应用于用户无法完成主动的信息告知的情况下</li>
+<li>观察的适用情况<ul>
+<li>事件的情境性：某些事件只有和它们发生时的具体环境联系起来，才能得到理解。</li>
+</ul>
+</li>
+<li>观察方法：<ul>
+<li><p>采样观察：时间采样，事件采样</p>
+</li>
+<li><p>民族志观察一个群体-&gt;自己也变成群体，沉浸式；关注工作的分布式协同、计划和程序、意识</p>
+<ul>
+<li>深度理解信息；</li>
+<li>让真实世界的社会性因素可见化；</li>
+<li>打破人们已有的一些错误假设和错误观念</li>
+<li>需要耗费很多时间</li>
+<li>调研结果很难传递到开发过程</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h4 id="三者的联系与区别"><a href="#三者的联系与区别" class="headerlink" title="三者的联系与区别*"></a>三者的联系与区别*</h4><p>【联系】</p>
+<p>面谈、原型、观察均为需求获取的方法（手段逐渐变重），不确定性越重，越要用更重的手段</p>
+<p>【区别】</p>
+<p>面谈：用户都知道，与其交流</p>
+<p>原型：需求工程师和用户都有不确定的部分，让原型帮忙消除不确定性风险</p>
+<p>观察：有一些场景用户无法主动告知，不知道</p>
+<h3 id="3-2-面谈问题的设计"><a href="#3-2-面谈问题的设计" class="headerlink" title="3.2 面谈问题的设计"></a>3.2 面谈问题的设计</h3><p><strong>问题类型：</strong></p>
+<ul>
+<li>开放式问题<ul>
+<li>被会见者对答复的选择可以是开放和不受限制的，他们可能答复两个词，也可能答复两段话。</li>
+<li>在希望得到丰富（具有一定深度和广度）信息时，开放式问题比较合适</li>
+<li>例如：<ul>
+<li>“你觉得把所有的经理都置于一个内联网内怎么样？”</li>
+<li>“请解释你是如何做进度决策的？”</li>
+<li>“对公司中企业对企业电子商务的当前状态有何看法？”</li>
+</ul>
+</li>
+<li>优点：<ul>
+<li>让被会见者感到自在</li>
+<li>会见者可以收集被会见者使用的词汇，这能反应他的教育、价值标准、态度和信念</li>
+<li>提供丰富的细节</li>
+<li>对没采用的进一步的提问有启迪作用</li>
+<li>让被会见者更感兴趣</li>
+<li>容许更多的自发性</li>
+<li>会见者可以在没有太多准备的情况下进行面谈。</li>
+</ul>
+</li>
+<li>缺点<ul>
+<li>提此类问题可能会产生太多不相干的细节</li>
+<li>面谈可能失控</li>
+<li>开放式的回答会花费大量的时间才能获得有用的信息量</li>
+<li>可能会使会见者看上去没有准备。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>封闭式问题<ul>
+<li>答案有基本的形式，被会见者的回答是受到限制的</li>
+<li>例如：<ul>
+<li>“项目存储库每个星期更新多少次？”</li>
+<li>“电话中心一个月平均收到多少个电话？”</li>
+<li>“下列信息中哪个对你最有用：（1）填好的客户投诉单；（2）访问web站点的客户的电子邮件投诉；（3）与客户面对面的交流；（4）退回的货物。”</li>
+<li>“列出头两项需要优先考虑的改善技术基础设施的事项。</li>
+</ul>
+</li>
+<li>优点：<ul>
+<li>节省时间</li>
+<li>切中要点</li>
+<li>保持对面谈的控制</li>
+<li>快速探讨大范围问题</li>
+<li>得到贴切的数据</li>
+</ul>
+</li>
+<li>缺点：<ul>
+<li>使得被会见者厌烦</li>
+<li>得不到丰富的细节</li>
+<li>出于上述原因，失去主要思想</li>
+<li>不能建立和面谈者的友好关系。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p><strong>问题准备：注意事项</strong></p>
+<p>前期</p>
+<ul>
+<li><strong>开放式问题为主</strong></li>
+<li>决策层与专家为主</li>
+<li>遵循 问题 -&gt; 目标 -&gt; 解决方案路线<ul>
+<li>问题、目标</li>
+<li>目标、任务（流程 -&gt; 任务）</li>
+</ul>
+</li>
+<li>分析基本的<strong>涉众特点</strong><ul>
+<li>角色、任务、个人目标、频率、优先级</li>
+</ul>
+</li>
+</ul>
+<p><a target="_blank" rel="noopener" href="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230210115108811.png"><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230210115108811.png" alt="image-20230210115108811"></a></p>
+<p><a target="_blank" rel="noopener" href="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230210115116762.png"><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230210115116762.png" alt="image-20230210115116762"></a></p>
+<p>后期</p>
+<ul>
+<li><strong>封闭式问题为主</strong></li>
+<li>抓住主题与线索<ul>
+<li>例如，任务分解、流程图、界面示意…</li>
+</ul>
+</li>
+<li>问题针对性<ul>
+<li>任务分解关系</li>
+<li>流程正确性、异常</li>
+<li>界面中的行为、数据项</li>
+<li>…</li>
+</ul>
+</li>
+<li>事先准备面谈记录材料</li>
+</ul>
+<p><a target="_blank" rel="noopener" href="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230210115256955.png"><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230210115256955.png" alt="image-20230210115256955"></a></p>
+<p><strong>其他重要的问题类型</strong></p>
+<ul>
+<li><strong>探究式问题</strong><ul>
+<li>为什么？</li>
+<li>你能举个例子吗？</li>
+<li>你能详细描述一下吗？</li>
+</ul>
+</li>
+<li><strong>诱导性问题</strong><ul>
+<li>“你和其他经理一样，都同意把财产管理计算机化，是吗”</li>
+</ul>
+</li>
+<li><strong>双筒问题</strong><ul>
+<li>“每天你通常会做什么决策，你是怎样做的”</li>
+</ul>
+</li>
+<li><strong>元问题</strong><ul>
+<li>我的问题看起来相关吗？</li>
+<li>你的回答正式吗？</li>
+<li>你是回答这些问题的最佳人选吗？</li>
+<li>我问了太多的问题吗？</li>
+<li>我还应该见什么人？</li>
+</ul>
+</li>
+</ul>
+<p><strong>面谈背后的要点：取得“共情”与“目标”的平衡</strong></p>
+<ul>
+<li>共情<ul>
+<li>取得信任</li>
+<li>激发主动性</li>
+<li>获得更全面的问题域背景（主观）和业务意向（个人）</li>
+<li><em>客户洞察：功能</em> <em>-</em> <em>认知</em> <em>-</em> <em>情感；面谈可视作“反向的客户洞察”</em></li>
+</ul>
+</li>
+<li>目标<ul>
+<li>充分、正确地获取用户需求</li>
+<li>在项目前景和范围指导下充分获取用户需求与问题域知识</li>
+<li>利用开放式问题、探究式问题和程序性提示增强覆盖范围</li>
+<li>利用封闭式问题确认细节</li>
+<li><em>主动控制面谈过程</em></li>
+</ul>
+</li>
+</ul>
+<h2 id="4-需求分析-10分"><a href="#4-需求分析-10分" class="headerlink" title="4. 需求分析(10分)"></a>4. 需求分析(10分)</h2><h3 id="4-1-需求分析基本任务"><a href="#4-1-需求分析基本任务" class="headerlink" title="4.1 需求分析基本任务"></a>4.1 需求分析基本任务</h3><p>需求分析的活动包括：需求细化、确定需求优先级、需求协商</p>
+<ul>
+<li>需求细化<ul>
+<li>明确用户需求的隐含因素</li>
+</ul>
+</li>
+<li>确定需求优先级（<strong>核心</strong>）<ul>
+<li>方法有：累计投票、区域划分、Top-N、数据量化等</li>
+</ul>
+</li>
+<li>需求协商<ul>
+<li>明确冲突的因素，避免情绪上的冲突</li>
+<li>明确冲突的解决空间</li>
+<li>确定最佳解决方案</li>
+</ul>
+</li>
+</ul>
+<p>需求分析的根本任务包括：</p>
+<ul>
+<li>建立分析模型</li>
+<li>创建解决方案</li>
+</ul>
+<p>需求分析的核心：确定需求优先级</p>
+<h3 id="4-2-概念类图"><a href="#4-2-概念类图" class="headerlink" title="4.2 概念类图"></a>4.2 概念类图</h3><p>领域模型和概念类图是一个概念，都是画这种简化的图</p>
+<p><a target="_blank" rel="noopener" href="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230210170418807.png"><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230210170418807.png" alt="image-20230210170418807"></a></p>
+<h3 id="4-3-顺序图"><a href="#4-3-顺序图" class="headerlink" title="4.3 顺序图"></a>4.3 顺序图</h3><p><a target="_blank" rel="noopener" href="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230210170442281.png"><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230210170442281.png" alt="image-20230210170442281"></a></p>
+<p><strong>系统顺序图！！！</strong></p>
+<ul>
+<li>将整个系统看作一个黑箱的对象，强调外部参与者和系统的交互行为，重点展示系统级事件</li>
+</ul>
+<p><a target="_blank" rel="noopener" href="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230210170543949.png"><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230210170543949.png" alt="image-20230210170543949"></a></p>
+<p><a target="_blank" rel="noopener" href="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230210170851076.png"><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230210170851076.png" alt="image-20230210170851076"></a></p>
+<p><mark>建立用例（多场景）的系统顺序图</mark>要考</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502041318911.png" alt="image-20230214094059155"></p>
+<h3 id="4-4-状态图"><a href="#4-4-状态图" class="headerlink" title="4.4 状态图"></a>4.4 状态图</h3><p>比较难，会看前面题的难度</p>
+<p><a target="_blank" rel="noopener" href="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230210171258179.png"><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230210171258179.png" alt="image-20230210171258179"></a></p>
+<p><a target="_blank" rel="noopener" href="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230210171601677.png"><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230210171601677.png" alt="image-20230210171601677"></a></p>
+<h2 id="5-需求验证与管理-10分"><a href="#5-需求验证与管理-10分" class="headerlink" title="5. 需求验证与管理(10分)"></a>5. 需求验证与管理(10分)</h2><h3 id="5-1-需求验证基本活动"><a href="#5-1-需求验证基本活动" class="headerlink" title="5.1 需求验证基本活动"></a>5.1 需求验证基本活动</h3><p>需求验证是专指在需求规格说明完成之后，对需求规格说明文档进行的验证活动。</p>
+<ol>
+<li><strong>评审</strong><ul>
+<li>由作者之外的其他人来检查产品问题的方法</li>
+<li>是主要的静态分析手段</li>
+</ul>
+</li>
+<li><strong>原型与模拟</strong><ul>
+<li>涉及到复杂的动态行为时</li>
+<li>成本较高</li>
+</ul>
+</li>
+<li><strong>开发测试用例</strong><ul>
+<li>如果无法为某条需求定义完备的测试用例，那么它可能就存在着模糊、信息遗漏、不正确等缺陷</li>
+</ul>
+</li>
+<li><strong>用户手册编制</strong><ul>
+<li>验证功能需求</li>
+<li>验证项目范围</li>
+<li>验证异常流程需求</li>
+<li>验证环境与约束需求</li>
+</ul>
+</li>
+<li><strong>利用跟踪关系</strong><ul>
+<li>业务需求 -&gt; 用户需求 -&gt; 系统需求</li>
+<li>系统需求 -&gt; 用户需求 -&gt; 业务需求</li>
+</ul>
+</li>
+<li><strong>自动化分析</strong>：目前做不到</li>
+</ol>
+<h3 id="5-2-需求管理任务与活动"><a href="#5-2-需求管理任务与活动" class="headerlink" title="5.2 需求管理任务与活动"></a>5.2 需求管理任务与活动</h3><blockquote>
+<p>三种活动</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502041318288.png" alt="image-20230216140456290"></p>
+</blockquote>
+<ol>
+<li><strong>维护需求基线</strong><ul>
+<li>交流涉众需要什么</li>
+<li>驱动设计和实现工作</li>
+<li>测试和验证最终产品</li>
+<li>辅助项目管理</li>
+</ul>
+</li>
+<li><strong>实现需求跟踪</strong><ul>
+<li>将需求应用到解决方案</li>
+<li>将需求分配到子系统</li>
+</ul>
+</li>
+<li><strong>控制变更</strong><ul>
+<li>控制变更</li>
+<li>控制迭代式开发中的变化</li>
+</ul>
+</li>
+</ol>
+<h3 id="5-3-需求变更控制-过程"><a href="#5-3-需求变更控制-过程" class="headerlink" title="5.3 需求变更控制 过程"></a>5.3 需求变更控制 过程</h3><p>以<strong>可控、一致</strong>的方式进行需求基线中需求的变更处理，包括对变化的评估、协调、批准或拒绝、实现和验证</p>
+<ol>
+<li>提请者：提请需求变更</li>
+<li>接收者：接受变更请求</li>
+<li>评估者：变更评估，得到需求变更表单</li>
+<li>变更控制委员会：变更<strong>决策</strong>，拒绝变更就结束</li>
+<li>修改者：执行变更</li>
+<li>验证者：验证变更，结束</li>
+</ol>
+<p><a target="_blank" rel="noopener" href="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230210173234646.png"><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230210173234646.png" alt="image-20230210173234646"></a></p>
+<h3 id="5-4-需求变更控制-组织"><a href="#5-4-需求变更控制-组织" class="headerlink" title="5.4 需求变更控制 组织"></a>5.4 需求变更控制 组织</h3><p>CCB变更控制委员会：每个部门至少包含一个人</p>
+<ol>
+<li><strong>项目或程序管理部门</strong></li>
+<li><strong>产品管理或者需求分析部门</strong></li>
+<li><strong>开发部门</strong></li>
+<li><strong>测试或者质量保障部门</strong></li>
+<li>市场或客户代表</li>
+<li>编写用户文档的部门</li>
+<li>技术支持或帮助部门</li>
+<li><strong>配置管理部门</strong></li>
+</ol>
+<h3 id="5-5-需求变更控制-注意事项"><a href="#5-5-需求变更控制-注意事项" class="headerlink" title="5.5 需求变更控制 注意事项"></a>5.5 需求变更控制 注意事项</h3><blockquote>
+<p>5个注意事项：</p>
+<ol>
+<li>认识到变更的必要性，并为之制定计划</li>
+<li>维护需求基线，<strong>审计</strong>变更记录</li>
+<li>管理范围<strong>蔓延</strong></li>
+<li>灵活应对变更请求</li>
+<li>使用<strong>辅助工具</strong></li>
+</ol>
+</blockquote>
+<ol>
+<li>认识到变更的必要性，并为之制定计划<ul>
+<li>定义<strong>明确的变更控制过程</strong>，建立变更控制的有效渠道</li>
+<li>所有提交的需求变更请求都要进行仔细的评估</li>
+<li>是否进行变更的决定应该由变更控制委员会统一做出</li>
+<li>必须对变更的实现结果进行验证</li>
+<li>需求的变化情况要及时的通知到所有会受到影响的项目涉众</li>
+</ul>
+</li>
+<li>维护需求基线，审计变更记录</li>
+<li>管理范围蔓延<ul>
+<li>根据业务目标、产品前景和项目范围，评估每一项提议的<strong>新增</strong>需求和特性</li>
+</ul>
+</li>
+<li><strong>灵活应对</strong>变更请求<ul>
+<li>推迟产品的交付时间。</li>
+<li>要求增派人手</li>
+<li>要求员工加班工作</li>
+<li>推迟或者去除尚未实现的优先级较低的需求</li>
+<li>容许产品质量的降低</li>
+</ul>
+</li>
+<li>使用<strong>辅助工具</strong><ul>
+<li>工具应该具有以下几个特性，以支持需求变更过程：<ul>
+<li>可用定义变更请求中的数据项。</li>
+<li>可用辅助项目涉众完成变更控制过程中的协作。</li>
+<li>可以帮助维护需求基线，审计变更记录。</li>
+<li>能够将变更情况及时的通知到相关人员。</li>
+<li>可以生成标准的和定制的报告和图表。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ol>
+
+        </div>
+
+        
+            <section class="post-copyright">
+                
+                
+                
+                
+
+            </section>
+        
+        <section class="post-tags">
+            <div>
+                <span>标签:</span>
+                <span class="tag">
+                    
+                    
+                        <a href="/tags/%E8%AF%BE%E7%A8%8B/"># 课程</a>
+                    
+                        
+                </span>
+            </div>
+            <div>
+                <a href="javascript:window.history.back();">返回</a>
+                <span>· </span>
+                <a href="/">主页</a>
+            </div>
+        </section>
+        <section class="post-nav">
+            
+                <a class="prev" rel="prev" href="/2023/07/01/2023%E6%98%A5%E5%AD%A3%E3%80%8A%E6%9C%8D%E5%8A%A1%E7%AB%AF%E5%BC%80%E5%8F%91%E3%80%8B%E8%AF%BE%E7%A8%8B%E7%AC%94%E8%AE%B0/">2023春季《服务端开发》课程笔记</a>
+            
+            
+            <a class="next" rel="next" href="/2022/07/01/2022%E6%98%A5%E5%AD%A3%E3%80%8A%E7%AE%97%E6%B3%95%E3%80%8B%E8%AF%BE%E7%A8%8B%E7%AC%94%E8%AE%B0/">2022春季《算法》课程笔记</a>
+            
+        </section>
+
+
+    </article>
+</div>
+
+
+    <div id="gitalk-container"></div>
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.css">
+<script src="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.min.js"></script>
+<script src="//cdn.bootcss.com/blueimp-md5/2.10.0/js/md5.js"></script>
+<div id="gitalk-container"></div>
+<script type="text/javascript">
+      var gitalk = new Gitalk({
+        clientID: '',
+        clientSecret: '',
+        repo: 'blog_comment',
+        owner: 'lyxx2535',
+        admin: 'lyxx2535',
+        id: md5(location.pathname),
+        labels: 'Gitalk'.split(',').filter(l => l),
+        perPage: 10,
+        pagerDirection: 'last',
+        createIssueManually: true,
+        distractionFreeMode: false
+      })
+      gitalk.render('gitalk-container')
+</script>
+
+            </div>
+            <footer id="footer" class="footer">
+    <div class="copyright">
+        <span>© Annie | Powered by <a href="https://hexo.io" target="_blank">Hexo</a> & <a href="https://github.com/Siricee/hexo-theme-Chic" target="_blank">Chic</a> | 2020 - 2025
+            <br>
+            <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+<span class="site-uv">
+    Total visitors:
+    <i class="busuanzi-value" id="busuanzi_value_site_uv"></i>
+</span>&nbsp;|&nbsp;
+
+
+<span class="site-pv">
+    Total views:
+    <i class="busuanzi-value" id="busuanzi_value_site_pv"></i>
+</span>
+
+          </span>
+    </div>
+</footer>
+
+    </div>
+</body>
+
+</html>

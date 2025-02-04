@@ -1,0 +1,2165 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <meta name="author" content="Annie">
+
+
+
+
+
+<title>2022春季《C++》课程笔记 | Annie&#39;s Blog</title>
+
+
+
+    <link rel="icon" href="/favicon.ico">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+    <script src="/js/tocbot.min.js"></script>
+    
+
+
+
+    
+    
+        
+    
+
+
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+<body>
+    <script>
+        // this function is used to check current theme before page loaded.
+        (() => {
+            const currentTheme = window.localStorage && window.localStorage.getItem('theme') || '';
+            const isDark = currentTheme === 'dark';
+            const pagebody = document.getElementsByTagName('body')[0]
+            if (isDark) {
+                pagebody.classList.add('dark-theme');
+                // mobile
+                document.getElementById("mobile-toggle-theme").innerText = "· Dark"
+            } else {
+                pagebody.classList.remove('dark-theme');
+                // mobile
+                document.getElementById("mobile-toggle-theme").innerText = "· Light"
+            }
+        })();
+    </script>
+
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">Annie&#39;s Blog</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default">
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+        </div>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">Annie&#39;s Blog</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; 菜单</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+            <div class="main">
+                <div class="container">
+    
+    
+        <div class="post-toc">
+    <div class="tocbot-list">
+    </div>
+    <div class="tocbot-list-menu">
+        <a class="tocbot-toc-expand" onclick="expand_toc()">全部展开</a>
+        <a onclick="go_top()">回到顶部</a>
+        <a onclick="go_bottom()">前往底部</a>
+    </div>
+</div>
+
+<script>
+    var tocbot_timer;
+    var DEPTH_MAX = 6; // 为 6 时展开所有
+    var tocbot_default_config = {
+        tocSelector: '.tocbot-list',
+        contentSelector: '.post-content',
+        headingSelector: 'h1, h2, h3, h4, h5',
+        orderedList: false,
+        scrollSmooth: true,
+        onClick: extend_click,
+    };
+
+    function extend_click() {
+        clearTimeout(tocbot_timer);
+        tocbot_timer = setTimeout(function() {
+            tocbot.refresh(obj_merge(tocbot_default_config, {
+                hasInnerContainers: true
+            }));
+        }, 420); // 这个值是由 tocbot 源码里定义的 scrollSmoothDuration 得来的
+    }
+
+    document.ready(function() {
+        tocbot.init(obj_merge(tocbot_default_config, {
+            collapseDepth: 1
+        }));
+    });
+
+    function expand_toc() {
+        var b = document.querySelector('.tocbot-toc-expand');
+        var expanded = b.getAttribute('data-expanded');
+        expanded ? b.removeAttribute('data-expanded') : b.setAttribute('data-expanded', true);
+        tocbot.refresh(obj_merge(tocbot_default_config, {
+            collapseDepth: expanded ? 1 : DEPTH_MAX
+        }));
+        b.innerText = expanded ? 'Expand all' : 'Collapse all';
+    }
+
+    function go_top() {
+        window.scrollTo(0, 0);
+    }
+
+    function go_bottom() {
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+
+    function obj_merge(target, source) {
+        for (var item in source) {
+            if (source.hasOwnProperty(item)) {
+                target[item] = source[item];
+            }
+        }
+        return target;
+    }
+</script>
+    
+
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">2022春季《C++》课程笔记</h1>
+            
+                <div class="post-meta">
+                    
+                        作者: <a itemprop="author" rel="author" href="/">Annie</a>
+                    
+
+                    
+                        <span class="post-time">
+                        日期: <a href="#">July 1, 2022&nbsp;&nbsp;10:51:05</a>
+                        </span>
+                    
+                    
+                        <span class="post-category">
+                        分类:
+                            
+                                <a href="/categories/%E6%9C%AC%E7%A7%91%E7%94%9F%E8%AF%BE%E7%A8%8B/">本科生课程</a>
+                            
+                        </span>
+                    
+                </div>
+            
+        </header>
+
+        <div class="post-content">
+            <h1 id="第一课"><a href="#第一课" class="headerlink" title="第一课"></a>第一课</h1><h2 id="程序设计语言"><a href="#程序设计语言" class="headerlink" title="程序设计语言"></a>程序设计语言</h2><p>语言：数学上的表示，让计算机理解</p>
+<p>语法、语义、语用</p>
+<p>句型</p>
+<p>Backus-Naur Form EBNF&#x2F;语法图</p>
+<p>identifer 标识符</p>
+<p>不可代替的部分：A&#x2F;D：terminate（终结符号） &#x3D; sigma字母表：ascii码</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032319619.png" alt="image-20220216102935989"></p>
+<p>推导：不断从左步替换右步：_a9是不是identifier</p>
+<p>从ID开始：左步可以替换右步 |是或的意思</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032319662.png" alt="image-20220216103651292"></p>
+<p>从识别符号开始（ID），可以推导出符号串，就是该语言可识别的符号串 可写成<strong>推导树</strong></p>
+<p>计算机就用该规则识别符号串</p>
+<p>从上往下：deduct（推导） 从下往上：reduce（归纳）</p>
+<p><strong>语言：在特定的字母表（ascii）上，按照特定的规则（BNF），所构成的符号串的集合</strong>。</p>
+<ul>
+<li>符号串无穷无尽，因为包含recursive</li>
+</ul>
+<p>什么执行识别过程？Compiler（编译器）把语言等价翻译成机器表示 等价翻译：与状态机等价？</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032319716.png" alt="image-20220216104025126"></p>
+<ul>
+<li>RG约束最强,语言集合最小Regular Grammar正则文法，类比*.doc–Finite automata有限状态自动机 </li>
+<li>CFG：Context free grammar上下文无关文法 Push Down Automata</li>
+<li>CSG：Context sensitive grammar Linear Bounded Automata线性界限自动机</li>
+<li>PSG：phrase structure grammar短语结构文法 Turing machine（可计算性的全集）</li>
+</ul>
+<p>formal method</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032319460.png" alt="image-20220216104335995"></p>
+<p>编译器翻译过程：<strong>语义</strong>，去等价翻译</p>
+<p>大部分程序设计语言词法：符合RG 大部分语法：符合CFG 随着自动机的提升，表示越来越复杂 超出CFG的范围：用ad hoc描述，不会用CSG，因为太复杂</p>
+<p><strong>语用</strong>：一个意思，表达可能不一样  对语言的执行是有帮助的</p>
+<h2 id="编程"><a href="#编程" class="headerlink" title="编程"></a>编程</h2><p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032319758.png" alt="image-20220216111029093"></p>
+<p>每一个语句的执行都有前后条件做限制  符号的演化：calculus  但有时候没有明确的科学限制</p>
+<p>debug不仅考虑控制流，还要考虑数据流</p>
+<p>写程序时的经验：<strong>编程范式</strong>（共4种）</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032319306.png" alt="image-20220216112600362"></p>
+<p>冯诺依曼(基于图灵机)：可以算出来，一定知道数据、步骤、次序、所占空间（通过存储、指令，完成output） </p>
+<p>命令式编程（基于冯诺依曼，分2类）</p>
+<ul>
+<li><p>Procedural：沿着过程</p>
+</li>
+<li><p>OO：写表示的时候确实是Object和class（高级程序设计语言范畴），真正<strong>执行时</strong>仍然基于<strong>运行环境</strong></p>
+</li>
+</ul>
+<p>对比java(pure)，在虚拟机解释下，体现OO特征。但c++底层执行：知道当前对象的状态，和执行到函数的哪一步</p>
+<p><strong>函数副作用在这里有用</strong>，跟下面不一样</p>
+<p>哪些编程范式可以从冯诺依曼解放出来？<strong>函数式编程</strong>：有理论依据 不是基于图灵机 组合数学 数理逻辑？</p>
+<p>不想知道细节，只关心一个个功能，通过计算的叠加完成计算任务</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032318613.png" alt="image-20220216114318192"></p>
+<p>声明式编程</p>
+<ul>
+<li>函数式：<ul>
+<li>函数副作用：值不仅仅受参数影响，还受<strong>上下环境</strong>影响，如与全局变量有关 <strong>不能有函数副作用</strong><ul>
+<li>先调哪个函数没有影响，可以<strong>并行</strong>（如两个不同载体）从哪里开始运行由系统决定<ul>
+<li>如排版，先变成5号字、再加黑bold，或换顺序，没有影响 如画图渲染，把所有运行一遍</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>逻辑式程序设计：推理<img src="../../../../84368/AppData/Roaming/Typora/typora-user-images/image-20220216132902494.png" alt="image-20220216132902494" style="zoom:25%;" /><ul>
+<li>不断输入规则、fact，判断问题（也可能<strong>不知道</strong>，推不出来）</li>
+<li>专家系统：医生、地质经验输入，通过事实、采集样本，让计算机代替专家   </li>
+<li>目前活跃的有prolog，如算24，平常枚举   这里<strong>不知道怎么计算</strong>（隐藏细节）描述清楚问题即可</li>
+</ul>
+</li>
+</ul>
+<h2 id="C-语言发展路径"><a href="#C-语言发展路径" class="headerlink" title="C++语言发展路径"></a>C++语言发展路径</h2><p><img src="/../../../../84368/AppData/Roaming/Typora/typora-user-images/image-20220216135826340.png" alt="image-20220216135826340"></p>
+<p>开始的想法：能不能用科学计算，现在已被<strong>数据处理</strong>替代</p>
+<p>Algol：</p>
+<ul>
+<li>提出scope：<strong>作用域</strong>（程序的局部化）提出栈等概念</li>
+<li>提出复合语句</li>
+<li>提出软件复用：代码复用，要做模块</li>
+<li>提出函数：最重要的是参数传递</li>
+<li>提出递归：增强、简洁</li>
+<li>提出动态数组</li>
+</ul>
+<p>Algol 68引入C++结构化编程的思想</p>
+<p>C++OO 从Simula 67引入</p>
+<p><strong>Go语言</strong>：重写后台 增加携程（并发程序设计）垃圾回收 内存安全</p>
+<p>c语言运行效率高，开发效率低</p>
+<p><img src="/../../../../84368/AppData/Roaming/Typora/typora-user-images/image-20220216193052950.png" alt="image-20220216193052950"></p>
+<p>即使发明了也不能代替：早期很多代码已经被编译成<strong>二进制码</strong>了，<strong>程序正确性不能被证明</strong></p>
+<h1 id="第二课"><a href="#第二课" class="headerlink" title="第二课"></a>第二课</h1><h2 id="C-的诞生"><a href="#C-的诞生" class="headerlink" title="C++的诞生"></a>C++的诞生</h2><p>Fortran一致性差，与机器绑定紧密</p>
+<p>CPL bcpl注重细节，不够简洁 B写unix操作系统发展到C</p>
+<p>第3个基因OO从Simula 67开始 计算：一大类软件叫做Simulation System仿真系统需要<strong>对问题求数值解</strong> 没有直接的数学模型做对应 这个人做核反应堆，选择FORTRAN或者ALGOL60 打破LIFO栈结构  想要设计一个语言兼容Algol60</p>
+<ul>
+<li>有能描述行为的动作</li>
+<li>指针来管理</li>
+<li>有供分析的数据</li>
+<li>对数据要有管理</li>
+</ul>
+<p>Simula 1：只是核电的仿真系统 </p>
+<p>之后的Simula 67:有封装&#x2F;虚函数&#x2F;多态&#x2F;垃圾回收</p>
+<ul>
+<li><p>发现有共性：能不能增强<strong>复用</strong> <strong>抽象</strong>共性为Class 不同的class有共性-&gt;<strong>继承</strong></p>
+</li>
+<li><p>原来都是从顶向下，现在也能自底向上</p>
+</li>
+</ul>
+<p>没有继续发展下去的原因：1Born：停在68 在欧洲 2：贵3：缺IDE4：没更多作品 5：体积大 6：并发和数据类型表示不够好</p>
+<p>程序&#x3D;算法+数据结构</p>
+<p><img src="/../../../../84368/AppData/Roaming/Typora/typora-user-images/image-20220223111012157.png" alt="image-20220223111012157"></p>
+<p><img src="/../../../../84368/AppData/Roaming/Typora/typora-user-images/image-20220223112301423.png" alt="image-20220223112301423"></p>
+<p>存在主义：注重个体 尊重所有有益的工具</p>
+<p>1979：带类的C 要兼容C 接近机器和问题 不能舍弃C中危险丑陋特性而付出效益的代价</p>
+<p>linker：连接兼容性重于代码兼容性  实现+测试稳步前进</p>
+<p>C++：用户产业界大学 运行环境 硬件+OS 标准化ANSI ISO（国际化）</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032318232.png" alt="image-20220223114641712"></p>
+<p>cPP：只翻译class，不检查语法 Cfront：<strong>语法检查</strong></p>
+<p>现在编译器的结构：LLVM</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032318251.png" alt="image-20220223115506834"></p>
+<p>C++ 兼顾细节与抽象 与错误相比更重要的是能做什么 程序员可以被信任</p>
+<h2 id="课程内容"><a href="#课程内容" class="headerlink" title="课程内容"></a>课程内容</h2><p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032318295.png" alt="image-20220223123736330"></p>
+<p>1结构化 2OO 3final</p>
+<h1 id="第三课"><a href="#第三课" class="headerlink" title="第三课"></a>第三课</h1><h2 id="结构化程序设计部分"><a href="#结构化程序设计部分" class="headerlink" title="结构化程序设计部分"></a>结构化程序设计部分</h2><p>程序&#x3D;数据结构+算法 </p>
+<p>1、数据 2、计算控制 3、组织 4、构造数据类型(array struct union pointer)</p>
+<p><strong>数据</strong>：有名字、值、性质(const为常量只有<strong>读权限</strong>一定设为const)和DataType</p>
+<p>int x &#x3D; 8;初始化     int x;取值范围 16位时-32768-32767 用sizeof来看</p>
+<p>ADT抽象数据类型 因为数表示的范围有限，所以可数、离散</p>
+<p>用补码：模 好计算 溢出overflow要自己控制</p>
+<p>移植程序在不同机器怎么办？用typedef int INT16;&#x2F;&#x2F;别名 INT16 y;这样移植时就可用typedef short INT16;就可以了</p>
+<p>int x &#x3D; 5; int y &#x3D; 2; x&#x2F;y&#x3D;2 定义了<strong>同类型的计算语义</strong></p>
+<p><strong>builtin datatype</strong>：char int float double</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032318267.png" alt="image-20220225143944850" style="zoom:25%;" />局部变量在stack new int 在heap</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032318279.png" alt="image-20220225150314242"></p>
+<p>强：在类型系统的要求 s1&#x3D;”12”; s2&#x3D;8; s1&#x3D;s1+s2;弱类型可能可以理解</p>
+<p>静：compile&#x2F;link阶段能确定类型 run以后要根据状态来决定类型：动态类型</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032318476.png" alt="image-20220225150616586"></p>
+<p><strong>多态</strong>：动态的表现 要看实际调用 约束是Figure必须是line rect的父类</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032318647.png" alt="image-20220225151301222"></p>
+<p>tom其实不是duck类型，不符合这个函数的关系，但有这个quack函数，就可以调用：完全<strong>动态</strong>的形式</p>
+<p>程序不能做证明：只能用测试  类型安全不能用于测试</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032318397.png" alt="image-20220225151600524"></p>
+<p>怎么在不同类型之间计算？<strong>表达式</strong>    要考虑优先级、结合性</p>
+<p>double x &#x3D; 1.0 + 3&#x2F;2;逐个趋强 1.0+1&#x3D;2.0</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032318431.png" alt="image-20220225153042827"></p>
+<p>副作用：要去掉表达式的副作用，要让程序员清晰易懂   谨防overflow</p>
+<p>新版本机制：“1+2”+3 元程序设计 可以让系统帮忙做类型推演</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032318464.png" alt="image-20220225153335845"></p>
+<p>不加分号：表达式 加分号：语句 操作符重载</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032318488.png" alt="image-20220225153952358"></p>
+<p>A(1) &#x3D; 8;是不行的，因为x是局部变量 </p>
+<p>类型不同时，先计算右边，如double x &#x3D; 1 + 2&#x2F;3;</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032318517.png" alt="image-20220225154105331"></p>
+<p>不能做重载 如果yz都是左值，可以写x&gt;0?y:z&#x3D;8;</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032318962.png" alt="image-20220225154302153"></p>
+<p>整个表达式的值是<strong>最后一个的值</strong>，如这里是6</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032318682.png" alt="image-20220225154718057"></p>
+<p>交换a b</p>
+<p><strong>语句</strong>：加分号 </p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032318716.png" alt="image-20220225155951606"></p>
+<p>可以通过重载，输出自己定义的数据类型，很方便</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032318754.png" alt="image-20220225160449176"></p>
+<p>for循环有三要素（初始化;终止条件;改变循环控制变量）</p>
+<p>switch相比if，只需要比较一次，开销小   一般避免出现字面常量（1、2）而选用符号常量（如const double PI &#x3D; 3.14; const int RED &#x3D; 0;）更好enum：<strong>枚举类型</strong>（enum Color{RED &#x3D; -8, BLUE, GREEN}默认是0，也可以赋值）把一组关联的常量变成新的类型</p>
+<p>日志也经常用switch case 示例：</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032318784.png" alt="image-20220225161231596"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032318822.png" alt="image-20220225161653191"></p>
+<p>可以把表放到文件当中：方便汉化等 修改资源文件</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032318147.png" alt="image-20220225161955583"></p>
+<p>问题1：一定有很高的效率吗？问题2：有没有办法解决？通过compiler后的呈现，方法：table driven</p>
+<p>1：enum范围？ 2：通过compiler后的呈现？</p>
+<h1 id="第四课"><a href="#第四课" class="headerlink" title="第四课"></a>第四课</h1><h2 id="switch"><a href="#switch" class="headerlink" title="switch"></a>switch</h2><p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032318205.png" alt="image-20220302102128621"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032318242.png" alt="image-20220302102813841"></p>
+<p>跳转表：0x034-0x0fc：200byte 有值：跳到如0x56214 再指向string地址 无：default 存0x23e</p>
+<p>ja:无符号<strong>大于</strong>50 gotodefault</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032318288.png" alt="image-20220302103011864"></p>
+<p>以空间换时间<img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032318362.png" alt="image-20220302103313742"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032318409.png" alt="image-20220302103636309"></p>
+<p>差值即是字符串长度，如number为7</p>
+<p>如果enum范围太大呢？类似平衡二叉树</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032318245.png" alt="image-20220302104116789"></p>
+<p>jg：大于</p>
+<img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032318283.png" alt="image-20220302104247712" />
+
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032318318.png" alt="image-20220302104450631" style="zoom:25%;" />通过实验让gcc做出选择。目前不能让用户自己选。</p>
+<img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032318340.png" alt="image-20220302104631223" style="zoom: 33%;" />
+
+<p>OO：数据和代码的封装，是整体的封装 compiler编译后依然分开在code和数据</p>
+<p>全局变量：data区 局部变量：栈 很多地址要link时才能确定：include库等</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032318361.png" alt="image-20220302110214399"></p>
+<p>同名时：在不同阶段会<strong>检查符号表并报错</strong></p>
+<p>不能全部作为全局变量：没有递归，因为不能载入 局部变量的代价是stack的申请退回空间等操作</p>
+<p>heap：用函数显式申请 也要记得还 否则容易内存泄漏</p>
+<p>函数重载：符号表里会有内部的函数名，指示参数类型-&gt;可以区分</p>
+<h1 id="第五课"><a href="#第五课" class="headerlink" title="第五课"></a>第五课</h1><h2 id="函数与引用"><a href="#函数与引用" class="headerlink" title="函数与引用"></a>函数与引用</h2><h2 id="内联函数"><a href="#内联函数" class="headerlink" title="内联函数"></a>内联函数</h2><h1 id="第六课"><a href="#第六课" class="headerlink" title="第六课"></a>第六课</h1><h2 id="作用域"><a href="#作用域" class="headerlink" title="作用域"></a>作用域</h2><h2 id="namespace"><a href="#namespace" class="headerlink" title="namespace"></a>namespace</h2><h2 id="宏"><a href="#宏" class="headerlink" title="宏"></a>宏</h2><h1 id="第七课"><a href="#第七课" class="headerlink" title="第七课"></a>第七课</h1><h2 id="数组"><a href="#数组" class="headerlink" title="数组"></a>数组</h2><p>int a[3];&#x2F;&#x2F;a是数组类型</p>
+<p>sizeof(a);&#x2F;&#x2F;表示数组大小 等于3*sizeof(int)</p>
+<p>a是指针？f(a) 这样就不能求a的大小，所以要传size 其实不是？</p>
+<p>字符串数组初始化等价于自动在后面加’\0’（访问则用数组遍历的形式） </p>
+<p>如果不加’\0’就会显示烫0xcc</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032318392.png" alt="image-20220316100923266"></p>
+<p>int a[2] [3] 等价于 int[3] a[2]</p>
+<p>参数传递：缺省第1维，但不能缺省第2维 因为int[3]基类型 一维数组要知道</p>
+<p>升降维：可看成两个元素组成的一维数组</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032318312.png" alt="image-20220316103800572"></p>
+<p>java可以有不规则数组ragged array，因为java不需要知道内存排列</p>
+<p>但C++没有不规则数组 元素必须整齐排列（相当于矩阵填满了）</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032318337.png" alt="image-20220316104232292"></p>
+<h2 id="Struct"><a href="#Struct" class="headerlink" title="Struct"></a>Struct</h2><p>不同元素在空间中进行排列，默认public，通常与指针联用</p>
+<p>赋值同类型：下图不能赋值，只有A a, b； typedef A, B才能叫同类型</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032318372.png" alt="image-20220316104628368"></p>
+<p>call by reference：会节约空间，但会带来函数副作用</p>
+<p>对齐：不是7是12 padding：契合硬件，提高效率，空间换时间</p>
+<p>可以指定对齐方式：如指定8字节，或pack（改变编译器的对齐方式， 不使用这条指令的情况下，编译器默认采取<code>#pragma pack(8)</code>也就是8字节的默认对齐方式，n值可以取（<code>1</code>， <code>2</code>， <code>4</code>， <code>8</code>， <code>16</code>） 中任意一值。）</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032318397.png" alt="image-20220316105143538"></p>
+<h2 id="Union"><a href="#Union" class="headerlink" title="Union"></a>Union</h2><p>共享空间，节省空间，size是最大值，需要哪种数据类型就访问哪个</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032318417.png" alt="image-20220316105721945"></p>
+<p>二维数组定义矩阵，下标访问而不能用名称访问（如_a11, _a22）</p>
+<p>占有的空间依然是9*int 每一块空间都有两个名字_a11或 _element[0] [0]</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032318398.png" alt="image-20220316110253501"></p>
+<p>修改成union后：注意空间一定要整齐 系统&#x2F;嵌入式软件为了节省空间使用</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032318429.png" alt="image-20220316110513625"></p>
+<p>开300个：浪费了200个空间 所以定义FIGURE</p>
+<p>光有draw不够，还需要type来标识类型</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032318458.png" alt="image-20220316111235359"></p>
+<p>FIGURE_TYPE t;</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032318497.png" alt="image-20220316111429154"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032318522.png" alt="image-20220316111506092"></p>
+<p>如果增加FIGURE_TYPE t，也不会增加空间（毕竟它占用的空间最小）</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032318552.png" alt="image-20220316111741310"></p>
+<p>draw和input：其中枚举类型不能直接input，要用赋值</p>
+<p>多态性：三种类型都能放</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032318516.png" alt="image-20220316111952539"></p>
+<p>增加属性时在每个里面都添加：类似面向对象定义class 利用union可实现多态</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032318549.png" alt="image-20220316112046446"></p>
+<h1 id="第八课"><a href="#第八课" class="headerlink" title="第八课"></a>第八课</h1><h2 id="指针"><a href="#指针" class="headerlink" title="指针"></a>指针</h2><p>指针的作用：管理地址信息</p>
+<ul>
+<li>读写数据</li>
+<li>调用代码</li>
+</ul>
+<h3 id="定义与基本操作"><a href="#定义与基本操作" class="headerlink" title="定义与基本操作"></a>定义与基本操作</h3><h4 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h4><p>int *p;&#x2F;&#x2F;地址对应的内容是int</p>
+<p>仅仅管理地址信息，但不间接操作数据、调用代码(不知道基类型) void*</p>
+<p>int *p,q;&#x2F;&#x2F;p是指针类型，q是int！所以用typedef</p>
+<p>可以赋绝对内存地址：所以可以写操作系统等（作业不涉及）</p>
+<ul>
+<li>嵌入式软件：和其他设备交互，交互的点是扩展内存的地址，往<strong>特定地址</strong>写入数据，就可以通讯–就不需要串口、socket通讯等</li>
+</ul>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032318588.png" alt="image-20220323103310587"></p>
+<h4 id="操作符"><a href="#操作符" class="headerlink" title="操作符"></a>操作符</h4><p>int *p;&#x2F;&#x2F;也分配了一个地址0x7B77 刚开始矩形内内容为null 没有初始化</p>
+<p>p&#x3D;&x;&#x2F;&#x2F;相当于x多了一个名字*p</p>
+<p>如何对p做初始化？<strong>一定要</strong>初始化！！把p放在安全的位置上</p>
+<ul>
+<li>随时随地确认p在<strong>有效空间</strong>内</li>
+<li>如int *p &#x3D; &x;不知道怎么办？？</li>
+<li>Pointer Literal:指针常量null <ul>
+<li>最开始ANSI C：为**((void<em>)0)</em>* <ul>
+<li>但(void*)要求不对数据操作，否则随便赋值（不同类型的指针都能相互赋值，破坏内存系统）</li>
+</ul>
+</li>
+<li>C++：赋值为0<ul>
+<li>但会产生<strong>二义性调用</strong> func(int) func(char*)</li>
+</ul>
+</li>
+<li>C++11：nullptr 不一定是二进制0存储</li>
+</ul>
+</li>
+</ul>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032318609.png" alt="image-20220323104321366"></p>
+<h4 id="指针运算"><a href="#指针运算" class="headerlink" title="指针运算"></a>指针运算</h4><ul>
+<li><p>赋值：同类型 否则可以用int赋值double</p>
+<ul>
+<li><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032318637.png" alt="image-20220323104650658"></li>
+</ul>
+</li>
+<li><p>加减：指针偏移 地址检索</p>
+<ul>
+<li>p&#x3D;p+1 相当于p &#x3D;|p|+sizeof(int)保证操作数据时按照完整数据段 <ul>
+<li><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032318659.png" alt="image-20220323104949954"></li>
+</ul>
+</li>
+<li>同类型可以相减，一般用于数组操作 (|p|-|q|)&#x2F;sizeof(基类型)<ul>
+<li><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032318410.png" alt="image-20220323105203685"></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>比较：一般用&#x3D;&#x3D; !&#x3D;</p>
+</li>
+<li><p>输出：字符串是特例cout&lt;&lt;p是内容 </p>
+<ul>
+<li>因为cout是全局对象 &lt;&lt;函数:操作符重载 规定char*是字符串 转化成非char*就可以输出地址 </li>
+<li><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032318438.png" alt="image-20220323105546730"></li>
+</ul>
+</li>
+<li><p>void*：管理内存 不能做运算，因为不知道sizeof(基类型)</p>
+<ul>
+<li><p>如果操作要做强制类型转换</p>
+<ul>
+<li><p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032318476.png" alt="image-20220323105914118"></p>
+</li>
+<li><p>作用是指针类型的公共接口：安全</p>
+<ul>
+<li><p>清零不需要知道数据类型，每一块赋0即可</p>
+</li>
+<li><p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032318506.png" alt="image-20220323110523157"></p>
+</li>
+<li><p>memset的实现：强制类型转换成char* memcpy showBytes同理</p>
+<ul>
+<li><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032318533.png" alt="image-20220323110711474"></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>常量指针：const int c &#x3D; 0;&#x2F;&#x2F;c可读不可写 </p>
+<ul>
+<li><p>const int *cp;&#x2F;&#x2F;cp是一个指针，指向const int cp对管理的数据空间只有读的权限 *cp&#x3D;10 报错 *q &#x3D; 8;可以 </p>
+</li>
+<li><p><strong>cp&#x3D;&y;&#x2F;&#x2F;可以!!</strong> <strong>管理者cp只能读，管理者q可读可写</strong></p>
+<ul>
+<li>作用:前提:有函数副作用 但有时候不想要 </li>
+<li>print(a);&#x2F;&#x2F;空间太大 传指针print(&amp;a);&#x2F;&#x2F;效率高，但把写的权力交给print</li>
+<li>怎么兼顾效率和安全？*<em>void print(const A <em>a)</em></em> 而且引用时也要用const</li>
+<li>Use const whenever possible</li>
+</ul>
+</li>
+<li><p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032318433.png" alt="image-20220323111656899"></p>
+</li>
+<li><p>q&#x3D;&c;&#x2F;&#x2F;不可以！*q&#x3D;8;相当于可改变常量的值 </p>
+<ul>
+<li><p>但有时候可以去掉这种约束 如print(A *p) const A a;&#x2F;&#x2F;a传不了了 怎么办 </p>
+</li>
+<li><p>const_cast&lt;int *&gt;可以主动去掉const属性</p>
+</li>
+<li><p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032318464.png" alt="image-20220323112147317"></p>
+</li>
+<li><p>假如print不诚信，其实改了数据，会怎么样？</p>
+</li>
+<li><p>*q&#x3D;111 同样的单元有两个不同的值 问题：为什么不会覆盖128？？</p>
+</li>
+<li><p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032318497.png" alt="image-20220323114809074"></p>
+</li>
+<li><p>compiler:编译时c换成128 *q换成111 提前把常量换成具体的值</p>
+</li>
+<li><p>showBytes可以访问Addr里的value    不能把常量指针给变量，除非可信任！</p>
+</li>
+<li><p>如果参数不变，尽可能写成const！！！</p>
+</li>
+<li><p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032318528.png" alt="image-20220323115028368"></p>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>指针常量：只有一次机会赋值单元，但是单元的内容可以改变 *p可改 p不可改</p>
+<ul>
+<li><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032318565.png" alt="image-20220323115300768"></li>
+</ul>
+</li>
+</ul>
+<h3 id="指针和数组"><a href="#指针和数组" class="headerlink" title="指针和数组"></a>指针和数组</h3><ul>
+<li>&amp;a[0]就是指针，可用于遍历数组 a[i]与*(p+i)等同</li>
+<li>int *p&#x3D;a;&#x2F;&#x2F;a这里是表达式 f(a)&#x2F;&#x2F;a也是表达式</li>
+<li>int a[8];sizeof(a)可以得到大小,数组是一种数据结构   void(int a[], int n){sizeof(a)}无法得到大小</li>
+<li>当数组变量变成表达式后，进行了类型转换：数组类型—&gt;int *const   所以要传n(size)</li>
+<li>int b[]相当于变成了<strong>int * const b</strong> 空间不变数组可更改   <strong>不能写b++</strong>  只能写p++</li>
+<li>a[i]编译器会变为*(a+i) p也可以写成*(p+i)</li>
+<li><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032318828.png" alt="image-20220323144417968"></li>
+</ul>
+<p><strong>二维数组</strong></p>
+<ul>
+<li><p>int a[6][2]相当于12个连续空间 int *p &#x3D; &amp;a[0][0]; </p>
+</li>
+<li><p>a[i][j]相当于*(p+i*2+j) i乘以2  </p>
+</li>
+<li><p>a[0]相当于int[2] a6个T(T2个int) 高维是一维的叠加 int *p &#x3D; a[0];&#x2F;&#x2F;把两个int控制权交给p <strong>可以</strong> </p>
+<ul>
+<li>如果访问2个之后的，其实越界了，但其实安全(本来就有这个空间)</li>
+</ul>
+</li>
+<li><p>有没有二维指针？如q[0][0] 有 即int[2]* q&#x3D;a;</p>
+<ul>
+<li>q&#x3D;a q的类型是6个T组成的一维数组 即T*    也可以用q&#x3D;&amp;a[0];进行初始化 q+1就是q+sizeof(T)</li>
+<li>具体写法：int (*q)[2] &#x3D; a;或者 typedef int (*q)[2];都可以—&gt;理解为typedef int[2] *q;</li>
+</ul>
+</li>
+<li><p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032318858.png" alt="image-20220323153507709"></p>
+</li>
+<li><p>数组元素操作</p>
+</li>
+<li><p>数组元素的指针表示法</p>
+</li>
+<li><p>sizeof(A);&#x2F;&#x2F;返回10*sizeof(int)     sizeof(A+1);&#x2F;&#x2F;<strong>返回4</strong>(32位寻址时) 因为A变成表达式A+1是1个地址</p>
+</li>
+<li><p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032318889.png" alt="image-20220323154318759"></p>
+</li>
+<li><p>降维：定义二维 传一维</p>
+<ul>
+<li>maximum(A[0],2*4);&#x2F;&#x2F;传递的是4个int组成的一维数组类型 是<strong>越界</strong>的访问形式</li>
+<li>maximum(&amp;A[0][0], 2*4); n可改为sizeof(A)&#x2F;sizeof(A[0][0]) 数组长度变化时不用改<ul>
+<li><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032318921.png" alt="image-20220323163655929"></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>升维：定义一维 如何变成二维三维</p>
+<ul>
+<li><p>变成<strong>二维</strong>：</p>
+<ul>
+<li><p>typedef int T[2]; show((T *)b, 6);&#x2F;&#x2F;T是类型    </p>
+</li>
+<li><p>因为定义指针q时也可用int (*q)[2]  </p>
+<p>所以这里也能直接写成show((int (*)[2])b, 6);&#x2F;&#x2F;说明b是指向2个int一维数组的指针</p>
+</li>
+</ul>
+</li>
+<li><p>变成<strong>三维</strong>：</p>
+<ul>
+<li>typedef int T1[3]; typedef T1 T2[2]; show((T2 *)b, 2);</li>
+<li>show((int(*)[2][3])b, 2);</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>对<strong>内存</strong>空间数据块 解释二进制的方式依赖<strong>数据类型</strong> 对<strong>外存</strong>也是如此（word txt格式等）</p>
+</li>
+<li><p>思考：怎么分行显示（4个int就换行） (i*2+j+1)%4&#x3D;&#x3D;0 (i*6+j*3+k+1)%4&#x3D;&#x3D;0</p>
+</li>
+<li><p>a[i][j]&#x3D;*(a+i)+j   a[i][j][k]&#x3D;*(*(a+i)+j)+k</p>
+</li>
+</ul>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032318940.png" alt="image-20220323165127598"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032318970.png" alt="image-20220323165340711"></p>
+<h1 id="第九课"><a href="#第九课" class="headerlink" title="第九课"></a>第九课</h1><h2 id="动态变量"><a href="#动态变量" class="headerlink" title="动态变量"></a>动态变量</h2><ul>
+<li><p>大小和生命周期不能由编译器确定，在非编译时刻确定</p>
+</li>
+<li><p>stack用于函数，heap用于动态变量，共用一块空间</p>
+<ul>
+<li><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032318872.png" alt="image-20220325134811375"></li>
+</ul>
+</li>
+<li><p>申请空间通过函数实现，可创建一段连续空间，用指针或者取下标访问</p>
+<ul>
+<li><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032318894.png" alt="image-20220325135213262"></li>
+</ul>
+</li>
+<li><p>多维数组怎么new？<strong>new int[12] 再用升维操作</strong></p>
+<ul>
+<li>C++：new 更清晰：typedef</li>
+<li>C：(int *)malloc(字节数);&#x2F;&#x2F;一定要把void*强制类型转换成int *   语法上有区别</li>
+<li>用new向系统申请空间时：进行有效性判定(有可能会失败！所以拿到指针需要判断是不是null<ul>
+<li>exception：可预见的&#x2F;无法避免的(如文件破坏，socket端口被占用)</li>
+<li>如果申请不够会报bad_alloc</li>
+<li>可以手动释放内存：void f(); f(new_handler p);&#x2F;&#x2F;有问题时可以调自己的函数来处理</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>new和malloc语义上也有区别:class A{} </p>
+<ul>
+<li>p&#x3D;(int *)malloc(sizeof(A)*20)<strong>不会</strong>调用构造函数</li>
+<li>new A[20];&#x2F;&#x2F;面向对象程序设计：RAII 每个对象获得生命周期时必须要被初始化 要调用constructor</li>
+<li>C++建议用<strong>new</strong> OO时更好让对象处于有效状态</li>
+</ul>
+</li>
+</ul>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032318926.png" alt="image-20220325140646180"></p>
+<ul>
+<li><p>归还：delete </p>
+<ul>
+<li><p>写方括号：int[]可以不写 如果是A delete[]可以调用析构函数 delete只能释放内存</p>
+<ul>
+<li>释放内存还不够 <strong>析构函数</strong>要调用！</li>
+<li>如句柄 socket连接要取消 所以new[]就要用delete[]</li>
+</ul>
+</li>
+<li><p>A* P &#x3D;  new A[8]; delete[8] p;</p>
+<ul>
+<li><p>delete[]这里的8写不写<strong>没区别</strong>，为什么？怎么知道还几个？</p>
+</li>
+<li><p>如果用C:A *q&#x3D;(A*)malloc(sizeof(A)*8);free(q);</p>
+</li>
+<li><p>sizeof(A)在<strong>编译时数值可以确定</strong></p>
+<ul>
+<li><p>free时怎么准确地还掉？cookie！！！</p>
+<ul>
+<li>建立一张表 名称(p) 地址 大小(8) q 地址     大小 表的大小在变化，这个方法不好</li>
+<li>delete p&#x2F;q时知道地址，那如何知道大小呢？cookie大小放<strong>初始地址上面的单元</strong>，就知道了size，然后还空间</li>
+</ul>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032318954.png" alt="image-20220325143628613"></p>
+</li>
+</ul>
+</li>
+<li><p>如果用*(p++)&#x3D;0; delete p;有问题 大小找错了 还了不属于申请的空间 <strong>申请的指针不要动</strong>！</p>
+</li>
+</ul>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032318985.png" alt="image-20220325143901317"></p>
+</li>
+<li><p>只要有new 就delete 防止内存泄漏</p>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="指针数组"><a href="#指针数组" class="headerlink" title="指针数组"></a>指针数组</h2><p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032318012.png" alt="image-20220325144316641"></p>
+<ul>
+<li><p>ping也是一个程序 *argv[]是指针数组 *env[]存了一些配置 没有给长度怎么办？结尾是null 可以遍历</p>
+</li>
+<li><p>异步执行：调用另一个exe 如何判断返回值状态？用system(“test.exe”)等拿到返回值的状态（如01）</p>
+</li>
+<li><p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032318866.png" alt="image-20220325150716222"></p>
+</li>
+<li><p>不知道传多少参数：…根据第一个参数的规范去拿参数</p>
+<ul>
+<li>因为<strong>从右往左入栈</strong> 后面的参数在<strong>第一个参数地址的上面</strong></li>
+<li><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032318902.png" alt="image-20220325151033166"></li>
+</ul>
+</li>
+<li><p>模拟写一个MyPrint</p>
+<ul>
+<li><p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032318925.png" alt="image-20220325151306567"></p>
+</li>
+<li><p>先定义变量，放在初始位置，然后按类型(用$约定 语言解析)拿不同参数，最后还掉</p>
+<ul>
+<li>list:va_list就是char *</li>
+<li>start:通过第一个参数s找到起始位置：list的地址+s的偏移量 找到起始位置 </li>
+<li>arg:因为有对齐 所以不直接用sizeof 而是用宏_INTSIZEOF()(一般都是用整数int对齐)<ul>
+<li>(x+n-1)&amp;~(n-1)	</li>
+<li><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032318951.png" alt="image-20220325154819621"></li>
+<li><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032318976.png" alt="image-20220325152740525"></li>
+</ul>
+</li>
+<li>end:指针变成0 变成不可用状态</li>
+</ul>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032318008.png" alt="image-20220325153340420"></p>
+</li>
+<li><p>像MyPrint，max：第一个参数不一定是符号串，但一定要有一个具体参数 </p>
+<ul>
+<li>max要给出个数，否则不知道循环多少个</li>
+</ul>
+</li>
+<li><p>万一违背原则（写1个参数传3个，写3个参数传1个），会访问不改访问的空间，改写的话可能改返回值，造成格式串攻击</p>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="指针和结构"><a href="#指针和结构" class="headerlink" title="指针和结构"></a>指针和结构</h2><ul>
+<li><p>-&gt;和smart pointer(操作符重载)不同	</p>
+<ul>
+<li><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032318819.png" alt="image-20220325155636485"></li>
+</ul>
+</li>
+<li><p>如果传A a消耗大量空间 所以用A *a传地址—&gt;加上const 防止函数副作用 被修改</p>
+<ul>
+<li>call by reference：A &amp;a 可以不用指针</li>
+<li><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032318839.png" alt="image-20220325160148005"></li>
+</ul>
+</li>
+<li><p>多次申请的同类型动态数据放容器中管理：<strong>链表</strong> 多一块空间记录下一块空间的地址</p>
+<ul>
+<li><p>这种记录的管理方式也在硬盘里面（存下一个的地址）：</p>
+<ul>
+<li><p>文件由磁道组成，最小单位是扇区。磁盘调度不能按顺序，那就不能记录顺序。所以这种情况要建表，文件从硬盘装载时查表，就知道文件需要有哪些块，然后<strong>统一进行磁盘调度</strong>，同时把表放到<strong>内存</strong>，2个原因导致效率高（FAT文件分配表:File Allocation Table）。这个表是确定的（格式化后地址就固定了），不会有变化。</p>
+</li>
+<li><p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032318863.png" alt="image-20220325161554910"></p>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="动态变量的应用（链表）"><a href="#动态变量的应用（链表）" class="headerlink" title="动态变量的应用（链表）"></a>动态变量的应用（链表）</h2><ul>
+<li>根据访问的不同，可能是栈(在开头插)或者队列(在结尾插)<ul>
+<li><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032318894.png" alt="image-20220325161929539"></li>
+</ul>
+</li>
+</ul>
+<p><strong>插入</strong></p>
+<ul>
+<li><p>表头插入</p>
+</li>
+<li><p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032318928.png" alt="image-20220325162400600"></p>
+<ul>
+<li>这里可以不判断head是否为null，直接p-&gt;next &#x3D; head;head &#x3D; p;</li>
+</ul>
+</li>
+<li><p>表尾插入</p>
+</li>
+<li><p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032318955.png" alt="image-20220325162550215"></p>
+</li>
+<li><p>插在某结点（值为a）的后面</p>
+<ul>
+<li>短路表达式：如果前面确定值，后面将被忽略</li>
+<li>q!&#x3D;null保证不会把null结点来引用 可叫做哨兵结点（也有说法说放一个值域为null的结点为开头，避免判断链表是否为空，简化边界处理）</li>
+<li><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032318767.png" alt="image-20220325162847920"></li>
+<li>希望链表满足一定的属性次序，所以不一定操作头尾（有序：折半查找）增删效率与查找相反<ul>
+<li>主要的应用在数据库的索引（建立序关系）如果索引过强，增删效率低，查找效率高</li>
+</ul>
+</li>
+<li>根据问题来调整，没有绝对的好坏</li>
+</ul>
+</li>
+<li><p>插在某结点（值为a）的前面</p>
+<ul>
+<li><p>需要两个指针，因为不知道前面的</p>
+</li>
+<li><p>加很多null，害怕空指针，因为有exception</p>
+<ul>
+<li><p>用guard node：head值为null除了头结点不会有其他为空</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032318792.png" alt="image-20220325164505394"></p>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>结点删除</p>
+<ul>
+<li>同样需要两个结点记录</li>
+<li><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032318829.png" alt="image-20220325164647367"></li>
+</ul>
+</li>
+</ul>
+<p>练习：<strong>单项排序链</strong></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032318855.png" alt="image-20220325164910809"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032318889.png" alt="image-20220325165208405"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032318919.png" alt="image-20220325165352004"></p>
+<p>问题：first是一个全局变量。如果作为main里面的局部变量，insert(first,n);会有问题吗？？</p>
+<h2 id="链表代码实现"><a href="#链表代码实现" class="headerlink" title="链表代码实现"></a>链表代码实现</h2><h3 id="without-dummy-node"><a href="#without-dummy-node" class="headerlink" title="without dummy node"></a>without dummy node</h3><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"><span class="keyword">struct</span> <span class="title class_">Node</span>&#123;</span><br><span class="line">    <span class="type">int</span> k;</span><br><span class="line">    Node *next;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="comment">//插入后返回新的头结点</span></span><br><span class="line"><span class="function">Node *<span class="title">insert</span><span class="params">(Node *head, <span class="type">int</span> val)</span></span>&#123;</span><br><span class="line">    Node *n = <span class="keyword">new</span> Node;</span><br><span class="line">    n-&gt;k = val;</span><br><span class="line">    n-&gt;next = <span class="literal">nullptr</span>;</span><br><span class="line"></span><br><span class="line">    Node *ans = head;</span><br><span class="line">    Node *prev = <span class="literal">nullptr</span>, *curr = head;</span><br><span class="line">    <span class="keyword">while</span> (curr != <span class="literal">nullptr</span> &amp;&amp; val &gt;= curr-&gt;k)&#123;</span><br><span class="line">        prev = curr;</span><br><span class="line">        curr = curr-&gt;next;</span><br><span class="line">    &#125;</span><br><span class="line"><span class="comment">//    prev就是要插入的值</span></span><br><span class="line">    <span class="keyword">if</span>(prev == <span class="literal">nullptr</span>)&#123;<span class="comment">//当n是头结点</span></span><br><span class="line">        n-&gt;next = head;</span><br><span class="line">        ans = n;</span><br><span class="line">    &#125;<span class="keyword">else</span>&#123;<span class="comment">//插在prev和curr之间</span></span><br><span class="line">        n-&gt;next = prev-&gt;next;</span><br><span class="line">        prev-&gt;next = n;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> ans;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//删除后返回新的头结点</span></span><br><span class="line"><span class="function">Node *<span class="title">remove</span><span class="params">(Node *head, <span class="type">int</span> val)</span></span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(head == <span class="literal">nullptr</span>)&#123;<span class="comment">//链表为空，没有可删的东西</span></span><br><span class="line">        <span class="keyword">return</span> head;</span><br><span class="line">    &#125;</span><br><span class="line">    Node *ans = head;</span><br><span class="line">    Node *prev = <span class="literal">nullptr</span>, *curr = head;</span><br><span class="line">    <span class="keyword">while</span> (curr != <span class="literal">nullptr</span> &amp;&amp; val != curr-&gt;k)&#123;</span><br><span class="line">        prev = curr;</span><br><span class="line">        curr = curr-&gt;next;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span>(curr != <span class="literal">nullptr</span>)&#123;<span class="comment">//找到待删除结点</span></span><br><span class="line">        <span class="keyword">if</span>(prev == <span class="literal">nullptr</span>)&#123;<span class="comment">//删除的是头结点</span></span><br><span class="line">            ans = head-&gt;next;</span><br><span class="line">            <span class="keyword">delete</span> head;</span><br><span class="line">        &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">            prev-&gt;next = curr-&gt;next;</span><br><span class="line">            <span class="keyword">delete</span> curr;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> ans;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">print</span><span class="params">(<span class="type">const</span> Node *head)</span></span>&#123;<span class="comment">//const 因为不需要改内容</span></span><br><span class="line">    <span class="keyword">if</span>(head == <span class="literal">nullptr</span>)&#123;</span><br><span class="line">        cout &lt;&lt; <span class="string">&quot;&lt;null&gt;&quot;</span> &lt;&lt; endl;</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="type">const</span> Node *p = head;<span class="comment">//p对管理的数据空间只有读权限</span></span><br><span class="line">    <span class="keyword">while</span> (p != <span class="literal">nullptr</span>)&#123;</span><br><span class="line">        cout &lt;&lt; p-&gt;k;</span><br><span class="line">        <span class="keyword">if</span>(p-&gt;next != <span class="literal">nullptr</span>)&#123;</span><br><span class="line">            cout &lt;&lt; <span class="string">&quot;-&gt;&quot;</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        p = p-&gt;next;</span><br><span class="line">    &#125;</span><br><span class="line">    cout &lt;&lt; endl;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//回收链表占用的空间</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">release</span><span class="params">(Node *head)</span></span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(head == <span class="literal">nullptr</span>)&#123;</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    Node *p = head;</span><br><span class="line">    <span class="keyword">while</span>(p != <span class="literal">nullptr</span>)&#123;</span><br><span class="line">        Node *q = p-&gt;next;<span class="comment">//先把下一个指针记录 否则删了p后就不合法 可能地址值会变</span></span><br><span class="line">        <span class="keyword">delete</span> p;</span><br><span class="line">        p = q;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">    Node *head = <span class="literal">nullptr</span>;</span><br><span class="line">    head = <span class="built_in">insert</span>(head, <span class="number">2</span>);</span><br><span class="line">    head = <span class="built_in">insert</span>(head, <span class="number">1</span>);</span><br><span class="line">    head = <span class="built_in">insert</span>(head, <span class="number">3</span>);</span><br><span class="line">    head = <span class="built_in">insert</span>(head, <span class="number">4</span>);</span><br><span class="line">    head = <span class="built_in">insert</span>(head, <span class="number">0</span>);</span><br><span class="line"></span><br><span class="line">    head = <span class="built_in">remove</span>(head, <span class="number">3</span>);</span><br><span class="line"></span><br><span class="line">    <span class="built_in">print</span>(head);</span><br><span class="line"></span><br><span class="line">    <span class="built_in">release</span>(head);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="with-dummy-node"><a href="#with-dummy-node" class="headerlink" title="with dummy node"></a>with dummy node</h3><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;assert.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"><span class="keyword">struct</span> <span class="title class_">Node</span>&#123;</span><br><span class="line">    <span class="type">int</span> k;</span><br><span class="line">    Node *next;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="comment">//不返回，因为dummy一直不变</span></span><br><span class="line"><span class="function"><span class="type">void</span> *<span class="title">insert</span><span class="params">(Node *head, <span class="type">int</span> val)</span></span>&#123;</span><br><span class="line">    <span class="built_in">assert</span>(head != <span class="literal">nullptr</span>);</span><br><span class="line"></span><br><span class="line">    Node *n = <span class="keyword">new</span> Node;</span><br><span class="line">    n-&gt;k = val;</span><br><span class="line">    n-&gt;next = <span class="literal">nullptr</span>;</span><br><span class="line"></span><br><span class="line">    Node *prev = head, *curr = head-&gt;next;</span><br><span class="line">    <span class="keyword">while</span>(curr != <span class="literal">nullptr</span> &amp;&amp; val &gt;= curr-&gt;k)&#123;</span><br><span class="line">        prev = curr;</span><br><span class="line">        curr = curr-&gt;next;</span><br><span class="line">    &#125;</span><br><span class="line"><span class="comment">//    可以总保证prev不为null 简单了一点</span></span><br><span class="line">    prev-&gt;next = n;</span><br><span class="line">    n-&gt;next = curr;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//删除后返回新的头结点</span></span><br><span class="line"><span class="function"><span class="type">void</span> *<span class="title">remove</span><span class="params">(Node *head, <span class="type">int</span> val)</span></span>&#123;</span><br><span class="line">    <span class="built_in">assert</span>(head != <span class="literal">nullptr</span>);</span><br><span class="line"></span><br><span class="line">    Node *prev = head, *curr = head-&gt;next;</span><br><span class="line">    <span class="keyword">while</span> (curr != <span class="literal">nullptr</span> &amp;&amp; val != curr-&gt;k)&#123;</span><br><span class="line">        prev = curr;</span><br><span class="line">        curr = curr-&gt;next;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span>(curr != <span class="literal">nullptr</span>)&#123;<span class="comment">//找到待删除结点</span></span><br><span class="line">        prev-&gt;next = curr-&gt;next;</span><br><span class="line">        <span class="keyword">delete</span> curr;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">print</span><span class="params">(<span class="type">const</span> Node *head)</span></span>&#123;<span class="comment">//const 因为不需要改内容</span></span><br><span class="line">    <span class="built_in">assert</span>(head != <span class="literal">nullptr</span>);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span>(head -&gt; next == <span class="literal">nullptr</span>)&#123;</span><br><span class="line">        cout &lt;&lt; <span class="string">&quot;&lt;null&gt;&quot;</span> &lt;&lt; endl;</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="type">const</span> Node *p = head-&gt;next;</span><br><span class="line">    <span class="keyword">while</span> (p != <span class="literal">nullptr</span>)&#123;</span><br><span class="line">        cout &lt;&lt; p-&gt;k;</span><br><span class="line">        <span class="keyword">if</span>(p-&gt;next != <span class="literal">nullptr</span>)&#123;</span><br><span class="line">            cout &lt;&lt; <span class="string">&quot;-&gt;&quot;</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        p = p-&gt;next;</span><br><span class="line">    &#125;</span><br><span class="line">    cout &lt;&lt; endl;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//回收链表占用的空间</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">release</span><span class="params">(Node *head)</span></span>&#123;</span><br><span class="line">    <span class="built_in">assert</span>(head != <span class="literal">nullptr</span>);</span><br><span class="line"></span><br><span class="line">    Node *p = head;</span><br><span class="line">    <span class="keyword">while</span>(p != <span class="literal">nullptr</span>)&#123;</span><br><span class="line">        Node *q = p-&gt;next;<span class="comment">//先把下一个指针记录 否则删了p后就不合法 可能地址值会变</span></span><br><span class="line">        <span class="keyword">delete</span> p;</span><br><span class="line">        p = q;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">    Node *dummy = <span class="keyword">new</span> Node;</span><br><span class="line">    dummy-&gt;k = <span class="number">-1</span>;<span class="comment">//-1在二进制补码里全1 可能有帮助</span></span><br><span class="line">    dummy-&gt;next = <span class="literal">nullptr</span>;</span><br><span class="line">    <span class="built_in">insert</span>(dummy, <span class="number">2</span>);</span><br><span class="line">    <span class="built_in">insert</span>(dummy, <span class="number">1</span>);</span><br><span class="line">    <span class="built_in">insert</span>(dummy, <span class="number">3</span>);</span><br><span class="line">    <span class="built_in">insert</span>(dummy, <span class="number">4</span>);</span><br><span class="line">    <span class="built_in">insert</span>(dummy, <span class="number">0</span>);</span><br><span class="line"></span><br><span class="line">    <span class="built_in">remove</span>(dummy, <span class="number">3</span>);</span><br><span class="line"></span><br><span class="line">    <span class="built_in">print</span>(dummy);</span><br><span class="line"></span><br><span class="line">    <span class="built_in">release</span>(dummy);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="第十课"><a href="#第十课" class="headerlink" title="第十课"></a>第十课</h1><p>更正：不需要判断head是否为null 只要赋值就行</p>
+<p>容器：</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032318682.png" alt="image-20220330101449125"></p>
+<h2 id="指针与函数"><a href="#指针与函数" class="headerlink" title="指针与函数"></a>指针与函数</h2><p>函数指针：指向函数代码段的指针</p>
+<ul>
+<li>double *fp1(int);&#x2F;&#x2F;表示fp1是函数原型，参数int返回double</li>
+<li>double (*fp1)(int)&#x3D;&f;&#x2F;&#x2F;这样写才行</li>
+<li>(*fp1)(10);&#x2F;&#x2F;就相当于f(10);</li>
+<li>fp1,fp2是<strong>不同类型</strong>，不能进行相互赋值</li>
+<li>取地址符与f等价，fp1&#x3D;f 所以可以fp1(10);<ul>
+<li>int a[8];cout &lt;&lt;  a;&#x2F;&#x2F;此时a<strong>退化成指针</strong>，输出地址 cout&lt;&lt;&a;&#x2F;&#x2F;此时a仍为数组，&amp;a为<strong>地址</strong></li>
+</ul>
+</li>
+<li>形构一样，可以不断赋值</li>
+</ul>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032318708.png" alt="image-20220330102719781"></p>
+<h3 id="函数指针"><a href="#函数指针" class="headerlink" title="函数指针"></a>函数指针</h3><ul>
+<li>原先扩展逻辑不好：前缀，op类型定死了</li>
+</ul>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032318729.png" alt="image-20220330103042935"></p>
+<p>getTask：把输入转化为任务结构</p>
+<p>execute：分离op和op1，op2 </p>
+<ul>
+<li>add minus都是一个形构，用函数指针赋值：int (*fp)(int, int);fp&#x3D;add,fp&#x3D;minus  fp(op1,op2)</li>
+</ul>
+<p>switch-case:table driven 放入指针数组 就可以表驱动</p>
+<ul>
+<li>让指针数组和enum的指针一样</li>
+</ul>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032318753.png" alt="image-20220330103732094"></p>
+<p>利用op数组下标和enum下标后：</p>
+<p>如果再增加int multi(int a, int b)：只需要修改op数组和enum</p>
+<ul>
+<li>可以用宏制作(compose)一个程序</li>
+<li>如利用框架BEGIN_MESSAGE_MAP增加函数</li>
+<li>耦合度降低，程序维护性提升。</li>
+<li><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032318784.png" alt="image-20220330104259493"></li>
+</ul>
+<p>冒泡排序：与数据本身无关，只是一个策略–&gt;<strong>写泛型</strong></p>
+<ul>
+<li><p>改数据类型：需要知道块大小(width)和<strong>初始地址</strong>(void *)块数量(num)</p>
+</li>
+<li><p>char *A&#x3D;(char *)base;</p>
+</li>
+<li><p>char *tmp &#x3D; (char *)malloc(width);&#x2F;&#x2F;大小在调用后在确定分配的空间malloc   最后要free(tmp)</p>
+</li>
+<li><p>内存之间的<strong>复制</strong>而不是赋值</p>
+</li>
+<li><p>memcpy(void *, void *, int size);&#x2F;&#x2F;第j块拷贝到tmp</p>
+</li>
+<li><p>序关系：两块数据没有类型，只有<strong>调用者</strong>知道序关系，如何传递给mySort？用函数指针 (*compare)让被调用者完成计算</p>
+<ul>
+<li><p>int (*compare)(const void *elem1, const void *elem2)</p>
+</li>
+<li><p>称为<strong>回调函数</strong></p>
+</li>
+<li><p>icompare(const void *elem1, const void *elem2){</p>
+<p>​	if(elem1-&gt;age &gt; elem2-&gt;age)return 1;</p>
+<p>&#x2F;&#x2F;我忘了强制类型转换！！</p>
+<p>}</p>
+</li>
+<li><p>可用函数指针实现泛型，体现多态(一名多用)–&gt;以后用template模板</p>
+</li>
+</ul>
+</li>
+</ul>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032318820.png" alt="image-20220330110140162"></p>
+<p>综上，函数指针1、实现公共框架 2、实现泛型，体现多态</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032318741.png" alt="image-20220330110301288"></p>
+<p>访问不同语义、同样接口的代码</p>
+<h2 id="多级指针"><a href="#多级指针" class="headerlink" title="多级指针"></a>多级指针</h2><p>多级指针：基类型是指针</p>
+<p>交换2个int：x和y地址值 交换2个char*：把原来的int变成char *就可以了</p>
+<p>若写为char p1[]&#x3D;”abcd”;&#x2F;&#x2F;等价于char p1[5];这里的p1p2地址一旦<strong>创建后不能被移动</strong>，所以只能用strcpy来完成交换</p>
+<blockquote>
+<p>数组名a指向是数值的第一个数据的‘首地址，不容修改，所以它不能随便的指向除了首地址的其他元素的地址。所以&amp;a+1出现了直接跳出整个数组，把地址指向了最后一个元素的后面。</p>
+</blockquote>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032318761.png" alt="image-20220330112452190"></p>
+<h2 id="引用"><a href="#引用" class="headerlink" title="引用"></a>引用</h2><p>取别名，相当于修改原数组</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032318784.png" alt="image-20220330112642366"></p>
+<p>返回值可以为引用：x[j]即a[j]返回后多了一个名字max2,可以进行赋值（返回值要在调用者里面）</p>
+<p>局部变量不能返回引用：在栈里面，函数调用完就回收！声明周期短！</p>
+<p>OO操作符重载：此处引用可用于为左值的地方</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032318810.png" alt="image-20220330112913450"></p>
+<h2 id="OOP"><a href="#OOP" class="headerlink" title="OOP"></a>OOP</h2><p>ADT：Stack约束</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032318841.png" alt="image-20220330113911900"></p>
+<p>OO：数据和行为封装在一起(Encapsulation)</p>
+<p>封装理念：Information Hidding信息隐藏</p>
+<ul>
+<li>构造函数Stack()编译器会强制执行，<strong>保证对象初始化</strong></li>
+<li>因为buffer[]私有，所以不能直接访问buffer，只能通过push&#x2F;pop完成</li>
+<li>依然是Data Code Stack Heap不像Java有VM</li>
+<li>其实成员函数<strong>有默认的this</strong>，放在开头</li>
+</ul>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032318877.png" alt="image-20220330114831957"></p>
+<h3 id="十个问题"><a href="#十个问题" class="headerlink" title="十个问题"></a>十个问题</h3><p>1、一定会帮助生成默认构造函数A()</p>
+<p>2、自动调用，一定要定义为public，有时定义成private？</p>
+<p>3、什么情况下引入成员初始化表？初始化次序<strong>按照定义</strong>，而不是按照语句</p>
+<p>4、为什么引入操作符重载：A a,b;a&#x3D;b;&#x2F;&#x2F;编译器帮忙重载</p>
+<p>5、Late Binding:程序运行时才绑定 virtual虚函数，需要告诉编译器</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032318659.png" alt="image-20220330115950048"></p>
+<p>6、什么时候用virtual？主动向OS申请Late Binding</p>
+<p>7、什么时候用private&#x2F;protected继承？和public完全不同</p>
+<p>8、有些操作符不能用全局函数实现重载，有些只能用全局函数</p>
+<p>9、什么时候成员函数可以返回&amp;引用？合理的情况</p>
+<p>10、什么时候需要自主管理内存？new delete</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032318685.png" alt="image-20220330120337771"></p>
+<h1 id="第十一课"><a href="#第十一课" class="headerlink" title="第十一课"></a>第十一课</h1><h2 id="OOP好处"><a href="#OOP好处" class="headerlink" title="OOP好处"></a>OOP好处</h2><p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032318715.png" alt="image-20220408141155148"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032318756.png" alt="image-20220408141628518"></p>
+<p>好处仅在编译期间，编译后和非OO代码其实是一样的，有虚函数this</p>
+<p>最大的差别：<strong>封装</strong>：函数放在结构体中间 </p>
+<ul>
+<li>用户使用Stack不需要知道内部细节，如何初始化，但可以使用接口</li>
+</ul>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032318798.png" alt="image-20220408142424797"></p>
+<ul>
+<li>面向过程：程序是命令的集合，可以线性化 函数切分成子函数降低复杂度</li>
+<li>面向对象：程序是对象的集合<ul>
+<li>有继承、多态</li>
+</ul>
+</li>
+<li>基于对象：Ada 把函数捆绑在对象内 但没有继承多态</li>
+</ul>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032318822.png" alt="image-20220408142348216"></p>
+<p>使用OO后开发效率，软件质量都能得到提升</p>
+<h2 id="封装"><a href="#封装" class="headerlink" title="封装"></a>封装</h2><p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032318725.png" alt="image-20220408143851891"></p>
+<p>大规模程序：分头文件和源文件</p>
+<ul>
+<li>头文件<strong>a.h</strong><ul>
+<li>声明public private变量函数</li>
+</ul>
+</li>
+<li>源文件 <strong>a.cpp</strong><ul>
+<li>写完整的构造函数和类方法 </li>
+<li>指明作用域：TDate::SetDate(int y, int m, int d)</li>
+</ul>
+</li>
+<li>也可以不分开，像Java一样写在一起，把<strong>所有内容放在头文件</strong>（如inline）<ul>
+<li>调用函数时，反复调用函数会花费大量时间在调用机制上。会建议编译器使用内联，但不保证编译器会这样实现。</li>
+<li>如果声明成inline函数，会直接用函数体替换函数调用，就可以不用函数调用机制<ul>
+<li>不好，因为inline是代码的展开，可能让目标代码很长。</li>
+<li>所以通常只将小函数getset设置内联，大函数放在源文件里</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p>编译时一个单元一个单元编译，需要其他单元时只需要<strong>把头文件拿过来</strong>（已声明），源代码在链接时做</p>
+<ul>
+<li>两个互相使用时？先声明两个函数</li>
+</ul>
+<p>类：ADT 私有变量不能赋值，如果要赋值用set函数</p>
+<p>Tdate g；就是一个对象，因为已经调用构造函数分配了内存，初始化好了 指针需要new</p>
+<p>g:全局静态存储 t:栈区 p:堆区 </p>
+<ul>
+<li>构造函数，进行值的初始化</li>
+</ul>
+<h2 id="构造函数"><a href="#构造函数" class="headerlink" title="构造函数"></a>构造函数</h2><p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032318761.png" alt="image-20220408144513177"></p>
+<ul>
+<li><p>无返回类型：void都没有</p>
+</li>
+<li><p>可重载：参数列表不同</p>
+</li>
+<li><p>不写：编译器提供默认构造函数，无参数（写的话就不再提供，防止冲突）</p>
+<ul>
+<li>调用默认构造函数后，<strong>栈堆</strong>中的值都是<strong>不确定的值</strong>，全局、全局静态、局部静态会初始化为0。栈堆中的对象里的成员变量也是不确定的值</li>
+<li>主要是完成<strong>对象的初始化</strong>，而不是为对象内容的赋值。<ul>
+<li>建立标识符</li>
+<li>为对象成员开辟内存空间</li>
+<li>根据语句为对象变量赋值</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>可声明成public或private</p>
+<ul>
+<li><p>private：class外部无法访问创建对象</p>
+<p>单例：只能让对象内部的方法调用，在类内部提供一个方法创建对象-<strong>接管对象创建</strong></p>
+<p>也可以多例：指定对象个数</p>
+</li>
+</ul>
+</li>
+</ul>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032318797.png" alt="image-20220408144844805"></p>
+<p>A a1 &#x3D; 1; 会调用A(int i)进行类型转换</p>
+<p>用数组时：可以调用不同的构造函数，默认无参</p>
+<p>目标：分配内存，但我们也要对<strong>变量初始化</strong></p>
+<h3 id="成员初始化表"><a href="#成员初始化表" class="headerlink" title="成员初始化表"></a>成员初始化表</h3><p>赋值初始化：先用构造函数进行了初始化，赋值时又要调自己的构造函数</p>
+<p>成员初始化表：效率更高</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032318847.png" alt="image-20220408150816980"></p>
+<p>变量初始化：</p>
+<ul>
+<li>A():y(1),z(x),x(0){x&#x3D;100;}</li>
+<li>按声明次序初始化：先x后y后z<ul>
+<li>char *p;int size;需要调换次序，否则size没有初始化会出错</li>
+</ul>
+</li>
+<li>不可以像java一样，<strong>只有static const int可以在类内部初始化</strong><ul>
+<li>const、引用类型只能在声明时<strong>使用初始化列表进行初始化</strong>，不能进行赋值</li>
+<li>赋值只有在空间有了才能赋值，所以写在括号里</li>
+<li>构造函数<strong>可以重载</strong></li>
+<li>成员对象若没有无参构造函数，也要在表中初始化</li>
+</ul>
+</li>
+</ul>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032318873.png" alt="image-20220408151304723"></p>
+<ul>
+<li>成员对象：B中有对象A，不是引用而是对象<ul>
+<li>通过B的函数调用A</li>
+</ul>
+</li>
+</ul>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032318895.png" alt="image-20220408151518554"></p>
+<p>数据成员太多时，容易出错，用声明式初始化</p>
+<h2 id="析构函数"><a href="#析构函数" class="headerlink" title="析构函数"></a>析构函数</h2><p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032318787.png" alt="image-20220408151753775"></p>
+<p>2种情况需要释放：其中程序员只需要<strong>负责堆上new的部分</strong></p>
+<p>栈：作用域结束，对象会自动消亡</p>
+<p>堆：自己调用delete释放 否则会造成内存泄漏</p>
+<ul>
+<li>能不能用垃圾回收？Java不知道什么时候垃圾回收，实时性低</li>
+<li>垃圾回收只释放<strong>堆上的内存</strong>，效率障碍，文件操作的句柄、数据库连接忘记关闭，释放不了，但可以调用finalize()，下一次再回收：不确定什么时候回收，所以不太好</li>
+</ul>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032318814.png" alt="image-20220408153020773"></p>
+<p>C++内存管理：RAII（资源获取是初始化）利用构造的对象最终会被销毁的原则</p>
+<ul>
+<li>如果在堆上new了资源，一定要释放</li>
+</ul>
+<p>析构函数声明成private的作用？</p>
+<ul>
+<li><strong>强制自主控制对象存储分配（不能在栈上创建对象-&gt;只能在堆上）</strong></li>
+</ul>
+<p>编译器不允许声明对象，如A aa；因为在栈上，无法自主进行析构</p>
+<p>但可以在堆上生成A <em>p &#x3D; new A; 发现delete p;失败，但可以在A内部写destroy。*<em>p-&gt;destroy();</em></em></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032318843.png" alt="image-20220408153035771"></p>
+<p>s2&#x3D;s1;&#x2F;&#x2F;是s2重新开数组，还是拷贝s2头指针？</p>
+<h2 id="拷贝构造函数"><a href="#拷贝构造函数" class="headerlink" title="拷贝构造函数"></a>拷贝构造函数</h2><p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032318874.png" alt="image-20220408153725808"></p>
+<p>对同类对象进行初始化时：传参数时，返回值时</p>
+<ul>
+<li>A a;</li>
+<li>A b&#x3D;a;</li>
+</ul>
+<p>避免修改原类型：A(const A&amp; a);</p>
+<ul>
+<li><p>const类型：防止修改</p>
+</li>
+<li><p>引用类型：节省了点空间。</p>
+<ul>
+<li><p>要是没写引用，则是值传递，会<strong>无限递归</strong>调用拷贝构造函数</p>
+</li>
+<li><pre><code class="c++">#include &lt;iostream&gt;   
+  
+using namespace std;
+class CExample  
+&#123;  
+    int m_nTest;  
+public:  
+      
+    CExample(int x):m_nTest(x) //带参数构造函数   
+    &#123;   
+       cout &lt;&lt; &quot;constructor with argument/n&quot;;  
+    &#125;  
+      
+    CExample(const CExample &amp; ex) //拷贝构造函数   
+    &#123;  
+        m_nTest = ex.m_nTest;  
+        cout &lt;&lt; &quot;copy constructor/n&quot;;  
+    &#125;  
+      
+    CExample&amp; operator = (const CExample &amp;ex)//赋值函数(赋值运算符重载)   
+    &#123;     
+        cout &lt;&lt; &quot;assignment operator/n&quot;;  
+        m_nTest = ex.m_nTest;  
+        return *this;  
+    &#125;  
+      
+    void myTestFunc(CExample ex)  
+    &#123;  
+    &#125;  
+&#125;;  
+  
+int main()  
+&#123;  
+    CExample aaa(2);  //constructor with argument     
+    CExample bbb(3);  //constructor with argument  
+    bbb = aaa;  //assignment operator  因为bbb已经实例化，不需要构造，只调用赋值函数 
+    CExample ccc = aaa;  //copy constructor  但是ccc还没有实例化，因此调用的是拷贝构造函数
+    bbb.myTestFunc(aaa);  //是aaa作为参数传递给bbb.myTestFunc(CExample ex)， 即CExample ex = aaa；和第四个一致，所以还是拷贝构造函数
+      
+    return 0;     
+&#125;  
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br><span class="line">201</span><br><span class="line">202</span><br><span class="line">203</span><br><span class="line">204</span><br><span class="line">205</span><br><span class="line">206</span><br><span class="line">207</span><br><span class="line">208</span><br><span class="line">209</span><br><span class="line">210</span><br><span class="line">211</span><br><span class="line">212</span><br><span class="line">213</span><br><span class="line">214</span><br><span class="line">215</span><br><span class="line">216</span><br><span class="line">217</span><br><span class="line">218</span><br><span class="line">219</span><br><span class="line">220</span><br><span class="line">221</span><br><span class="line">222</span><br><span class="line">223</span><br><span class="line">224</span><br><span class="line">225</span><br><span class="line">226</span><br><span class="line">227</span><br><span class="line">228</span><br><span class="line">229</span><br><span class="line">230</span><br><span class="line">231</span><br><span class="line">232</span><br><span class="line">233</span><br><span class="line">234</span><br><span class="line">235</span><br><span class="line">236</span><br><span class="line">237</span><br><span class="line">238</span><br><span class="line">239</span><br><span class="line">240</span><br><span class="line">241</span><br><span class="line">242</span><br><span class="line">243</span><br><span class="line">244</span><br><span class="line">245</span><br><span class="line">246</span><br><span class="line">247</span><br><span class="line">248</span><br><span class="line">249</span><br><span class="line">250</span><br><span class="line">251</span><br><span class="line">252</span><br><span class="line">253</span><br><span class="line">254</span><br><span class="line">255</span><br><span class="line">256</span><br><span class="line">257</span><br><span class="line">258</span><br><span class="line">259</span><br><span class="line">260</span><br><span class="line">261</span><br><span class="line">262</span><br><span class="line">263</span><br><span class="line">264</span><br><span class="line">265</span><br><span class="line">266</span><br><span class="line">267</span><br><span class="line">268</span><br><span class="line">269</span><br><span class="line">270</span><br><span class="line">271</span><br><span class="line">272</span><br><span class="line">273</span><br><span class="line">274</span><br><span class="line">275</span><br><span class="line">276</span><br><span class="line">277</span><br><span class="line">278</span><br><span class="line">279</span><br><span class="line">280</span><br><span class="line">281</span><br><span class="line">282</span><br><span class="line">283</span><br><span class="line">284</span><br><span class="line">285</span><br><span class="line">286</span><br><span class="line">287</span><br><span class="line">288</span><br><span class="line">289</span><br><span class="line">290</span><br><span class="line">291</span><br><span class="line">292</span><br><span class="line">293</span><br><span class="line">294</span><br><span class="line">295</span><br><span class="line">296</span><br><span class="line">297</span><br><span class="line">298</span><br><span class="line">299</span><br><span class="line">300</span><br><span class="line">301</span><br><span class="line">302</span><br><span class="line">303</span><br><span class="line">304</span><br><span class="line">305</span><br><span class="line">306</span><br><span class="line">307</span><br><span class="line">308</span><br><span class="line">309</span><br><span class="line">310</span><br><span class="line">311</span><br><span class="line">312</span><br><span class="line">313</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">    &gt; 假如拷贝构造函数参数不是引用类型的话， 那么将使得 ccc.CExample(aaa)变成aaa传值给ccc.CExample(CExample ex)，即CExample ex = aaa，因为 ex 没有被初始化， 所以 CExample ex = aaa 继续调用拷贝构造函数，接下来的是构造ex，也就是 ex.CExample(aaa)，必然又会有aaa传给CExample(CExample ex), 即 CExample ex = aaa;那么又会触发拷贝构造函数，就会永远递归下去。</span><br><span class="line"></span><br><span class="line">什么时候需要**自定义拷贝构造函数**？深拷贝</span><br><span class="line"></span><br><span class="line">- 如果析构掉s1,abcd也被析构,s2变成悬挂指针（指向的地址不知道存了什么东西）</span><br><span class="line">- 所以使用深拷贝（拷贝构造函数）</span><br><span class="line"></span><br><span class="line">![image-20220413103027595](https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032318911.png)</span><br><span class="line"></span><br><span class="line">有自定义拷贝构造函数：调用默认构造函数而不是默认拷贝构造函数，认为a的部分不用拷</span><br><span class="line"></span><br><span class="line">- 如果想拷贝A，又想自定义：**写a(b,a);**显式调用成员对象的构造函数 通常要多写一个默认构造函数</span><br><span class="line"></span><br><span class="line">&gt; generate返回时有一个拷贝，赋值时又进行了一次拷贝赋值，进行了3次对象创建，效率低（左值引用）</span><br><span class="line">&gt;</span><br><span class="line">&gt; - 3次：先建对象&quot;test&quot; 返回时拷贝一次 S=时又拷贝赋值给S</span><br><span class="line"></span><br><span class="line">这里有错，其实是将S传入generate()，拷贝构造就是针对S，只进行了1次。</span><br><span class="line"></span><br><span class="line">const A &amp;:左值右值都可以绑定 拷贝构造</span><br><span class="line"></span><br><span class="line">A&amp;&amp;：只能绑定右值，左值仍然会用拷贝构造</span><br><span class="line"></span><br><span class="line"># 第十二课</span><br><span class="line"></span><br><span class="line">## 移动构造函数</span><br><span class="line"></span><br><span class="line">![image-20220413104654012](https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032318955.png)</span><br><span class="line"></span><br><span class="line">**左值**：变量</span><br><span class="line"></span><br><span class="line">**右值**：常数、表达式、函数调用</span><br><span class="line"></span><br><span class="line">右值引用：int &amp;&amp;a = 10;//a可修改</span><br><span class="line"></span><br><span class="line">const int &amp;a = 10;或const int &amp;&amp;a = 10;//a不可修改</span><br><span class="line"></span><br><span class="line">右值绑定在const上，但不能绑定在非const（左值）上，因为不知道右值什么时候被销毁</span><br><span class="line"></span><br><span class="line">- 当然左值可以绑定在常量引用上</span><br><span class="line"></span><br><span class="line">generate()是右值，不能直接做修改</span><br><span class="line"></span><br><span class="line">- 右值引用，可以使用移动构造函数 如swap已经被优化</span><br><span class="line">  - p是目标数组，把s.p移动到p，然后把s.p置为null</span><br><span class="line">    - 这样就**不需要新的空间资源**</span><br><span class="line">- 若写成string &amp;&amp;S，持有引用，该地址则可以被使用</span><br><span class="line"></span><br><span class="line">若没有自定义拷贝构造、拷贝赋值、析构函数，编译器会合成默认的移动构造函数和移动赋值函数</span><br><span class="line"></span><br><span class="line">- 拷贝构造有变，一般移动构造也会变</span><br><span class="line">- 析构函数管理额外申请的资源，编译器不负责，所以没有默认的函数</span><br><span class="line"></span><br><span class="line">53原则：3析构函数、拷贝函数、移动函数</span><br><span class="line"></span><br><span class="line">不需要创建新资源：效率高</span><br><span class="line"></span><br><span class="line">## 动态内存</span><br><span class="line"></span><br><span class="line">不确定有多少对象</span><br><span class="line"></span><br><span class="line">栈：局部变量，按值传递的参数</span><br><span class="line"></span><br><span class="line">堆：动态内存</span><br><span class="line"></span><br><span class="line">- C：malloc free </span><br><span class="line">  - malloc(sizeof(A))不能调用构造函数（构造函数只能隐式调用）</span><br><span class="line">- C++：new delete 动态对象（除了分配内存还能调用构造函数、析构函数）</span><br><span class="line"></span><br><span class="line">new/delete：既是关键字，也是操作符（有权限进行重定义）为什么引入？**new调用构造函数 delete调用析构函数**</span><br><span class="line"></span><br><span class="line">![image-20220413105554321](https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032318868.png)</span><br><span class="line"></span><br><span class="line">new A的返回值是A* 赋值给p new了后一定要delete 因为堆上不会自己调用，栈上代码离开区域，就会被释放（不同）</span><br><span class="line"></span><br><span class="line">![image-20220413105803514](https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032318904.png)</span><br><span class="line"></span><br><span class="line">new也可以用于基本数据类型 int *i = new int;在堆上创建基本数据类型</span><br><span class="line"></span><br><span class="line">栈上的对象都有名称，堆上的对象都无名，**只能用指针访问**（指针也是数据类型，大小始终是计算机字长）</span><br><span class="line"></span><br><span class="line">![image-20220413110045626](https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032318932.png) </span><br><span class="line"></span><br><span class="line">![image-20220413111533970](https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032318979.png)</span><br><span class="line"></span><br><span class="line">![image-20220413111708855](https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032318005.png)</span><br><span class="line"></span><br><span class="line">建议delete对象后，将指针置为null</span><br><span class="line"></span><br><span class="line">- delete intPtr;//把Object的内存块释放</span><br><span class="line">- intPtr = null;//把指针的内存释放</span><br><span class="line">  - double free: 避免悬空指针dangling pointer 容易有段错误</span><br><span class="line"></span><br><span class="line">不知道指针类型，可以写void *p。但delete有点问题。</span><br><span class="line"></span><br><span class="line">- void *p;//若不指定类型，delete时不知道调用哪个析构函数，只会释放内存指向的Object，不会调用析构函数。所以需要显性进行类型转换</span><br><span class="line">- delete p;</span><br><span class="line"></span><br><span class="line">![image-20220413113140183](https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032318038.png)</span><br><span class="line"></span><br><span class="line">- 先调用析构函数：调用多少次？new时在数组地址之前存储4字节大小的100，就可以依次调用析构函数</span><br><span class="line">  - p是A数组首地址-4字节的地址，存储数组长度100</span><br><span class="line">  - ![image-20220413122325290](https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032318327.png)</span><br><span class="line">- 再归还内存：不加[]，认为是1个对象，只调用1次析构函数；同时会出现段错误，因为把中间的内存块去掉了，前面的和后面的都在，不连续了，知道长度但不知道数组起始位置也没什么用</span><br><span class="line"></span><br><span class="line">同样的，int *p=(int\*)malloc(size);free p;//p的大小也是存在头部</span><br><span class="line"></span><br><span class="line">**对于内置数据类型，不需要调用析构函数**，所以不加上4字节存储长度，delete p直接把完整内存释放</span><br><span class="line"></span><br><span class="line">- int *p;</span><br><span class="line">- p = new int[100];</span><br><span class="line">- delete p;//写delete []p;也不算错</span><br><span class="line"></span><br><span class="line">![image-20220413113559247](https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032318362.png)</span><br><span class="line"></span><br><span class="line">自定义类型必须调用**默认构造函数**（无参）（老标准）</span><br><span class="line"></span><br><span class="line">- C++11统一初始化列表：new int[5]&#123;0,1,2,3,4&#125;也可以显式调用带参数的构造函数</span><br><span class="line"></span><br><span class="line">![image-20220413114039735](https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032318394.png)</span><br><span class="line"></span><br><span class="line">![image-20220413114030010](https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032318428.png)</span><br><span class="line"></span><br><span class="line">删除时先删除行，再删除列，最后删除chArray2</span><br><span class="line"></span><br><span class="line">因为在内存间多维数组是**一维连续内存块**，所以不会new chArray[ROWS]，而是new int[12]，访问a\[i][j]用a[i*4+j]</span><br><span class="line"></span><br><span class="line">- 用**下标操作符重载**</span><br><span class="line"></span><br><span class="line">## const成员</span><br><span class="line"></span><br><span class="line">![image-20220413114708351](https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032318449.png)</span><br><span class="line"></span><br><span class="line">**const必须在定义的地方初始化**，所以用**成员初始化表**，而不是事后赋值</span><br><span class="line"></span><br><span class="line">对于一个对象而言，值不变（分配在一个内存）；不同的对象值不相同</span><br><span class="line"></span><br><span class="line">对于一个类而言值不变：</span><br><span class="line"></span><br><span class="line">- static const所有对象共享一份内存  **编译期常量** </span><br><span class="line">- 只能初始化在static const int x = 100;（只有static const int能在类里面初始化）不能在成员初始化表的地方写</span><br><span class="line"></span><br><span class="line">![image-20220413115545057](https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032318471.png)</span><br><span class="line"></span><br><span class="line">对象A是const，指所有成员变量不应该被改变</span><br><span class="line"></span><br><span class="line">f更改了const，但编译器不知道f会改变值 所以引入**const成员函数**</span><br><span class="line"></span><br><span class="line">![image-20220413115654417](https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032318592.png)</span><br><span class="line"></span><br><span class="line">在声明和定义时加上**const关键字**，有关键字a就可正常调用，否则会编译出错</span><br><span class="line"></span><br><span class="line">a是const对象，因此a不可变</span><br><span class="line"></span><br><span class="line">- 能不能骗编译器？f()const 左边编译时会出错，右边没问题</span><br><span class="line">- 编译器怎么检查？怎么做呢？？编译器只能获得A.h 所以要**在可以调用的函数后加const**</span><br><span class="line"></span><br><span class="line"># 第十三课</span><br><span class="line"></span><br><span class="line">## const成员</span><br><span class="line"></span><br><span class="line">![image-20220420103159539](https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032318617.png)</span><br><span class="line"></span><br><span class="line">如何告诉编译器a.f()有误？编译时只能拿到a.h，所以在show()后面标const。同时a.cpp也会标记const。</span><br><span class="line"></span><br><span class="line">- 能不能骗编译器？f()加const，**不能骗！**</span><br><span class="line">  - 变量什么时候不能被赋值？已经被声明成const</span><br><span class="line">  - 其实f()=f(A *const this) 如果声明const 变为const A\* const this</span><br><span class="line">    - A ***const** this：指针不可被修改</span><br><span class="line">    - **const** A\* const this：指向的内容不可被修改</span><br><span class="line"></span><br><span class="line">其实const作用于参数，就类似于const A a(0,0);</span><br><span class="line"></span><br><span class="line">![image-20220420103815831](https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032318662.png)</span><br><span class="line"></span><br><span class="line">**引用不能被更改**，但引用指向的值可以改，即使指向a也可以。</span><br><span class="line"></span><br><span class="line">*new int:\*是解引用操作符，可以把一个int赋给引用</span><br><span class="line"></span><br><span class="line">new int是指针，引用需要指向变量，所以将指针加*赋给</span><br><span class="line"></span><br><span class="line">- 按位const：每个内存值不变</span><br><span class="line">- 按逻辑const：对象概念上无变化，允许以成员为单位变化。**C++采用按逻辑**</span><br><span class="line"></span><br><span class="line">mutable关键字：不受const的限制，可以赋值</span><br><span class="line"></span><br><span class="line">const_cast&lt;A*&gt;(this)-&gt;x=1;//放入show()，编译可通过，相当于把const A\*变成A\*,可以进行赋值了</span><br><span class="line"></span><br><span class="line">## 静态成员</span><br><span class="line"></span><br><span class="line">![image-20220420104637405](https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032318700.png)</span><br><span class="line"></span><br><span class="line">如果把共享变量定义成全局变量：缺乏数据保护</span><br><span class="line"></span><br><span class="line">名污染：A类型有count，B类型有count</span><br><span class="line"></span><br><span class="line">所以把类共享的变量放在类自身：**类名规定名空间**</span><br><span class="line"></span><br><span class="line">![image-20220420105301299](https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032318721.png)</span><br><span class="line"></span><br><span class="line">**加static**</span><br><span class="line"></span><br><span class="line">- 类对象共享：a，b中相同，因为是唯一的拷贝</span><br><span class="line">- 即使类A没有创建对象，全局数据区也有内存分配，程序结束后才释放-**不随对象的创建而分配内存，也不随对象的销毁而释放内存**</span><br><span class="line"></span><br><span class="line">**定义**：希望在类外部，只定义一次</span><br><span class="line"></span><br><span class="line">- 不适合放在构造函数或成员初始化中，因为创建对象时才调用。</span><br><span class="line">- 放在头文件中？每次引入头文件时会反复执行，重复定义</span><br><span class="line"></span><br><span class="line">所以通常在类的实现文件cpp中，如A::shared=0;//不用再写static</span><br><span class="line"></span><br><span class="line">- 若是static const int i = 0;//只能在声明的地方定义，如.h</span><br><span class="line"></span><br><span class="line">![image-20220420105527114](https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032318743.png)</span><br><span class="line"></span><br><span class="line">静态成员函数：只能存取静态成员变量 类可以调静态函数和成员</span><br><span class="line"></span><br><span class="line">![image-20220420105446253](https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032318893.png)</span><br><span class="line"></span><br><span class="line">允许通过类直接访问静态成员</span><br><span class="line"></span><br><span class="line">- a.f();A::f();//都行</span><br><span class="line"></span><br><span class="line">![image-20220420105814617](https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032318919.png)</span><br><span class="line"></span><br><span class="line">可以**记录**当前类型创建了多少个对象</span><br><span class="line"></span><br><span class="line">- get方法用static，1个对象都没创建时也可以获取值</span><br><span class="line">- 静态成员**控制对象创建**：只有静态成员方法在没有对象时也能被调用</span><br><span class="line"></span><br><span class="line">int A::obj_count=0;//是定义不是赋值，int不可省略</span><br><span class="line"></span><br><span class="line">![image-20220420110029203](https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032318950.png)</span><br><span class="line"></span><br><span class="line">private：接管</span><br><span class="line"></span><br><span class="line">public：static可以控制对象创建 如果原来有指向对象：返回；没有就创建 **单例**</span><br><span class="line"></span><br><span class="line">谁创建，谁归还：程序员创建，程序员用destroy归还</span><br><span class="line"></span><br><span class="line">## 友元</span><br><span class="line"></span><br><span class="line">场景：private让类外部不能看到private成员，安全性高，降低耦合性。缺点是空间开销大。</span><br><span class="line"></span><br><span class="line">![image-20220420112332938](https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032318992.png)</span><br><span class="line"></span><br><span class="line">- 初始化时不用分开行和列</span><br><span class="line"></span><br><span class="line">- 偏移不用写4个字节：按照指针类型进行偏移 p_data[i]=*(p+i)</span><br><span class="line">- 引用返回：避免拷贝，减少开销</span><br><span class="line"></span><br><span class="line">![image-20220420112611301](https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032318031.png)</span><br><span class="line"></span><br><span class="line">每次通过element函数调用得到值。</span><br><span class="line"></span><br><span class="line">- 矩阵很大，不希望每次都进行调用</span><br><span class="line"></span><br><span class="line">![image-20220420112804232](https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032318064.png)</span><br><span class="line"></span><br><span class="line">直接访问私有成员：效率会提高</span><br><span class="line"></span><br><span class="line">要相信这个函数才行，仍然有一定的数据保护：对于**相信的程序中实体，可以做高效存取**</span><br><span class="line"></span><br><span class="line">![image-20220420113143888](https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032318414.png)</span><br><span class="line"></span><br><span class="line">关键字friend</span><br><span class="line"></span><br><span class="line">- **声明后就可以访问A的私有成员**！！！！</span><br><span class="line">- 编译时要先声明后使用，所以友元声明时前面要有对应的声明</span><br><span class="line"></span><br><span class="line">如果用外面的，用extern声明，要在链接时才知道是否正确</span><br><span class="line"></span><br><span class="line">- 对于全局函数：即使前面没有写void func(),也可以写extern</span><br><span class="line">- 但是对于**类里的友元函数，一定要先声明！**include或声明在前面</span><br><span class="line"></span><br><span class="line">声明友元时，尽量在前面都已声明！不管是函数还是类。（避免一些细节出错）</span><br><span class="line"></span><br><span class="line">![image-20220420114009287](https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032318979.png)</span><br><span class="line"></span><br><span class="line">不能正常编译，因为不符合先声明后使用：Vector没声明过</span><br><span class="line"></span><br><span class="line">不完全的类型声明，满足编译器的内存检查：不能写Vector v，只能写引用Vector &amp;v（和实际大小无关）</span><br><span class="line"></span><br><span class="line">- Vector v要拷贝，拷贝需要知道完整的类型声明（毕竟要构造个新的）</span><br><span class="line"></span><br><span class="line">友元关系是单向的，不具有交换性。如声明了类X是类Y的友元，不等于类Y一定是X的友元。</span><br><span class="line"></span><br><span class="line">友元不具有传递性，若类X是类Y的友元，类Y是类Z的友元，不一定类X是类Z的友元。必须在类Z中声明。</span><br><span class="line"></span><br><span class="line">相互使用类时有声明的问题</span><br><span class="line"></span><br><span class="line">![image-20220420114848957](https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032318999.png)</span><br><span class="line"></span><br><span class="line">写show(B &amp;b)时，没有办法使用b.b；所以要放在**程序文件**cpp中，不能写在头文件（保证B的成员变量b已经出现）</span><br><span class="line"></span><br><span class="line">- 不能B include A, A include B 互为友元时AB的类定义感觉只能写在一个头文件里</span><br><span class="line"></span><br><span class="line">**相同类的各个对象互为friends(友元)**</span><br><span class="line"></span><br><span class="line">```c++</span><br><span class="line">class complex&#123;</span><br><span class="line">public:</span><br><span class="line">	complex();</span><br><span class="line">	int func(const complex&amp; param)&#123;return param.re;//看这里&#125;</span><br><span class="line">private:</span><br><span class="line">	double re,img;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">...</span><br><span class="line">complex c1,c2;</span><br><span class="line">c2.func(c1);//看这里</span><br></pre></td></tr></table></figure>
+</code></pre>
+</li>
+</ul>
+</li>
+</ul>
+<p>原则：</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032318027.png" alt="image-20220420115408571"></p>
+<p>不是无脑get,set</p>
+<ul>
+<li>NONE：如果不公开使用，直接不公开</li>
+<li>分为read&#x2F;write功能，共4类</li>
+</ul>
+<p>Law of Demeter：使朋友最少，朋友了解的类也最少</p>
+<blockquote>
+<p>总结：管理对象构造：构造函数、析构函数、拷贝&#x2F;移动构造</p>
+<p>3种成员：const、静态、友元</p>
+</blockquote>
+<h1 id="第十四课"><a href="#第十四课" class="headerlink" title="第十四课"></a>第十四课</h1><h2 id="继承"><a href="#继承" class="headerlink" title="继承"></a>继承</h2><p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032318066.png" alt="image-20220420115732175"></p>
+<p>面向对象的核心机制。把类似但是不同的概念在软件中反映。</p>
+<ul>
+<li>相同的部分不用重写。</li>
+<li>不同的部分用继承、多态等方式增量开发。</li>
+</ul>
+<p>只有稳定、不变的才进行复用：<strong>接口代码</strong>（描述层次性概念）否则父子类耦合性高</p>
+<h3 id="单继承"><a href="#单继承" class="headerlink" title="单继承"></a>单继承</h3><p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032318093.png" alt="image-20220422104057635"></p>
+<p>class中的成员默认是private，而struct的成员默认为public。来自class的继承按照private继承处理，来自struct的继承按照public继承处理。只有这两个区别。</p>
+<p>struct也可以继承。可以说除了这个都差不多。</p>
+<p>“：“表示继承的含义，前面是派生类 后面是基类</p>
+<p>派生类需要知道基类的内容，所以必须已经有定义</p>
+<ul>
+<li>没有继承时，protected和private相同 <ul>
+<li>仅仅在继承类中表示可以被派生类使用。</li>
+<li>派生类可以访问<strong>基类</strong>的保护成员，但不能访问<strong>基类对象</strong>的保护成员</li>
+</ul>
+</li>
+</ul>
+<p>继承有点像在子类中定义了一个父类的成员变量，看不见private，所以像set_ID()不对</p>
+<ul>
+<li>那有什么用？ID对派生类对象的正常工作很重要，也可以<strong>用父类的方法</strong>正常使用</li>
+</ul>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032318347.png" alt="image-20220422104246282"></p>
+<h4 id="根据名称寻找"><a href="#根据名称寻找" class="headerlink" title="根据名称寻找"></a>根据名称寻找</h4><p>两个showInfo()：调用<strong>派生类</strong>里的版本</p>
+<p>但如果写showInfo(int x)：vs.showInfo();会报错！C++先通过名字匹配，匹配不上才去找基类的版本</p>
+<ul>
+<li>先在undergraduate_Student的<strong>名空间</strong>里找，找到后就<strong>不会在基类中找</strong>了</li>
+<li><strong>函数隐藏</strong>：其他所有版本的函数都会被隐藏</li>
+<li>那岂不是不能做重载？用解决<strong>名空间问题</strong>的方法<ul>
+<li><strong>using Student::showInfo;</strong>&#x2F;&#x2F;把Student中的showInfo引入undergraduate_Student的名空间</li>
+<li>可见 再调用vs.showInfo();vs.showInfo(10);两种就都可以了</li>
+</ul>
+</li>
+<li>继承：子类拥有一个父类的成员变量，拥有各自的名空间</li>
+<li>继承的本质：<strong>寻找名称</strong>的过程。所以C++可以转换为C语言编译？所以继承不是语言上的差别，而是<strong>理念</strong>上的差别。</li>
+</ul>
+<p>构造函数、析构函数、拷贝构造函数（与资源创建相关）不能被继承：否则会出现子类自己新申请的资源，不能被释放</p>
+<blockquote>
+<p>有两个类，是继承关系。如果在派生类中要用到基类中的元素，那么怎么去初始化它？<strong>当然是要利用基类的构造函数去初始化它啦</strong>！</p>
+</blockquote>
+<h4 id="多态"><a href="#多态" class="headerlink" title="多态"></a>多态</h4><p>希望根据基类对象和子类对象调用对应的版本？怎么做？</p>
+<ul>
+<li>加virtual！<strong>虚函数</strong></li>
+</ul>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032318056.png" alt="image-20220422111259413"></p>
+<p>能不能改变基类中的<strong>访问控制</strong>？可以改一些</p>
+<ul>
+<li>可以将public改成private，不能将private改成public</li>
+<li>不能写char nickname[16];否则出现两个nickname（都有各自的名称）</li>
+</ul>
+<p>如果不写：默认跟之前一样 private</p>
+<ul>
+<li>private&#x2F;public继承在访问父类时没有任何影响 <strong>对派生类本身无用</strong></li>
+<li>但会影响<strong>派生类的用户</strong>：其他类访问或继承 如写private后nickname不能访问了</li>
+</ul>
+<p>前向声明不需要写继承自哪里！！！只用写名字！！！</p>
+<h3 id="友元和protected"><a href="#友元和protected" class="headerlink" title="友元和protected"></a>友元和protected</h3><p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032318095.png" alt="image-20220422111537325"></p>
+<p>为什么有错？因为派生类不能访问作为参数传入的<strong>基类对象b</strong>的受保护成员，只能访问派生类自己类中的<strong>基类</strong>的受保护成员（看作成员变量）</p>
+<ul>
+<li>否则定义派生类和友元，就可以避免受保护机制</li>
+</ul>
+<p>友元不具有传递性，在继承关系中也不具有传递性（第一个函数可访问，第二个不可以访问）</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032318138.png" alt="image-20220422112158451"></p>
+<p>执行次序：基类构造函数、成员类构造函数、派生类构造函数（多个：按照声明的顺序调用构造函数）</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032318161.png" alt="image-20220422112542200"></p>
+<p>若要调非默认构造函数：<strong>成员初始化表指出</strong>（毕竟执行次序在前）</p>
+<p>对于拷贝构造函数呢？B b2(b1);&#x2F;&#x2F;没有指明基类如何拷贝，但子类又自定义了拷贝构造函数，所以基类部分没有默认拷贝构造函数，所以A此时<strong>调用默认构造函数</strong>！</p>
+<ul>
+<li>指明：B(const B &amp;b): <strong>A(b)</strong>;&#x2F;&#x2F;b派生自a，b包含a的数据成员，所以可以指明a要用拷贝构造函数</li>
+</ul>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032318192.png" alt="image-20220422170112572"></p>
+<p>构造函数不能被继承</p>
+<ul>
+<li>如果B没有新的成员变量，但要写许多与A构造版本相同的B的构造版本，很麻烦–&gt;用语法糖（没有改变程序的语法，但提供简单写法方便使用）<ul>
+<li>using A::A;&#x2F;&#x2F;不是继承，为派生类生成与基类形参<strong>完全相同的构造函数</strong>，派生类自己的成员就只会默认初始化</li>
+</ul>
+</li>
+</ul>
+<h2 id="虚函数virtual"><a href="#虚函数virtual" class="headerlink" title="虚函数virtual"></a>虚函数virtual</h2><p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032318606.png" alt="image-20220422114259009"></p>
+<p>为什么可以将派生类对象赋给基类对象？类型相容</p>
+<p>赋值相容：b的内容拷贝到a空间，但是内存对不上</p>
+<ul>
+<li>在java中A a，a&#x3D;b只是引用变化，没有影响</li>
+<li>在C++中ab都是对象，a&#x3D;b合法，但不保证信息不丢失——内存对不上<ul>
+<li><strong>对象切片</strong>：只留下基类的对象，派生类多余的被丢失</li>
+</ul>
+</li>
+</ul>
+<p>A a&#x3D;b;&#x2F;&#x2F;过程其实是b作为参数传到A的拷贝构造函数**const A&amp;**，函数只会选择b中A有的部分，所以最终进行了切片</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032318275.png" alt="image-20220422114658268"></p>
+<p>所以赋值给<strong>引用或指针</strong>，防止对象身份变化</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032318301.png" alt="image-20220422115237469"></p>
+<p>a&#x3D;b;&#x2F;&#x2F;ok会切片 b&#x3D;a;&#x2F;&#x2F;类型不相容 a.f();&#x2F;&#x2F;赋值与否都是A 调用A::f();</p>
+<ul>
+<li>func1(b);&#x2F;&#x2F;调用A::f(); 静态绑定</li>
+<li>func2(&amp;b));&#x2F;&#x2F;调用A::f();  静态绑定<ul>
+<li>根据<strong>声明的类型</strong>绑定。不管是A还是B，不看实际传入的类型</li>
+</ul>
+</li>
+</ul>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032318336.png" alt="image-20220422115532364"></p>
+<ul>
+<li>前期：<strong>编译时</strong>刻根据对象声明的<strong>静态类型</strong>确定</li>
+<li>动态：根据<strong>运行时刻实际对象类型</strong>确定，可根据派生类对象的不同类型决定。效率低，Java就是完全采用动态绑定的。所以C++默认前期绑定。</li>
+</ul>
+<p>显式指出：<strong>virtual实现多态</strong>！</p>
+<h1 id="第十五课"><a href="#第十五课" class="headerlink" title="第十五课"></a>第十五课</h1><h2 id="虚函数"><a href="#虚函数" class="headerlink" title="虚函数"></a>虚函数</h2><p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032318372.png" alt="image-20220422120029478"></p>
+<p>如果在基类中写了virtual，子类中如果不写virtual，也是动态绑定。</p>
+<p>根据当前类型调用不同版本的f：重定义。</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032318401.png" alt="image-20220427203939002"></p>
+<ul>
+<li><p>全局函数不可以：不能有多态</p>
+</li>
+<li><p>静态不行：只要类就可以调用，<strong>与对象无关</strong></p>
+</li>
+<li><p>内联不行：<strong>编译时</strong>决定通过哪段代码替换实现（而对象要在<strong>运行期</strong>才确定类型），所以尽量不要把虚函数实现写在头文件里</p>
+</li>
+<li><p>构造不行：获取资源，派生类比基类持有的资源往往更多，virtual后会根据派生类的实际类型去创建对象。但是，构造函数在创建对象时自动调用，<strong>不可能根据父类的指针或者引用去调用</strong>（不像func2(A *pa)一样），所以不会成为虚函数。如果要调要用虚函数表，也要知道实例类型（但构建恰恰是创建实例，矛盾）</p>
+</li>
+<li><p>析构要：保证delete时调用派生类版本，释放所有资源</p>
+</li>
+</ul>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032318740.png" alt="image-20220427205705374"></p>
+<ul>
+<li>p&#x3D;&a;p-&gt;f();&#x2F;&#x2F;调用A版本p-&gt;h();&#x2F;&#x2F;A的h()会绑定到调用过程中</li>
+<li>p&#x3D;&b;p-&gt;f();&#x2F;&#x2F;调用b版本</li>
+<li>编译时f()没有静态绑定的调用地址，运行时a\b都会将额外的信息记录在内存头上，创建a时把a.f()地址存在头上，b.f()地址存在头上</li>
+</ul>
+<p>根据定义虚函数的不同，记录的地址不同：不确定在前面加上多少个内存（<strong>偏移量</strong>）用指针！可变长 <strong>虚函数表</strong>，保存函数的地址</p>
+<ul>
+<li><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032318250.png" alt="image-20220427210258866"></li>
+</ul>
+<p>找到对象的指针-&gt;找到虚函数表里的表项-&gt;调用对应的函数指针</p>
+<p>B重定义f()：覆盖A，g还是原来的</p>
+<p>前面一个实体，后面一个实体：函数调用或者类型转换</p>
+<ul>
+<li>p-4：第一次取地址取到A_vtable（虚函数表的地址），第二次取地址取到A::f。p是this，默认的<em><em>f(const A</em> this)</em>* </li>
+<li>虚函数表的地址在编译时就能确定，但在运行期才能放在对象的头上。而构造函数执行时，A_vtable，B_vtable还没有完成，所以也<strong>寻找不到构造函数的vtable</strong>。整个对象构造完毕，vtable才可以运行。</li>
+<li>所以(**((char *)p - 4))(p)等价于p-&gt;f()</li>
+</ul>
+<p>显然<strong>静态绑定的效率高很多</strong>。</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032318282.png" alt="image-20220427212250525"></p>
+<p>依次调用了哪些函数？</p>
+<p>注意构造函数可以调用虚函数（没有虚函数表，没有虚函数性质，看成普通成员函数），编译器自动根据<strong>构造对象的类型</strong>调用</p>
+<p>B b：构造函数 先调A::A()，A::f()，B::B()</p>
+<p>p-&gt;f();&#x2F;&#x2F;调用B::f()</p>
+<p>p-&gt;g();&#x2F;&#x2F;静态绑定，p是A类型，调用A::g()</p>
+<p>f()：不管当前的指针类型是A还是B，根据实际指向的对象类型（B b），所以调用B::f()</p>
+<p>p-&gt;h();&#x2F;&#x2F;A::h() B::f() A::g()</p>
+<p>右上角的p-&gt;f()：调B::f() A::g() 不对！实际上是B::f() <strong>B::g()</strong></p>
+<ul>
+<li>因为动态绑定其实是用this-&gt;g()实现的，而this从B* cosnt this来，此时因为f是动态绑定，传入的类型是B*<ul>
+<li>h()因为是静态绑定，传入的是A*</li>
+</ul>
+</li>
+</ul>
+<p>难道每次都要看this的类型吗？？</p>
+<ul>
+<li>静态绑定：根据普通的函数调用，名空间的一致</li>
+<li>动态绑定：内存对象的<strong>实际情况</strong>，对象身份的一致</li>
+</ul>
+<p>h()：<strong>非虚接口</strong> 不是虚函数，但可以呈现多态的特性</p>
+<p>只有成员函数可以呈现出多态，如果全局函数想呈现多态呢？非虚接口</p>
+<p>h()：<strong>只有虚函数发生变化，非虚函数不发生变化</strong></p>
+<ul>
+<li>若有f(){f1();f2();f3()}可以作为算法骨架，复用稳定的步骤f1(),f3()，对于多态的部分只需要定义f2()即可</li>
+<li>可定义动态算法：template method pattern 模板方法</li>
+</ul>
+<p>如果C继承B时，void f不想是虚函数，但不知道是不是虚函数，很混乱：</p>
+<p>提供语法机制：</p>
+<ul>
+<li>关键字<strong>override</strong>：指明该函数是虚函数的重定义 基类中声明过virtual 所以肯定不会有函数隐藏</li>
+<li>关键字<strong>final</strong>：指明该虚函数不能被子类重定义了</li>
+</ul>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032318309.png" alt="image-20220427213640892"></p>
+<ul>
+<li><p>f1对：const：this指向的内容不能改，没说f1的行为不能改</p>
+</li>
+<li><p>f2错：参数不能变 int f2()也不行 <strong>虚函数返回值和参数都相同</strong>，如果不是虚函数同名就可以达到覆盖的效果</p>
+</li>
+</ul>
+<p>建议都写override</p>
+<h2 id="纯虚函数"><a href="#纯虚函数" class="headerlink" title="纯虚函数"></a>纯虚函数</h2><p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032318338.png" alt="image-20220427214112230"></p>
+<p>纯虚函数：不需要实现的函数，作为框架</p>
+<ul>
+<li>加上&#x3D;0：没有定义，意味着没有函数的实现，虚函数表中会<strong>保留一个位置，但不放地址</strong>，只有派生类给出定义后，地址才会被填写</li>
+</ul>
+<p>可以在声明之外给出定义，可以复用父类的实现（只是调用，不是继承）</p>
+<p>ac.f();会出错，因为没有地址，所以<strong>不允许纯虚函数创建对象</strong>（不能传值调用，<strong>防止对象切片</strong>，同时可作为基类使用）</p>
+<ul>
+<li>有纯虚函数的类是抽象类！</li>
+<li>抽象类提供框架、接口，派生类提供实现</li>
+</ul>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032318250.png" alt="image-20220427214340243"></p>
+<p>每个派生类有自己的display()</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032318270.png" alt="image-20220427234505312"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032318298.png" alt="image-20220427234531431"></p>
+<p>增加linux、unix都很简单，代码维护性和复用性很强</p>
+<p>语言为设计服务：抽象工厂模式</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032318336.png" alt="image-20220427234908682"></p>
+<p>析构函数往往是虚函数</p>
+<h3 id="虚析构函数"><a href="#虚析构函数" class="headerlink" title="虚析构函数"></a>虚析构函数</h3><p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032318355.png" alt="image-20220427235154686"></p>
+<p>不能正确调用D的析构函数，而是B，不能正确释放资源</p>
+<p>基类释放资源的部分<strong>依然会调用</strong>，但会额外调用delete name</p>
+<ul>
+<li>先释放成员函数，再释放B</li>
+</ul>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032318374.png" alt="image-20220428000342071"></p>
+<p>C.f()没有缺省参数值，编译器静态检查时不会报错，因为只知道声明的是A*，不知道运行时实际指向的对象类型</p>
+<ul>
+<li>左边输出1，右边输出0？但实际是左右均输出0</li>
+<li>缺省参数值用静态绑定，检查语法时<strong>根据基类型语法</strong>，用的时候不管后面定义没定义，只要f不带参数时就静态绑定x&#x3D;0（即使B中override了）<ul>
+<li>同时动态绑定会增加新的开销，所以<strong>不要定义</strong></li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032318164.png" alt="image-20220428093859070"></p>
+</blockquote>
+<h1 id="第十六课"><a href="#第十六课" class="headerlink" title="第十六课"></a>第十六课</h1><h2 id="虚函数-1"><a href="#虚函数-1" class="headerlink" title="虚函数"></a>虚函数</h2><p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032318183.png" alt="image-20220504103110448"></p>
+<p>复用接口时复用类型，而不是复用实现（复用实现为了少写代码）</p>
+<ul>
+<li>非虚函数：接口和实现都被继承，要保证子类中不会发生变化</li>
+<li>一般虚函数：接口和缺省实现的代码会被继承。</li>
+<li>纯虚函数：只继承接口，子类必须实现</li>
+</ul>
+<h2 id="继承-1"><a href="#继承-1" class="headerlink" title="继承"></a>继承</h2><p>如何确定<strong>继承</strong>？里氏替换原则：子类的对象能替换超类的实例，子类的实例之间也能互相替换</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032318215.png" alt="image-20220504105940835"></p>
+<p>基类的fly()不会抛出error，所以子类也不能抛出error，保证换一个子类对象，基类代码不用改变</p>
+<p>Design by contract：契约式设计，保证一样</p>
+<ul>
+<li>Pre-condition：确保参数满足条件</li>
+<li>Post-condition：确保方法调用后的结果一样，不要多一个error</li>
+<li>不变式：正方形总满足s.width()&#x3D;&#x3D;s.height()</li>
+</ul>
+<p>不能让正方形<strong>单独调用</strong>setHeight\setWidth，否则破坏了不变式</p>
+<ul>
+<li>把方法设成<strong>私有</strong>？静态绑定时p是Rectangle类型，所以可以调用setHeight.</li>
+<li>设为<strong>virtual</strong>？然后在setHeight\setWidth中调用setLength？的确可以保证assert<ul>
+<li>对于Widen方法，用setWidth方法变宽一点，不过要保证高度不变（与额外的性质冲突）</li>
+</ul>
+</li>
+</ul>
+<p>发现虚函数和非虚函数都不行：因为性质不满足非虚函数的性质，不符合契约式程序设计</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032318255.png" alt="image-20220504110409132"></p>
+<p>private：让Rectangle不允许调用setHeight\setWidth？不是，访问控制是静态绑定的。</p>
+<ul>
+<li>编译时，p是Rectangle，setHeight是public，可以通过检查</li>
+<li>运行时，p是<strong>Square</strong>，setHeight是private，也没有问题</li>
+<li>虚函数是动态，运行时；访问控制是静态，编译时。</li>
+</ul>
+<p>所以因为这条性质，正方形不能继承长方形</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032318303.png" alt="image-20220504111907464"></p>
+<p>不要定义同名的成员函数，防止变来变去</p>
+<ul>
+<li>只定义虚函数<ul>
+<li>尽量符合契约式设计</li>
+</ul>
+</li>
+<li>不定义同名的成员函数</li>
+</ul>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032318344.png" alt="image-20220504113131437"></p>
+<ul>
+<li>私有继承：复用基类中的代码，有<strong>protected成员</strong>，或者希望重载virtual function时，该技术才有意义<ul>
+<li>组合只能使用被组合对象的<strong>公共部分</strong></li>
+</ul>
+</li>
+<li>public继承：is-a private继承：<strong>has-a</strong>外界看不到，引入对象，能使用保护成员和虚函数<ul>
+<li>万不得已（protected成员，希望重载virtual function）才使用</li>
+</ul>
+</li>
+<li>设计层面上没有意义，只用于实现层面</li>
+<li>b有Error，因为类型没有被继承（CHumanBeing的公开接口CStudent都没有，无法进行类型转换）<ul>
+<li>不能采用框架式编程</li>
+</ul>
+</li>
+</ul>
+<h2 id="多继承"><a href="#多继承" class="headerlink" title="多继承"></a>多继承</h2><p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032318641.png" alt="image-20220504112948744"></p>
+<ul>
+<li>不写[]，<strong>默认</strong>private继承</li>
+<li>问题<ul>
+<li>初始化顺序</li>
+<li>同名问题</li>
+</ul>
+</li>
+</ul>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032318781.png" alt="image-20220504113243126"></p>
+<p>weight同名：设计的冗余</p>
+<ul>
+<li>说明Bed和Sofa有共同部分，可以进一步分解</li>
+</ul>
+<img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032318804.png" alt="image-20220504113540460" style="zoom:25%;" />
+
+<img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032318825.png" alt="image-20220504113635641" style="zoom:25%;" />
+
+<p>SleepSofa还是有两个weight？只要一份就好</p>
+<ul>
+<li>菱形设计结构：顶层一份就好 virtual inheritance</li>
+</ul>
+<h3 id="虚继承"><a href="#虚继承" class="headerlink" title="虚继承"></a>虚继承</h3><p>解决多继承中的名冲突问题。</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032318844.png" alt="image-20220504114027700"></p>
+<p>B::x和C::x就不冲突了：但是这是两份</p>
+<p>虚继承：公共副本</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032318883.png" alt="image-20220504114136701"></p>
+<p>B、C虚继承自A，创建一个虚基类对象A，派生类存放一个<strong>指向虚基类的指针</strong>（接口是is-a，实现是has-a）</p>
+<ul>
+<li>语法上virtual public和public virtual一样</li>
+<li>初始化只需要1次，所以规定由<strong>最新派生的类</strong>来调用A的构造函数，如这里是D。所以D只有一份A对象。</li>
+<li>虚基类的构造函数优先于所有非虚基类的构造函数，因为非虚可能指向虚</li>
+</ul>
+<p>基类A如果有一个virtual，则BC也有virtual&#x2F;BC有同名的virtual函数f：D覆盖f时覆盖哪一个？<strong>同时覆盖</strong>，调D实现的版本</p>
+<ul>
+<li>如果一个类有虚函数，派生类中有多个虚函数表，同名的版本会被覆盖</li>
+</ul>
+<p>如果想单独覆盖一个版本？留给大家</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032318968.png" alt="image-20220504115041303"></p>
+<p>有多少个基类，就有多少个虚函数表指针</p>
+<ul>
+<li>把所有虚函数的表都拷过来</li>
+<li>把覆盖了的虚函数写出来如D::v3</li>
+<li>自己定义的虚函数D:vD写在头上的虚函数表里</li>
+</ul>
+<p>实现上单继承和多继承都是is-a</p>
+<h1 id="第十七课"><a href="#第十七课" class="headerlink" title="第十七课"></a>第十七课</h1><p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032318986.png" alt="image-20220511101610563"></p>
+<p>C++中多态体现在：</p>
+<ul>
+<li>函数重载（一名多用）<ul>
+<li>虚函数多态是动态的，运行时确定</li>
+<li>函数重载是静态多态，编译时就确定</li>
+</ul>
+</li>
+<li>类属多态：泛型编程，传入不同类型复用同一份代码</li>
+<li>OO（前面讲的部分）：虚函数</li>
+</ul>
+<h2 id="函数重载"><a href="#函数重载" class="headerlink" title="函数重载"></a>函数重载</h2><p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032319010.png" alt="image-20220511102403365"></p>
+<ul>
+<li><p>返回值无所谓：先匹配名字，再匹配参数，就可以确定</p>
+<ul>
+<li><p>参数个数、顺序都能匹配，或者隐形类型转换</p>
+</li>
+<li><p><strong>更好匹配：不能比其他差，有一个参数更好</strong></p>
+<ul>
+<li>如int到float&#x2F;double，都不是更好匹配</li>
+<li>1完全精确，2<strong>整型提升</strong>（bool&#x2F;enum-&gt;int），3标准转换（没有更好，一视同仁）<ul>
+<li>char到unsigned char&#x2F;double，都是标准转换，一样的</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>窄转换：允许 double-&gt;int&#x2F;float</p>
+</li>
+</ul>
+</li>
+</ul>
+<p><strong>操作符重载</strong></p>
+<p>通过函数重载的方式，匹配名称、参数。</p>
+<p><strong>操作符重载就是函数重载</strong></p>
+<h3 id="操作符重载"><a href="#操作符重载" class="headerlink" title="操作符重载"></a>操作符重载</h3><p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032319046.png" alt="image-20220511103033988"></p>
+<p>用新函数取代add方法：重载operator +</p>
+<ul>
+<li>可以写成c&#x3D;a+b</li>
+</ul>
+<p>也可定义<strong>全局函数</strong>：传入两个参数，声明成友元函数</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032319090.png" alt="image-20220511103756106"></p>
+<ul>
+<li>至少包含一个自定义类型，不能全是内置数据类型</li>
+<li>成员函数内不一定非要自定义运算符，因为this已经是自定义了</li>
+</ul>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032319130.png" alt="image-20220511104447664"></p>
+<p>不局限于class，其他类型也可以重载</p>
+<ul>
+<li><p>重载++，因为Day是自定义类型</p>
+</li>
+<li><p>不能重载cout，但可以重载&lt;&lt;（用的最多）</p>
+<ul>
+<li>ostream与cout相关，o&lt;&lt;代表本身的输出</li>
+<li>一定要返回ostream对象，需要连续使用（链式调用）<ul>
+<li>cout &lt;&lt; d1 &lt;&lt; d2 &lt;&lt; d3；如cout &lt;&lt; d1还是ostream</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p>这个函数能不能作为成员函数重载？</p>
+<ul>
+<li>不行，否则只能传参数，ostream改不了了</li>
+</ul>
+<p>参数一般都是引用。为了连续使用，返回ostream&amp;对象</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032319491.png" alt="image-20220511105805983"></p>
+<p>四个操作符<strong>不能被重载</strong>：</p>
+<p>.成员访问运算符</p>
+<p>.*成员指针访问运算符</p>
+<ul>
+<li>void(A::*p_f)();&#x2F;&#x2F;A类成员的函数指针，只能指向A的成员函数</li>
+<li>a.*p_f就可以指向函数</li>
+</ul>
+<p>::域操作符</p>
+<p>?:条件操作符   </p>
+<ul>
+<li>如果<strong>重载</strong>，维持原来操作，会发现a&#x3D;1,b&#x3D;1<ul>
+<li>条件运算符会<strong>控制流程跳转</strong>-&gt;操作符重载是函数调用，所有参数都被计算出来，所有代码段都执行（导致a&#x3D;1,b&#x3D;1），程序理解有偏差</li>
+</ul>
+</li>
+</ul>
+<p>sizeof：不重载，参数是类型</p>
+<p><strong>可以重载</strong></p>
+<ul>
+<li>类成员函数</li>
+<li>带有类参数的全局函数</li>
+</ul>
+<p><strong>双目操作符重载</strong></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032319181.png" alt="image-20220511111127629"></p>
+<p>this必然是第一个参数，如示例中a是this</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032319202.png" alt="image-20220511111349685"></p>
+<p>友元函数：arg1,arg2至少有一个是自定义类型；而此时没有隐含的this参数，所以有两个参数</p>
+<p>-&gt;是间接访问 []下标运算符 ()函数调用运算符 &#x3D;赋值运算符 均不能重载</p>
+<p>关于()和[]和-&gt;为什么不能重载？</p>
+<ul>
+<li>因为都有保留的操作顺序，<strong>第一个参数是对象，第二个参数是对象相关的参数</strong>，而全局函数调用无法保留这样的顺序，所以强制用成员函数进行重载，这样就可以保证第一个是this了</li>
+<li>成员函数的第一个参数是this，全局函数没办法做限制</li>
+<li>&#x3D;为什么不行？？<ul>
+<li>编译器会覆盖你的重载</li>
+<li>会影响运算顺序，比如说右值赋给左值，可能搞成左值赋给右值</li>
+</ul>
+</li>
+</ul>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032319218.png" alt="image-20220514155952237"></p>
+<p>全局函数和成员函数都支持时，用全局函数作为补充。</p>
+<p>10+obj？不支持，成员函数第一个参数必须是自定义类型</p>
+<p>需要支持交换律时，全局函数可以作为补充</p>
+<ul>
+<li>单目最好是类的成员函数，只有自己本身一个参数<ul>
+<li><strong>类型转换函数</strong>只能是成员函数</li>
+<li>&#x3D;（）[] -&gt;</li>
+<li><strong>需要修改状态的函数</strong>，返回*this</li>
+</ul>
+</li>
+<li>双目最好是类的友元函数<ul>
+<li>隐形类型转换：如CL(int i)的构造函数可以让传10+obj时，10转成CL；而成员函数需要精确匹配，这样不行<ul>
+<li>转换分2种，<strong>自定义-&gt;内置，内置-&gt;自定义</strong></li>
+</ul>
+</li>
+<li>交换律，让可交换</li>
+</ul>
+</li>
+</ul>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032319246.png" alt="image-20220511113150974"></p>
+<p>借助短路，p为0时不会执行strlen(p)：短路规则是内置规则</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032319277.png" alt="image-20220511114608504"></p>
+<p>这里想要重载乘号*，返回一个乘起来的对象</p>
+<ul>
+<li>return会拷贝，不好</li>
+<li>如果代码中有连续的*（如两次），返回的是第二次new的对象，没拿到第一次的引用，可能造成内存泄漏</li>
+<li>static result：还可以复用？不好吗<ul>
+<li>如果要比较两个结果，发现是永真式</li>
+</ul>
+</li>
+</ul>
+<p>所以+，*这种就用return的方法</p>
+<ul>
+<li>返回值优化，不会进行拷贝，就在调用的地方进行一次创建<ul>
+<li>如果定义temp然后进行return（其实也会被优化，没有拷贝），直接return两种写法均可避免拷贝</li>
+</ul>
+</li>
+</ul>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032319241.png" alt="image-20220511115110414"></p>
+<p>单目操作符作为类成员函数更稳妥</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032319267.png" alt="image-20220511115415254"></p>
+<p>a++：返回值，返回++之前的对象拷贝Counter</p>
+<p>++a：返回左值，*this，就是一个变量Counter&amp;</p>
+<p>本来应该没有参数，但在postfix里面加int</p>
+<ul>
+<li>区分两个函数</li>
+<li>int值有作用吗？没有 <strong>哑元参数</strong>：只区分函数</li>
+</ul>
+<h1 id="第十八课"><a href="#第十八课" class="headerlink" title="第十八课"></a>第十八课</h1><h2 id="特殊操作符重载"><a href="#特殊操作符重载" class="headerlink" title="特殊操作符重载"></a>特殊操作符重载</h2><h3 id=""><a href="#" class="headerlink" title="&#x3D;"></a>&#x3D;</h3><p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032319293.png" alt="image-20220518101501254"></p>
+<ul>
+<li>有自定义：用自定义；没有自定义：编译器提供</li>
+<li><strong>不能被继承</strong>：派生类有基类没有的成员，如果继承，会造成部分成员被复制，新成员没有被复制</li>
+<li>参数是同类型的引用，返回值是同样类型的引用return *this<ul>
+<li>如A &amp;operator &#x3D; (A &amp;a)</li>
+<li>二目操作符，第一个对象是自己的this对象</li>
+<li>a&#x3D;b作为表达式有值，是赋值后的值；可以c&#x3D;a&#x3D;b链式赋值</li>
+</ul>
+</li>
+<li>返回值要不要加const？反正只要值?<ul>
+<li>链式赋值可以，其他写法不可以 如(a&#x3D;b).f()</li>
+<li>不要<strong>过分地加约束条件</strong></li>
+</ul>
+</li>
+</ul>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032319327.png" alt="image-20220518104152494"></p>
+<p>char *p这种成员变量，要有深拷贝，防止悬挂指针</p>
+<ul>
+<li>释放旧空间（因为长度可能不一样），申请新空间</li>
+</ul>
+<p>A a, b;a&#x3D;b;和A a&#x3D;b;不一样</p>
+<ul>
+<li><p>前者：a先调构造函数，再调赋值操作符重载</p>
+</li>
+<li><p>后者：相当于A a(b)；用b构造a，调拷贝<strong>构造</strong>函数</p>
+</li>
+<li><p>看一开始有没有被构造</p>
+</li>
+</ul>
+<p>避免悬垂指针和内存泄露：深拷贝</p>
+<ul>
+<li>如果在重载时内存不够怎么办？a已经被破坏，但没有被新分配内存，资源错误<ul>
+<li>先赋值，后释放！！！</li>
+<li>char *指针，delete时加不加[]都可以，因为是<strong>内置数据类型</strong>，不调用析构函数，直接释放完整内存</li>
+</ul>
+</li>
+</ul>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032319350.png" alt="image-20220518104828268"></p>
+<p>可能两个对象指向的是一个派生对象</p>
+<p><strong>证同测试</strong>：避免自我赋值 </p>
+<ul>
+<li><p>if(this&#x3D;&#x3D;&amp;rhs)</p>
+</li>
+<li><p>也可以用id避免</p>
+</li>
+<li><p>惊喜地发现<strong>先赋值后释放</strong>的代码可以避免自我赋值，效率上稍差一点，但比较简单——最好的写法</p>
+</li>
+</ul>
+<h3 id="-1"><a href="#-1" class="headerlink" title="[]"></a>[]</h3><p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032319371.png" alt="image-20220518105539697"></p>
+<p>下标操作符，针对数组，向量结构</p>
+<ul>
+<li>针对申请了数组的类，希望访问成员<ul>
+<li>要取到真正的变量，所以返回引用类型</li>
+<li>如果是const string，重载函数也要声明为const<ul>
+<li>this.p可以是const，p[i]不是const，可以改</li>
+<li>所以加了个const没问题</li>
+</ul>
+</li>
+<li>但是cs[0]&#x3D;’D’可执行，不希望<ul>
+<li>非常量：希望返回char &amp;</li>
+<li>常量：希望返回const char <ul>
+<li>不能根据返回值的类型进行重载！</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032319234.png" alt="image-20220518111301381"></p>
+<p>写两个函数，可以这样重载吗？可以</p>
+<ul>
+<li>参数一样，const很特别，const string <em>const this，上面只有string <em>const this，所以两个版本的**this类型不一样</em></em></li>
+</ul>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032319256.png" alt="image-20220518111905959"></p>
+<p><strong>二维数组</strong>：内部用一维数组实现</p>
+<p>get方法可以赋值，希望能正常访问二维数组：目前为止不行data[1][2]</p>
+<ul>
+<li>下标操作符只能一个个解释，不存在重载一号操作符和二号操作符<ul>
+<li>看data[1][0]和data[0][0]的偏移量是多少</li>
+</ul>
+</li>
+<li>第一个操作符重载：int *operator[](int i){return p + i*n2}</li>
+<li>第二个操作符重载：在int*基础上偏移即可data.operator[](1)[2]</li>
+</ul>
+<p><strong>三维</strong>：第一个操作符重载：p+i*n2*n3 偏移一个面</p>
+<ul>
+<li><p>第二个操作符怎么重载？不应该用内置数据类型，用自定义类wrapper</p>
+</li>
+<li><p>变data.operator[](1).operator[](2) 返回自定义object</p>
+</li>
+</ul>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032319274.png" alt="image-20220518113311529"></p>
+<p>行列号num1,num2；可以一层层的定义下去</p>
+<p>返回为Int *时，编译器会帮助转换（构造函数）</p>
+<ul>
+<li>不想转换怎么办？<strong>explict</strong>，加上则必须显示调用，不支持隐式类型转换</li>
+</ul>
+<p>RAII：初始化被对象封装</p>
+<h3 id="-2"><a href="#-2" class="headerlink" title="()"></a>()</h3><p>函数调用：希望f()可以直接调用(2.4, 0, 8);</p>
+<p>希望把函数作为带状态的对象传入</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032319306.png" alt="image-20220518114807952"></p>
+<p>把常用操作方便地作为函数重载</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032319332.png" alt="image-20220518115603961"></p>
+<p>对ostream对象重载，int() 成功了返回1，没成功返回0</p>
+<p>语法：operator前面没有函数类型 目标类型由函数名决定</p>
+<ul>
+<li>确保只有一个类型转换运算符</li>
+</ul>
+<h1 id="第十九课"><a href="#第十九课" class="headerlink" title="第十九课"></a>第十九课</h1><h2 id="特殊操作符重载-1"><a href="#特殊操作符重载-1" class="headerlink" title="特殊操作符重载"></a>特殊操作符重载</h2><h3 id="-3"><a href="#-3" class="headerlink" title="-&gt;"></a>-&gt;</h3><p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032319352.png" alt="image-20220525102752552"></p>
+<p>指针间接引用操作符。二元</p>
+<p>怎么重载？</p>
+<ul>
+<li>a-&gt;f()不行，因为a是对象，用a.f()</li>
+<li>a.operator-&gt;(f)不行，参数不能是函数名称，且可能还有函数的参数：**-&gt;的另一个参数类型无法确定**</li>
+</ul>
+<p>重载时将-&gt;按照一元操作符重载描述</p>
+<ul>
+<li>a.operator-&gt;()是一元操作符，就把另一个参数扔掉<ul>
+<li>必须返回指针类型吗？也不一定，可以返回定义过-&gt;重载的对象，如返回b，可以继续嵌套b-&gt;f()</li>
+</ul>
+</li>
+<li>调用函数时：a.operator-&gt;()-&gt;f()</li>
+</ul>
+<p>图中*getPen()复杂，所以重载箭头操作符：</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032319751.png" alt="image-20220525102842592"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032319111.png" alt="image-20220525103427984"></p>
+<p>在每一个可能退出的地方都要delete p，如p-&gt;f()里面可能会throws exception</p>
+<ul>
+<li>多出口函数：很难管理</li>
+</ul>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032319132.png" alt="image-20220525104604373"></p>
+<ul>
+<li><p>用RAII解决：用资源A初始化对象AWrapper</p>
+<ul>
+<li>AWrapper只封装A</li>
+<li>特性：栈上资源不需要我们回收，堆上才需要我们回收</li>
+<li>AWrapper在栈上，把生命周期不确定的堆上资源封装到栈上，就变成<strong>智能指针</strong>了<ul>
+<li>A *operator-&gt;(){return p;}重载后即可p-&gt;f()</li>
+</ul>
+</li>
+<li>可以用<strong>Template模板</strong>：支持任意类型的T封装在内</li>
+</ul>
+</li>
+<li><p>局限性：堆的生命周期变成和栈一样了，只在<strong>一个函数内</strong>使用</p>
+<ul>
+<li>如果A要在几个函数中共享，要用更复杂的方式</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p>既然这个对象的生命期和test方法一样，那为什么A不直接在栈上创建？</p>
+<ul>
+<li>可以是从外传进来的</li>
+<li>可能是动态创建，程序运行中才知道</li>
+<li>A太大了，不想在栈上创建</li>
+</ul>
+</blockquote>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032319164.png" alt="image-20220525104823449"></p>
+<h3 id="new-delete"><a href="#new-delete" class="headerlink" title="new,delete"></a>new,delete</h3><p>属于运算符，可以被重载。作用：分配内存，调用构造函数。</p>
+<ul>
+<li>不能改变意思，会<strong>分配&#x2F;释放内存</strong>，再调用构造函数&#x2F;析构函数</li>
+<li>重载加粗部分，对于频繁释放内存的程序，自己管理内存，可以提升效率</li>
+<li>operator new在构造之前，operator delete在析构之后，所以必须是静态</li>
+</ul>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032319193.png" alt="image-20220525110442029"></p>
+<p>size_t:自动计算 需要保证返回内存块<strong>指针</strong></p>
+<p>注意operator new[]和operator new<strong>不一样</strong></p>
+<ul>
+<li><p>如果只定义后者，new A[]调用的还是系统自带的</p>
+</li>
+<li><p>重载可以有多个，可以定义多个参数，…部分可以有很多版本</p>
+</li>
+<li><p>placement new定位放置new：new的重载版本，可以把p传入，可以<strong>缓冲区提前分配</strong>，在栈上分配大块内存 A *a1 &#x3D; new (p) A1…可以反复使用同一块内存</p>
+<ul>
+<li>A* p&#x3D;new (ptr)A;申请空间，其中ptr就是程序员指定的内存首地址</li>
+</ul>
+</li>
+</ul>
+<img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032319225.png" alt="image-20220525112038890" style="zoom:150%;" />
+
+<p>可以不管size（自动），但可以使用</p>
+<ul>
+<li>全局operator new可以当malloc：new(sizeof(A)*10) 自定义的new里面也可以调全局的</li>
+</ul>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032319048.png" alt="image-20220525112548432"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032319071.png" alt="image-20220525112652504"></p>
+<p>new(size_t, ostream)可以收集统计数据</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032319103.png" alt="image-20220525112932408"></p>
+<p>重载后：自己分配内存和统一管理</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032319132.png" alt="image-20220525112952763"></p>
+<p>如果空间不足：申请更大空间，扩容</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032319160.png" alt="image-20220525113054398"></p>
+<p>还需要管理内存扩容的问题：线程池</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032319190.png" alt="image-20220531232650988"></p>
+<p>怎么要内存？再调系统的operator new</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032319844.png" alt="image-20220525113148108"></p>
+<p>多申请几个person，免得老申请；create new space后再加入容器</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032319885.png" alt="image-20220525113350563"></p>
+<p>已经申请的10个内存空间，怎么知道返回哪个地址？容器方式管理，就可以知道创建Person时放在哪个地方</p>
+<ul>
+<li>数组形式：a[0]&#x2F;a[1]均为地址，需要额外空间int[] flag记录使用情况，每次均扫描（需要额外空间记录使用）</li>
+</ul>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032319905.png" alt="image-20220531232947793"></p>
+<ul>
+<li><p>链表形式</p>
+<ul>
+<li>自嵌入式链表<ul>
+<li>若使用，改变指针，返回第一个空闲的地址</li>
+</ul>
+</li>
+</ul>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032319937.png" alt="image-20220531233207710"></p>
+</li>
+</ul>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032319961.png" alt="image-20220531233332301"></p>
+<p>归还时直接串到链表上即可。</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032319990.png" alt="image-20220525114400089"></p>
+<ul>
+<li>内存池架构：推广到不同类型的对象类型管理，变成<strong>封装</strong><ul>
+<li>写了*next后，可以把一块块连续申请的内存挂上去，变成内存池</li>
+</ul>
+</li>
+</ul>
+<p>		</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032319664.png" alt="image-20220525114442916"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032319691.png" alt="image-20220531233607147"></p>
+<p>pool是指针，指向一大块的首地址，不够就加一块</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032319708.png" alt="image-20220525114743393"></p>
+<p>很多应用非常时间敏感：对实时性、效率要求高</p>
+<p>Java的GC会卡顿2秒，但实际中C++内存管理很重要</p>
+<p>长处：管理内存、资源</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032319742.png" alt="image-20220601001313265"></p>
+<p>使用：</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032319766.png" alt="image-20220525115553305"></p>
+<p>delete p1，立马把now_avail指向开头</p>
+<p>不断移动now_avail指针，指示空着的内存（如果有一大块为空，delete所有）</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032319802.png" alt="image-20220601001504070"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032319481.png" alt="image-20220525115829360"></p>
+<p>货架的物品一次可以new很多。</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032319505.png" alt="image-20220601001637334"></p>
+<p><strong>同一块内存可以复用，就可以重载new&#x2F;delete</strong>。对资源进行更好的管理</p>
+<h1 id="第二十课"><a href="#第二十课" class="headerlink" title="第二十课"></a>第二十课</h1><h2 id="模板"><a href="#模板" class="headerlink" title="模板"></a>模板</h2><p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032319530.png" alt="image-20220525120045134">   </p>
+<p>泛型编程：复制出很多模板，自然可以实现泛型。</p>
+<p>语法相同代码，实际含义其实不同：加整数和加字符串不一样</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032319559.png" alt="image-20220601103008384"></p>
+<p>实现不同类型的排序，可针对所有类型T做排序，传入int&#x2F;double，T就会变成int&#x2F;double</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032319584.png" alt="image-20220601103114300"></p>
+<p>宏可以不需要生命类型</p>
+<p>缺陷：简单功能，<strong>不能进行类型检查</strong>（强类型语言会出错，如传int string比较会报错）</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032319610.png" alt="image-20220601103220817"></p>
+<p>需要定义的函数很多，无论怎样也定义不全</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032319124.png" alt="image-20220601103247493"></p>
+<p>实现cmp函数，传指针；缺点是实现复杂</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032319145.png" alt="image-20220601103525688"></p>
+<p>把特定类型变成泛型，T是类型参数名称，用T1&#x2F;T2也行</p>
+<p>声明：template <typename T>告诉编译器是模板代码</p>
+<p>怎么用？sort(a, 100);sort(b, 200);发现sort是模板，就会看a的声明类型-&gt;把模板拷贝一遍-&gt;把T变成int</p>
+<p>很重要：<strong>推导类型参数</strong>，隐式实例化</p>
+<blockquote>
+<p>class C{…}</p>
+<p>C a[300];</p>
+<p>sort(a, 300);必须要重载操作符，否则不知道A[]是什么意思</p>
+<p>T t &#x3D; A[j];是拷贝构造，下面是赋值，如果要深拷贝就要重载&#x3D;和copy constructer</p>
+</blockquote>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032319163.png" alt="image-20220601104241817"></p>
+<p>可以有多个类型参数</p>
+<ul>
+<li>可带<strong>普通参数</strong>：size是<strong>编译时常量</strong>，调用时就会给一个值，编译时替换，需要常量的地方就会有常量</li>
+</ul>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032319190.png" alt="image-20220601105050038"></p>
+<p>可以有<strong>默认模板参数</strong>，按理说顺序可以不管，但最安全的方式就是<strong>从右向左定义</strong>默认参数</p>
+<ul>
+<li>编译失败：因为t&#x3D;0，但不知道类型</li>
+<li>所以<strong>函数默认参数必须配合默认模板参数</strong>，否则可能编译失败</li>
+</ul>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032319386.png" alt="image-20220601105251474"></p>
+<p>如果两个参数类型不一样怎么办？定义T1,T2也行，但简单来说重载函数即可</p>
+<ul>
+<li>同时使用函数模板和函数重载<ul>
+<li>注意<strong>先调用函数重载</strong>！！！可简单解决问题</li>
+</ul>
+</li>
+</ul>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032319411.png" alt="image-20220601105602165"></p>
+<p>stack int和stack double不一样，因为不是同一个类</p>
+<ul>
+<li>只要是分开定义，就定义类型参数</li>
+<li>和前面的区别：要<strong>显式实例化</strong></li>
+</ul>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032319610.png" alt="image-20220601111247268"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032319642.png" alt="image-20220601111345981"></p>
+<p>使用到模板才进行实例化，否则编译器不会生成</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032319668.png" alt="image-20220601111431553"></p>
+<p>声明函数:extern</p>
+<p>引入头文件：编译引入.h，链接时有.cpp，为什么会有error？</p>
+<ul>
+<li>链接时找不到max(double,double)版本，目标代码没有模板，只有已经实例化后的代码，所以只有max(int, int)</li>
+<li>那就自己实例化？但include时是编译之后的代码，file2.cpp看不见源代码，不能自己实例化</li>
+<li>所以完整定义一般在头文件，编译单元就有能力实例化模板<ul>
+<li>但容易出现同名问题，不过注意一点就行，还是要<strong>把模板的完整定义放在头文件</strong></li>
+</ul>
+</li>
+</ul>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032319817.png" alt="image-20220601112328385"></p>
+<p>源编程：类似递归，enum是常量，不需要运行时计算</p>
+<ul>
+<li><p>输入一个数，变成一段程序</p>
+</li>
+<li><p>图灵完备：支持循环、条件、记录数据</p>
+</li>
+<li><p>代码本身<strong>不需要内存，全是常量</strong></p>
+</li>
+<li><p>函数式编程：不带副作用、没内存的函数完成</p>
+<ul>
+<li>有输入输出：输出用enum\typedef\const</li>
+<li>递归函数：有输入，有输出，支持递归</li>
+<li>支持选择</li>
+</ul>
+</li>
+<li><p>enum只支持整型数？反正所有数据类型都可以变成01</p>
+</li>
+</ul>
+<p>函数式编程适合的问题：产生一个数据，继续调，不需要中间存储</p>
+<h2 id="异常处理"><a href="#异常处理" class="headerlink" title="异常处理"></a>异常处理</h2><p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032319844.png" alt="image-20220601113427975"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032319043.png" alt="image-20220601113440807"></p>
+<p>发现异常立即处理其实未必妥当</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032319099.png" alt="image-20220601113608733"></p>
+<p>构造函数不返回值，也没有参数，怎么办？</p>
+<ul>
+<li>用专门的处理机制</li>
+</ul>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032319604.png" alt="image-20220601113802240"></p>
+<p>异常对象可以是类，也可以是基本类型</p>
+<p>throw如果是对象，调用拷贝构造函数，和return一样</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032319637.png" alt="image-20220601114121253"></p>
+<p><strong>派生类到基类是允许的</strong>，其他都不允许匹配不同类型</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032319667.png" alt="image-20220601114400108"></p>
+<p>abort终止程序</p>
+<p>多种异常特别乱，要写多个catch，就写异常类：</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032319694.png" alt="image-20220601114518079"></p>
+<p>throw已经拷贝了一次，catch不想再拷贝</p>
+<ul>
+<li>所以用引用方式来捕获</li>
+<li>会尝试多继承，与父类多次尝试，有一个匹配就行</li>
+</ul>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032319720.png" alt="image-20220601114938651"></p>
+<ul>
+<li>输出MyExceptionBase：考的不是catch的顺序，其实考构造函数。<strong>throw e是静态编译调用拷贝构造函数</strong>，只能从声明类型看，所以传出来后是base。</li>
+</ul>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032319924.png" alt="image-20220601115430568"></p>
+<p>…是语法，变参机制，如printf也是变参</p>
+<p>初始化列表可以构造内存单元、构造文件，但不是构造函数</p>
+<ul>
+<li>try的时候就要传列表，A() try{:}，但避免麻烦就别用列表了</li>
+</ul>
+<h1 id="第二十一课（三十分以上）"><a href="#第二十一课（三十分以上）" class="headerlink" title="第二十一课（三十分以上）"></a>第二十一课（三十分以上）</h1><h2 id="异常处理-1"><a href="#异常处理-1" class="headerlink" title="异常处理"></a>异常处理</h2><p>没有finally</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032319995.png" alt="image-20220608111349934"></p>
+<p>写<strong>空的类</strong>，编译器会提供</p>
+<ul>
+<li>构造</li>
+<li>析构</li>
+<li>拷贝构造</li>
+<li>赋值操作符重载</li>
+<li>取地址操作符重载。经常使用指针</li>
+<li>常成员函数，const对象会调用下面的，重载时要想是否返回const<ul>
+<li>&amp;、下标操作符需要想用不用const</li>
+</ul>
+</li>
+</ul>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032319128.png" alt="image-20220608111919556"></p>
+<p>对象内存的归还用析构函数：防止资源泄露</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032319156.png" alt="image-20220608112151853"></p>
+<p>定义基类：用纯虚函数；子类实现，体现多态</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032319197.png" alt="image-20220608112321947"></p>
+<p>pa是一个堆上的对象，所以结束后会delete pa。</p>
+<p>throw前要delete pa，否则会泄露资源。</p>
+<ul>
+<li>Java可以用finally</li>
+<li>C++没有finally，因为RAII希望把申请的资源封装成对象，资源获取过程是对象的初始化，资源的生命周期是对象的生命周期</li>
+</ul>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032319320.png" alt="image-20220608112625655"></p>
+<p>模板类，封装参数化类型指针ptr，通过-&gt;和*实现把对象当指针使用</p>
+<ul>
+<li>比其他指针智能：创建在栈上，销毁时会自动析构</li>
+</ul>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032319369.png" alt="image-20220608112949750"></p>
+<p>try-catch依旧，用智能指针后不用考虑delete</p>
+<ul>
+<li>离开花括号后就会被消解</li>
+</ul>
+<p>WINDOW_HANDLE是指向窗体的指针（句柄）</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032319600.png" alt="image-20220608113417417"></p>
+<p>把WINDOW_HANDLE指针，封装在类里面</p>
+<p>就不用写destroyWindow了，对象会自己调用析构函数</p>
+<p>没有重载-&gt;和*操作符？可以正常使用w吗？</p>
+<ul>
+<li>用operator WINDOW_HANDLE()，类型转换操作符重载，会隐式类型转换WindowHandle成WINDOW_HANDLE指针，就可以掌控指针的所有权，不用再重载指针操作</li>
+<li>相比之下，Smart Pointer掌管着-&gt; *的控制权，所以要重载；赋值操作也多一些</li>
+</ul>
+<h2 id="I-O处理"><a href="#I-O处理" class="headerlink" title="I&#x2F;O处理"></a>I&#x2F;O处理</h2><p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032319660.png" alt="image-20220608114314529"></p>
+<p>&lt;&lt;是双目，尤其是ostream，所以是全局函数重载</p>
+<p>&lt;&lt;和&gt;&gt;参数和返回值是引用</p>
+<ul>
+<li>加减乘除：返回对象</li>
+<li>支持链式、左值调用：返回引用，甚至加const</li>
+</ul>
+<p>3D输出时不能显示z，因为2D时已经重载了全局的&lt;&lt;，应用于3D</p>
+<ul>
+<li>绿色：再定义一个函数</li>
+<li>2D的指针c指向b，打印的还是2D，因为是静态绑定，看声明的指针类型</li>
+</ul>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032319076.png" alt="image-20220608115223988"></p>
+<p>让全局函数成为<strong>非虚接口</strong>，a.display()是动态绑定的</p>
+<blockquote>
+<p>全局函数不能是virtual，成员函数才能是virtual。</p>
+<p>如&#x3D;重载成成员函数可以是virtual，&lt;&lt;不行</p>
+</blockquote>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032319101.png" alt="image-20220608115624466"></p>
+<p>析构函数必须要virtual</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032319225.png" alt="image-20220608115645869"></p>
+<p>不知道push_back是什么类型，怎么办？</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032319253.png" alt="image-20220608115822216"></p>
+<p>不能构造成虚函数：第一反应是构造一个能变成虚函数的</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032319276.png" alt="image-20220608120007548"></p>
+<p>除非是虚函数，其他是静态绑定</p>
+<p>array[i]–&gt;*array + i*字长</p>
+<p>不能把子类当基类传入，因为字长不一样（子类有新成员），print函数的参数是BST array[]，array[i]不会打印想要的结果。</p>
+<h1 id="考试相关"><a href="#考试相关" class="headerlink" title="考试相关"></a>考试相关</h1><p>1、简答题（10分）</p>
+<ul>
+<li>C++的发展历史和贡献人物</li>
+</ul>
+<p>2、程序阅读题</p>
+<ul>
+<li>有错告诉错误，没错告诉输出</li>
+</ul>
+<p>3、编程题</p>
+<ul>
+<li>手写代码</li>
+</ul>
+<p>题量有点大，要写快点</p>
+
+        </div>
+
+        
+            <section class="post-copyright">
+                
+                
+                
+                
+
+            </section>
+        
+        <section class="post-tags">
+            <div>
+                <span>标签:</span>
+                <span class="tag">
+                    
+                    
+                        <a href="/tags/%E8%AF%BE%E7%A8%8B/"># 课程</a>
+                    
+                        
+                </span>
+            </div>
+            <div>
+                <a href="javascript:window.history.back();">返回</a>
+                <span>· </span>
+                <a href="/">主页</a>
+            </div>
+        </section>
+        <section class="post-nav">
+            
+                <a class="prev" rel="prev" href="/2022/07/01/2022%E6%98%A5%E5%AD%A3%E3%80%8A%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E3%80%8B%E8%80%83%E8%AF%95%E9%87%8D%E7%82%B9/">2022春季《计算机网络》考试重点</a>
+            
+            
+            <a class="next" rel="next" href="/2022/07/01/2022%E6%98%A5%E5%AD%A3%E3%80%8A%E8%BD%AF%E5%B7%A5II%E3%80%8B%E8%AF%BE%E7%A8%8B%E7%AC%94%E8%AE%B0/">2022春季《软工II》课程笔记</a>
+            
+        </section>
+
+
+    </article>
+</div>
+
+
+    <div id="gitalk-container"></div>
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.css">
+<script src="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.min.js"></script>
+<script src="//cdn.bootcss.com/blueimp-md5/2.10.0/js/md5.js"></script>
+<div id="gitalk-container"></div>
+<script type="text/javascript">
+      var gitalk = new Gitalk({
+        clientID: '',
+        clientSecret: '',
+        repo: 'blog_comment',
+        owner: 'lyxx2535',
+        admin: 'lyxx2535',
+        id: md5(location.pathname),
+        labels: 'Gitalk'.split(',').filter(l => l),
+        perPage: 10,
+        pagerDirection: 'last',
+        createIssueManually: true,
+        distractionFreeMode: false
+      })
+      gitalk.render('gitalk-container')
+</script>
+
+            </div>
+            <footer id="footer" class="footer">
+    <div class="copyright">
+        <span>© Annie | Powered by <a href="https://hexo.io" target="_blank">Hexo</a> & <a href="https://github.com/Siricee/hexo-theme-Chic" target="_blank">Chic</a> | 2020 - 2025
+            <br>
+            <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+<span class="site-uv">
+    Total visitors:
+    <i class="busuanzi-value" id="busuanzi_value_site_uv"></i>
+</span>&nbsp;|&nbsp;
+
+
+<span class="site-pv">
+    Total views:
+    <i class="busuanzi-value" id="busuanzi_value_site_pv"></i>
+</span>
+
+          </span>
+    </div>
+</footer>
+
+    </div>
+</body>
+
+</html>

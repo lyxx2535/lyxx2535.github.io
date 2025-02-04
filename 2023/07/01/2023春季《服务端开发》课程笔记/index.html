@@ -1,0 +1,1699 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <meta name="author" content="Annie">
+
+
+
+
+
+<title>2023春季《服务端开发》课程笔记 | Annie&#39;s Blog</title>
+
+
+
+    <link rel="icon" href="/favicon.ico">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+    <script src="/js/tocbot.min.js"></script>
+    
+
+
+
+    
+    
+        
+    
+
+
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+<body>
+    <script>
+        // this function is used to check current theme before page loaded.
+        (() => {
+            const currentTheme = window.localStorage && window.localStorage.getItem('theme') || '';
+            const isDark = currentTheme === 'dark';
+            const pagebody = document.getElementsByTagName('body')[0]
+            if (isDark) {
+                pagebody.classList.add('dark-theme');
+                // mobile
+                document.getElementById("mobile-toggle-theme").innerText = "· Dark"
+            } else {
+                pagebody.classList.remove('dark-theme');
+                // mobile
+                document.getElementById("mobile-toggle-theme").innerText = "· Light"
+            }
+        })();
+    </script>
+
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">Annie&#39;s Blog</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default">
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+        </div>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">Annie&#39;s Blog</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; 菜单</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+            <div class="main">
+                <div class="container">
+    
+    
+        <div class="post-toc">
+    <div class="tocbot-list">
+    </div>
+    <div class="tocbot-list-menu">
+        <a class="tocbot-toc-expand" onclick="expand_toc()">全部展开</a>
+        <a onclick="go_top()">回到顶部</a>
+        <a onclick="go_bottom()">前往底部</a>
+    </div>
+</div>
+
+<script>
+    var tocbot_timer;
+    var DEPTH_MAX = 6; // 为 6 时展开所有
+    var tocbot_default_config = {
+        tocSelector: '.tocbot-list',
+        contentSelector: '.post-content',
+        headingSelector: 'h1, h2, h3, h4, h5',
+        orderedList: false,
+        scrollSmooth: true,
+        onClick: extend_click,
+    };
+
+    function extend_click() {
+        clearTimeout(tocbot_timer);
+        tocbot_timer = setTimeout(function() {
+            tocbot.refresh(obj_merge(tocbot_default_config, {
+                hasInnerContainers: true
+            }));
+        }, 420); // 这个值是由 tocbot 源码里定义的 scrollSmoothDuration 得来的
+    }
+
+    document.ready(function() {
+        tocbot.init(obj_merge(tocbot_default_config, {
+            collapseDepth: 1
+        }));
+    });
+
+    function expand_toc() {
+        var b = document.querySelector('.tocbot-toc-expand');
+        var expanded = b.getAttribute('data-expanded');
+        expanded ? b.removeAttribute('data-expanded') : b.setAttribute('data-expanded', true);
+        tocbot.refresh(obj_merge(tocbot_default_config, {
+            collapseDepth: expanded ? 1 : DEPTH_MAX
+        }));
+        b.innerText = expanded ? 'Expand all' : 'Collapse all';
+    }
+
+    function go_top() {
+        window.scrollTo(0, 0);
+    }
+
+    function go_bottom() {
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+
+    function obj_merge(target, source) {
+        for (var item in source) {
+            if (source.hasOwnProperty(item)) {
+                target[item] = source[item];
+            }
+        }
+        return target;
+    }
+</script>
+    
+
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">2023春季《服务端开发》课程笔记</h1>
+            
+                <div class="post-meta">
+                    
+                        作者: <a itemprop="author" rel="author" href="/">Annie</a>
+                    
+
+                    
+                        <span class="post-time">
+                        日期: <a href="#">July 1, 2023&nbsp;&nbsp;10:51:05</a>
+                        </span>
+                    
+                    
+                        <span class="post-category">
+                        分类:
+                            
+                                <a href="/categories/%E6%9C%AC%E7%A7%91%E7%94%9F%E8%AF%BE%E7%A8%8B/">本科生课程</a>
+                            
+                        </span>
+                    
+                </div>
+            
+        </header>
+
+        <div class="post-content">
+            <h1 id="课程笔记"><a href="#课程笔记" class="headerlink" title="课程笔记"></a>课程笔记</h1><h1 id="01-建立开发环境"><a href="#01-建立开发环境" class="headerlink" title="01-建立开发环境"></a>01-建立开发环境</h1><p>前后端不分离-&gt;前后端分离(均部署在后端服务器)-&gt;微服务架构</p>
+<ul>
+<li><p>单体应用程序：单个可执行的应用程序</p>
+</li>
+<li><p>随着云计算的发展，单体不够，分解成小颗粒-&gt;微服务：</p>
+<ul>
+<li>微服务运行时可以部署在不同服务器，协作完成；一个完整业务逻辑跨越多个微服务(<strong>分布式</strong>计算技术)</li>
+<li>通信：HTTP，与语言无关，适合协同</li>
+</ul>
+</li>
+</ul>
+<p>开发框架：可被应用开发者定制的应用骨架，方便开发</p>
+<ul>
+<li>层次不断提高：Spring-&gt;SpringBoot-&gt;SpringCloud(容器&#x2F;微服务&#x2F;DevOps)<ul>
+<li>RUOYI基于SpringBoot</li>
+</ul>
+</li>
+</ul>
+<p>Spring不可避免要学习，是Java生态圈的主流开发框架</p>
+<ul>
+<li>非侵入性：其开发出来的软件，可以轻松脱离Spring：解耦</li>
+<li>容器：bean：<strong>java对象</strong>。bean开发出来后给Spring，Spring帮助创建bean<strong>对象和依赖关系</strong>(蓝色方块)<img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502041322214.png" alt="image-20230214195526166"></li>
+<li>AOP：面向切面编程，可以对业务逻辑的各个部分进行隔离，从而使得业务逻辑各部分之间的耦合度降低，提高程序的可重用性，同时提高了开发的效率</li>
+<li>持久层</li>
+</ul>
+<p>jdk版本推荐:8&#x2F;11&#x2F;17</p>
+<p>Jar和War的区别</p>
+<ul>
+<li>Jar是与平台无关的文件格式，它允许将许多文件组合成一个压缩文件</li>
+<li>War是一个可以直接运行的web模块，通常用于网站，打成包部署到容器中</li>
+</ul>
+<p>Spring常用依赖：</p>
+<ul>
+<li>Spring Boot DebTools</li>
+<li>Spring Web</li>
+</ul>
+<p>tomcat&#x2F;servlet&#x2F;maven了解一下</p>
+<p>加starter后会自动下载依赖的包，并维护所需版本</p>
+<p>properties&#x2F;yml格式均可，yml更常用</p>
+<p>编译后放在classes文件夹下</p>
+<p>@SpringBootApplication程序入口，进入</p>
+<ul>
+<li>@EnableAutoConfiguration作用：帮助SpringBoot应用将所有符合条件的@Configuration配置都加载到当前SpringBoot，并创建对应配置类的Bean，并把该Bean实体交给IoC容器进行管理。</li>
+<li>@ComponentScan： 扫描被@Component (@Service,@Controller)注解的 bean，注解默认会扫描该类所在的包下所有的类。<ul>
+<li>会搜索@Controller注解的bean，扫描类</li>
+</ul>
+</li>
+</ul>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502041322038.png" alt="image-20230214205839667"></p>
+<p>省去了业务层和数据访问层</p>
+<p>先到控制器找到&#x2F;，获得视图的名字home，拼接出前端的视图路径，找到templates下面的home.html</p>
+<p>devtools依赖：开发时就可以随时println之类的</p>
+<p>如何实时刷新：分别在vscode和页面安装LiveReload</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502041322491.png" alt="image-20230214211910458"></p>
+<p>mvn spring-boot:run 快速启动程序</p>
+<p>initializer：可以用官网下载zip，也可以用vscode插件</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502041322259.png" alt="image-20230301110202581"></p>
+<p>devtools：一边写代码，一边看到效果</p>
+<p>starter-web：实现Web场景开发，提供了嵌入的Tomcat以及Spring MVC的依赖。</p>
+<p>starter-thymeleaf：前后端不分离的页面渲染。与Spring MVC等Web框架进行集成作为Web应用的模板引擎。能够直接在浏览器中打开并正确显示模板页面，而不需要启动整个Web应用。</p>
+<h1 id="02-依赖注入"><a href="#02-依赖注入" class="headerlink" title="02-依赖注入"></a>02-依赖注入</h1><blockquote>
+<p>考试不考：另一种方式叫IoC，控制反转</p>
+</blockquote>
+<p>通过某种方式告诉spring我们的意图</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502041322804.png" alt="image-20230301111214198"></p>
+<ol>
+<li>自动化配置：在代码里加注释</li>
+<li>JavaConfig：Bean注解</li>
+<li>XML配置（现在没人用）</li>
+</ol>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502041322734.png" alt="image-20230301111443425"></p>
+<p>有一种光盘，要放入媒体播放器</p>
+<p>@Component注解：告诉Spring有可能会创建类的实例，接口的实现</p>
+<p>@ComponentScan注解：明确告诉Spring在当前类对应的包和相应的子包中搜索Component，如果有就自动创建实例对象</p>
+<p>@Configuration注解：告诉Spring类要做配置，用ComponentScan组装</p>
+<p>@AutoWired：需要在应用上下文里实现了CompactDisc的组件，这就建立了两个对象的依赖关系，通过构造方法，AutiWired告诉Spring进行注入</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">@Autowired</span><br><span class="line">    public CDPlayer(CompactDisc cd) &#123;</span><br><span class="line">        this.cd = cd;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<p>怎么看是什么版本的jdk?</p>
+<ul>
+<li>ctrl+shift+s选择user setting，输入runtimes，然后会跳转到settings.json，可以指定jdk版本</li>
+</ul>
+<p>全程没有主动的new类，而是spring帮忙</p>
+<p>注入：依赖的是接口，而不是实际的new对象，为了好修改，类不必修改</p>
+<p>对组件的命名是采用的类的名字，如CDPlayer</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">MediaPlayer</span> <span class="variable">player</span> <span class="operator">=</span> ctx.getBean(MediaPlayer.class);<span class="comment">//这里理论上可以写类的名字，如CDPlayer，但我会报错</span></span><br></pre></td></tr></table></figure>
+
+<p>也可以自定义Component的名字</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Component(&quot;MyComponent&quot;)</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="自动化配置"><a href="#自动化配置" class="headerlink" title="自动化配置"></a>自动化配置</h2><p>@Autowired</p>
+<ol>
+<li><p>用在构造器</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Autowired</span></span><br><span class="line"><span class="keyword">public</span> <span class="title function_">CDPlayer</span><span class="params">(CompactDisc cd)</span> &#123;</span><br><span class="line">	<span class="built_in">this</span>.cd = cd;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>用在setter方法</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Autowired</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">setCd</span><span class="params">(CompactDisc cd)</span> &#123;<span class="comment">//右键generate setter</span></span><br><span class="line">	<span class="built_in">this</span>.cd = cd;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>直接加在私有成员</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Autowired</span></span><br><span class="line"><span class="keyword">private</span> CompactDisc cd;</span><br></pre></td></tr></table></figure></li>
+</ol>
+<h2 id="JavaConfig"><a href="#JavaConfig" class="headerlink" title="JavaConfig"></a>JavaConfig</h2><p>使用<strong>bean注释</strong>，并创建<strong>new对象</strong></p>
+<p>junit是java常用的测试库</p>
+<p>main：功能代码 test：测试代码</p>
+<p>在pom.xml中加依赖</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&lt;dependency&gt;</span><br><span class="line">    &lt;groupId&gt;junit&lt;/groupId&gt;</span><br><span class="line">    &lt;artifactId&gt;junit&lt;/artifactId&gt;</span><br><span class="line">    &lt;version&gt;<span class="number">4.11</span>&lt;/version&gt;</span><br><span class="line">    &lt;scope&gt;test&lt;/scope&gt;</span><br><span class="line">&lt;/dependency&gt;</span><br></pre></td></tr></table></figure>
+
+<h2 id="XML装配"><a href="#XML装配" class="headerlink" title="XML装配"></a>XML装配</h2><p>通过xml告诉bean组装的意图</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;bean id=<span class="string">&quot;compactDisc&quot;</span> class=<span class="string">&quot;soundsystem.SgtPeppers&quot;</span> /&gt;</span><br><span class="line"> &lt;bean id=<span class="string">&quot;cdPlayer&quot;</span> class=<span class="string">&quot;soundsystem.CDPlayer&quot;</span>&gt;</span><br><span class="line">    &lt;constructor-arg ref=<span class="string">&quot;compactDisc&quot;</span> /&gt;</span><br><span class="line">  &lt;/bean&gt;</span><br></pre></td></tr></table></figure>
+
+<p>可以通过改class，指定整合的内容，匹配compactDisc接口；相互之间并不是直接关联的</p>
+<p>混合配置</p>
+<p>一部分注解用bean，一部分注解用component，xml</p>
+<h2 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h2><h3 id="profile"><a href="#profile" class="headerlink" title="@profile"></a>@profile</h3><p>开发环境：开发人员开发</p>
+<p>测试环境：测试人员测试</p>
+<p>生产环境：用户来用</p>
+<p>@profile(“dev”)名字可以随便起</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Profile(&quot;dev&quot;)</span><span class="comment">//开发环境，一开始就实例化出来</span></span><br><span class="line"><span class="meta">@Profile(&quot;prod&quot;)</span><span class="comment">//只在生产环境下才实例化出来，所以并不是同时实例化</span></span><br></pre></td></tr></table></figure>
+
+<p>有两个datasource，使用哪个？下面一行可以实例化dev</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">@ActiveProfiles(&quot;dev&quot;)</span><br></pre></td></tr></table></figure>
+
+<h3 id="Conditional"><a href="#Conditional" class="headerlink" title="@Conditional"></a>@Conditional</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Conditional(MagicExistsCondition.class)</span><span class="comment">//在某种情况下才实例化 参数是条件（这里是类实现）</span></span><br><span class="line"></span><br><span class="line"> <span class="meta">@Override</span></span><br><span class="line"><span class="keyword">public</span> <span class="type">boolean</span> <span class="title function_">matches</span><span class="params">(ConditionContext context, AnnotatedTypeMetadata metadata)</span> &#123;</span><br><span class="line"><span class="comment">//上下文的信息，定义了哪些bean/bean的属性/关心的bean存不存在，注解的元数据（方法有哪些注解，是否存在）</span></span><br><span class="line">    <span class="type">Environment</span> <span class="variable">env</span> <span class="operator">=</span> context.getEnvironment();</span><br><span class="line">    <span class="keyword">return</span> env.containsProperty(<span class="string">&quot;magic&quot;</span>);<span class="comment">//获得返回值true/false</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="自动装配的歧义性"><a href="#自动装配的歧义性" class="headerlink" title="自动装配的歧义性"></a>自动装配的歧义性</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Autowired</span> 如果有多个CompactDisc实例对象，不知道该挑哪个</span><br><span class="line"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">setCd</span><span class="params">(CompactDisc cd)</span> &#123;<span class="comment">//右键generate setter</span></span><br><span class="line">	<span class="built_in">this</span>.cd = cd;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Component</span></span><br><span class="line"><span class="meta">@Primary</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">SgtPeppers</span> <span class="keyword">implements</span> <span class="title class_">CompactDisc</span> &#123;<span class="comment">// CD唱片接口的实现 这样就可以提升参数优先级</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Qualifier(&quot;abc&quot;)</span><span class="comment">//还可以起名字，然后把同样的语句加在set方法处</span></span><br><span class="line"></span><br><span class="line"><span class="meta">@Autowired</span> <span class="comment">//如果有多个实例对象，不知道该挑哪个</span></span><br><span class="line"><span class="meta">@Qualifier(&quot;abc&quot;)</span><span class="comment">//起名字</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">setCd</span><span class="params">(CompactDisc cd)</span> &#123;<span class="comment">//右键generate setter</span></span><br><span class="line">	<span class="built_in">this</span>.cd = cd;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>自定义注解：如@Cold，继承自@Qualifier</p>
+<h3 id="Bean的作用域"><a href="#Bean的作用域" class="headerlink" title="Bean的作用域"></a>Bean的作用域</h3><p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502041328277.png" alt="image-20250204132849182"></p>
+<p>prototype:每次依赖注入，获取上下文，都会创建一个新的bean实例</p>
+<p>session:包含客户端与服务端的多次的交互，整个过程是一个session，如ShoppingCart没结束</p>
+<p>request:一次请求</p>
+<h3 id="通过代理注入给单例对象"><a href="#通过代理注入给单例对象" class="headerlink" title="通过代理注入给单例对象"></a>通过代理注入给单例对象</h3><p>注入的对象是代理对象，是个假的，会不同委托给不同接口</p>
+<h1 id="03-面向切面编程-AOP"><a href="#03-面向切面编程-AOP" class="headerlink" title="03-面向切面编程(AOP)"></a>03-面向切面编程(AOP)</h1><p>一个bean：实例化对象。bean之间有依赖关系，如何建立？</p>
+<ol>
+<li>自动化配置<ol>
+<li>@Component：告诉Spring这里要创建实例</li>
+<li>@Autowired把另一个对象的引用注入到里面<ol>
+<li>通过构造方法，到容器上下文里面去找</li>
+<li>通过get&#x2F;set方法</li>
+<li>直接加载private属性上面，spring会帮忙做初始化</li>
+</ol>
+</li>
+<li>@ComponentScan：告诉在哪个包的路径下搜（在当前类对应的包和相应的子包中搜索Component，如果有就自动创建实例对象）</li>
+</ol>
+</li>
+<li>JavaConfig<ol>
+<li>加@Configuration注解，告诉Spring类要做配置，用ComponentScan组装</li>
+</ol>
+</li>
+</ol>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502041329597.png" alt="image-20250204132913502"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502041329693.png" alt="image-20250204132921613"></p>
+<p>AOP解决的问题：在concert前后插入一些逻辑；其他代码都不动！</p>
+<p>切入逻辑：advice，在before&#x2F;after中</p>
+<p>面向切面的编程：不用对业务代码做任何修改</p>
+<h2 id="过程"><a href="#过程" class="headerlink" title="过程"></a>过程</h2><ol>
+<li><p>定义切面类Audience.java @Aspect 很多advice(一个before&#x2F;after就是一条advice)</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Aspect</span><span class="comment">//提示这是一个切面！</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Audience</span> &#123;</span><br><span class="line">    <span class="meta">@Before(&quot;execution(* concert.Performance.perform( .. ))&quot;)</span><span class="comment">//包路径.接口.方法 ..表示不在意参数有多少个 *表示不关心返回值是什么</span></span><br><span class="line">    <span class="comment">//在被切入的方法调用之前，把当前方法逻辑执行</span></span><br><span class="line">    <span class="comment">//这里指在perform()之前，调用silenceCellPhones()</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">silenceCellPhones</span><span class="params">()</span> &#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;Silencing cell phones&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Before(&quot;execution(* concert.Performance.perform( .. ))&quot;)</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">takeSeats</span><span class="params">()</span> &#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;Taking seats&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@AfterReturning(&quot;execution(* concert.Performance.perform( .. ))&quot;)</span></span><br><span class="line">    <span class="comment">//在applause()方法正常返回的时候切入</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">applause</span><span class="params">()</span> &#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;CLAP CLAP CLAP!!!&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@AfterThrowing(&quot;execution(* concert.Performance.perform( .. ))&quot;)</span></span><br><span class="line">    <span class="comment">//在demandRefund()方法异常时切入</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">demandRefund</span><span class="params">()</span> &#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;Demand a refund&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>在config中将切面的实例化</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Configuration</span></span><br><span class="line"><span class="meta">@EnableAspectJAutoProxy</span> <span class="comment">//开启AspectJ的自动代理机制 提醒要用切面，对有切面需求的对象引用都使用代理</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">ConcertConfig</span> &#123;<span class="comment">//配置类，用于实例化bean</span></span><br><span class="line">    <span class="meta">@Bean</span></span><br><span class="line">    <span class="keyword">public</span> Performance <span class="title function_">concert</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">Concert</span>();</span><br><span class="line">    &#125;</span><br><span class="line"><span class="comment">//    @Bean</span></span><br><span class="line"><span class="comment">//    public Performance concert2() &#123;</span></span><br><span class="line"><span class="comment">//        return new Concert();</span></span><br><span class="line"><span class="comment">//    &#125;</span></span><br><span class="line"></span><br><span class="line">    <span class="meta">@Bean</span></span><br><span class="line">    <span class="keyword">public</span> Audience <span class="title function_">audience</span><span class="params">()</span> &#123; <span class="comment">//定义Audience的bean</span></span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">Audience</span>();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="meta">@Bean</span><span class="comment">//需要实例化！</span></span><br><span class="line">    <span class="keyword">public</span> EncoreableIntroducer <span class="title function_">encoreableIntroducer</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">EncoreableIntroducer</span>();</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<p>或者使用自动化配置：在Audience类前加Component，在config类前加ComponentScan</p>
+</li>
+<li><p>加入注解@EnableAspectJAutoProxy，提醒要用切面，对有切面需求的对象引用都使用<strong>代理</strong></p>
+</li>
+</ol>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502041321514.png" alt="image-20230301153558936"></p>
+<h2 id="切点表达式"><a href="#切点表达式" class="headerlink" title="切点表达式"></a>切点表达式</h2><p>若每个切点表达式都是一样的，DRY原则：避免重复</p>
+<ul>
+<li><p>去重：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Pointcut(&quot;execution(* concert.Performance.perform( .. ))&quot;)</span><span class="comment">//把重复的切点表达式依附于一个方法，这样下面都可以复用</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">performance</span><span class="params">()</span> &#123;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Before(&quot;performance()&quot;)</span></span><br><span class="line"><span class="meta">@AfterReturning(&quot;performance()&quot;)</span></span><br><span class="line"><span class="meta">@AfterThrowing(&quot;performance()&quot;)</span></span><br></pre></td></tr></table></figure></li>
+</ul>
+<p>切点表达式当然可以切到不同的地方去</p>
+<p>@Around：环绕，有点像把其他advice全合并集中了</p>
+<h2 id="切点指示器"><a href="#切点指示器" class="headerlink" title="切点指示器"></a>切点指示器</h2><ul>
+<li>获取参数：args</li>
+<li>限定包路径：within</li>
+<li>限定bean名称：bean</li>
+</ul>
+<h2 id="引入接口"><a href="#引入接口" class="headerlink" title="引入接口"></a>引入接口</h2><p>实现新的aspect切面，把新的切面进入，调用者获得代理对象</p>
+<p>相当于<strong>切面就是原对象新的行为</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Aspect</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">EncoreableIntroducer</span> &#123;</span><br><span class="line">    <span class="meta">@DeclareParents(value = &quot;concert.Performance+&quot;,//后面的+表示应用到所有实现了该接口的Bean</span></span><br><span class="line"><span class="meta">    	defaultImpl = DefaultEncoreable.class)</span><span class="comment">//增加的行为用DefaultEncoreable实现</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> Encoreable encoreable;<span class="comment">//定义了接口的静态成员，可以依附于注解</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Bean</span><span class="comment">//需要实例化！</span></span><br><span class="line"><span class="keyword">public</span> EncoreableIntroducer <span class="title function_">encoreableIntroducer</span><span class="params">()</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">EncoreableIntroducer</span>();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="04-Web开发框架"><a href="#04-Web开发框架" class="headerlink" title="04-Web开发框架"></a>04-Web开发框架</h1><p>AOP：解耦</p>
+<p>利用@Before&#x2F;@After来指定切入点</p>
+<p>连接点：Spring只有<strong>方法</strong>这个连接点</p>
+<p>使用代理对象引入新功能，调用者不知道是新对象还是旧对象，代理对象会管理</p>
+<p>项目：在线订购系统（webapp前后端不分离）</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502041329541.png" alt="image-20250204132943403"></p>
+<ul>
+<li>程序分层</li>
+<li>控制器层：知道了用户要什么及格式，处理客户端的请求，满足客户端的响应<ul>
+<li>控制器拿到数据后，很有可能返回JSON</li>
+<li>控制器得到模板和数据，经过第三方库，转化成html文档，在浏览器就会看到页面</li>
+</ul>
+</li>
+<li>业务层：实现业务逻辑，处理控制器层的请求</li>
+<li>数据访问层：JDBC，写起来繁琐。OIM框架？如MyBatis</li>
+</ul>
+<p>slf4j可以打印日志，有@Slf4j这个注解就相当于定义了static obj。</p>
+<p>所以lombok简化代码书写</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">import lombok.extern.slf4j.Slf4j;</span><br></pre></td></tr></table></figure>
+
+<p>编译时，lombok帮助填写我们没填的代码；编译完了，lombok就没用了</p>
+<p>使用@Data，lombok会帮忙生成get&#x2F;set&#x2F;equals&#x2F;hashCode</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Data</span></span><br><span class="line"><span class="meta">@AllArgsConstructor</span></span><br><span class="line"><span class="meta">@NoArgsConstructor</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Person</span> &#123;</span><br><span class="line">    <span class="keyword">private</span> String name;</span><br><span class="line">    <span class="keyword">private</span> String address;</span><br><span class="line">    <span class="keyword">private</span> Integer age;</span><br><span class="line">    <span class="keyword">private</span> String hobbit;</span><br><span class="line">    <span class="keyword">private</span> String phone;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://upload-images.jianshu.io/upload_images/7541336-d1a8c0315eb0a2a3.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/400/format/webp" alt="img"></p>
+<p>表示编译结束后，打包时，把lombok排除掉</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">#pom.xml</span><br><span class="line"><span class="tag">&lt;<span class="name">excludes</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">exclude</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.projectlombok<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>lombok<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">exclude</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">excludes</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="localhost-8080-design发生什么"><a href="#localhost-8080-design发生什么" class="headerlink" title="localhost:8080&#x2F;design发生什么"></a>localhost:8080&#x2F;design发生什么</h2><ol>
+<li>在controller中，@RequestMapping(“&#x2F;design”)会配置请求的映射</li>
+<li>@GetMapping找到&#x2F;design方法，因为是get，匹配到。返回字符串”design”。</li>
+<li>resources放资源，view放在resources&#x2F;templates目录下，根据返回的字符串找到模板路径design.html</li>
+<li>thymeleaf根据模板、属性和对象渲染出浏览器可以使用的html文档<ol>
+<li>模板中所需的数据从哪里来？ingredient是控制器提供的对象，id、name这些属性可访问</li>
+</ol>
+</li>
+</ol>
+<h2 id="点击提交按钮发生什么"><a href="#点击提交按钮发生什么" class="headerlink" title="点击提交按钮发生什么"></a>点击提交按钮发生什么</h2><ol>
+<li>在controller中，@RequestMapping(“&#x2F;design”)会配置请求的映射</li>
+<li>@PostMapping找到processTaco方法。<ol>
+<li>taco对象：服务端将前端输入的信息转成taco对象，使用Converter，把id转到Ingredient</li>
+</ol>
+</li>
+</ol>
+<h2 id="会话是什么"><a href="#会话是什么" class="headerlink" title="会话是什么"></a>会话是什么</h2><p>服务端和客户端之间来来回回多趟，多次来往叫做会话session</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@SessionAttributes(&quot;tacoOrder&quot;)</span><span class="comment">//会话</span></span><br></pre></td></tr></table></figure>
+
+<p>tacoOrder对象在多次来往中，服务器一直维护着其存在</p>
+<p>所以tacoOrder.addTaco(taco);可以存储一段时间内的多个taco对象</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">th:object=<span class="string">&quot;$&#123;tacoOrder&#125;&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>thymeleaf会得到对象，然后匹配各个属性值</p>
+<h2 id="校验"><a href="#校验" class="headerlink" title="校验"></a>校验</h2><p>前后端分离的目的之一：减轻服务器的压力</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">import javax.validation.constraints.NotNull;//java验证的规范</span><br><span class="line">import javax.validation.constraints.Size;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">@Size(min=5, message=&quot;Name must be at least 5 characters long&quot;)</span><br></pre></td></tr></table></figure>
+
+<p>必须5个字符，否则在前端展示message字段作为错误信息</p>
+<p><strong>如何明确告诉spring要做校验？</strong></p>
+<p>@Valid注解会告诉spring进行校验（来自import javax.validation.Valid;）</p>
+<p><strong>如何将错误信息显示在浏览器</strong>？</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;span class=&quot;validationError&quot;</span><br><span class="line">      th:if=&quot;$&#123;#fields.hasErrors(&#x27;ingredients&#x27;)&#125;&quot;</span><br><span class="line">      th:errors=&quot;*&#123;ingredients&#125;&quot;&gt;Ingredient Error&lt;/span&gt;</span><br></pre></td></tr></table></figure>
+
+<p>如果有错误，展示错误</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">public String processTaco(</span><br><span class="line">  @Valid Taco taco, Errors errors,</span><br><span class="line">  @ModelAttribute TacoOrder tacoOrder) </span><br></pre></td></tr></table></figure>
+
+<p>如果@Valid校验不通过，errors则不为空：如果校验不通过就转到design页面</p>
+<p>@CreditCardNumber信用卡相关的校验</p>
+<p>见TacoOrder.java</p>
+<h2 id="使用视图控制器"><a href="#使用视图控制器" class="headerlink" title="使用视图控制器"></a>使用视图控制器</h2><p>一个url进来会路由到控制器上</p>
+<p>如果请求很简单，没啥逻辑，就不用路由到控制器上了：视图控制器</p>
+<p>WebMvcConfigurer：接口有用，可以做相关配置</p>
+<h1 id="05-JDBC、JPA"><a href="#05-JDBC、JPA" class="headerlink" title="05-JDBC、JPA"></a>05-JDBC、JPA</h1><p>现在基本前后端分离</p>
+<p>数据的持久化：JDBC</p>
+<h2 id="示例1-jdbctemplate"><a href="#示例1-jdbctemplate" class="headerlink" title="示例1:jdbctemplate"></a>示例1:jdbctemplate</h2><p>一定要加这个模板</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&lt;dependency&gt;</span><br><span class="line">	&lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;</span><br><span class="line">    &lt;artifactId&gt;spring-boot-starter-jdbc&lt;/artifactId&gt;</span><br><span class="line">&lt;/dependency&gt;</span><br><span class="line"></span><br><span class="line"><span class="keyword">private</span> JdbcTemplate jdbcTemplate;<span class="comment">//模板 加了starter-jdbc依赖后，会帮忙写，只需提供变化的部分</span></span><br></pre></td></tr></table></figure>
+
+<p>jdbc:获得连接-&gt;写sql查询语句-&gt;执行查询语句</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Repository是DAO层接口，表示持久化</span><br></pre></td></tr></table></figure>
+
+<p>mock工具，给一个接口，自动给接口的实现，不知道细节</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502041330228.png" alt="image-20250204133006112"></p>
+<p>也可以用lambda表达式</p>
+<p>初始化repo：在data.sql中初始化</p>
+<p>一般在业务层访问repo（DAO层），在控制器转向业务层</p>
+<p>控制器层处理request&#x2F;get等请求</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//JdbcOrderRepository.java</span></span><br><span class="line"><span class="type">GeneratedKeyHolder</span> <span class="variable">keyHolder</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">GeneratedKeyHolder</span>();<span class="comment">//获得id的渠道</span></span><br><span class="line">jdbcOperations.update(psc, keyHolder);<span class="comment">//真正插入的动作，往数据库插入一条数据</span></span><br><span class="line"><span class="type">long</span> <span class="variable">orderId</span> <span class="operator">=</span> keyHolder.getKey().longValue();</span><br><span class="line">order.setId(orderId);<span class="comment">//查询结果转换为的java对象，然后把获得的id赋值</span></span><br></pre></td></tr></table></figure>
+
+<p>很麻烦，order&#x2F;taco&#x2F;ingredient中要插入的数据、id都要自己指明，用下面的方法就很方便</p>
+<h2 id="示例2-sd-jdbc"><a href="#示例2-sd-jdbc" class="headerlink" title="示例2:sd-jdbc"></a>示例2:sd-jdbc</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;dependency&gt;</span><br><span class="line">  &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;</span><br><span class="line">  &lt;artifactId&gt;spring-boot-starter-data-jdbc&lt;/artifactId&gt;</span><br><span class="line">&lt;/dependency&gt;</span><br></pre></td></tr></table></figure>
+
+<ol>
+<li>定义接口：继承自CrudRepository。写一个接口就够了</li>
+</ol>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502041321231.png" alt="image-20230308144003834"></p>
+<p>可以配置数据库的名字tacocloud（默认选项置为false），JDBC访问路径为jdbc:h2:mem:tacocloud</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502041321294.png" alt="image-20230308144129623">默认没有密码</p>
+<p>执行schema.sql后产生了4张表<img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502041321282.png" alt="image-20230308144257077" style="zoom:150%;" /></p>
+<p>可以查询表的内容：</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502041321288.png" alt="image-20230308144343291"></p>
+<p>加devtools依赖包：默认提供h2-console的访问，就可以及时验证数据库开发的结果</p>
+<p>初始化repo：在dataloader中用java代码初始化</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//@Table(&quot;mytable&quot;)//可以将当前的java对象对应到数据库的哪一张表</span></span><br><span class="line"><span class="meta">@Table</span> <span class="comment">//如果不写，或者只写@Table，当前Ingredient对象就对应数据库中的Ingredient表</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="示例3-data-JPA"><a href="#示例3-data-JPA" class="headerlink" title="示例3:data JPA"></a>示例3:data JPA</h2><ol>
+<li>引入依赖</li>
+</ol>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;dependency&gt;</span><br><span class="line">  &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;</span><br><span class="line">  &lt;artifactId&gt;spring-boot-starter-data-jpa&lt;/artifactId&gt;</span><br><span class="line">&lt;/dependency&gt;</span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>写实体对象</li>
+<li>写接口。实现由Spring自动实现。</li>
+</ol>
+<p>jpa可以通过java对象，推出表的结构，所以schema.sql的文件省略了</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502041321326.png" alt="image-20230308153621882"></p>
+<p>这个表可以表示TACO_ORDER和TACO一对多的关系</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502041321474.png" alt="image-20230308153927760"></p>
+<p>接口中可以添加方法：根据名字，用邮编找到TacoOrder</p>
+<h2 id="作业的bug"><a href="#作业的bug" class="headerlink" title="作业的bug"></a>作业的bug</h2><ol>
+<li>关于持久化</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">@SessionAttributes(&quot;contactList&quot;)//持久化</span><br></pre></td></tr></table></figure>
+
+<p>注意这句话的意思是在本次session中这个attribute不变！所以如果写sessionStatus.setComplete();关闭session，list就不能持久化了，前端也就一次只有一个contact显示了。</p>
+<ol start="2">
+<li>关于页面显示：必须要写get方法</li>
+</ol>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@GetMapping</span></span><br><span class="line"><span class="keyword">public</span> String <span class="title function_">showContact</span><span class="params">()</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="string">&quot;home&quot;</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>写WebConfig似乎没有用？删了也不影响</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Configuration</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">WebConfig</span> <span class="keyword">implements</span> <span class="title class_">WebMvcConfigurer</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">addViewControllers</span><span class="params">(ViewControllerRegistry registry)</span> &#123;</span><br><span class="line">        registry.addViewController(<span class="string">&quot;/&quot;</span>).setViewName(<span class="string">&quot;home&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>复习：对数据的操作等同于对java对象的操作。</p>
+<p>schema.sql放在class根路径下，spring会自动执行脚本，完成对表的创建</p>
+<p>data.sql对数据库初始化，经常用于测试，常常放在test路径下</p>
+<h1 id="06-Spring-Security"><a href="#06-Spring-Security" class="headerlink" title="06 Spring Security"></a>06 Spring Security</h1><p>安全框架解决的问题：拒绝不怀好意的请求</p>
+<p>加依赖</p>
+<p>确认请求来自于谁：用户的身份-&gt;会跳转到login</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502041321195.png" alt="image-20230309235719344">用户身份的认证</p>
+<p>SpringSecurity帮助的工作：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">   &lt;!-- tag::thAction[] 没有写login的代码，controller是SpringSecurity实现的--&gt;</span><br><span class="line">&lt;!--    post请求会传username和password，发到服务端后SpringSecurity会认证--&gt;</span><br><span class="line">&lt;!--    SecurityConfig中有UserDetails，然后把username传到loadUserByUsername方法中，返回UserDetails对象--&gt;</span><br><span class="line">&lt;!--    根据UserDetails对象可以进一步获得存到数据库中的password，然后和客户端传来的password做比较，如果一样则认证成功--&gt;</span><br></pre></td></tr></table></figure>
+
+<p>用户认证后，接下来会不断地请求响应：session</p>
+<h2 id="浏览器和服务器如何维持会话"><a href="#浏览器和服务器如何维持会话" class="headerlink" title="浏览器和服务器如何维持会话"></a>浏览器和服务器如何维持会话</h2><p>无连接：不同的请求是无连接的（不像socket）</p>
+<p>服务端判断不了是否来自同一个用户，怎么办？cookie</p>
+<p>客户端登录，服务端认证成功，服务端返回cookie，通过response返回，浏览器通过协议，将cookie存入浏览器。</p>
+<p>当后面有请求时，浏览器自动将session-id作为cookie传回服务端。每次都会带着session-id。只要session-id不变，服务端就认为来自同一个用户。</p>
+<blockquote>
+<p>例：注册时cookie不变，登录后服务端返回新的session-id，接下来每一次请求都用这个id不变</p>
+</blockquote>
+<h2 id="如何定义请求资源的访问权限"><a href="#如何定义请求资源的访问权限" class="headerlink" title="如何定义请求资源的访问权限"></a>如何定义请求资源的访问权限</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//SecurityConfig.java</span></span><br><span class="line"><span class="keyword">return</span> http</span><br><span class="line">  .authorizeRequests()<span class="comment">//对请求做鉴权：2个url之一，针对design/orders，确认当前登录的用户是否属于USER角色</span></span><br><span class="line">    .mvcMatchers(<span class="string">&quot;/design&quot;</span>, <span class="string">&quot;/orders&quot;</span>).hasRole(<span class="string">&quot;USER&quot;</span>)</span><br><span class="line">    .anyRequest().permitAll()<span class="comment">//除了上面2个url，其他的访问畅通无阻</span></span><br></pre></td></tr></table></figure>
+
+<p>哪里定义的USER?</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//User.java</span></span><br><span class="line"><span class="meta">@Override</span><span class="comment">//硬编码，让这些用户默认具有USER权限，上面2个url即可访问</span></span><br><span class="line"><span class="keyword">public</span> Collection&lt;? <span class="keyword">extends</span> <span class="title class_">GrantedAuthority</span>&gt; getAuthorities() &#123;</span><br><span class="line">  <span class="keyword">return</span> Arrays.asList(<span class="keyword">new</span> <span class="title class_">SimpleGrantedAuthority</span>(<span class="string">&quot;ROLE_USER&quot;</span>));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>也可以加权限，如：.mvcMatchers(“&#x2F;design”, “&#x2F;orders”).hasAuthority(“read”).hasRole(“USER”)</p>
+<h2 id="实现方法级别的安全-taco-cloud"><a href="#实现方法级别的安全-taco-cloud" class="headerlink" title="实现方法级别的安全(taco-cloud)"></a>实现方法级别的安全(taco-cloud)</h2><p>控制器层的代码在好几个地方会调用到，可能授权好几个url：可以统一授权</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@PreAuthorize(&quot;hasRole(&#x27;ADMIN&#x27;)&quot;)</span><span class="comment">//方法级别的注解</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">deleteAllOrders</span><span class="params">()</span> &#123;</span><br><span class="line">  orderRepository.deleteAll();</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//@EnableGlobalMethodSecurity 如果打开，可以实现方法级别的授权：PreAuthorize生效</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="获取当前用户的信息"><a href="#获取当前用户的信息" class="headerlink" title="获取当前用户的信息"></a>获取当前用户的信息</h2><p>方法一：jdk里有个库jaas：java认证与授权服务，更底层的框架（相对SpringSecurity），principal接口来自库</p>
+<ul>
+<li>不同认证方式可插入，如密码、指纹，添加少量代码即可修改</li>
+<li>提供解耦操作，便于未来的扩展</li>
+<li>SpringSecurity更简洁</li>
+</ul>
+<p>方法二：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@PostMapping</span></span><br><span class="line"><span class="keyword">public</span> String <span class="title function_">processOrder</span><span class="params">(<span class="meta">@Valid</span> TacoOrder order, Errors errors,</span></span><br><span class="line"><span class="params">    SessionStatus sessionStatus,</span></span><br><span class="line"><span class="params">    <span class="meta">@AuthenticationPrincipal</span> User user)</span> &#123;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">if</span> (errors.hasErrors()) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="string">&quot;orderForm&quot;</span>;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  order.setUser(user);<span class="comment">//订单里的信息可以用user身份填充（就是注册时包括的信息）</span></span><br><span class="line"></span><br><span class="line">  orderRepo.save(order);</span><br><span class="line">  sessionStatus.setComplete();</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> <span class="string">&quot;redirect:/&quot;</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>方法三：通过安全上下文</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502041321225.png" alt="image-20230310004719387"></p>
+<p>总结：SecurityConfig.java配权限，或者用@PreAuthorize(“hasRole(‘ADMIN’)”)在方法上配，这是最重点的内容</p>
+<h1 id="docker"><a href="#docker" class="headerlink" title="docker"></a>docker</h1><p>虚拟容器，底层基于linux操作系统</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502041321246.png" alt="image-20230310004937286"></p>
+<p>VM：虚拟机，独立的操作系统。不同的VM和底层的宿主机完全独立。</p>
+<p>CONTAINER：使用者可以过滤底层差异，看作VM。不同点：底层机制是共享操作系统内核，也基于宿主机。（创建代价低，类比新起了一个进程，轻量级）</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502041321271.png" alt="image-20230310005129070"></p>
+<p>docker是一个软件，用于运行、管理容器</p>
+<p>docker run通过客户端发往host。host在linux操作系统上，client可以在windows上。指令通过远程连接，发往docker engine</p>
+<p>仓库：镜像放在这里</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502041321340.png" alt="image-20230310005402601"></p>
+<p>docker软件在这里，获得的容器来源于Linux</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502041321363.png" alt="image-20230310005426183"></p>
+<p>常用右边的</p>
+<p>docker desktop会自动在本机创建VM（虚拟化出的linux）</p>
+<p>在docker hub创建账号，存的是容器的镜像，可以下载很多软件。</p>
+<p>容器技术支撑了<strong>微服务</strong></p>
+<h1 id="07-docker使用"><a href="#07-docker使用" class="headerlink" title="07 docker使用"></a>07 docker使用</h1><p>上节课复习：</p>
+<p>类的命名：大写开头</p>
+<p>最底层安全框架jdk：JAAS</p>
+<ul>
+<li>可用其principal接口获得用户信息</li>
+</ul>
+<p>Spring提供的Spring Security：一个包</p>
+<p>docker：最初是linux上</p>
+<p>docker desktop：针对windows的GUI软件</p>
+<p>Spring本身是容器，放的是bean（面向对象的对象）</p>
+<p>web容器，如tomcat，放了servelet、filter</p>
+<p>docker容器：docker软件生成的容器</p>
+<p>上面三个容器<strong>没有关系</strong>！！</p>
+<p><strong>容器就是一台轻量级虚拟机</strong>，里面有操作系统（文件管理等都有）</p>
+<ul>
+<li>可以快速创建虚拟机，像启动进程一样</li>
+<li>为什么快？<strong>共享底层的linux操作系统内核</strong>，很多东西是共用的，而不是自己独立</li>
+<li>为什么需要容器？希望有一个干净的操作系统，跑自己的程序</li>
+</ul>
+<p>docker是软件，能帮助生成、管理容器（docker !&#x3D; 容器）</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502041321587.png" alt="image-20230403211053944"></p>
+<p>不同的容器环境互不影响</p>
+<p>集装箱：可以把软件打成容器的镜像，用户可以直接跑，而不需要乱七八糟的环境配置</p>
+<ul>
+<li>集装箱中间不需要拆开，可以直接交付给用户</li>
+</ul>
+<p>改变了软件的生成过程，形成流水线，可以及时更新代码、测试</p>
+<ul>
+<li>技术基础是容器技术</li>
+</ul>
+<p>改变软件技术架构：单体变成了多体，微服务开发：可以分别开发单体，然后合成多体</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502041321620.png" alt="image-20230403213206034"></p>
+<p>微服务用Spring Cloud开发，怎么开发微服务？解决分布式中数据的配置（11）、多个微服务怎么彼此发现（12）、A调B服务B不存在怎么办（容错问题13）</p>
+<p>K8S：解决<strong>集群化</strong>，把多个docker宿主机构建一个集群，在集群上虚拟出容器并管理生命周期</p>
+<p>istio</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502041321930.png" alt="image-20230403213858601"></p>
+<p>本质上只能跑在linux，为了方便desktop可以运行在windows，但底层是linux</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502041321154.png" alt="image-20230403214106707"></p>
+<p>Client操作系统无所谓</p>
+<p>docker_host一定在linux</p>
+<p>镜像：自己生成docker build;或者来自镜像仓库 docker hub</p>
+<p>docker用go开发</p>
+<p>命令类型</p>
+<ul>
+<li>管理命令：<ul>
+<li>image</li>
+<li>network：让虚拟机之间互联互通</li>
+<li>volume：存储。容器消亡后什么都没有了，重要数据要外置到某个地方去</li>
+</ul>
+</li>
+<li>操作命令</li>
+</ul>
+<p>docker info：客户端和服务端的信息，如plugins：compose：容器编排信息。服务端的镜像数、版本</p>
+<p><code>docker run hello-world</code>：client和daemon建立联系；daemon获得镜像、创建容器、结果输送到用户看到的windows控制台。<img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502041321879.png" alt="image-20230404004227502"></p>
+<h1 id="08-容器镜像构建与重排"><a href="#08-容器镜像构建与重排" class="headerlink" title="08 容器镜像构建与重排"></a>08 容器镜像构建与重排</h1><p>镜像：class 容器：object</p>
+<p><strong>dockerfile</strong></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502041321907.png" alt="image-20230404153834360"></p>
+<p>启动nginx：-p将本机端口映射到nginx</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502041321936.png" alt="image-20230404151242688"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502041321977.png" alt="image-20230404151351044"></p>
+<p>设置属于哪个“交换机&#x2F;网关”：搭在同一个网络，所以可以互相通信</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502041321363.png" alt="image-20230404151836727"></p>
+<p>如何增加新网卡，使3与12相连：用connect 并填入自己的id<img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502041321841.png" alt="image-20230404152343143"></p>
+<p>创建镜像：这里的<code>.</code>指上下文<img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502041321865.png" alt="image-20230404161204836"></p>
+<p>运行镜像：<img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502041321911.png" alt="image-20230404161516013"></p>
+<p>查看：得到容器的信息，如env、ports的映射、networks：bridge的网关和ip地址</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502041321991.png" alt="image-20230404162356318"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502041321012.png" alt="image-20230404163405531"></p>
+<p>java开发依赖jdk，运行时只需要jre。若只需要jre，可以用alpine，因为轻量级。</p>
+<h1 id="09-k8s使用"><a href="#09-k8s使用" class="headerlink" title="09 k8s使用"></a>09 k8s使用</h1><p>k8s是集群环境，部署了一系列容器，每个容器都提供了对外访问的端口号。如何从集群外部访问端口？统一的入口——ingress，类似nginx的反向代理，根据域名作转发。</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502041321086.png" alt="image-20230404202142393"></p>
+<p>输入域名后，会优先在本地hosts找对应的地址。</p>
+<p>controller返回视图</p>
+<h1 id="10-REST服务、微服务开发与部署"><a href="#10-REST服务、微服务开发与部署" class="headerlink" title="10 REST服务、微服务开发与部署"></a>10 REST服务、微服务开发与部署</h1><p>IDE开发</p>
+<ul>
+<li>SonarLint静态检查</li>
+<li>自动化测试，放在test目录下：驱动Controller运行。Mock&#x2F;Jmeter</li>
+</ul>
+<h2 id="spittr-test"><a href="#spittr-test" class="headerlink" title="spittr-test"></a>spittr-test</h2><p><strong>微服务开发</strong>：用SpringBoot</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502041321252.png" alt="image-20230405000140995"></p>
+<p>Sleuth：对日志做跟踪</p>
+<p>@ResponseBody：告诉返回的不是Spittle对象，而是JSON格式字符串。</p>
+<ul>
+<li>来自于Spring.web框架。</li>
+<li>怎么转？到classpath路径找可以转的第三方包：fasterxml.jackson.<img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502041321359.png" alt="image-20230405002733278"></li>
+<li>如果参数中有，意为从JSON字符串转成Java对象<img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502041321432.png" alt="image-20230405133019230"></li>
+</ul>
+<p>@PathVariable：路径变量</p>
+<p>每个方法都要加很冗余，用@RestController解决，会自动JSON解编码（Java对象-&gt;字符串）</p>
+<p>@Controller：1. 标识这是控制器 2. @Component：Spring扫描类，知道要实例化，就在上下文创建Bean</p>
+<p>mvn jetty:run：借助jetty插件可以跑起来</p>
+<ul>
+<li>host：localhost:8080。所以ingress知道域名。</li>
+</ul>
+<p>ResponseEntity可以作为controller的返回值</p>
+<ul>
+<li>headers.setLocation(url)</li>
+<li>new ResponseEntity&lt;&gt;(saved, headers, HttpStatus.CREATED)内容&#x2F;头部信息&#x2F;201状态码</li>
+</ul>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502041321460.png" alt="image-20230405004416461"></p>
+<p>@ExceptionHandler：处理所有方法中可能抛出的异常。用@ResponseStatus自己返回状态码。</p>
+<h2 id="section11"><a href="#section11" class="headerlink" title="section11"></a>section11</h2><p>公司管理license</p>
+<p><parent>是SpringBoot</p>
+<p>实现Rest接口：</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502041321610.png" alt="image-20230405004847998"></p>
+<p>查看运行时信息：accutator</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502041321635.png" alt="image-20230405004905454"></p>
+<p>自动生成镜像：maven-plungin插件</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502041321894.png" alt="image-20230405004938629"></p>
+<p>@RequestMapping value是访问的url</p>
+<p>dockerfile中maven validate阶段会把指定文件拷贝到文件夹中，并把变量替换掉</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502041321938.png" alt="image-20230405133806943"></p>
+<h1 id="11-基于NACOS的数据配置"><a href="#11-基于NACOS的数据配置" class="headerlink" title="11 基于NACOS的数据配置"></a>11 基于NACOS的数据配置</h1><h2 id="section12-nacos"><a href="#section12-nacos" class="headerlink" title="section12-nacos"></a>section12-nacos</h2><p>应用程序启动时，会根据不同的属性做不同的处理。比如数据库的类型：driverClassName，数据库的位置：url，数据库的用户名和密码</p>
+<p>有些配置信息比较重要，最好不要直接写在代码里</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502041321072.png" alt="image-20230405135218760"></p>
+<p> curl配置数据的三种访问方式</p>
+<ul>
+<li>服务名service：nacos-headless</li>
+<li>服务的集群IP<img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502041321151.png" alt="image-20230405142544463"></li>
+<li>pod的IP地址<img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502041321235.png" alt="image-20230405142602283"></li>
+</ul>
+<p>不可访问：<strong>pod的名字</strong>不能，如licensingservice-69d757895c</p>
+<p><strong>bootstrap.yml中</strong>：</p>
+<p>SpringCloud下面如何指定域名和端口号：spring.cloud.nacos.config.server-addr</p>
+<p>微服务的名字：spring.application.name</p>
+<p>dataid的后缀：spring.cloud.nacos.config.file-extension</p>
+<p>默认以服务名作为dataid的前缀：example</p>
+<ul>
+<li>找到example.properties配置，将内容取过来，作为当前微服务的属性文件</li>
+<li>可以取<code>useLocalCache=true</code>作为属性文件，就可以取属性值了</li>
+</ul>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502041321438.png" alt="image-20230405143443481"></p>
+<p>通过@Value注解，指定属性名，如果没有就是false</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502041321498.png" alt="image-20230405144031015"></p>
+<p>nacos在SpringCloud实现配置数据管理需要以下几步：</p>
+<ol>
+<li><p>加入依赖，就可以使用nacos配置管理的能力<img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502041321656.png" alt="image-20230405151425426"></p>
+</li>
+<li><p>配上nacos的访问地址、服务名、dataid后缀<img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502041321678.png" alt="image-20230405151521165"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502041321782.png" alt="image-20230405151539872"></p>
+</li>
+<li><p>@Value：指配置文件当中的属性名 @RefreshScope实时更新<img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502041321876.png" alt="image-20230405151645782"></p>
+</li>
+</ol>
+<p>cipher：加密</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502041321608.png" alt="image-20230405154213649"></p>
+<h1 id="12-基于NACOS的服务注册与发现"><a href="#12-基于NACOS的服务注册与发现" class="headerlink" title="12 基于NACOS的服务注册与发现"></a>12 基于NACOS的服务注册与发现</h1><p>nacos发心跳来维持活性</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502041321868.png" alt="image-20230405160140901"></p>
+<ul>
+<li>loadbalance：客户端的负载均衡（licensingservice调用organizationservice时，nacos会返回3个IP。loadbalance负责选择）</li>
+<li>openfeign：客户端如何便捷地访问服务端</li>
+</ul>
+<p><strong>organization-service需要借助nacos进行服务注册，如何做到？</strong></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502041321904.png" alt="image-20230405162655919"></p>
+<ol>
+<li>需要把数据放在nacos中做集中管理</li>
+</ol>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502041321175.png" alt="image-20230405162720335"></p>
+<ul>
+<li>如果用到了，还要加loadbalance和feign的依赖</li>
+</ul>
+<ol start="2">
+<li>在bootstrap.yml加入server-addr访问地址</li>
+</ol>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502041321356.png" alt="image-20230405162901053"></p>
+<ol start="3">
+<li>@EnableDiscoveryClient：意思是向nacos作登记</li>
+</ol>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502041321960.png" alt="image-20230405162927274"></p>
+<p>licensing-service中：@LoadBalanced表示做负载均衡</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502041321015.png" alt="image-20230405163351134"></p>
+<p>k8s-deploy.yml：会部署一个licensingservice和多个organizationservice</p>
+<p>clientType是一个变量，根据类型feign&#x2F;rest&#x2F;discovery来判断调用哪一种方式</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502041321665.png" alt="image-20230405165640732"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502041321727.png" alt="image-20230405231248135"></p>
+<ul>
+<li><p>discoveryClient：与nacos解耦。getInstances可以获取某个服务的详细信息。instances.get(0)可选择服务。</p>
+</li>
+<li><p>rest：改进后的RestTemplate</p>
+</li>
+<li><p>feign：@EnableFeignClients要加，下面的@Bean就不用了<img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502041321925.png" alt="image-20230405222246683"></p>
+<p>consumes：希望返回json（会把organization转成json字符串）如果想访问另外的微服务，定义这样的接口，加@FeignClient(想访问的服务名)</p>
+<p>客户端看到的就是对象</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502041321653.png" alt="image-20230405222431187"></p>
+</li>
+</ul>
+<p>随机策略：</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502041321678.png" alt="image-20230405223443822"></p>
+<h1 id="13-基于Sentinel的流控与熔断"><a href="#13-基于Sentinel的流控与熔断" class="headerlink" title="13 基于Sentinel的流控与熔断"></a>13 基于Sentinel的流控与熔断</h1><p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502041321718.png" alt="image-20230405235140329"></p>
+<p>A发到B的请求叫流量，流控&#x3D;流量控制，控制A到B的流量，如单位时间内只处理20个请求，超过就不处理了</p>
+<p>容错：B可能异常，A可以把请求给另一个，或者使用缺省值</p>
+<p>熔断：B老是出错：说明不稳定。后面就都会返回缺省值或者直接报错。类似漏电后及时把电路切断。</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502041321926.png" alt="image-20230406000239341"></p>
+<p><strong>使用Sentinel的步骤</strong></p>
+<p>定义资源：</p>
+<ul>
+<li>try-catch</li>
+<li>@SentiResource指明要监控的方法</li>
+</ul>
+<h2 id="使用try-catch定义资源"><a href="#使用try-catch定义资源" class="headerlink" title="使用try-catch定义资源"></a>使用try-catch定义资源</h2><p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502041321629.png" alt="image-20230406192307872"></p>
+<p>流控规则</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502041321878.png" alt="image-20230406192343490"></p>
+<p>资源定义在线程的执行代码中</p>
+<ul>
+<li>try：entry资源的入口定义；统计通过的请求</li>
+<li>catch：执行阻塞，统计阻止的请求</li>
+<li>finally：统计通过+阻止的请求</li>
+</ul>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502041321394.png" alt="image-20230406192541021"></p>
+<p>Timer每个1秒检查通过、阻止的请求数</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502041321615.png" alt="image-20230406192635272"></p>
+<p>tick每隔1s会进行统计和输出：<img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502041321625.png" alt="image-20230406192941605"></p>
+<h2 id="使用注解定义资源"><a href="#使用注解定义资源" class="headerlink" title="使用注解定义资源"></a>使用注解定义资源</h2><p>控制台的配置：</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502041322073.png" alt="image-20230407133357524"></p>
+<p>DemoController：</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502041322580.png" alt="image-20230407133444707"></p>
+<p>TestService:</p>
+<ul>
+<li>randomlyRunLong()有三分之一的概率熔断</li>
+<li>fallback：默认处理，发送限流&#x2F;熔断会抛异常代码逻辑转向这里的代码，fallback()是方法（return缺省值）</li>
+</ul>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502041322757.png" alt="image-20230407133513686"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502041322386.png" alt="image-20230407133933855"></p>
+<p>运行代码，test和hello资源均被监控（展示基于对请求的访问，如这里是<img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502041322715.png" alt="image-20230407134357713">，返回hello at 1）</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502041322780.png" alt="image-20230407134221000"></p>
+<p><strong>spring cloud alibaba</strong></p>
+<p>限流规则</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502041322311.png" alt="image-20230407161216547"></p>
+<p>熔断规则</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502041322339.png" alt="image-20230407161232412"></p>
+<p>资源怎么来的？定义了一个个资源：Sentinel可以针对url创建对应的资源，可以注释掉@SentinelResource，只是针对url的话@GetMapping就够了</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502041322540.png" alt="image-20230407161709366"></p>
+<p>微服务挂了后，DashBoard不会保存流控和熔断规则</p>
+<p>调用后，资源就会加入控制台的簇点链路</p>
+<h1 id="考试重点"><a href="#考试重点" class="headerlink" title="考试重点"></a>考试重点</h1><blockquote>
+<p>@Component的作用</p>
+<p>单体应用程序的不足</p>
+<p>HTTP状态码</p>
+<p>yml格式：通过缩进</p>
+<p>curl配置数据的三种访问方式</p>
+<p>服务发现可以提高弹性（可靠性、容错性）</p>
+<p>使用OpenFeign的方式调用服务</p>
+<p>2种负载均衡策略</p>
+<p>2种健康检查</p>
+<p>服务发现的好处</p>
+</blockquote>
+<h1 id="01-建立开发环境-1"><a href="#01-建立开发环境-1" class="headerlink" title="01-建立开发环境"></a>01-建立开发环境</h1><blockquote>
+<p>starter-web：实现Web场景开发，提供了嵌入的Tomcat以及Spring MVC的依赖。</p>
+<p>starter-thymeleaf：前后端不分离的页面渲染。与Spring MVC等Web框架进行集成作为Web应用的模板引擎。能够直接在浏览器中打开并正确显示模板页面，而不需要启动整个Web应用。</p>
+</blockquote>
+<h2 id="开发期工具：spring-boot-devtools"><a href="#开发期工具：spring-boot-devtools" class="headerlink" title="开发期工具：spring-boot-devtools"></a>开发期工具：spring-boot-devtools</h2><p>开发时使用，生产环境不用 </p>
+<ul>
+<li>可以一边写代码，一边看到效果</li>
+<li>结合spring-boot-run，结合ide(安装livereload)：可以实时刷新</li>
+</ul>
+<p>功能：</p>
+<ol>
+<li><p>代码变更后应用会自动重启（需要借助 IDE 的自动编译，局部重启，只重启修改过的）</p>
+</li>
+<li><p>当面向浏览器的资源（如模板、JavaScript、样式表）等发生变化时，会自动刷新浏览器</p>
+<ol>
+<li>开放端口以便与浏览器通信</li>
+</ol>
+<ul>
+<li>应用会暴露 LiveReload 端口，日志如：<code>LiveReload server is running on port 35729</code></li>
+<li>需要安装 VSCode 插件 LiveReload （IntelliJ IDEA 要做的配置见下页 ppt）</li>
+<li>需要安装浏览器插件：LiveReload，并打开</li>
+</ul>
+</li>
+<li><p>自动禁用（页面渲染的）模板缓存</p>
+<ol>
+<li>模板指页面渲染的模板</li>
+</ol>
+</li>
+<li><p>如果使用 H2 数据库，则内置了 H2 控制台。访问：<a target="_blank" rel="noopener" href="http://localhost:8080/h2-consle">http://localhost:8080/h2-consle</a></p>
+<ol>
+<li>该工具<strong>只在运行期使用</strong>，是runtime依赖，与编译器无关，不会编译优化&#x2F;插入调试信息等</li>
+</ol>
+</li>
+</ol>
+<h2 id="源代码仓库管理-git"><a href="#源代码仓库管理-git" class="headerlink" title="源代码仓库管理&#x2F;git"></a>源代码仓库管理&#x2F;git</h2><p>也称为版本控制（version control）系统，常用工具有：GitLab、SVN（Subversion）、Bitbucket 等；</p>
+<p>需纳入版本控制的有：功能代码、测试代码、测试脚本、构建脚本、部署脚本、配置文件等；</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502041323074.png" alt="image-20230408132704866"></p>
+<p>index是暂存区，通过add添加</p>
+<p>commit：从暂存区到本地仓库</p>
+<h1 id="02-依赖注入-1"><a href="#02-依赖注入-1" class="headerlink" title="02-依赖注入"></a>02-依赖注入</h1><p>依赖注入（Dependency Injection），又叫控制反转（IoC）</p>
+<h2 id="Spring的两个核心技术"><a href="#Spring的两个核心技术" class="headerlink" title="Spring的两个核心技术"></a>Spring的两个核心技术</h2><ol>
+<li>DI (Dependency Injection)：保留抽象接口，让组件（Component）依赖于抽象接口，当组件要与其他实际的对象发生依赖关系时，由抽象接口来注入依赖的实际对象</li>
+<li>AOP (Aspect Oriented Programming)：通过预编译方式和运行期间动态代理实现程序功能的统一维护的一种技术。利用 AOP 可以对业务逻辑的各个部分进行隔离，从而使得业务逻辑各部分之间的耦合度降低，提高程序的可重用性，同时提高了开发效率</li>
+</ol>
+<p><strong>依赖注入</strong>：创建对象实例时，为这个对象注入属性值或其它对象实例</p>
+<ul>
+<li><p>依赖于容器注入它所需要的外部资源</p>
+</li>
+<li><p>依赖的是接口，而不是实际的new对象。为了好修改，类不必修改。</p>
+</li>
+</ul>
+<p><strong>Spring</strong>是一个轻量级的控制反转(IoC)和面向切面(AOP)的<strong>容器</strong>框架。</p>
+<h2 id="Component的作用"><a href="#Component的作用" class="headerlink" title="@Component的作用*"></a>@Component的作用*</h2><p><code>@Component</code> 通常是通过路径扫描来自动侦测以及自动装配到 Spring 容器中</p>
+<ul>
+<li>可以使用 <code>@ComponentScan</code> 注解定义要扫描的路径从中找出标识了需要装</li>
+<li>配的类自动装配到 Spring 的 bean 容器中</li>
+</ul>
+<p><code>@Bean</code> 注解通常是我们在标有该注解的<strong>方法</strong>中定义产生这个 bean，<code>@Bean</code> 告</p>
+<p>诉了 Spring 这是某个类的实例，当我们需要用它的时候还给我。</p>
+<blockquote>
+<p><code>@Component</code>（和<code>@Service</code>和<code>@Repository</code>）用于自动检测和使用类路径扫描自动配置bean。注释类和bean之间存在隐式的一对一映射（即每个类一个bean）。</p>
+<p><code>@Bean</code>用于显式声明单个bean，而不是让Spring像上面那样自动执行它。它将bean的声明与类定义分离，并允许精确地创建和配置bean。</p>
+</blockquote>
+<h2 id="Spring配置方案"><a href="#Spring配置方案" class="headerlink" title="Spring配置方案"></a>Spring配置方案</h2><p>管理Bean分为注册和装配Bean两部分。完成管理Bean任务有以下三种方式：</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502041323080.png" alt="image-20230407164119121"></p>
+<h3 id="自动化配置-1"><a href="#自动化配置-1" class="headerlink" title="自动化配置"></a>自动化配置</h3><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502041323071.png" alt="image-20230407163935539" />
+
+<h4 id="组件扫描"><a href="#组件扫描" class="headerlink" title="组件扫描"></a>组件扫描</h4><p>@Component注解：告诉Spring有可能会创建类的实例，接口的实现（在上下文中创建对象）</p>
+<p>@ComponentScan注解：明确告诉Spring在<strong>当前类对应的包和相应的子包</strong>中搜索Component，如果有就自动创建实例对象</p>
+<p>@Configuration注解：告诉Spring类要做配置，用ComponentScan组装</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Configuration</span></span><br><span class="line"><span class="meta">@ComponentScan</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">CDPlayerConfig</span> &#123;</span><br><span class="line">    <span class="comment">//配置类，告诉Spring组装的入口</span></span><br><span class="line">    <span class="comment">//ComponentScan可以加参数，告诉去哪里搜</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="自动装配"><a href="#自动装配" class="headerlink" title="自动装配"></a>自动装配</h4><p>@Autowired：把上下文中的另一个对象注入到当前类中，<strong>建立依赖关系</strong>。</p>
+<p>如CompactDisc建立到CDPlayer<img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502041323095.png" alt="image-20230407164243028" style="zoom: 67%;" /></p>
+<ul>
+<li><p>用在构造器</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Autowired</span></span><br><span class="line"><span class="keyword">public</span> <span class="title function_">CDPlayer</span><span class="params">(CompactDisc cd)</span> &#123;</span><br><span class="line">	<span class="built_in">this</span>.cd = cd;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>用在setter方法</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Autowired</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">setCd</span><span class="params">(CompactDisc cd)</span> &#123;<span class="comment">//右键generate setter</span></span><br><span class="line">	<span class="built_in">this</span>.cd = cd;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>直接加在私有成员</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Autowired</span></span><br><span class="line"><span class="keyword">private</span> CompactDisc cd;</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h3 id="JavaConfig-1"><a href="#JavaConfig-1" class="headerlink" title="JavaConfig"></a>JavaConfig</h3><p>使用@Bean注解，并创建new对象</p>
+<p>@Configuration注解：告诉Spring类要做配置，用ComponentScan组装</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * cdplayer配置</span></span><br><span class="line"><span class="comment"> * 配置类的用途就是生成并注入 Bean</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">@Configuration</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">CDPlayerConfig</span> &#123;<span class="comment">//Spring的入口</span></span><br><span class="line"></span><br><span class="line">    <span class="meta">@Bean</span><span class="comment">//告诉Spring来调这个方法，怎么来new是程序员自己考虑</span></span><br><span class="line">    <span class="keyword">public</span> CompactDisc <span class="title function_">compactDisc</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">SgtPeppers</span>();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//    @Bean//需要参数，Spring会自动在上下文找是否实现了这个接口的对象，找CompactDisc的实例（加不加Autowired效果都一样）</span></span><br><span class="line"><span class="comment">//    public CDPlayer cdPlayer(CompactDisc cd) &#123;</span></span><br><span class="line"><span class="comment">//        return new CDPlayer(cd);</span></span><br><span class="line"><span class="comment">//    &#125;</span></span><br><span class="line"></span><br><span class="line">    <span class="meta">@Bean</span><span class="comment">//不是new了一个对象，而是获得上下文的对象的引用 不是应用代码！因为使用了 @Configuration 和 @Bean 注解，多次调用该方法也不会多次 new</span></span><br><span class="line">    <span class="keyword">public</span> CDPlayer <span class="title function_">cdPlayer</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">CDPlayer</span>(compactDisc()) ;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="XML装配-1"><a href="#XML装配-1" class="headerlink" title="XML装配"></a>XML装配</h3><p>通过xml告诉bean组装的意图</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;bean id=<span class="string">&quot;compactDisc&quot;</span> class=<span class="string">&quot;soundsystem.SgtPeppers&quot;</span> /&gt;</span><br><span class="line"> &lt;bean id=<span class="string">&quot;cdPlayer&quot;</span> class=<span class="string">&quot;soundsystem.CDPlayer&quot;</span>&gt;</span><br><span class="line">    &lt;constructor-arg ref=<span class="string">&quot;compactDisc&quot;</span> /&gt;</span><br><span class="line">  &lt;/bean&gt;</span><br></pre></td></tr></table></figure>
+
+<p>可以通过改class，指定整合的内容，匹配compactDisc接口；相互之间并不是直接关联的</p>
+<h2 id="Bean的作用域-1"><a href="#Bean的作用域-1" class="headerlink" title="Bean的作用域"></a>Bean的作用域</h2><p><code>@Scope</code> 可以与 <code>@Component</code> 和 <code>@Bean</code> 一起使用，指定作用域</p>
+<ul>
+<li><code>Singleton</code>，单例，不使用 <code>@Scope</code> 时<strong>默认</strong>，在整个应用中，只创建 bean 的一个实例</li>
+<li><code>Prototype</code>，原型，每次注入或者通过 Spring 应用上下文获取的时候，都会创建一个新 bean 实例</li>
+<li><code>Session</code>，会话，在 Web 应用中，为每个会话创建一个 bean 实例<ul>
+<li>包含客户端与服务端的多次的交互，整个过程是一个session，如ShoppingCart没结束</li>
+</ul>
+</li>
+<li><code>Request</code>，请求，在 Web 应用中，为每个请求创建一个 bean 实例<ul>
+<li>一次请求一个实例</li>
+</ul>
+</li>
+</ul>
+<p>使用会话和请求作用域，重定义的话用@Scope</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Component</span></span><br><span class="line"><span class="meta">@Scope(value=WebApplicationContext.SCOPE_SESSION, proxyMode=ScopedProxyMode.INTERFACES)</span></span><br><span class="line"><span class="keyword">public</span> ShoppingCart <span class="title function_">cart</span><span class="params">()</span>&#123;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>默认是Singleton</p>
+<h1 id="03-面向切面编程-AOP-1"><a href="#03-面向切面编程-AOP-1" class="headerlink" title="03-面向切面编程(AOP)"></a>03-面向切面编程(AOP)</h1><h2 id="AOP术语"><a href="#AOP术语" class="headerlink" title="AOP术语"></a>AOP术语</h2><ol>
+<li>通知（Advice）：切面做什么以及何时做<ol>
+<li>@Before: 前置通知, 在方法执行之前执行</li>
+<li>@After: 后置通知, 在方法执行之后执行</li>
+<li>@AfterRunning: 返回通知, 在方法返回结果之后执行</li>
+<li>@AfterThrowing: 异常通知, 在方法抛出异常之后</li>
+<li>@Around: 环绕通知, 围绕着方法执行</li>
+</ol>
+</li>
+<li>切点（Pointcut）：何处</li>
+<li>切面（Aspect）：Advice 和 Pointcut 的结合</li>
+<li>连接点（Join point）：<strong>方法</strong>、字段修改、构造方法<ul>
+<li>Spring只能在方法切，不能在字段修改和构造方法切</li>
+</ul>
+</li>
+<li>引入（introduction）：引入新的行为和状态</li>
+<li>织入（Weaving）：切面应用到目标对象的过程<ol>
+<li>编译期</li>
+<li>类加载期</li>
+<li><strong>运行期</strong>：Spring采纳的方式</li>
+</ol>
+</li>
+</ol>
+<p>@Before：指在perform()之前，调用silenceCellPhones()</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502041323091.png" alt="image-20230407164848136"></p>
+<p>@Aspect切面类中有很多advice。@Before是一个advice，里面是切点表达式。一个before&#x2F;after就是一条advice。</p>
+<ul>
+<li>切点表达式：在哪些类&#x2F;类的哪些方法&#x2F;哪些包切</li>
+</ul>
+<p>@Aspect具有@Component的效果吗？没有！Spring扫描不到不会实例化</p>
+<ul>
+<li><p>要么在javaconfig类中实例化<img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502041323097.png" alt="image-20230407165054287"></p>
+</li>
+<li><p>要么在Audience类前加@Component，在config类前加@ComponentScan</p>
+</li>
+<li><p>@Controller、@Service、@Repository具有@Component的效果</p>
+</li>
+</ul>
+<h2 id="过程-1"><a href="#过程-1" class="headerlink" title="过程"></a>过程</h2><ol>
+<li><p>定义切面类Audience.java @Aspect 很多advice</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Aspect</span><span class="comment">//提示这是一个切面！</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Audience</span> &#123;</span><br><span class="line">    <span class="meta">@Before(&quot;execution(* concert.Performance.perform( .. ))&quot;)</span><span class="comment">//包路径.接口.方法 ..表示不在意参数有多少个 *表示不关心返回值是什么</span></span><br><span class="line">    <span class="comment">//在被切入的方法调用之前，把当前方法逻辑执行</span></span><br><span class="line">    <span class="comment">//这里指在perform()之前，调用silenceCellPhones()</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">silenceCellPhones</span><span class="params">()</span> &#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;Silencing cell phones&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Before(&quot;execution(* concert.Performance.perform( .. ))&quot;)</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">takeSeats</span><span class="params">()</span> &#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;Taking seats&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@AfterReturning(&quot;execution(* concert.Performance.perform( .. ))&quot;)</span></span><br><span class="line">    <span class="comment">//在perform()方法正常返回的时候切入</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">applause</span><span class="params">()</span> &#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;CLAP CLAP CLAP!!!&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@AfterThrowing(&quot;execution(* concert.Performance.perform( .. ))&quot;)</span></span><br><span class="line">    <span class="comment">//在perform()方法异常时切入</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">demandRefund</span><span class="params">()</span> &#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;Demand a refund&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>在config中将切面的实例化</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Configuration</span></span><br><span class="line"><span class="meta">@EnableAspectJAutoProxy</span> <span class="comment">//开启AspectJ的自动代理机制 提醒要用切面，对有切面需求的对象引用都使用代理</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">ConcertConfig</span> &#123;<span class="comment">//配置类，用于实例化bean</span></span><br><span class="line">    <span class="meta">@Bean</span></span><br><span class="line">    <span class="keyword">public</span> Performance <span class="title function_">concert</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">Concert</span>();</span><br><span class="line">    &#125;</span><br><span class="line"><span class="comment">//    @Bean</span></span><br><span class="line"><span class="comment">//    public Performance concert2() &#123;</span></span><br><span class="line"><span class="comment">//        return new Concert();</span></span><br><span class="line"><span class="comment">//    &#125;</span></span><br><span class="line">    <span class="meta">@Bean</span></span><br><span class="line">    <span class="keyword">public</span> Audience <span class="title function_">audience</span><span class="params">()</span> &#123; <span class="comment">//定义Audience的bean</span></span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">Audience</span>();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Bean</span><span class="comment">//需要实例化！</span></span><br><span class="line">    <span class="keyword">public</span> EncoreableIntroducer <span class="title function_">encoreableIntroducer</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">EncoreableIntroducer</span>();</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<p>或者在Audience类前加Component，在config类前加ComponentScan</p>
+</li>
+<li><p>加入注解@EnableAspectJAutoProxy，提醒要用切面，对有切面需求的对象引用都使用<strong>代理</strong></p>
+</li>
+</ol>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502041323603.png" alt="image-20230301153558936"></p>
+<h2 id="切点指示器-1"><a href="#切点指示器-1" class="headerlink" title="切点指示器"></a>切点指示器</h2><p>用来限定连接点满足某些条件，如限定参数、包路径、bean名称</p>
+<ul>
+<li>execution：用来匹配方法执行的连接点，也就是哪些方法要应用切面</li>
+<li>within：用来限定连接点必须在确定的类型或包中</li>
+<li>args：用来限定连接点，也就是方法执行时它的参数属于给定类型的一个实例</li>
+<li>bean：限定bean名称</li>
+</ul>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502041323626.png" alt="image-20230407165728930"></p>
+<h1 id="04-Web开发框架-1"><a href="#04-Web开发框架-1" class="headerlink" title="04-Web开发框架"></a>04-Web开发框架</h1><h2 id="lombok"><a href="#lombok" class="headerlink" title="lombok"></a>lombok</h2><p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502041323648.png" alt="image-20230407170142114"></p>
+<p>lombok可以简化java代码的书写：编译时，lombok帮助填写我们没填的代码</p>
+<ul>
+<li><p>如使用@Data，lombok会帮忙生成get&#x2F;set&#x2F;equals&#x2F;hashCode</p>
+</li>
+<li><p>要装插件，否则省略很多内容后会报错</p>
+</li>
+</ul>
+<h2 id="请求映射注解"><a href="#请求映射注解" class="headerlink" title="请求映射注解"></a>请求映射注解</h2><table>
+<thead>
+<tr>
+<th>注解</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>@RequestMapping</code></td>
+<td>通用的请求处理，一般只在类级别使用</td>
+</tr>
+<tr>
+<td><code>@GetMapping</code></td>
+<td>处理 HTTP GET 请求</td>
+</tr>
+<tr>
+<td><code>@PostMapping</code></td>
+<td>处理 HTTP POST 请求</td>
+</tr>
+<tr>
+<td><code>@PutMapping</code></td>
+<td>处理 HTTP PUT 请求</td>
+</tr>
+<tr>
+<td><code>@DeleteMapping</code></td>
+<td>处理 HTTP DELETE 请求</td>
+</tr>
+<tr>
+<td><code>@PatchMapping</code></td>
+<td>处理 HTTP PATCH 请求</td>
+</tr>
+</tbody></table>
+<p>@RequestMapping：既可以加在方法上，也可以加在类上</p>
+<p>@SpringBootApplication：指明程序的入口</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502041323672.png" alt="image-20230407170345461"></p>
+<h3 id="localhost-8080-design发生什么（我加的）"><a href="#localhost-8080-design发生什么（我加的）" class="headerlink" title="localhost:8080&#x2F;design发生什么（我加的）"></a>localhost:8080&#x2F;design发生什么（我加的）</h3><ol>
+<li>在controller中，@RequestMapping(“&#x2F;design”)会配置请求的映射</li>
+<li>@GetMapping找到&#x2F;design方法，因为是get，匹配到。返回字符串”design”。</li>
+<li>resources放资源，view放在resources&#x2F;templates目录下，根据返回的字符串找到模板路径design.html</li>
+<li>thymeleaf根据模板、属性和对象渲染出浏览器可以使用的html文档<ol>
+<li>模板中所需的数据从哪里来？ingredient是控制器提供的对象，id、name这些属性可访问</li>
+</ol>
+</li>
+</ol>
+<h3 id="点击提交按钮发生什么（我加的）"><a href="#点击提交按钮发生什么（我加的）" class="headerlink" title="点击提交按钮发生什么（我加的）"></a>点击提交按钮发生什么（我加的）</h3><ol>
+<li>在controller中，@RequestMapping(“&#x2F;design”)会配置请求的映射</li>
+<li>@PostMapping找到processTaco方法。<ol>
+<li>taco对象：服务端将前端输入的信息转成taco对象，使用Converter，把id转到Ingredient</li>
+</ol>
+</li>
+</ol>
+<h2 id="MVC分层-Web项目有哪些层次【2020】"><a href="#MVC分层-Web项目有哪些层次【2020】" class="headerlink" title="MVC分层&#x2F;Web项目有哪些层次【2020】"></a>MVC分层&#x2F;Web项目有哪些层次【2020】</h2><p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502041323691.png" alt="image-20230407171558883"></p>
+<p>进入控制器层：进行参数解析</p>
+<p>客户端请求参数分类：</p>
+<ol>
+<li>路径参数，<code>@PathVariable</code></li>
+<li>请求参数（查询参数），<code>@RequestParam</code></li>
+<li>表单参数，应用于前后端不分离的传统场景，默认，对应 model 对象，可以使用 <code>@Valid</code> 校验</li>
+<li><code>json</code> 请求体，应用于前后端分离的场景，使用 <code>@RequestBody</code> 把 <code>json</code> 格式转成 java 对象；<code>@ResponseBody</code>，把 java 对象转成 <code>json</code> 格式</li>
+</ol>
+<p>进入业务层：做数据持久化，访问数据访问层</p>
+<p><strong>控制器层拿到返回值后怎么处理？</strong></p>
+<ul>
+<li><p>前后端不分离时：客户端请求页面，所以返回时将model的属性作为页面渲染的属性，返回视图名，通过第三方页面渲染返回页面（如thymeleaf）</p>
+</li>
+<li><p>前后端分离时：请求JSON格式。加@ResponseBody，指需要将java对象变成json。每个方法上面写很麻烦，在类上面写@RestController</p>
+</li>
+</ul>
+<h1 id="05-JDBC、JPA-1"><a href="#05-JDBC、JPA-1" class="headerlink" title="05-JDBC、JPA"></a>05-JDBC、JPA</h1><table>
+<thead>
+<tr>
+<th>特点</th>
+<th>JdbcTemplate</th>
+<th>Spring Data JDBC</th>
+<th>JDA</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>实现具体类（Repository.java）</td>
+<td>需要</td>
+<td>不需要，只要写明继承关系</td>
+<td>不需要，只要写明继承关系</td>
+</tr>
+<tr>
+<td>定义实体类和数据库表的映射关系</td>
+<td>不需要</td>
+<td>需要</td>
+<td>需要</td>
+</tr>
+<tr>
+<td>程序员维护表之间的关系</td>
+<td>需要</td>
+<td>不需要</td>
+<td>不需要</td>
+</tr>
+<tr>
+<td>显式提供表结构（建表 SQL 脚本）</td>
+<td>需要</td>
+<td>需要</td>
+<td>不需要，可以自动推断</td>
+</tr>
+</tbody></table>
+<h2 id="JdbcTemplate"><a href="#JdbcTemplate" class="headerlink" title="JdbcTemplate"></a>JdbcTemplate</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">&lt;dependency&gt;</span><br><span class="line">	&lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;</span><br><span class="line">    &lt;artifactId&gt;spring-boot-starter-jdbc&lt;/artifactId&gt;</span><br><span class="line">&lt;/dependency&gt;</span><br><span class="line">&lt;dependency&gt;</span><br><span class="line">	&lt;groupId&gt;com.h2database&lt;/groupId&gt;</span><br><span class="line">	&lt;artifactId&gt;h2&lt;/artifactId&gt;</span><br><span class="line">	&lt;scope&gt;runtime&lt;/scope&gt;</span><br><span class="line">&lt;/dependency&gt;    </span><br><span class="line"></span><br><span class="line"><span class="keyword">private</span> JdbcTemplate jdbcTemplate;<span class="comment">//模板 加了starter-jdbc依赖后，会帮忙写，只需提供变化的部分</span></span><br></pre></td></tr></table></figure>
+
+<p>特点：</p>
+<ul>
+<li><p>解决样板式代码的问题（重复性），只需要提供查询逻辑。</p>
+<ul>
+<li>提供了大量查询更新数据库的方法，如<code>update</code>、<code>execute</code>、<code>query</code>等。可以帮忙完成重复性代码。</li>
+<li>如果要覆盖的话写@Override即可。</li>
+</ul>
+</li>
+<li><p>需要实现具体类 <code>JdbcIngredientRepository</code> 而其他两种方法不用；</p>
+</li>
+<li><p>需要提供 <code>src/main/resources/schema.sql</code> 文件作为表结构的定义（建表脚本）。</p>
+<ul>
+<li><p>很复杂，要进行许多表的关联，如order&#x2F;taco&#x2F;ingredient中要插入的数据、id都要自己指明<img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502041323715.png" alt="image-20230407200204682"></p>
+</li>
+<li><p>sql放在class根路径下，spring会自动执行脚本，完成对表的创建</p>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="SpringDataJDBC"><a href="#SpringDataJDBC" class="headerlink" title="SpringDataJDBC"></a>SpringDataJDBC</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;dependency&gt;</span><br><span class="line">  &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;</span><br><span class="line">  &lt;artifactId&gt;spring-boot-starter-data-jdbc&lt;/artifactId&gt;</span><br><span class="line">&lt;/dependency&gt;</span><br></pre></td></tr></table></figure>
+
+<p>特点：</p>
+<ul>
+<li><p>需要定义实体类和数据库表的映射关系；</p>
+<ul>
+<li><p>需要@Table、@Id、@Column等注解</p>
+</li>
+<li><pre><code class="java">@Data//lombok会帮忙生成get/set/equals/hashCode
+//@Table(&quot;mytable&quot;)//可以将当前的java对象对应到数据库的哪一张表
+@Table //如果不写，或者只写@Table，当前Ingredient对象就对应数据库中的Ingredient表
+@AllArgsConstructor
+@NoArgsConstructor(access=AccessLevel.PRIVATE, force=true)
+public class Ingredient implements Persistable&lt;String&gt; &#123;
+
+  @Id
+  private String id;
+
+  private String name;
+  private Type type;
+
+  @Override
+   public boolean isNew() &#123;
+      return true;
+   &#125;
+
+  public enum Type &#123;
+    WRAP, PROTEIN, VEGGIES, CHEESE, SAUCE
+  &#125;
+&#125;
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">- 不需要实现具体类，只需要写好继承关系</span><br><span class="line"></span><br><span class="line">  - 定义接口并继承CrudRepository</span><br><span class="line">  - ![image-20230407200224879](https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502041323333.png)</span><br><span class="line"></span><br><span class="line">- 需要提供 `src/main/resources/schema.sql` 文件作为表结构的定义（建表脚本）。</span><br><span class="line"></span><br><span class="line">&gt; 加devtools依赖包：默认提供h2-console的访问，就可以及时验证数据库开发的结果</span><br><span class="line"></span><br><span class="line">## SpringDataJPA的开发流程和特征【2020】</span><br><span class="line"></span><br><span class="line">开发流程：</span><br><span class="line"></span><br><span class="line">1. 引入依赖</span><br><span class="line"></span><br><span class="line">```java</span><br><span class="line">&lt;dependency&gt;</span><br><span class="line">  &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;</span><br><span class="line">  &lt;artifactId&gt;spring-boot-starter-data-jpa&lt;/artifactId&gt;</span><br><span class="line">&lt;/dependency&gt;</span><br></pre></td></tr></table></figure>
+</code></pre>
+</li>
+</ul>
+</li>
+</ul>
+<ol start="2">
+<li>定义接口，继承自CrudRepository</li>
+</ol>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502041323376.png" alt="image-20230407200520266"></p>
+<ol start="3">
+<li>定义实体类和数据库表的对应关系<ol>
+<li>@Entity说明这个class是实体类，可以从数据库找到，如果没有它会帮你创建一个数据表的作用（Entity是共同规范，与厂家无关）</li>
+<li>@id：声明一个属性将映射到数据库主键的字段。</li>
+</ol>
+</li>
+</ol>
+<ul>
+<li>jpa可以通过java对象，推出表的结构，所以不需要schema.sql的文件</li>
+</ul>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502041323928.png" alt="image-20230407200545641"></p>
+<p>特征：</p>
+<ul>
+<li>需要定义实体类和数据库表的映射关系；</li>
+<li>不需要实现具体类，只需要写好继承关系；</li>
+<li>依据实体类推断表结构，不需要建表脚本；</li>
+<li>可以自定义查询方法。</li>
+</ul>
+<blockquote>
+<p>与JDBC的共同点：定义接口、定义对应关系</p>
+</blockquote>
+<h2 id="自定义查询方法"><a href="#自定义查询方法" class="headerlink" title="自定义查询方法"></a>自定义查询方法</h2><p>定义查询方法，无需实现：</p>
+<ul>
+<li>领域特定语言（domain specific language DSL）spring data 的命名约定</li>
+<li>查询动词 + 主题 + 断言</li>
+<li><strong>查询动词： get 、 read 、 find 、 count</strong></li>
+<li>例子：</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">List&lt;TacoOrder&gt; <span class="title function_">findByDeliveryZip</span><span class="params">( String deliveryZip )</span>;</span><br></pre></td></tr></table></figure>
+
+<p>声明自定义查询（JDQL 面向对象查询语言）：</p>
+<p>不符合方法命名约定时，或者命名太长时</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Query(&quot;Order o where o.deliveryCity = &#x27;Seattle&#x27;&quot;)</span></span><br><span class="line">List&lt;TacoOrder&gt; <span class="title function_">readOrdersDeliveredInSeattle</span><span class="params">( )</span>;</span><br></pre></td></tr></table></figure>
+
+<h2 id="Jpa、Hibernate、Spring-Data-Jpa-三者之间的关系"><a href="#Jpa、Hibernate、Spring-Data-Jpa-三者之间的关系" class="headerlink" title="Jpa、Hibernate、Spring Data Jpa 三者之间的关系"></a>Jpa、Hibernate、Spring Data Jpa 三者之间的关系</h2><ul>
+<li>JPA 的宗旨是为 POJO 提供持久化标准规范；</li>
+<li>Hibernate 作为厂家实现了这一规范；</li>
+</ul>
+<p><img src="https://eaglebear2002.github.io/6170/image-20230407005727833.png" alt="img"></p>
+<h1 id="06-Spring-Security-1"><a href="#06-Spring-Security-1" class="headerlink" title="06 Spring Security"></a>06 Spring Security</h1><h2 id="用户信息存储"><a href="#用户信息存储" class="headerlink" title="用户信息存储"></a>用户信息存储</h2><p>持久化的3种方式：</p>
+<ul>
+<li>内存用户存储</li>
+<li>JDBC用户存储</li>
+<li>LDAP用户存储</li>
+</ul>
+<h2 id="SpringSecurity开发"><a href="#SpringSecurity开发" class="headerlink" title="SpringSecurity开发"></a>SpringSecurity开发</h2><p><img src="https://eaglebear2002.github.io/6170/image-20230406223941208.png" alt="img"></p>
+<p>开发人员实现SpringSecurity提供的UserDetialsService接口（告诉权限等），实例化到上下文，SpringSecurity就可以在上下文找到接口对象，返回UserDetails用户的详细信息</p>
+<p>BEANPassWordEncoder也是需要开发人员实现SpringSecurity提供的接口-&gt;实例化到上下文，以便SpringSecurity进行加解密</p>
+<p>绿色部分不需要开发人员操心，帮助进行用户名密码的认证工作（不需要自己实现Controller）会用到BEANPassWordEncoder和UserDetialsService实例</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502041323293.png" alt="image-20230407202421177"></p>
+<p>告诉SpringSecurity需要对哪些url进行控制</p>
+<ul>
+<li><p>@EnableGlobalMethodSecurity 如果打开，可以实现<strong>方法级别</strong>的授权：PreAuthorize生效</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@PreAuthorize(&quot;hasRole(&#x27;ADMIN&#x27;)&quot;)</span><span class="comment">//方法级别的注解</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">deleteAllOrders</span><span class="params">()</span> &#123;</span><br><span class="line">  orderRepository.deleteAll();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h2 id="创建自定义登录页"><a href="#创建自定义登录页" class="headerlink" title="创建自定义登录页"></a>创建自定义登录页</h2><ul>
+<li>当需要认证时转向的登录页：<code>.loginPage(&quot;/&quot;)</code></li>
+<li>视图控制器，定义 login 请求对应的视图：<code>registry.addViewController(&quot;/login&quot;);</code></li>
+<li>登录的 post 请求由 Spring Security 自动处理，名称默认：<code>username</code>、<code>password</code>，可配置</li>
+</ul>
+<h1 id="07-docker使用-1"><a href="#07-docker使用-1" class="headerlink" title="07 docker使用"></a>07 docker使用</h1><h2 id="docker-1"><a href="#docker-1" class="headerlink" title="docker"></a>docker</h2><p><strong>容器就是一台轻量级虚拟机</strong>，里面有操作系统（文件管理等都有）</p>
+<ul>
+<li>可以快速创建虚拟机，像启动进程一样</li>
+<li>为什么快速？<strong>共享底层的linux操作系统内核</strong>（在宿主机上），很多东西是共用的，而不是自己独立</li>
+<li>为什么需要容器？希望有一个<strong>干净</strong>的操作系统，跑自己的程序</li>
+<li>使用者可以过滤底层差异，看作VM</li>
+</ul>
+<p>docker是一个软件，用于运行、管理容器</p>
+<p>docker desktop是针对windows的GUI软件，会自动在本机创建VM（虚拟化出的linux）</p>
+<p>在docker hub创建账号，存的是容器的镜像，可以下载很多软件。</p>
+<p>容器技术支撑了<strong>微服务</strong></p>
+<h2 id="docker-run"><a href="#docker-run" class="headerlink" title="docker run"></a>docker run</h2><p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502041323360.png" alt="image-20230408201927366"></p>
+<p>-p：左边是主机端口，右边是容器端口</p>
+<p>–rm：退出后自动删除容器</p>
+<p>-d：后台运行，不用交互</p>
+<p>-e：设置环境变量，操作系统中会有对应的环境变量</p>
+<h2 id="管理命令"><a href="#管理命令" class="headerlink" title="管理命令"></a>管理命令</h2><p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502041323761.png" alt="image-20230407204526513"></p>
+<p>输入<code>docker --help</code></p>
+<p>volume：存储。容器消亡后，使数据可以继续保留在volumn里。</p>
+<ul>
+<li>docker管理卷</li>
+<li>绑定挂载卷</li>
+</ul>
+<p>network：让虚拟机之间互联互通</p>
+<ul>
+<li>默认bridge网络，每个容器创建后自动挂在docker0的桥上</li>
+</ul>
+<p>container</p>
+<p>image</p>
+<p>此外，<code>docker stop</code>的意思是停止运行的容器；但停止后可以重新启动（restart）</p>
+<h1 id="08-容器镜像构建与重排-1"><a href="#08-容器镜像构建与重排-1" class="headerlink" title="08 容器镜像构建与重排"></a>08 容器镜像构建与重排</h1><h2 id="dockerfile文件指令"><a href="#dockerfile文件指令" class="headerlink" title="dockerfile文件指令"></a>dockerfile文件指令</h2><p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502041323797.png" alt="image-20230408210634034"></p>
+<p>RUN：构建正在创建的映像，会创建image的新层</p>
+<ul>
+<li><code>docker run 指令（-it/-p/-d等） 镜像名 参数（/bin/sh、bash等）</code></li>
+<li>docker run命令中，镜像名后面的都是给容器执行的命令参数</li>
+<li>所以<code>docker run -it test:1</code> 和 <code>docker run -it test:1 bash</code>，前者不会覆盖cmd，后者会覆盖cmd</li>
+</ul>
+<p>ADD和COPY的区别：add会自动解压，copy只会拷贝（都可以将本地文件添加到容器中）</p>
+<p><strong>cmd和entrypoint的区别</strong></p>
+<p>CMD：容器启动以后，默认的执行的命令，如启动python程序</p>
+<ul>
+<li>如果docker run没有指定任何的执行命令或者dockerfile里面也没有entrypoint，那么，就会使用cmd指定的默认的执行命令执行。</li>
+<li>如果我们在run时指定了命令或者有entrypoint，那么cmd就会被覆盖。</li>
+<li>它不会为Image创建新层，而只是运行命令</li>
+</ul>
+<p>ENTRYPOINT：用entrypoint的中括号形式作为docker 容器启动以后的默认执行命令</p>
+<ul>
+<li><p>区别1：ENTRYPOINT不会被docker run中的参数命令覆盖</p>
+</li>
+<li><p>区别2：如果在Dockerfile中CMD与ENTRYPOINT都存在，则CMD中的指</p>
+<p>令将会被作为ENTRYPOINT中的参数，即这时候CMD里的指令会失去它的</p>
+<p>作用，只是作为一个参数（可以理解为就是字符串）了。这时docker run</p>
+<p>后的参数指令依然会覆盖CMD，但是也会失去他本身的作用，仅仅是作为</p>
+<p>参数（字符串）提供给ENTRYPOINT中的命令</p>
+</li>
+</ul>
+<h2 id="编写最佳的dockerfile"><a href="#编写最佳的dockerfile" class="headerlink" title="编写最佳的dockerfile"></a>编写最佳的dockerfile</h2><p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502041323826.png" alt="image-20230408211951689"></p>
+<p>dockerignore：把不想要的文件排除在外</p>
+<p>容器本来就轻量级，只运行单个应用</p>
+<p>多个RUN合并：减少镜像的分层。可以把差不多变化频率的层放在一起。</p>
+<h2 id="docker-compose及常用指令"><a href="#docker-compose及常用指令" class="headerlink" title="docker-compose及常用指令"></a>docker-compose及常用指令</h2><p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502041323919.png" alt="image-20230407210015916"></p>
+<p>和k8s同级，均可用于部署服务，如将多个服务一次性部署。</p>
+<ul>
+<li>一个服务对应一或多个容器</li>
+<li>项目是由一组关联的应用容器组成的一个完整业务单元</li>
+</ul>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502041323014.png" alt="image-20230407210034235"></p>
+<p>docker-compose ps：不是呈现docker系统中的所有容器，只是呈现当前目录下docker-compose所部署的容器（因为会运行当前目录下的docker-compose.yml文件进行部署）</p>
+<p>docker-compose images同理，只是当前目录下的镜像</p>
+<p>docker-compose logs -f [pod名字&#x2F;服务的名字] 把里面的容器的日志打印出来</p>
+<h2 id="yaml文件"><a href="#yaml文件" class="headerlink" title="yaml文件*"></a>yaml文件*</h2><p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502041323090.png" alt="image-20230407210025648"></p>
+<p>连续的<code>-</code>或者一行</p>
+<p>对象用<code>&#123;&#125;</code></p>
+<h1 id="09-k8s使用-1"><a href="#09-k8s使用-1" class="headerlink" title="09 k8s使用"></a>09 k8s使用</h1><h2 id="k8s中的资源"><a href="#k8s中的资源" class="headerlink" title="k8s中的资源"></a>k8s中的资源</h2><p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502041323617.png" alt="image-20230407210818637"></p>
+<p>ingress：如何从集群外部访问端口？统一的入口——ingress，类似nginx的反向代理，根据域名作转发。</p>
+<ul>
+<li>k8s是集群环境，部署了一系列容器，每个容器都提供了对外访问的端口号。</li>
+<li>输入域名后，会优先在本地hosts找对应的地址。</li>
+<li>ingress由两部分组成：<ul>
+<li>ingress controller：将新加入的Ingress转化成Nginx的配置文件并使之生效</li>
+<li>ingress服务：将Nginx的配置抽象成一个Ingress对象，每添加一个新的服务只需写一个新的Ingress的yaml文件即可</li>
+</ul>
+</li>
+</ul>
+<p>service ：在k8s中不要直接访问具体pod，因为pod经常变换ip会变，所以用service。</p>
+<ul>
+<li>从逻辑上代表了一组Pod，具体是哪些 Pod 则是由 label 来挑选。</li>
+<li>有自己的IP，而且这个IP是不变的</li>
+<li>客户端只需要访问 Service的IP，Kubernetes 则负责建立和维护 Service 与Pod的映射关系。无论后端Pod如何变化，对客户端不会有任何影响，因为Service没有变。</li>
+</ul>
+<p>deployment：pod版本管理的工具，用来区分不同版本的pod</p>
+<ul>
+<li><p>单独创建pod的时候就不会有deployment出现，但是创建deployment的时候一定会创建pod,因为pod是一个基础的单位。</p>
+</li>
+<li><p>顾名思义“部署”：除了运行代码(即pod)之外，需要考虑更新策略，副本数量，回滚，重启等步骤</p>
+</li>
+<li><p>自动伸缩，设定伸缩个数的区间：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kubectl autoscale deployment spittr --min=10 --max=15 --cpu-percent=80</span><br></pre></td></tr></table></figure></li>
+</ul>
+<p>pod：调度的最小单位，一个或多个容器</p>
+<h2 id="pod"><a href="#pod" class="headerlink" title="pod"></a>pod</h2><p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502041323637.png" alt="image-20230407210949745"></p>
+<p><strong>背命名空间</strong>：默认情况下同一个POD的不同容器的哪些名称空间是打通的。这里先说一下结论，共享的是UTS、IPC、NET、USER。</p>
+<p>pod可以在多个容器直接共享</p>
+<p>是K8S调度的最小单元</p>
+<h2 id="访问服务的方法"><a href="#访问服务的方法" class="headerlink" title="访问服务的方法"></a>访问服务的方法</h2><ol>
+<li>用<code>port-forward</code>创建pod&#x2F;service端口到本机端口的映射，实现对部署服务的访问</li>
+<li>创建<code>ingress</code>，就可以通过域名来做路由。<ol>
+<li>查询hosts文件得到本地ip</li>
+<li>来自域名的请求会被转发到所设置的服务的端口</li>
+</ol>
+</li>
+<li>启动<code>curl</code>工具：基于http的访问<img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502041323658.png" alt="image-20230407211801930"></li>
+</ol>
+<h2 id="Label、service-和-pod-之间的关系"><a href="#Label、service-和-pod-之间的关系" class="headerlink" title="Label、service 和 pod 之间的关系"></a>Label、service 和 pod 之间的关系</h2><p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502041323674.png" alt="image-20230407213004599"></p>
+<p>通过label、service找到对应的pod</p>
+<p>service有集群ip，也可以用来访问service（pod因为经常消亡，ip会变所以不能用）</p>
+<h2 id="k8s-service和nacos-service的异同点"><a href="#k8s-service和nacos-service的异同点" class="headerlink" title="k8s service和nacos service的异同点"></a>k8s service和nacos service的异同点</h2><p>共同点：通过服务名访问多个动态的服务实例。</p>
+<ol>
+<li>一个服务的背后可能有多个服务的实例，多个服务的实例通过pod体现。</li>
+<li>因为pod不断增加消亡、动态变化，所以服务实例也是动态变化的。客户端只需要知道服务名，k8s和nacos负责具体管理。</li>
+</ol>
+<p>不同点：</p>
+<ol>
+<li>k8s service是pod层级，与ingress&#x2F;pod等资源配合使用。nacos service是服务层级，与开发框架相关。<ol>
+<li>k8s 的 service 底层还有 pod，nacos 的 service 本身就是最低粒度的单位了</li>
+</ol>
+</li>
+<li>在服务注册与发现上，nacos的与k8s的service可以二选一</li>
+<li>k8s除了作为服务发现和注册中心，还有管理部署的功能。<ol>
+<li>当拿 k8s 作为部署工具的时候，nacos 的底层可以依赖 k8s。此时nacos维护每个服务的元数据，每个服务的部署、升级、重启等依赖底层的k8s</li>
+<li>但nacos也可以通过其他方式部署服务实例，注册到nacos。比如换 docker swarm 或者其它部署工具的时候，nacos 就可以不依赖 k8s</li>
+</ol>
+</li>
+</ol>
+<h1 id="10-REST服务、微服务开发与部署-1"><a href="#10-REST服务、微服务开发与部署-1" class="headerlink" title="10 REST服务、微服务开发与部署"></a>10 REST服务、微服务开发与部署</h1><h2 id="微服务架构模式的特征【2020】"><a href="#微服务架构模式的特征【2020】" class="headerlink" title="微服务架构模式的特征【2020】"></a>微服务架构模式的特征【2020】</h2><ol>
+<li>应用程序分解为具有明确定义了职责范围的细粒度组件</li>
+<li>完全独立部署，独立测试，并可复用</li>
+<li>使用轻量级通信协议 HTTP 和 JSON ，松耦合</li>
+<li>服务实现可使用多种编程语言和技术</li>
+<li>将大型团队划分成多个小型开发团队，每个团队只负责他们各自的服务</li>
+</ol>
+<h2 id="单体应用程序的不足-【2020】"><a href="#单体应用程序的不足-【2020】" class="headerlink" title="单体应用程序的不足*【2020】"></a>单体应用程序的不足*【2020】</h2><ol>
+<li>数据库的表对所有模块可见</li>
+<li>一个人的修改，整个应用都要重新构建、测试、部署</li>
+<li>整体复制分布式部署，不能拆分按需部署</li>
+</ol>
+<h2 id="HTTP状态码"><a href="#HTTP状态码" class="headerlink" title="HTTP状态码*"></a>HTTP状态码*</h2><p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502041323696.png" alt="image-20230407214435705"></p>
+<p>1-5的含义</p>
+<h2 id="消息转换器"><a href="#消息转换器" class="headerlink" title="消息转换器"></a><strong>消息转换器</strong></h2><p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502041323730.png" alt="image-20230409163422944"></p>
+<p>在每个方法上加@ResponseBody或在类上加@ResponseController</p>
+<p>可以加在方法上面，或者传参时参数里面</p>
+<ul>
+<li>接收data时：文本如JSON串-&gt;Java对象</li>
+<li>返回data时：Java对象-&gt;JSON字符串</li>
+</ul>
+<h2 id="运维实践"><a href="#运维实践" class="headerlink" title="运维实践"></a>运维实践</h2><ol>
+<li>功能代码和测试脚本等都在源代码库中</li>
+<li>指定 JAR 依赖的版本号</li>
+<li>配置数据与源代码分开放，配置当中有很多常变化的、敏感的信息</li>
+<li>已构建的服务是不可变的，不能再被修改</li>
+<li>微服务应该是无状态的</li>
+<li>并发，通过启动更多的微服务实例横向扩展，多线程是纵向扩展</li>
+</ol>
+<h1 id="11-基于NACOS的数据配置-1"><a href="#11-基于NACOS的数据配置-1" class="headerlink" title="11 基于NACOS的数据配置"></a>11 基于NACOS的数据配置</h1><p>nacos：动态配置服务+服务发现及管理，可在docker&#x2F;k8s部署</p>
+<p>微服务的两大配置数据来源：Spring Cloud Config或nacos</p>
+<h2 id="如何基于nacos配置管理做微服务开发"><a href="#如何基于nacos配置管理做微服务开发" class="headerlink" title="如何基于nacos配置管理做微服务开发"></a>如何基于nacos配置管理做微服务开发</h2><ol>
+<li>加依赖<img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502041323380.png" alt="image-20230407214951871"></li>
+<li>在bootstrap中定义nacos的访问地址（server-addr）、后缀（file-extension）、服务名（application.name，可用来组合dataID，有固定的格式）<img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502041323409.png" alt="image-20230407215034722"></li>
+<li>在代码中获取某一属性的值<ol>
+<li><p>@Value指定属性文件里key的名字，由此可以从nacos中获取最新属性值（这里设置了缺省值false）</p>
+</li>
+<li><p>@RefreshScope：nacos更新配置数据后，SpringBoot及时地获取数据</p>
+</li>
+</ol>
+</li>
+</ol>
+<h2 id="dataid"><a href="#dataid" class="headerlink" title="dataid"></a>dataid</h2><p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502041323444.png" alt="image-20230407220719824"></p>
+<p>在nacos平台上创建dataid，内容是配置数据<img src="https://pic3.zhimg.com/80/v2-cb27fcaab71a21acd3a785e6b34ccc6e_1440w.webp" alt="img"></p>
+<h1 id="12-基于NACOS的服务注册与发现-1"><a href="#12-基于NACOS的服务注册与发现-1" class="headerlink" title="12 基于NACOS的服务注册与发现"></a>12 基于NACOS的服务注册与发现</h1><h2 id="如何使用OpenFeign的方式调用服务-如何使用nacos进行服务注册与发现-【2020】"><a href="#如何使用OpenFeign的方式调用服务-如何使用nacos进行服务注册与发现-【2020】" class="headerlink" title="如何使用OpenFeign的方式调用服务&#x2F;如何使用nacos进行服务注册与发现*【2020】"></a>如何使用OpenFeign的方式调用服务&#x2F;如何使用nacos进行服务注册与发现*【2020】</h2><ol>
+<li>需要把数据放在nacos中做集中管理，最核心是nacos-discovery</li>
+</ol>
+<p>还有nacos-config<img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502041323469.png" alt="image-20230407221406283"></p>
+<p>如果用到了，还要加loadbalance和feign的依赖</p>
+<ol start="2">
+<li><p>在bootstrap.yml加入server-addr访问地址（nacos访问地址）</p>
+</li>
+<li><p>在application.java中加入@EnableDiscoveryClient（这个第二三种都要加）和@EnableFeignClients（第三种）注解</p>
+<ol>
+<li>第三种方式使用OpenFeign，加两个注解</li>
+</ol>
+</li>
+</ol>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502041323499.png" alt="image-20230405223044074"></p>
+<ol start="4">
+<li>定义要访问的接口。@FeignClient()的value为要访问的服务名，会拿来向nacos询问背后的实例<ul>
+<li>value可以指定要访问的url</li>
+</ul>
+</li>
+</ol>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502041323528.png" alt="image-20230405223304039"></p>
+<ol start="5">
+<li>openfeign会自动实现接口，但需要我们用@Autowired注入依赖：<img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502041323785.png" alt="image-20230407221544886"></li>
+</ol>
+<h2 id="curl配置数据的访问方式"><a href="#curl配置数据的访问方式" class="headerlink" title="curl配置数据的访问方式*"></a>curl配置数据的访问方式*</h2><ol>
+<li>服务名service：nacos-headless</li>
+<li>服务的集群IP<img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502041323257.png" alt="image-20230405142544463"></li>
+<li>pod的IP地址<img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502041323271.png" alt="image-20230405142602283"></li>
+</ol>
+<p>不可访问：<strong>pod的名字</strong>不能，如licensingservice-69d757895c</p>
+<h2 id="服务发现的好处"><a href="#服务发现的好处" class="headerlink" title="服务发现的好处*"></a>服务发现的好处*</h2><ol>
+<li>快速水平伸缩，而不是垂直伸缩。不影响客户端<ol>
+<li>水平伸缩：任意增删实例，对客户端不感知</li>
+<li>垂直伸缩：增加计算资源（如CPU、内存）来处理大量请求</li>
+</ol>
+</li>
+<li>提高应用程序的弹性<ol>
+<li>如可靠性、容错性。有一个挂了，nacos会用其他健康实例。</li>
+</ol>
+</li>
+</ol>
+<blockquote>
+<p>SpringCloudAlibaba包括学过的nacos和sentinel，其他不用管</p>
+</blockquote>
+<h2 id="使用到的starter依赖"><a href="#使用到的starter依赖" class="headerlink" title="使用到的starter依赖"></a>使用到的starter依赖</h2><ul>
+<li>服务配置： <code>com.alibaba.cloud, spring-cloud-starter-alibaba-nacos-config</code></li>
+<li>服务注册： <code>com.alibaba.cloud, spring-cloud-starter-alibaba-nacos-discovery</code></li>
+<li>客户端负载均衡： <code>org.springframework.cloud, spring-cloud-starter-loadbalancer</code></li>
+<li>简化客户端调用： <code>org.springframework.cloud, spring-cloud-starter-openfeign</code></li>
+</ul>
+<h2 id="调用服务的三种方式"><a href="#调用服务的三种方式" class="headerlink" title="调用服务的三种方式"></a>调用服务的三种方式</h2><p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502041323291.png"></p>
+<p>后两种方法自动做负载均衡，因此一般不建议使用第一种（只在测试时使用），更常见的是第三种。我们定义的负载平衡策略（轮询、随机等）能影响到后两种方式。</p>
+<h2 id="健康检查的两种机制"><a href="#健康检查的两种机制" class="headerlink" title="健康检查的两种机制*"></a>健康检查的两种机制*</h2><ol>
+<li><p>临时实例的客户端主动上报机制， 临时实例每隔 5s 发送一个心跳包给 Nacos 服务器端</p>
+<ol>
+<li>部署在k8s上的实例主动向nacos发心跳。</li>
+</ol>
+</li>
+<li><p><strong>永久实例</strong>的服务端反向探测机制，永久实例支持 3 种探测协议，TCP、HTTP 和 MySQL，默认探测协议为 TCP，也就是通过不断 ping 的方式来判断实例是否健康。</p>
+<ol>
+<li>nacos主动和实例联系，不断ping。实例可以写REST接口，返回状态码判断是否健康。</li>
+</ol>
+</li>
+</ol>
+<p><img src="https://eaglebear2002.github.io/6170/image-20230408100516865.png" alt="img"></p>
+<h2 id="服务部署"><a href="#服务部署" class="headerlink" title="服务部署"></a>服务部署</h2><p>licensingservice如何调用organizationservice？</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502041323319.png" alt="image-20230407221228485"></p>
+<p>错误：用nacos转发，licensingservice-&gt;nacos-&gt;organizationservice</p>
+<p>正确：从nacos获取organizationservice的实例，如3个IP，客户端的loadbalancer以轮询或某种略侧从3个中选一个，然后直接通讯</p>
+<ul>
+<li>loadbalance：客户端的负载均衡，负责选择</li>
+<li>openfeign：客户端如何便捷地访问服务端</li>
+</ul>
+<h1 id="13-基于Sentinel的流控与熔断-1"><a href="#13-基于Sentinel的流控与熔断-1" class="headerlink" title="13 基于Sentinel的流控与熔断"></a>13 基于Sentinel的流控与熔断</h1><p>Sentinel 是面向分布式、多语言异构化服务架构的流量治理组件，主要以流量为切入点，从流量路由、流量控制、流量整形、熔断降级、系统自适应过载保护、热点流量防护等多个维度来帮助开发者保障微服务的稳定性。</p>
+<ul>
+<li>容错：B可能异常，A可以把请求给另一个，或者使用缺省值</li>
+<li>熔断：B老是出错：说明不稳定。后面就都会返回缺省值或者直接报错。类似漏电后及时把电路切断。</li>
+</ul>
+<h2 id="定义资源的方式"><a href="#定义资源的方式" class="headerlink" title="定义资源的方式"></a>定义资源的方式</h2><p>3种定义资源的方式</p>
+<ol>
+<li>通过代码直接定义：一段代码定义一个资源，try-catch做保护</li>
+<li>使用注解定义：@SentinelResource(value&#x3D;”test”, fallback&#x3D;”helloFallBack”)代表要监控test方法，发送限流&#x2F;熔断会抛异常代码逻辑转向fallback()方法</li>
+<li>SpringCloud框架基于url自动定义。</li>
+</ol>
+<p>强调：外置文件只能定义规则，不能定义资源！</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502041323351.png" alt="image-20230408011850566"></p>
+<h2 id="规则的种类"><a href="#规则的种类" class="headerlink" title="规则的种类"></a>规则的种类</h2><blockquote>
+<p>可在代码定义或者dashboard定义</p>
+<p>QPS：每秒查询率。对查询服务器在规定时间内处理流量多少的衡量标准。</p>
+</blockquote>
+<ol>
+<li>流量控制规则：当QPS超过任意规则的阈值后，新的请求会被立刻拒绝，方式为抛出FlowException</li>
+<li>熔断降级规则：复杂链路上的某一环不稳定，就可能会层层级联，最终导致整个链路都不可用。<ol>
+<li>因此需要对不稳定的<strong>弱依赖服务调用</strong>进行熔断降级，暂时切断不稳定调用，避免局部不稳定因素导致整体的雪崩。熔断降级作为保护自身的手段，通常在客户端（调用端）进行配置。</li>
+</ol>
+</li>
+<li>系统保护规则：系统高负荷工作、CPU利用率占有率高时的保护规则</li>
+<li>来源访问控制规则：根据不同来源采取不同措施</li>
+<li>热点参数规则：同样的请求，依据参数来做限定</li>
+</ol>
+<p>BlockException</p>
+<ul>
+<li><p>DegradeException：熔断</p>
+</li>
+<li><p>FlowException：限流</p>
+</li>
+</ul>
+<h3 id="熔断处理与策略"><a href="#熔断处理与策略" class="headerlink" title="熔断处理与策略"></a>熔断处理与策略</h3><ul>
+<li>针对耗时长的情况</li>
+<li>针对业务本身抛出的异常</li>
+</ul>
+<p>Sentinel处理后会返回缺省值或者异常。</p>
+<p>策略：</p>
+<ul>
+<li>慢调用：若某个请求的处理时间&gt;RT，则认为是慢调用。<ul>
+<li>若单位统计时长内有<strong>慢调用比例</strong>&gt;阈值+请求数目&gt;最小请求数目，则熔断。</li>
+<li>经过熔断时长后熔断器会进入探测恢复状态（HALF-OPEN 状态），若<strong>接下来的一个请求响应时间</strong>小于设置的慢调用 RT 则结束熔断，若大于设置的慢调用 RT 则会再次被熔断。</li>
+</ul>
+</li>
+<li>异常：若单位统计时长内有<strong>异常比例</strong>&gt;阈值+请求数目&gt;最小请求数目，则熔断。<ul>
+<li>经过熔断时长后熔断器会进入探测恢复状态（HALF-OPEN 状态）。若接下来的一个请求成功完成（没有错误）则结束熔断，否则会再次被熔断。</li>
+</ul>
+</li>
+<li>异常数：当单位统计时长内的<strong>异常数目</strong>&gt;阈值，则自动进行熔断。<ul>
+<li>经过熔断时长后熔断器会进入探测恢复状态（HALF-OPEN 状态）。若接下来的一个请求成功完成（没有错误）则结束熔断，否则会再次被熔断。</li>
+</ul>
+</li>
+</ul>
+<h2 id="Sentinel组成"><a href="#Sentinel组成" class="headerlink" title="Sentinel组成"></a>Sentinel组成</h2><ul>
+<li>核心库（Java 客户端）：不依赖任何框架&#x2F;库，能够运行于 Java 8 及以上的版本的运行时环境，同时对 Dubbo&#x2F;Spring Cloud 等框架也有较好的支持<ul>
+<li>在微服务开发时进行交互</li>
+<li>可以用Sentinel的API，如FlowRule、DegradeRule、SystemRule等</li>
+</ul>
+</li>
+<li>控制台（Dashboard Dashboard）：主要负责管理推送规则、监控、管理机器信息等<ul>
+<li>已经实现好了，可以直接用</li>
+</ul>
+</li>
+</ul>
+<p><img src="https://eaglebear2002.github.io/6170/image-20230408102029273.png" alt="img"></p>
+<p>控制台不维护规则，通过端口号 8719 查询规则，如果服务故障则规则丢失。</p>
+<p>在控制台定义规则后，会立刻应用到服务上。</p>
+<h1 id="其他注解"><a href="#其他注解" class="headerlink" title="其他注解"></a>其他注解</h1><p>@SpringBootApplication程序入口，进入</p>
+<ul>
+<li>@EnableAutoConfiguration作用：帮助SpringBoot应用将所有符合条件的@Configuration配置都加载到当前SpringBoot，并创建对应配置类的Bean，并把该Bean实体交给IoC容器进行管理。</li>
+<li>@ComponentScan： 扫描被@Component (@Service,@Controller)注解的 bean，注解默认会扫描该类所在的包下所有的类。<ul>
+<li>会搜索@Controller注解的bean，扫描类</li>
+</ul>
+</li>
+</ul>
+<p>@profile(“dev”)名字可以随便起</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Profile(&quot;dev&quot;)</span><span class="comment">//开发环境，一开始就实例化出来</span></span><br><span class="line"><span class="meta">@Profile(&quot;prod&quot;)</span><span class="comment">//只在生产环境下才实例化出来，所以并不是同时实例化</span></span><br></pre></td></tr></table></figure>
+
+<p>@Conditional</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Conditional(MagicExistsCondition.class)</span><span class="comment">//在某种情况下才实例化 参数是条件（这里是类实现）</span></span><br></pre></td></tr></table></figure>
+
+<p>@Qualifier ：指出我们想要使用哪个 <strong>bean</strong></p>
+<p>@Valid注解会告诉spring进行校验（来自import javax.validation.Valid;） </p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Data</span><span class="comment">//lombok会帮忙生成get/set/equals/hashCode</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Taco</span> &#123;</span><br><span class="line"></span><br><span class="line">  <span class="meta">@NotNull</span></span><br><span class="line">  <span class="meta">@Size(min=5, message=&quot;Name must be at least 5 characters long&quot;)</span></span><br><span class="line">  <span class="keyword">private</span> String name;<span class="comment">//taco的名字</span></span><br><span class="line"></span><br><span class="line">  <span class="meta">@NotNull</span></span><br><span class="line">  <span class="meta">@Size(min=1, message=&quot;You must choose at least 1 ingredient&quot;)</span></span><br><span class="line">  <span class="keyword">private</span> List&lt;Ingredient&gt; ingredients;<span class="comment">//用户所指定的配料 Converter将id转成Ingredient</span></span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>@SessionAttributes(“tacoOrder”)维持一段会话内tacoOrder的状态</p>
+<p>@ModelAttribute：将请求参数绑定到 Model 对象。</p>
+<p>@Repository：持久层的接口</p>
+<p>@Controller：控制器层的接口</p>
+<p>@Query：标记在继承了Repository的自定义接口方法上，就不需要遵循查询方法命名规则</p>
+<h1 id="作业"><a href="#作业" class="headerlink" title="作业"></a>作业</h1><h2 id="6"><a href="#6" class="headerlink" title="6"></a>6</h2><ol>
+<li><p><a target="_blank" rel="noopener" href="https://github.com/AliyunContainerService/k8s-for-docker-desktop">GitHub - AliyunContainerService&#x2F;k8s-for-docker-desktop: 为Docker Desktop for Mac&#x2F;Windows开启Kubernetes和Istio。</a>照着安装到ingress，我之前已经安了3.7，这里下的是3.8</p>
+</li>
+<li><p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502041322608.png" alt="image-20230323011351348"></p>
+</li>
+<li><p>涉及到pull&#x2F;build等，一定要上梯子</p>
+</li>
+<li><p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502041322837.png" alt="image-20230323014020833">k8s-depoly.yaml把ppt里的语句合并了</p>
+</li>
+<li><p>最后一个坑：注意修改本机hosts文件！</p>
+</li>
+</ol>
+<h2 id="7"><a href="#7" class="headerlink" title="7"></a>7</h2><p>在dockerfile所在目录下运行命令，遇见问题与解决：</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502041322900.png" alt="img"></p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/m0_47256162/article/details/127872759">https://blog.csdn.net/m0_47256162/article/details/127872759</a></p>
+<p>刚开始没部署成功，加了这个就绿了<img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502041322573.png" alt="image-20230326125759351"></p>
+<p>manifest for java:latest not found: manifest unknown: manifest unknown的解决：加了一堆镜像</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502041322683.png" alt="image-20230324123218450"></p>
+<p>pod结点绿但是无法访问的原因：换行符问题，mvn clean package之后把target目录下的dockerfile与run.sh格式改为LF，然后mvn docker:build，再create部署即可<img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502041322423.png" alt="img"></p>
+<h2 id="9"><a href="#9" class="headerlink" title="9"></a>9</h2><p>把run.sh改为LF格式</p>
+<p><a target="_blank" rel="noopener" href="https://github.com/AliyunContainerService/k8s-for-docker-desktop">https://github.com/AliyunContainerService/k8s-for-docker-desktop</a></p>
+<p>kubectl proxy开启网页，访问<a target="_blank" rel="noopener" href="http://localhost:8001/api/v1/namespaces/kubernetes-dashboard/services/https:kubernetes-dashboard:/proxy/">http://localhost:8001/api/v1/namespaces/kubernetes-dashboard/services/https:kubernetes-dashboard:/proxy/</a></p>
+<p>Windows环境下：$TOKEN&#x3D;((kubectl -n kube-system describe secret default | Select-String “token:”) -split “ +”)[1]<br>kubectl config set-credentials docker-desktop –token&#x3D;”${TOKEN}”<br>echo $TOKEN</p>
+
+        </div>
+
+        
+            <section class="post-copyright">
+                
+                
+                
+                
+
+            </section>
+        
+        <section class="post-tags">
+            <div>
+                <span>标签:</span>
+                <span class="tag">
+                    
+                    
+                        <a href="/tags/%E8%AF%BE%E7%A8%8B/"># 课程</a>
+                    
+                        
+                </span>
+            </div>
+            <div>
+                <a href="javascript:window.history.back();">返回</a>
+                <span>· </span>
+                <a href="/">主页</a>
+            </div>
+        </section>
+        <section class="post-nav">
+            
+                <a class="prev" rel="prev" href="/2024/10/05/%E5%8D%9A%E5%AE%A2%E4%BC%98%E5%8C%96%E6%97%A5%E5%BF%97/">博客优化日志</a>
+            
+            
+            <a class="next" rel="next" href="/2023/01/14/2022%E7%A7%8B%E5%AD%A3%E3%80%8A%E9%9C%80%E6%B1%82%E4%B8%8E%E5%95%86%E4%B8%9A%E6%A8%A1%E5%BC%8F%E3%80%8B%E8%AF%BE%E7%A8%8B%E7%AC%94%E8%AE%B0/">2022秋季《需求与商业模式》课程笔记</a>
+            
+        </section>
+
+
+    </article>
+</div>
+
+
+    <div id="gitalk-container"></div>
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.css">
+<script src="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.min.js"></script>
+<script src="//cdn.bootcss.com/blueimp-md5/2.10.0/js/md5.js"></script>
+<div id="gitalk-container"></div>
+<script type="text/javascript">
+      var gitalk = new Gitalk({
+        clientID: '',
+        clientSecret: '',
+        repo: 'blog_comment',
+        owner: 'lyxx2535',
+        admin: 'lyxx2535',
+        id: md5(location.pathname),
+        labels: 'Gitalk'.split(',').filter(l => l),
+        perPage: 10,
+        pagerDirection: 'last',
+        createIssueManually: true,
+        distractionFreeMode: false
+      })
+      gitalk.render('gitalk-container')
+</script>
+
+            </div>
+            <footer id="footer" class="footer">
+    <div class="copyright">
+        <span>© Annie | Powered by <a href="https://hexo.io" target="_blank">Hexo</a> & <a href="https://github.com/Siricee/hexo-theme-Chic" target="_blank">Chic</a> | 2020 - 2025
+            <br>
+            <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+<span class="site-uv">
+    Total visitors:
+    <i class="busuanzi-value" id="busuanzi_value_site_uv"></i>
+</span>&nbsp;|&nbsp;
+
+
+<span class="site-pv">
+    Total views:
+    <i class="busuanzi-value" id="busuanzi_value_site_pv"></i>
+</span>
+
+          </span>
+    </div>
+</footer>
+
+    </div>
+</body>
+
+</html>

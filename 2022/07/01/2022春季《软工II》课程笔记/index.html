@@ -1,0 +1,1892 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <meta name="author" content="Annie">
+
+
+
+
+
+<title>2022春季《软工II》课程笔记 | Annie&#39;s Blog</title>
+
+
+
+    <link rel="icon" href="/favicon.ico">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+    <script src="/js/tocbot.min.js"></script>
+    
+
+
+
+    
+    
+        
+    
+
+
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+<body>
+    <script>
+        // this function is used to check current theme before page loaded.
+        (() => {
+            const currentTheme = window.localStorage && window.localStorage.getItem('theme') || '';
+            const isDark = currentTheme === 'dark';
+            const pagebody = document.getElementsByTagName('body')[0]
+            if (isDark) {
+                pagebody.classList.add('dark-theme');
+                // mobile
+                document.getElementById("mobile-toggle-theme").innerText = "· Dark"
+            } else {
+                pagebody.classList.remove('dark-theme');
+                // mobile
+                document.getElementById("mobile-toggle-theme").innerText = "· Light"
+            }
+        })();
+    </script>
+
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">Annie&#39;s Blog</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default">
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+        </div>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">Annie&#39;s Blog</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; 菜单</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+            <div class="main">
+                <div class="container">
+    
+    
+        <div class="post-toc">
+    <div class="tocbot-list">
+    </div>
+    <div class="tocbot-list-menu">
+        <a class="tocbot-toc-expand" onclick="expand_toc()">全部展开</a>
+        <a onclick="go_top()">回到顶部</a>
+        <a onclick="go_bottom()">前往底部</a>
+    </div>
+</div>
+
+<script>
+    var tocbot_timer;
+    var DEPTH_MAX = 6; // 为 6 时展开所有
+    var tocbot_default_config = {
+        tocSelector: '.tocbot-list',
+        contentSelector: '.post-content',
+        headingSelector: 'h1, h2, h3, h4, h5',
+        orderedList: false,
+        scrollSmooth: true,
+        onClick: extend_click,
+    };
+
+    function extend_click() {
+        clearTimeout(tocbot_timer);
+        tocbot_timer = setTimeout(function() {
+            tocbot.refresh(obj_merge(tocbot_default_config, {
+                hasInnerContainers: true
+            }));
+        }, 420); // 这个值是由 tocbot 源码里定义的 scrollSmoothDuration 得来的
+    }
+
+    document.ready(function() {
+        tocbot.init(obj_merge(tocbot_default_config, {
+            collapseDepth: 1
+        }));
+    });
+
+    function expand_toc() {
+        var b = document.querySelector('.tocbot-toc-expand');
+        var expanded = b.getAttribute('data-expanded');
+        expanded ? b.removeAttribute('data-expanded') : b.setAttribute('data-expanded', true);
+        tocbot.refresh(obj_merge(tocbot_default_config, {
+            collapseDepth: expanded ? 1 : DEPTH_MAX
+        }));
+        b.innerText = expanded ? 'Expand all' : 'Collapse all';
+    }
+
+    function go_top() {
+        window.scrollTo(0, 0);
+    }
+
+    function go_bottom() {
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+
+    function obj_merge(target, source) {
+        for (var item in source) {
+            if (source.hasOwnProperty(item)) {
+                target[item] = source[item];
+            }
+        }
+        return target;
+    }
+</script>
+    
+
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">2022春季《软工II》课程笔记</h1>
+            
+                <div class="post-meta">
+                    
+                        作者: <a itemprop="author" rel="author" href="/">Annie</a>
+                    
+
+                    
+                        <span class="post-time">
+                        日期: <a href="#">July 1, 2022&nbsp;&nbsp;10:51:05</a>
+                        </span>
+                    
+                    
+                        <span class="post-category">
+                        分类:
+                            
+                                <a href="/categories/%E6%9C%AC%E7%A7%91%E7%94%9F%E8%AF%BE%E7%A8%8B/">本科生课程</a>
+                            
+                        </span>
+                    
+                </div>
+            
+        </header>
+
+        <div class="post-content">
+            <h1 id="01-软件工程基础"><a href="#01-软件工程基础" class="headerlink" title="01-软件工程基础"></a>01-软件工程基础</h1><h2 id="什么是软件工程？"><a href="#什么是软件工程？" class="headerlink" title="什么是软件工程？"></a>什么是软件工程？</h2><ol>
+<li>应用<strong>系统的、规范的、可量化</strong>的方法来开发、运行和维护软件，即将工程应用到软件。</li>
+<li>对1)中各种方法的研究。</li>
+</ol>
+<h1 id="02-软件工程的发展"><a href="#02-软件工程的发展" class="headerlink" title="02-软件工程的发展"></a>02-软件工程的发展</h1><h2 id="五十年代到00年代的特点"><a href="#五十年代到00年代的特点" class="headerlink" title="五十年代到00年代的特点"></a>五十年代到00年代的特点</h2><ol>
+<li>1950s：科学计算；以机器为中心进行编程；像生产硬件一样生产软件。</li>
+<li>1960s：业务应用(批量数据处理和事物计算)；软件不同于硬件；用软件工艺的方式生产软件。</li>
+<li>1970s：结构化方法；瀑布模型；强调规则和纪律。它们奠定了软件工程的基础，是后续年代软件工程发展的支撑。</li>
+<li>1980s：<strong>追求生产力最大化</strong>；现代结构化方法&#x2F;面向对象编程广泛应用；重视过程的作用。</li>
+<li>1990s：企业为中心的大规模软件系统开发；追求快速开发、可变更性和用户价值；web应用出现</li>
+<li>2000s：大规模web应用；大量面向大众的web产品；追求快速开发、可变更性、用户价值和创新。</li>
+</ol>
+<p><img src="https://spricoder.oss-cn-shanghai.aliyuncs.com/2020-Software-Engineering-and-Computing-II/img/cpt2/5.png"></p>
+<h1 id="05-项目启动"><a href="#05-项目启动" class="headerlink" title="05-项目启动"></a>05-项目启动</h1><h2 id="如何管理团队？"><a href="#如何管理团队？" class="headerlink" title="如何管理团队？"></a>如何管理团队？</h2><h3 id="①-实验中采取了哪些方法？有哪些经验？"><a href="#①-实验中采取了哪些方法？有哪些经验？" class="headerlink" title="①  实验中采取了哪些方法？有哪些经验？"></a>①  实验中采取了哪些方法？有哪些经验？</h3><ul>
+<li><strong>建立团队章程</strong>：建立明确的团队章程，统一团队成员的目标、绩效和方法，指导团队管理工作的进行。常见内容有：<ul>
+<li>团队目标。</li>
+<li>团队共同追求。</li>
+<li>团队结构和角色分工。</li>
+<li>团队的任务、活动与绩效。</li>
+<li>团队规则与约束。</li>
+<li>经验：有必要指定一定的章程，约束团队成员之间的行为，比如开会请假必须得到其他三人的同意，又如一旦某项决策做出，不同意者不能再后续阶段违反等。</li>
+</ul>
+</li>
+<li><strong>持续成功</strong>（最有效手段）：设置小里程碑，每隔一段时间让团队体验成功。每次作业的检查结果一定程度上肯定了每个小阶段的工作。</li>
+<li><strong>和谐沟通</strong>：建立开放的环境，鼓励交流，要有制度保障定期沟通，会议和书面交流均可。保证每个人的工作进展和感知情况及时传达给整个团队。比如沟通需求变更、接口调整、关键代码修改等。</li>
+<li><strong>避免团队杀手</strong>：需要对别人的工作全心全意的信任，尽管评审是必要的。产品质量的降低会使得凝聚力下降。经验是需要回避以下团队杀手：<ul>
+<li>防范式管理</li>
+<li>官僚主义</li>
+<li>地理分散</li>
+<li>时间分割</li>
+<li>产品质量的降低</li>
+<li>虚假的最后期限</li>
+<li>小圈子控制</li>
+</ul>
+</li>
+</ul>
+<h3 id="②-团队结构有哪几种？"><a href="#②-团队结构有哪几种？" class="headerlink" title="②  团队结构有哪几种？"></a>②  团队结构有哪几种？</h3><ul>
+<li><p>主程序员团队：一名技术能力出色的成员做为主程序员，负责领导团队完成任务。工作效率高，保证一致性。缺点是项目复杂，主程序员能力不足那么主程序员成为瓶颈。适合于把握性大，时间要求紧的情况。</p>
+</li>
+<li><p>民主团队：没有集中的瓶颈，成员发挥能动性，沟通成本高，工作效率降低，要防止陷入混乱。适合于敏捷过程或较有挑战性的项目。</p>
+</li>
+<li><p>开放团队：为了创新而存在的。管理者黑箱管理，不知道团队成员的工作进展，只需要知道工作仍在进行中。</p>
+</li>
+</ul>
+<h2 id="质量保障有哪些措施？"><a href="#质量保障有哪些措施？" class="headerlink" title="质量保障有哪些措施？"></a>质量保障有哪些措施？</h2><p>在软件开发过程中，执行质量保障计划，每达到一个里程碑就及时根据保障计划进行质量验证，质量验证的方法主要有评审、测试和质量度量三种。</p>
+<p>常见的质量保障安排如下：</p>
+<ol>
+<li>需求开发：需求评审、需求度量；</li>
+<li>体系结构：体系结构评审、集成测试(持续集成)；</li>
+<li>详细设计：详细设计评审、设计度量、集成测试(持续集成)；</li>
+<li>构造阶段：代码评审、代码度量、测试(测试驱动和持续集成)；</li>
+<li>测试阶段：测试、测试度量。</li>
+</ol>
+<p>常见的质量验证方法如下：</p>
+<p>1） 评审：由作者之外的其他人来检查产品问题，使用评审检查表，发现问题，返工并跟踪。</p>
+<p>2） 测试：项目中包括集成测试，单元测试，系统测试。</p>
+<p>3） 质量度量：用数字量化的方式描述软件产品。项目中进行了需求度量，代码度量和测试度量。</p>
+<ul>
+<li>如果结合实验说活动说评审、测试、质量度量应该就行。</li>
+</ul>
+<h2 id="配置管理有哪些活动？"><a href="#配置管理有哪些活动？" class="headerlink" title="配置管理有哪些活动？"></a>配置管理有哪些活动？</h2><ol>
+<li><p>标识配置项：</p>
+<ol>
+<li>确定哪些配置项需要被保存和管理。</li>
+<li>为配置项确定标识，设置唯一的ID。</li>
+<li>详细说明配置项特征，包括生产者、基线建立时间、使用者等。</li>
+</ol>
+</li>
+<li><p>版本管理：</p>
+<ol>
+<li>为每一个刚纳入配置管理的配置项赋予一个初始的版本号，并在发生变更是更新版本号。</li>
+<li>旧记录会被保留。</li>
+</ol>
+</li>
+<li><p>变更控制： </p>
+<ol>
+<li>以可控、一致的方式进行变更处理，包括对变化的评估、协调、批准、否决、实现、验证。</li>
+<li>通过变更处理，项目负责人可以在面对变化时做出周全决策。</li>
+</ol>
+</li>
+<li><p>配置审计：</p>
+<ol>
+<li>确定一个项目满足需求的功能和物理特征的程度，确保软件开发工作按照需求规格和设计特征进行，验证配置项的完整性、正确性、一致性和可跟踪性。比如定期更新文档。</li>
+</ol>
+</li>
+<li><p>状态报告：</p>
+<ol>
+<li>标识、收集和维持演化中的配置状态信息。一般由工具自动完成。</li>
+</ol>
+</li>
+<li><p>软件发布管理：</p>
+<ol>
+<li>将配置项发布到开发活动之外。比如发布给客户。</li>
+</ol>
+</li>
+</ol>
+<blockquote>
+<p>用人话说1就是把需求、设计、代码等配置项标ID，然后2给初始版本号，3发生变更时进行控制（如pr然后merge），开发时也要4定期检查这些配置有没有问题，并5把每一阶段信息记入状态报告；最后6把配置项给开发活动之外如客户。</p>
+</blockquote>
+<h1 id="06-需求基础"><a href="#06-需求基础" class="headerlink" title="06-需求基础"></a>06-需求基础</h1><h2 id="什么是需求？"><a href="#什么是需求？" class="headerlink" title="什么是需求？"></a>什么是需求？</h2><ol>
+<li><strong>用户</strong>为了解决问题或达到某些目标所需要的条件或能力；</li>
+<li><strong>系统</strong>或系统部件为了满足合同、标准、规范或其它正式文档所规定的要求而需要具备的条件或能力；</li>
+<li>对1或2中的一个条件或一种能力的一种<strong>文档化</strong>表述。</li>
+</ol>
+<h2 id="区分需求的三个层次"><a href="#区分需求的三个层次" class="headerlink" title="区分需求的三个层次"></a>区分需求的三个层次</h2><p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032332291.png" alt="image-20220609220024368"></p>
+<ol>
+<li><p>业务需求：</p>
+<ol>
+<li><p>是系统建立的战略出发点，表现为<strong>高层次</strong>的目标，它描述了组织为什么要开发系统。</p>
+</li>
+<li><p>定义系统特性SF(System Feature)</p>
+</li>
+<li><p>一般较为抽象，主观的目标</p>
+<blockquote>
+<p>示例：在系统使用3个月后，销售额度应该提高20%(期望，没有从软件角度进行描述，业务需求)</p>
+</blockquote>
+</li>
+</ol>
+</li>
+<li><p>用户需求：</p>
+<ol>
+<li><p>是执行实际工作的用户<strong>对系统</strong>所能完成的具体任务的期望，描述了系统能够帮助用户做些什么。</p>
+</li>
+<li><p>通常要补充问题域知识。</p>
+</li>
+<li><p>表达一般为“系统应该允许”，“系统能够”，“软件必须帮助用户”…</p>
+<blockquote>
+<p>示例：系统应该帮助收银员完成销售处理</p>
+</blockquote>
+</li>
+</ol>
+</li>
+<li><p>系统级需求</p>
+<ol>
+<li>需求分析模型：用户对系统行为的期望，每个系统级需求反映了<strong>一次外界与系统的交互行为</strong>，或者<strong>系统的一个实现细节</strong></li>
+<li>通常为某个用户需求的交互细节，因为反映一次交互行为或实现细节</li>
+<li>Eg.在接到客户经理的请求后，系统应该为客户经理提供所有会员的个⼈信息。</li>
+</ol>
+</li>
+</ol>
+<h2 id="需求分类"><a href="#需求分类" class="headerlink" title="需求分类"></a>需求分类</h2><p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032332324.png" alt="image-20220609221358544"></p>
+<ol>
+<li>需求<ol>
+<li>项目需求(人的数量、计划成本、时间，对<strong>项目</strong>的期望)<ul>
+<li>R5：<strong>项目</strong>的成本要控制在60万元人民币以下。</li>
+<li>R6：<strong>项目</strong>要在6个月内完成。</li>
+</ul>
+</li>
+<li>过程需求(人的分工、合作、方法、工具，是对<strong>项目开发过程</strong>的期望)<ul>
+<li>R7：在<strong>开发</strong>中，开发者要提交软件需求规格说明文档、设计描述文档和测试报告。</li>
+<li>R8：项目要使用持续集成方法进行<strong>开发</strong>。</li>
+</ul>
+</li>
+<li>系统需求<ol>
+<li>软件需求</li>
+<li>硬件需求<ul>
+<li>R9：系统要购买专用服务器，其规格不低于…</li>
+</ul>
+</li>
+<li>其他需求（人力资源、软硬件与人力协同）<ul>
+<li>R10：系统投入使用时，需要对用户进行1个星期的集中培训。</li>
+</ul>
+</li>
+</ol>
+</li>
+</ol>
+</li>
+<li>不切实际的需求<ul>
+<li>R11：系统要分析会员的购买记录，预测该会员将来⼀周和⼀个月内、会购买的商品；(技术上不可行)</li>
+<li>R12：系统要能够对每月的出入库以及销售行为进行标准的财务分析；(在有限的资源条件下不可行，因为财务分析很复杂)</li>
+<li>R13：在使用系统时，收银员必须要在2个小时内完成一个销售处理的所有操作。(超出了软件所影响的问题域范围)</li>
+</ul>
+</li>
+</ol>
+<h3 id="软件需求分类"><a href="#软件需求分类" class="headerlink" title="软件需求分类"></a>软件需求分类</h3><ol>
+<li><p>功能需求：</p>
+<ol>
+<li><p>和系统主要工作相关的需求，即在不考虑物理约束的情况下，用户希望系统所能够执行的活动，这些活动可以帮助用户完成任务。<strong>功能需求主要表现为系统和环境之间的行为交互</strong>。</p>
+</li>
+<li><p>应当按三个抽象层次展开，即SF（业务需求）、UR（用户需求）和SR（系统需求）都可以是功能需求。</p>
+<blockquote>
+<p>示例：在接到客户经理的<strong>请求</strong>后，系统应该为客户经理<strong>提供</strong>所有会员的个人信息。（请求-提供是交互过程）</p>
+<p>在存储设备发生故障时，系统要在0.5秒内<strong>向用户</strong>发出警报。（向用户表现交互过程）</p>
+<p>用户输入的补货数中含有非数字字符时，系统必须提示输入错误。</p>
+</blockquote>
+</li>
+</ol>
+</li>
+<li><p>数据需求(属于功能需求的一种,DR)：</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032332299.png" alt="image-20220618164016375"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032332301.png" alt="image-20220618164006744"></p>
+<ol>
+<li><p><strong>功能需求</strong>的补充：如果在功能需求部分明确定义了<strong>相关的数据结构</strong>，那么就不需要再定义数据需求。如果功能需求需要数据支持并且没有定义数据结构，则需要定义专门的数据需求。</p>
+</li>
+<li><p>数据需求是需要在数据库、文件或者其他介质中存储的数据描述，通常包括下列内容：</p>
+<ol>
+<li><p>各个功能使用的<strong>数据信息</strong>；</p>
+</li>
+<li><p>使用频率；</p>
+</li>
+<li><p>可访问性要求；</p>
+</li>
+<li><p><strong>数据实体及其关系</strong>；</p>
+</li>
+<li><p>完整性约束；</p>
+</li>
+<li><p><strong>数据保持</strong>要求。</p>
+<blockquote>
+<p>示例：系统需要存储的数据实体及其关系为图6-14的内容。(数据实体及其关系)</p>
+<p>系统需要存储1年内的销售记录和退货记录。(数据保持)</p>
+<p>商品的标识由0-24位字母、数字混合组成的字符串。</p>
+<p>用户输入的收入金额中不能含有非数字字符。</p>
+</blockquote>
+</li>
+</ol>
+</li>
+</ol>
+</li>
+<li><p>性能需求：系统整体或系统组成部分应该拥有的<strong>性能特征</strong>，例如CPU使用率、内存使用率等。</p>
+<ol>
+<li>速度：系统完成任务的时间<ul>
+<li>所有用户查询必须在10s内完成</li>
+</ul>
+</li>
+<li>容量：系统能存储的数据量<ul>
+<li>系统因该能够存储至少100万个销售信息</li>
+</ul>
+</li>
+<li>吞吐量：系统在连续的时间内完成的事务数量<ul>
+<li>解释器每分钟应该能够至少解析5000条没有错误的语句</li>
+</ul>
+</li>
+<li>负载：系统可以承载的<strong>并发</strong>工作量<ul>
+<li>系统应该允许50个营业服务器同时从集中服务器上进行数据的上传或下载</li>
+</ul>
+</li>
+<li>实时性：严格的实时要求<ul>
+<li>系统监测到异常时，监视器必须在0.5s内发出警报，和故障警报不一样，<strong>故障不是</strong>系统的正常功能</li>
+</ul>
+</li>
+</ol>
+</li>
+<li><p>质量属性(QA)：系统为了满足<strong>规定的及隐含</strong>的所有要求而需要具备的要素称为质量</p>
+<ol>
+<li>可靠性：在规格时间间隔内和规定条件下，系统或部件执行所要求能力的能力。<ul>
+<li>在进行数据的下载和上传中，如果网络故障，系统不能出现故障。故障不是正常功能！</li>
+</ul>
+</li>
+<li>可用性：软件系统在投入使用时可操作和可访问的程度或能实现其指定系统功能的概率。<ul>
+<li>系统的可用性要达到98%</li>
+</ul>
+</li>
+<li>安全性：软件组织对其程序和数据进行<strong>未授权访问</strong>的能力，未授权的访问可能是有意，也可能是无意的。<ul>
+<li>VIP顾客只能查看自己的个人信息和购买记录</li>
+</ul>
+</li>
+<li>可维护性：软件系统或部件能修改以排除故障、改进性能或其他属性或适应变更了的环境的容易程度，包括<strong>可修改性</strong>(Modiﬁability)和<strong>可扩展性</strong>(Extensibility)。<ul>
+<li>如果系统要增加新的特价类型，要能够在2个人月内完成。</li>
+</ul>
+</li>
+<li>可移植性：系统或部件能从⼀种<strong>硬件或软件环境</strong>转换至另外一种环境的特性。<ul>
+<li>集中服务器要能够在1人月内从Window 7操作系统更换到Solaris 10操作系统。</li>
+</ul>
+</li>
+<li>易用性：与用户使用软件所<strong>花费的努力</strong>及其对使用的评价相关的特性。<ul>
+<li>使用系统1个月的收银员进行销售处理的效率要达到10件商品&#x2F;分钟。</li>
+<li>经过10天培训的收银员就能够熟练使用系统。</li>
+</ul>
+</li>
+<li>往往会有形容词和副词</li>
+</ol>
+</li>
+<li><p>对外接口：系统和环境中<strong>其他系统</strong>之间需要建立的接口，包括硬件接口、软件接口、数据库接口等等。</p>
+<ol>
+<li>接口的用途<ul>
+<li>注册使用Google Maps API</li>
+<li><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032332300.png" alt="image-20220618163921880"></li>
+</ul>
+</li>
+<li>接口的输入输出</li>
+<li>数据格式<ul>
+<li>使用扫描仪扫描文件，传递回的数据为pdf格式文件。</li>
+</ul>
+</li>
+<li>命令格式</li>
+<li>异常处理要求</li>
+</ol>
+</li>
+<li><p>约束：进行系统构造时需要遵守的约束，例如<strong>编程语言、硬件设施</strong>等</p>
+<ol>
+<li>系统开发及运行的环境(包括目标机器、操作系统、网络环境、编程语言、数据库管理系统等)<ul>
+<li>系统使用Java语言进行开发</li>
+<li>系统必须能够与Oracle数据库交互</li>
+</ul>
+</li>
+<li>问题域内的相关标准(包括法律法规、行业协定、企业规章等)<ul>
+<li>已过保质期的食品不能销售</li>
+</ul>
+</li>
+<li>商业规则:(用户在任务执行中的一些潜在规则也会限制开发人员设计和构建系统的选择范围)<ul>
+<li>顾客可以使用美元付款</li>
+</ul>
+</li>
+</ol>
+<p>注:需求的灵活性，可以有中高低标准</p>
+</li>
+</ol>
+<h1 id="07-需求分析方法"><a href="#07-需求分析方法" class="headerlink" title="07-需求分析方法"></a>07-需求分析方法</h1><p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032332307.png" alt="image-20220610100816421"></p>
+<h2 id="建立用例图"><a href="#建立用例图" class="headerlink" title="建立用例图"></a>建立用例图</h2><p>用例描述是交互流程：用户怎么样，系统怎么样</p>
+<ol>
+<li>用例的定义：<ul>
+<li>在系统（或者子系统或者类）和外部对象的<strong>交互</strong>当中所执行的行为序列的描述，包括<strong>各种不同的序列和错误的序列</strong>，它们能够联合提供⼀种<strong>有价值的服务</strong>。</li>
+</ul>
+</li>
+<li>图例:<ol>
+<li>用例：椭圆</li>
+<li>参与者：小人，是系统或其他系统对要开发的系统所扮演的角色。</li>
+<li>关系：简单的就是一条直线，包括相关、泛化关系、包含关系和继承关系。（角色之间也有关系，但一般不画）</li>
+<li>系统边界：是一个框</li>
+</ol>
+</li>
+</ol>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032332739.png" alt="image-20220610101818822"></p>
+<ol start="3">
+<li>用例图的建立步骤<ol>
+<li>进行目标分析与确定解决方向：需要实现什么，一般是SF</li>
+<li>寻找参与者：一般为角色名</li>
+<li>寻找用例：每个用户的任务（目标）都是⼀个独立用例<ul>
+<li><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032332910.png" alt="image-20220610102423248" style="zoom:25%;" /><img src="C:\Users\84368\AppData\Roaming\Typora\typora-user-images\image-20220610102458212.png" alt="image-20220610102458212" style="zoom:25%;" /></li>
+</ul>
+</li>
+<li>细化用例:判断标准是用例描述了为应对<strong>一个业务事件</strong>，由<strong>一个用户</strong>发起，并在<strong>一个连续时间段</strong>内完成，可以<strong>增加业务价值</strong>的任务。<ul>
+<li><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032332955.png" alt="image-20220610102648858" style="zoom: 25%;" /><img src="C:\Users\84368\AppData\Roaming\Typora\typora-user-images\image-20220610205521850.png" alt="image-20220610205521850" style="zoom:25%;" /></li>
+</ul>
+</li>
+</ol>
+</li>
+<li>注意:<ol>
+<li>不要将用例细化为没有独立业务价值的单个操作:例如,不要将用户管理细化为增加、修改和删除三个更小的用例,因为它们要联合起来才能体现出业务价值。 </li>
+<li>不要将同⼀个<strong>业务目标</strong>细化为不同用例:例如<strong>特价策略制定和赠送策略制定</strong>。</li>
+<li>不要将没有业务价值(而是技术实现需要)的内容作为用例：<ol>
+<li>常见的错误有<strong>登录</strong>(应该描述为安全性质量需求)、”数据验证&#x2F;输入&#x2F;输出数据检查”(应该描述为数据需求或者业务规则)、”连接数据库”(属性软件内部实现而不是需求)、网络传输等。</li>
+</ol>
+</li>
+<li>不要将单个步骤细化为用例</li>
+<li>不要将片面的一个方面细化为用例</li>
+<li><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032332205.png" alt="image-20220610103128601" style="zoom:50%;" /></li>
+<li><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032332224.png" alt="image-20220610103251499" style="zoom:50%;" /></li>
+</ol>
+</li>
+</ol>
+<p>例题：</p>
+<p><img src="https://spricoder.oss-cn-shanghai.aliyuncs.com/2020-Software-Engineering-and-Computing-II/img/summary/1.png"></p>
+<p><img src="C:\Users\84368\AppData\Roaming\Typora\typora-user-images\image-20220610205400261.png" alt="image-20220610205400261" style="zoom: 25%;" /><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032332318.png" alt="image-20220610205429912" style="zoom:25%;" /></p>
+<ul>
+<li>注意把外面的框框画上</li>
+<li>借书、还书、查询书籍可以适当写出来，没必要合成一个书籍管理</li>
+<li>借书人这里可以合成一个，用注册或登记个人信息来区分</li>
+<li>右图把管理员和管理者分为两个我不是很同意</li>
+</ul>
+<h2 id="建立分析类图（概念类图）"><a href="#建立分析类图（概念类图）" class="headerlink" title="建立分析类图（概念类图）"></a>建立分析类图（概念类图）</h2><ol>
+<li>基本元素:<ol>
+<li>对象<ul>
+<li>标识符：对象自治、对象请求写作</li>
+<li>状态：存储数据，如密码、名称</li>
+<li>行为：利用数据做什么</li>
+</ul>
+</li>
+<li>类：对象集合的抽象</li>
+<li>链接（link）（dependency）<ul>
+<li>对象之间的互相协作的关系</li>
+<li>描述了对象之间的物理或业务联系</li>
+</ul>
+</li>
+<li>关联<ul>
+<li>对象之间链接的抽象</li>
+<li>聚合与组合，聚合集合可以为空</li>
+</ul>
+</li>
+<li>继承:泛化关系</li>
+</ol>
+</li>
+</ol>
+<p><img src="https://spricoder.oss-cn-shanghai.aliyuncs.com/2020-Software-Engineering-and-Computing-II/img/cpt6/18.png"><br><img src="https://spricoder.oss-cn-shanghai.aliyuncs.com/2020-Software-Engineering-and-Computing-II/img/cpt6/19.png"></p>
+<ol start="2">
+<li><p>建立步骤</p>
+<ol>
+<li><p>对每个用例文本描述，尤其是场景描述，建立<strong>局部</strong>的概念类图</p>
+<ul>
+<li><p>根据用例的文本描述，<strong>识别候选类</strong>(名词分析法)</p>
+</li>
+<li><p>筛选候选类，<strong>确定概念类</strong>(状态和行为)</p>
+</li>
+</ul>
+</li>
+</ol>
+</li>
+</ol>
+<ul>
+<li><p>状态和行为：概念类<br>+ 状态：其他概念类的行为，即属性<br>+ 行为：需求是否遗漏，否则转交给其他类<br>+ 无状态无行为：完全剔除</p>
+</li>
+<li><p><strong>识别关联</strong></p>
+<ul>
+<li>发现协作，补充问题域内的关系<ul>
+<li>聚合：空心菱形， 菱形位于聚合方，部分与整体的关系</li>
+</ul>
+</li>
+<li>组合：实心菱形， 菱形位于组合方，整体对部分有完全的管理职责<ul>
+<li>继承：空心三角， 三角位于基类</li>
+</ul>
+</li>
+<li>协作关系写在直线中间<ul>
+<li>*代表数字N，..用来连接最小最大值，如0..1</li>
+</ul>
+</li>
+<li><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032332338.png" alt="image-20220610111216782"></li>
+</ul>
+</li>
+<li><p><strong>识别重要属性</strong>（注意概念类图只有属性，详细类图才有方法）</p>
+<ul>
+<li><p>把重要属性加上</p>
+<ol start="2">
+<li>将所有用例产生的局部概念类图进行合并，建立软件系统的整体概念类图</li>
+</ol>
+</li>
+</ul>
+</li>
+</ul>
+<ol start="3">
+<li>先画关联关系，再添加类的属性 注意用：参与、发起、更新、使用、决定等词语，可以写被..由..</li>
+</ol>
+<p><img src="https://spricoder.oss-cn-shanghai.aliyuncs.com/2020-Software-Engineering-and-Computing-II/img/summary/2.png"></p>
+<img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032332364.png" alt="image-20220610205920541" style="zoom:50%;" />
+
+<ul>
+<li>写出安全系统、账户系统是比较好的，把用户和银行账户分开也比较有道理</li>
+<li>像存取款、修改账户信息这种明确写出的，就写出来吧，不用合成ATM操作</li>
+</ul>
+<h2 id="建立顺序图"><a href="#建立顺序图" class="headerlink" title="建立顺序图"></a>建立顺序图</h2><ul>
+<li>系统顺序图是将系统整个看做一个黑箱的对象而描述的简单顺序图的形式，强调外部参与者和系统的交互行为，重点展示系统级事件。</li>
+<li>关于对象名冒号的意思：<img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032332789.png" alt="image-20220612112039430" style="zoom:25%;" /></li>
+</ul>
+<img src="https://spricoder.oss-cn-shanghai.aliyuncs.com/2020-Software-Engineering-and-Computing-II/img/cpt6/26.png" style="zoom: 50%;" />
+
+<ol>
+<li>组件：图名称+对象（方框或小人）+生命线（虚线）+执行态（实体小矩形）信息、创建、返回</li>
+<li>消息类型：<img src="https://spricoder.oss-cn-shanghai.aliyuncs.com/2020-Software-Engineering-and-Computing-II/img/cpt6/27.png" style="zoom: 50%;" />同步消息等返回，异步不等。一个同步消息对应一个返回消息。</li>
+<li>组合段： loop opt alt [表示条件]  <ul>
+<li>alt：多条路径，条件为真时执行。<strong>注意，每一种可选分支之间要用虚线分割，而且在表示执行态的圆柱上面要写监护条件，放在[]里面。</strong></li>
+<li>opt：任选，仅当条件为真时执行。把条件写[]里面。</li>
+<li>loop：循环，条件为真时可多次执行。在旁边使用[]书写循环条件。</li>
+</ul>
+</li>
+<li>注意可以自己指向自己，比如更新操作。</li>
+</ol>
+<p><img src="https://spricoder.oss-cn-shanghai.aliyuncs.com/2020-Software-Engineering-and-Computing-II/img/cpt6/28.png"><br><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032332837.png" alt="image-20220610212232081"></p>
+<ol start="3">
+<li>步骤:<ol>
+<li>确定上下文环境</li>
+<li>根据用例描述找到<strong>交互对象</strong></li>
+<li>按照用例描述中的流程顺序，逐步添加消息</li>
+</ol>
+</li>
+</ol>
+<h2 id="建立状态图"><a href="#建立状态图" class="headerlink" title="建立状态图"></a>建立状态图</h2><ol>
+<li>图例:<ol>
+<li>状态：一组可观察的情况，描述了一个系统在给定时间的行为</li>
+<li>状态转换：从一个状态到另一个状态的转换</li>
+<li>事件：使系统表现出某种可预测的行为形式的事件</li>
+<li>行为：由于过渡而发生的过程</li>
+</ol>
+</li>
+</ol>
+<p><img src="https://spricoder.oss-cn-shanghai.aliyuncs.com/2020-Software-Engineering-and-Computing-II/img/cpt6/31.png"></p>
+<ol start="2">
+<li><p>步骤:</p>
+<ol>
+<li>确定上下文环境，明确状态主体和状态主题对应的上下文环境</li>
+<li>识别状态：状态的主体表现出的一些稳定状态</li>
+<li>建立状态转换：建立状态之间的转换。</li>
+<li>补充详细信息，完善状态图</li>
+</ol>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032332336.png" alt="image-20220610213805662"></p>
+</li>
+</ol>
+<ul>
+<li>注意有起点有终点</li>
+<li><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032332370.png" alt="image-20220610213932477"></li>
+</ul>
+<h1 id="08-需求文档化与验证"><a href="#08-需求文档化与验证" class="headerlink" title="08-需求文档化与验证"></a>08-需求文档化与验证</h1><h2 id="为什么要建立需求规格说明"><a href="#为什么要建立需求规格说明" class="headerlink" title="为什么要建立需求规格说明?"></a>为什么要建立需求规格说明?</h2><ol>
+<li>方便交流：软件开发过程中，<strong>子任务与人员</strong>之间存在错综复杂的关系，存在大量的沟通和交流，所以要编写软件开发中要编写不同类型的文档，每种文档都是针对项目中需要广泛交流的内容。因为<strong>软件需求</strong>需要进行<strong>广泛交流</strong>，所以要把需求文档化。</li>
+<li>需求规格说明是在<strong>软件产品的角度以系统级需求列表的方式</strong>描述软件系统解决方案，书写需求规格说明，可以建立管理控制的基线，方便任务分配，制定工作计划，进行跟踪和度量。</li>
+</ol>
+<blockquote>
+<p>用例文档和需求规格说明文档是最为常见的两种需求文档</p>
+<p>用例文档从<strong>用户</strong>的角度以用例文本为主描述<strong>软件系统与外界的交互</strong></p>
+<p>软件需求规格说明文档则从<strong>软件产品</strong>的角度以<strong>系统级需求列表</strong>的方式描述<strong>软件系统解决方案</strong></p>
+</blockquote>
+<h2 id="对给定的需求示例，判定并修正其错误"><a href="#对给定的需求示例，判定并修正其错误" class="headerlink" title="对给定的需求示例，判定并修正其错误"></a>对给定的需求示例，判定并修正其错误</h2><ol>
+<li>技术文档写作要点(简洁，精确，易读，易修改)；<ol>
+<li>简洁：动词名词+辅助词，不要使用复杂长句、形容词和副词。</li>
+<li>精确：不能产生起义或无法理解。</li>
+<li>易读(查询)：<ol>
+<li>有效使用<strong>引言、目录、索引</strong>等能够增强文档易读性的方法</li>
+<li>使用<strong>系统化的方式</strong>组织内容信息，提供文档内容的可读性。</li>
+</ol>
+</li>
+<li>易修改：使用相同的语句格式组织相关联或相似的信息；使用列表组织独立、并列的信息；使用编号表达繁杂信息之间的关系。引用而不是重复</li>
+</ol>
+</li>
+<li>需求书写要点(使用用户术语，可验证，可行性)；通常用可行性和可验证性来判断需求书写是否正确</li>
+<li>需求规格说明文档书写要点(充分利用标准的文档模板，保持所以内容位置得当；保持文档内的需求集具有完备性和一致性；为需求划分优先级)</li>
+</ol>
+<p><img src="https://spricoder.oss-cn-shanghai.aliyuncs.com/2020-Software-Engineering-and-Computing-II/img/cpt7/4.png"></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">1. &quot;After the payment process is complete, the relevant information should be appended to a log ﬁle.&quot;模糊的，不知道relevant information指代的是什么</span><br><span class="line">2. &quot;The system should be constructed so that it will be easy to add new functionality in the future.&quot;不可验证的，因为easy无法衡量</span><br><span class="line">3. &quot;The price of a gasoline purchase is computed as the price per gallon for the type of gas purchased, multiplied by the number of gallons purchased (use two decimal points for representing fractions of gallons).&quot; 合格的，因为很完整</span><br><span class="line">4. &quot;The system should be available 24 hours a day, 7 days a week. 不现实的，不能保证永远工作</span><br><span class="line">5.用户查询的界面应该友好。不对，友好不能验证，应当改成“用户完成任何一个查询任务时的鼠标点击数都不能超过5次”</span><br></pre></td></tr></table></figure>
+
+<h2 id="对给定的需求示例，设计功能测试用例"><a href="#对给定的需求示例，设计功能测试用例" class="headerlink" title="对给定的需求示例，设计功能测试用例"></a>对给定的需求示例，设计功能测试用例</h2><ol>
+<li>以需求为线索，开发测试用例套件，确定输入&#x2F;输出，开发测试用例。</li>
+</ol>
+<p><img src="https://spricoder.oss-cn-shanghai.aliyuncs.com/2020-Software-Engineering-and-Computing-II/img/cpt7/6.png"></p>
+<ol start="2">
+<li>制定测试用例<ul>
+<li>方法用白盒或黑盒</li>
+</ul>
+</li>
+</ol>
+<h1 id="09-软件设计基础"><a href="#09-软件设计基础" class="headerlink" title="09-软件设计基础"></a>09-软件设计基础</h1><h2 id="什么是软件设计？"><a href="#什么是软件设计？" class="headerlink" title="什么是软件设计？"></a>什么是软件设计？</h2><ol>
+<li>软件设计是指关于软件对象的设计，是一种设计活动。软件设计既指软件对象实现的规格说明，又指这个规格说明产生的过程。</li>
+<li>软件设计活动以需求开发的制品(需求规格说明和分析模型)为基础，构建软件设计方案描述和原型，为后期的构造活动提供规划或蓝图。</li>
+<li>软件设计具有工程性、艺术性、演化性、决策性、约束性、概念完整性等性质。</li>
+</ol>
+<h2 id="软件设计的核心思想是什么？"><a href="#软件设计的核心思想是什么？" class="headerlink" title="软件设计的核心思想是什么？"></a>软件设计的核心思想是什么？</h2><p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032332392.png" alt="image-20220610235059926"></p>
+<ol>
+<li>分解：横向上将系统分割为几个相对简单的子系统与子系统之间的关系</li>
+<li>抽象：纵向上聚焦各子系统的接口（区别于实现，各子系统之间交互的契约），可以分离接口和实现，使得人们更好地关注软件系统本质，降低复杂度。</li>
+</ol>
+<h2 id="软件工程设计有哪三个层次？各层的主要思想是什么？"><a href="#软件工程设计有哪三个层次？各层的主要思想是什么？" class="headerlink" title="软件工程设计有哪三个层次？各层的主要思想是什么？"></a>软件工程设计有哪三个层次？各层的主要思想是什么？</h2><p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032332414.png" alt="image-20220611000014292"></p>
+<ol>
+<li>高层设计：基于反映软件高层抽象的构件设计，描述系统的高层结构、关注点和设计决策。<ol>
+<li><strong>部件</strong>承载了系统主要的<strong>计算与状态</strong></li>
+<li><strong>连接件</strong>承载部件之间的<strong>交互</strong></li>
+<li>部件与连接件都是抽象的类型定义(就像类定义)，它们的实例(就像类的对象实例)组织构成软件系统的整体结构，<strong>配置</strong>将它们的实例连接起来</li>
+</ol>
+</li>
+<li>中层设计：更加关注组成构件的模块的设计、导入&#x2F;导出、过程之间调用关系或者类之间的协作<ol>
+<li>模块划分隐藏⼀些程序片段(数据结构+算法)的细节，暴露接口于外界</li>
+</ol>
+</li>
+<li>低层设计：深入模块和类的内部，关注具体的数据结构、算法、类型、语句和控制结构等。<ol>
+<li>将基本的语言单位（类型与语句），组织起来，建立高质量的数据结构+算法</li>
+<li>屏蔽程序中复杂数据结构与算法的实现细节！</li>
+</ol>
+</li>
+</ol>
+<blockquote>
+<p>软件设计既可以分为体系结构设计（高）和详细设计（中低），也可以分为高中低三层。</p>
+</blockquote>
+<h1 id="10-软件体系结构基础"><a href="#10-软件体系结构基础" class="headerlink" title="10-软件体系结构基础"></a>10-软件体系结构基础</h1><h2 id="体系结构概念"><a href="#体系结构概念" class="headerlink" title="体系结构概念"></a>体系结构概念</h2><p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032332563.png" alt="image-20220611230756231"></p>
+<ol>
+<li><p>软件体系结构是由部件，连接件，配置组成的。</p>
+<ol>
+<li><p><strong>部件</strong>是软件体系结构的基本组成单位之⼀，承载系统的主要功能，包括处理与数据；</p>
+<ul>
+<li><p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032332826.png" alt="image-20220611230825849"></p>
+</li>
+<li><p>原始部件</p>
+</li>
+<li><p>复合部件</p>
+</li>
+</ul>
+</li>
+<li><p><strong>连接件</strong>是软件体系结构的另一个基本组成单位，定义了部件间的交互，是连接的抽象表示；</p>
+<ul>
+<li><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032332259.png" alt="image-20220611230947775"></li>
+<li>原始连接件</li>
+<li>复合连接件:是由更细粒度的部件和连接件组成。</li>
+</ul>
+</li>
+<li><p><strong>配置</strong>是对“形式”的发展，定义了“部件”以及“连接件”之间的关联方式，将它们组织成系统的总体结构。 </p>
+<ul>
+<li><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032332287.png" alt="image-20220611230924459"></li>
+</ul>
+</li>
+</ol>
+</li>
+</ol>
+<h2 id="体系结构风格的优缺点（画图）"><a href="#体系结构风格的优缺点（画图）" class="headerlink" title="体系结构风格的优缺点（画图）"></a>体系结构风格的优缺点（画图）</h2><ol>
+<li><p>主程序子程序风格</p>
+<ol>
+<li><img src="https://spricoder.oss-cn-shanghai.aliyuncs.com/2020-Software-Engineering-and-Computing-II/img/cpt9/12.png" style="zoom: 50%;" /></li>
+<li>优点:<ol>
+<li>流程清晰，易于理解</li>
+<li>强控制性</li>
+</ol>
+</li>
+<li>缺点:<ol>
+<li>程序调用是一种强耦合的连接方式，非常依赖接口</li>
+<li>程序调用的连接方式限制了部件之间的数据交互，可能会导致不必要的公共耦合。</li>
+</ol>
+</li>
+<li>适用：可以将系统功能依层次分解为<strong>多个顺序执行步骤</strong>的系统</li>
+</ol>
+</li>
+<li><p>面向对象风格</p>
+<ol>
+<li><img src="https://spricoder.oss-cn-shanghai.aliyuncs.com/2020-Software-Engineering-and-Computing-II/img/cpt9/20.png" style="zoom:50%;" /></li>
+<li>优点:<ol>
+<li>内部实现的可修改性（隐藏内部实现）</li>
+<li>易开发、易理解、易复用的结构组织（契合模块化思想）</li>
+</ol>
+</li>
+<li>缺点:<ol>
+<li>接口的耦合性(由于方法调用机制，接口的耦合性无法消除)</li>
+<li>标识的耦合性(一个对象要和其他对象交互，必须知道标识符)</li>
+<li>副作用（难以理解、高耦合性以及数据的不一致视图）<ul>
+<li>更难实现程序的“正确性”<img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032332308.png" alt="image-20220611231711934"></li>
+</ul>
+</li>
+</ol>
+</li>
+<li>适用：适用于那些能够基于<strong>数据信息分解和组织</strong>的软件系统。</li>
+</ol>
+</li>
+<li><p>分层风格</p>
+<ol>
+<li><img src="https://spricoder.oss-cn-shanghai.aliyuncs.com/2020-Software-Engineering-and-Computing-II/img/cpt9/21.png"></li>
+<li>优点:<ol>
+<li>设计机制清晰，易于理解（抽象层次分离，隔离复杂度）</li>
+<li>支持并行开发（层次之间遵守程序稳定的接口）</li>
+<li>更好的可复用性与内部可修改性（接口的稳定性，不同层次的部件能够互相替代）</li>
+</ol>
+</li>
+<li>缺点：<ol>
+<li>交互协议难以修改（可能需要改变所有的层次，接口具有强耦合性）</li>
+<li>性能损失（禁止跨层调用）</li>
+<li>难以确定层次数量和粒度</li>
+</ol>
+</li>
+<li>应用：适用于主要功能是在<strong>不同抽象层次</strong>上进行任务分解的复杂处理，能建立稳定的不同抽象层次之间的稳定交互协议，没有很高的实时性能要求的系统</li>
+</ol>
+</li>
+<li><p>MVC风格:</p>
+<ol>
+<li><img src="https://spricoder.oss-cn-shanghai.aliyuncs.com/2020-Software-Engineering-and-Computing-II/img/cpt9/22.png"></li>
+<li>优点:<ol>
+<li>易开发性：抽象了业务逻辑，表现和控制机制清晰，易于开发</li>
+<li>视图和控制的可修改性</li>
+<li>适宜于<strong>网络系统</strong>开发的特征（MVC 不仅允许视图和控制的可修改性，而且其对业务逻辑、表现和控制的分离使得⼀个模型可以同时建立并保持<strong>多个视图</strong>，这非常适用于网络系统开发）</li>
+</ol>
+</li>
+<li>缺点:<ol>
+<li>复杂性：MVC将用户的任务分解成了表现、控制和模型三个部分，这会增加系统的复杂性，不利于理解任务实现。</li>
+<li>模型修改困难，视图和控制都要依赖于模型</li>
+</ol>
+</li>
+</ol>
+</li>
+</ol>
+<h1 id="11-软件体系结构设计与构建-高"><a href="#11-软件体系结构设计与构建-高" class="headerlink" title="11-软件体系结构设计与构建(高)"></a>11-软件体系结构设计与构建(高)</h1><h2 id="体系结构设计的过程？"><a href="#体系结构设计的过程？" class="headerlink" title="体系结构设计的过程？"></a>体系结构设计的过程？</h2><ol>
+<li>分析关键需求和项目约束：<ul>
+<li>分析用例文档和需求规格说明书（包含需求规格和项目约束）。注意既要考虑功能性需求，又要考虑非功能性需求，甚至很大意义上体系结构设计是为了满足<strong>非功能性需求</strong>。</li>
+</ul>
+</li>
+<li>选择体系结构风格：<ul>
+<li>选择<strong>分层风格</strong>（信息系统、并行开发、非web应用），进行评审。</li>
+</ul>
+</li>
+<li>进行软件体系结构逻辑（抽象）设计：产生<strong>逻辑包图</strong></li>
+<li>依赖逻辑设计进行软件体系结构（实现）设计：产生<strong>物理包图</strong></li>
+<li>完善体系结构设计：关键类图，持久化数据格式的定义等（VO PO）</li>
+<li>添加构件接口：包、重要文件的创建，定义接口</li>
+<li>迭代过程3-6</li>
+</ol>
+<h2 id="包的原则"><a href="#包的原则" class="headerlink" title="包的原则"></a>包的原则</h2><p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032332337.png" alt="image-20220611233603049"></p>
+<ol>
+<li><p>重用发布等价原则(REP):重用的粒度就是发布的粒度</p>
+<blockquote>
+<ol>
+<li>为重用器分组组件(类)</li>
+<li>单个类通常是不可重用的：几个协作类组成一个包</li>
+<li>包中的类应构成可重用和可释放的模块：模块提供一致的功能</li>
+<li>减少重新使用者的工作</li>
+<li>和相关联的类一起发布，而不是单独进行发布</li>
+</ol>
+</blockquote>
+</li>
+<li><p>共同封闭原则(CCP):包中所有类对于同一类性质的变化应该是<strong>共同封闭</strong>的，一个变化若对一个包产生影响，则对该包中的所有类产生影响，而对于其他包不造成任何影响。</p>
+<blockquote>
+<ol>
+<li>最小化修改都程序员的影响</li>
+<li>包尽可能大，和CRP互斥</li>
+<li>方法<ol>
+<li>将具有相似闭包的类分组</li>
+<li>面向可以预期的变更封闭包</li>
+<li>将更改限制为几个软件包</li>
+<li>降低包装释放频率</li>
+<li>减少程序员的工作量</li>
+<li>只对可预测的变更有作用，不可预测的变更会为系统带来极大的破坏能力，并且无法进行预测。</li>
+</ol>
+</li>
+</ol>
+</blockquote>
+</li>
+<li><p>共同重用原理(CRP):一个包中的所有类应该是能够<strong>共同重用</strong>的。</p>
+<blockquote>
+<ol>
+<li>根据常见重用对类进行分组：避免给用户不必要的依赖</li>
+<li>遵循CRP通常会导致软件包拆分：获得更多，更小，更专注的包</li>
+<li>减少重新使用者的工作</li>
+<li>包尽可能小，和CCP互斥</li>
+</ol>
+</blockquote>
+</li>
+<li><p>无环依赖原则(ADP):在包的依赖关系图中不能存在环。必须是<strong>有向无环图</strong>。</p>
+<blockquote>
+<ol>
+<li>第一种单环，DIP依赖倒置即可解决</li>
+<li>第二种互环，A依赖B，且B依赖A</li>
+</ol>
+</blockquote>
+</li>
+</ol>
+<p><img src="https://spricoder.oss-cn-shanghai.aliyuncs.com/2020-Software-Engineering-and-Computing-II/img/summary/3.png"></p>
+<ul>
+<li>Y依赖于BY，但没有依赖于B。B依赖于BY，所以Y没有依赖B。</li>
+<li>应该看代码上的依赖，不是运行上的依赖。</li>
+</ul>
+<ol start="5">
+<li>稳定依赖原则(SDP):朝着稳定(别人的修改不影响我)的方向进行依赖<ol>
+<li>Ca:输入耦合度，包外部依赖<strong>该包内</strong>的类个数</li>
+<li>Ce:输出耦合度，包内部依赖于<strong>包外部</strong>的类的个数</li>
+<li>不稳定性: I &#x3D; Ce &#x2F; (Ce + Ca}), I越小越稳定</li>
+</ol>
+</li>
+</ol>
+<p><img src="https://spricoder.oss-cn-shanghai.aliyuncs.com/2020-Software-Engineering-and-Computing-II/img/cpt10/16.png"></p>
+<ol start="6">
+<li>稳定抽象原则(SAP):包的抽象程度应该和其稳定程度一致<ol>
+<li>稳定的包应该是抽象的包</li>
+<li>不稳定的包应该是具体的包</li>
+<li>Na:包中<strong>抽象类</strong>个数</li>
+<li>Nc:包中<strong>所有类</strong>个数</li>
+<li>抽象度A &#x3D; Na &#x2F; Nc</li>
+</ol>
+</li>
+<li>前三条描述的是依赖性，后三条描述的是耦合性</li>
+<li>包设计过程:<ol>
+<li>开发包(构件)设计</li>
+<li>运行时的进程</li>
+<li>物理部署</li>
+</ol>
+</li>
+</ol>
+<h2 id="体系结构构建之间接口的定义"><a href="#体系结构构建之间接口的定义" class="headerlink" title="体系结构构建之间接口的定义(*)"></a>体系结构构建之间接口的定义(*)</h2><ol>
+<li>首先确定模块对外接口</li>
+<li>然后确定接口的规范</li>
+</ol>
+<ul>
+<li>逻辑层接口：<img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032332369.png" alt="image-20220611235306233"></li>
+<li>数据层接口（其实和逻辑层接口一样，都是语法、前置条件、后置条件）<img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032332240.png" alt="image-20220611235823134"></li>
+</ul>
+<h2 id="体系结构开发集成测试用例"><a href="#体系结构开发集成测试用例" class="headerlink" title="体系结构开发集成测试用例"></a>体系结构开发集成测试用例</h2><ol>
+<li><p>Stub：接受被测试部件请求，按照设定规则向被测部件<strong>返回结果</strong></p>
+<ul>
+<li>为了完成程序的编译和连接而使用的暂时代码，比如这个模块没写好，先写一点静态数据，就可以测别的模块</li>
+<li><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032332281.png" alt="image-20220612000758196"></li>
+</ul>
+</li>
+<li><p>Driver：设置环境，输入测试用例的输入数据、得到被测试部件的输出结果，与<strong>预期结果比较</strong>、并给出测试用例执行结论</p>
+<ul>
+<li><p>View的测试比较特殊，其他层都需要增加Driver进行测试<br>可以基于<strong>Junit</strong>编写Driver；基于接口规格设计测试用例</p>
+<ul>
+<li>开发View层时：需要logic的stub</li>
+<li>开发logic层时：需要模仿view的driver，需要data的stub，需要模拟同层调用的driver和stub</li>
+<li>开发data层时：需要模拟logic的driver</li>
+</ul>
+</li>
+<li><p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032332309.png" alt="image-20220612001208513"></p>
+</li>
+<li><p>驱动一个测试,就是驱动一个Service的行为</p>
+</li>
+</ul>
+</li>
+</ol>
+<p><img src="https://spricoder.oss-cn-shanghai.aliyuncs.com/2020-Software-Engineering-and-Computing-II/img/cpt10/42.png"></p>
+<ol start="3">
+<li>持续集成：逐步编写各个模块内部程序，替换相应的桩程序<ul>
+<li>真实程序不仅实现业务逻辑，而且会使用其他模块的接口程序（真实程序序或者桩程序）</li>
+<li>开始：客户端: view driver, logic stub, data stub；服务器端： logic driver, data stub</li>
+<li>进展：客户端： 逐步替换driver，逐步替换logic stub，data stub；服务器端：逐步替换logic driver，逐步替换 data stub</li>
+<li>最后联调：使用真实的客户端和服务器</li>
+</ul>
+</li>
+</ol>
+<h2 id="集成测试"><a href="#集成测试" class="headerlink" title="集成测试"></a>集成测试</h2><p>集成的目的是为了让各个模块合成为<strong>一个系统</strong>来工作，从而验证整个系统的功能。</p>
+<ol>
+<li>大爆炸式</li>
+<li>增量式：</li>
+</ol>
+<ul>
+<li><p>自顶向下式</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032332343.png" alt="image-20220612001540901"></p>
+</li>
+<li><p>自底向上式</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032332372.png" alt="image-20220612001604948"></p>
+</li>
+<li><p>持续集成</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032332399.png" alt="image-20220612001630158"></p>
+</li>
+</ul>
+<h1 id="12-人机交互-高"><a href="#12-人机交互-高" class="headerlink" title="12-人机交互(高)"></a>12-人机交互(高)</h1><h2 id="可用性"><a href="#可用性" class="headerlink" title="可用性"></a>可用性</h2><p>可用性不仅关注人使用系统的过程，同时还关注系统对使用它的人所产生的作用。有多维度的定义：</p>
+<ol>
+<li>易学性：新手用户容易学习，能够很快使用系统。</li>
+<li>效率：数量用户使用系统<strong>完成任务的速度</strong>，熟练的用户可以高效使用它。</li>
+<li>易记性：使用过软件系统的用户，能够<strong>有效记忆</strong>或快速重新学会使用该系统。(超市可以缓存之前的信息)</li>
+<li>出错率：指用户在使用系统时，会犯多少错，错误有多严重，以及是否能从错误中很容易地恢复。</li>
+<li>主观满意度：让用户有良好的<strong>体验</strong>。</li>
+</ol>
+<h2 id="人机交互设计原则"><a href="#人机交互设计原则" class="headerlink" title="人机交互设计原则"></a>人机交互设计原则</h2><ol>
+<li>简洁设计(7±2原则)：文字不如图形，右边要更简洁<ul>
+<li><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032332243.png" alt="image-20220612092914478"></li>
+</ul>
+</li>
+<li>一致性设计(实际模型和人的精神模型一致)，如下是一个不一致的例子(cancel和ok的位置变化，很奇怪)<ul>
+<li>精神模型：用户进行人机交互时头脑中的任务模型。</li>
+</ul>
+</li>
+</ol>
+<p><img src="https://spricoder.oss-cn-shanghai.aliyuncs.com/2020-Software-Engineering-and-Computing-II/img/cpt11/13.png"></p>
+<ol start="3">
+<li><p>低出错率设计(包括不适当的菜单功能灰色屏蔽、检查输入，出现错误的时候帮助用户修正错误，而不是重新填写，每一个输入都尽快的显示问题)</p>
+<ul>
+<li>出错时尽快<strong>提示、引导</strong>，帮助人们避免出错</li>
+</ul>
+</li>
+<li><p>易记性设计</p>
+<ol>
+<li>减少短期记忆的负担（Excel显示已输入过的信息）</li>
+<li>使用逐层递进的方式展示信息（图片的缩略展现）</li>
+<li>使用直观的快捷方式（<strong>快捷方式</strong>导航栏等）</li>
+<li>设置有意义的默认值（如日期等）</li>
+</ol>
+</li>
+<li><p>可视化设计</p>
+<ol>
+<li>按照任务模型设计<strong>界面隐喻</strong>，同时不要把软件系统的<strong>内部构造机制</strong>暴露给用户<ul>
+<li>不要把表关键字ID显示在界面上，不要把每个对象方法都设置成一个按钮，不要暴露<strong>ZIP</strong><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032332276.png" alt="image-20220612093551668"></li>
+</ul>
+</li>
+<li>可视化设计还应该基于界面隐喻，尽可能地把<strong>功能和任务细节</strong>表现出来。<ul>
+<li><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032332340.png" alt="image-20220612094114610"></li>
+</ul>
+</li>
+</ol>
+</li>
+<li><p>导航：提供好的入口，符合人的精神模型</p>
+<ul>
+<li><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032332369.png" alt="image-20220612094428435"></li>
+</ul>
+</li>
+<li><p>反馈：<strong>提示</strong>交互行为的结果，比如用<strong>状态栏</strong>提示交互结果而不是弹出对话框。</p>
+</li>
+<li><p><strong>差异</strong>性：给新手提供易学性高的图形页面，给专家提供效率高的命令行、快捷方式、热键等</p>
+</li>
+</ol>
+<p>例题1：<img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032332409.png" alt="image-20220612094725016"></p>
+<ul>
+<li>违反了：一致性设计。不一致的交互机制会导致用户的<strong>精神模型的不一致</strong>，造成不必要的麻烦和负担。这里按钮的位置不一致。</li>
+<li>体现了：<ul>
+<li>反馈：对用户行为进行了反馈，让用户<strong>意识到行为的结果</strong>。这里单击按钮改变了按钮边框。</li>
+<li>简洁设计：右图的隐喻设计代替了描述文字，更为简洁。</li>
+<li>可视化设计：基于界面隐喻，把功能和任务细节表现了出来。这里选择style就可以看到preview图。</li>
+</ul>
+</li>
+</ul>
+<p>例题2：</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032332734.png" alt="image-20220612095355978"></p>
+<ul>
+<li>导航：帮助用户找到任务的入口。</li>
+<li>简洁设计：利用图片的形式简洁地表达了交互信息。</li>
+<li>易记性设计：使用了直观的<strong>快捷方式</strong>。</li>
+<li><strong>可视化</strong>设计：基于界面隐喻，把功能和任务细节表现了出来。</li>
+<li>反馈：使用<strong>状态栏</strong>，提示用户交互行为的结果。</li>
+</ul>
+<h2 id="精神模型、差异性"><a href="#精神模型、差异性" class="headerlink" title="精神模型、差异性"></a>精神模型、差异性</h2><ul>
+<li><strong>精神模型</strong></li>
+</ul>
+<ol>
+<li><p>精神模型就是用户进行人机交互时<strong>头脑中的任务模型</strong>。依据精神模型可以进行<strong>隐喻</strong>(Metaphor)设计：</p>
+<blockquote>
+<ol>
+<li>隐喻又被称为<strong>视觉隐喻</strong>，是视觉上的图像，但会被用户映射为业务事物。用户在识别图像时，会依据隐喻将控件功能与已知的熟悉事物联系起来，形成任务模型；</li>
+<li>隐喻本质上是在用户已有知识的基础上建立一组新的知识，实现<strong>界面视觉提示和系统功能</strong>之间的知觉联系。</li>
+</ol>
+</blockquote>
+</li>
+</ol>
+<ul>
+<li><strong>差异性</strong><ul>
+<li>不同用户群体的<strong>任务模型</strong>有差异，好的人机交互应该为不同的用户群体提供差异化的交互机制。<ul>
+<li>既为新手用户提供易学性高的人机交互机制(图形界面)</li>
+<li>又为专家用户提供效率高的人机交互机制(命令行、快捷方式、热键)</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<ol>
+<li>新手用户<ol>
+<li>是对业务不熟悉的⼈</li>
+<li>例如新员工或者新接触系统的⼈。为新手用户设计系统时要关注易学性，进⾏业务导航，尽量避免出错。如果⼀个系统的⼤多数⽤户都是新手用户，整个系统的⼈机交互设计都要侧重<strong>易学性</strong>。</li>
+</ol>
+</li>
+<li>专家用户<ol>
+<li>是能够熟练操作计算机完成业务任务的⼈，⼀般都是⻓时间使⽤软件系统并且计算机操作技能熟练的人。</li>
+<li>为专家用户设计系统时，要关注效率。如果⼀个系统的大多数用户都是专家⽤户，整个系统的⼈机交互设计都要侧重效率。</li>
+</ol>
+</li>
+<li>熟练用户：是介于新手用户和专家用户之间的⼈。为熟练用户设计⼈机交互系统要在易学性和效率之间进行折中。</li>
+</ol>
+</blockquote>
+<h2 id="导航、反馈、协作式设计"><a href="#导航、反馈、协作式设计" class="headerlink" title="导航、反馈、协作式设计"></a>导航、反馈、协作式设计</h2><ul>
+<li>导航</li>
+</ul>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032332369.png" alt="image-20220612094428435"></p>
+<ol>
+<li>导航是为了给用户提供一个很好的<strong>完成任务的入口</strong>，好的导航保证这个入口很符合人的<strong>精神模型</strong>。</li>
+<li>全局导航控件包括窗口、菜单、列表、快捷方式、热键等。以<strong>功能分层和任务交互过程</strong>为依据。</li>
+<li>局部导航包括可视化控件布局与组合、按钮设置、文本颜色或字体大小等。以<strong>任务细节</strong>为依据。</li>
+</ol>
+<ul>
+<li>反馈</li>
+</ul>
+<ol>
+<li>反馈能够避免用户进行错误的操作，让用户明确自己的等待过程的长度。</li>
+<li>目的是提示用户交互的结果，但不能打断用户工作的意识流。<ul>
+<li>比如使用<strong>状态栏</strong>提示完成一项任务，不要用弹出对话框。</li>
+</ul>
+</li>
+<li>根据任务选择适当的响应时间：<ol>
+<li>打字、光标移动、⿏标定位：50～150毫秒</li>
+<li>简单频繁的任务：1秒</li>
+<li>普通的任务：2～4秒</li>
+<li>复杂的任务：8～12秒</li>
+</ol>
+</li>
+</ol>
+<ul>
+<li>协作式设计</li>
+</ul>
+<ol>
+<li>人和计算机是人机交互的方法，其中人的因素是比较固定的，一定时期内不会发生大的变化，所以要让两者交互顺畅，就需要让<strong>计算机更多地适应人的因素</strong>，这也是人机交互设计以用户为中心的根本原因</li>
+<li>这种调整计算机因素以更好地<strong>适应并帮助用户</strong>的设计方式被称为协作式设计。</li>
+<li>包括简洁设计、一致性设计、低出错率设计、易记性设计。</li>
+</ol>
+<h1 id="13-详细设计-中低"><a href="#13-详细设计-中低" class="headerlink" title="13-详细设计(中低)"></a>13-详细设计(中低)</h1><h2 id="详细设计的出发点"><a href="#详细设计的出发点" class="headerlink" title="详细设计的出发点"></a>详细设计的出发点</h2><ol>
+<li>软件详细设计是在软件体系结构设计之后进行，以<strong>需求开发</strong>的结果(需求规格说明和需求分析模型)和<strong>软件体系结构</strong>的结果(软件体系结构设计方案与原型)为出发点。</li>
+</ol>
+<h2 id="职责分配"><a href="#职责分配" class="headerlink" title="职责分配"></a>职责分配</h2><p>面向对象设计的过程中，通过职责建立静态设计模型：面向对象分解中，系统是由很多对象组成的。对象各自完成相应的职责，从而协作完成⼀个大的职责。</p>
+<p>类的职责主要有两部分构成：属性职责和方法职责。类与类之间也不是孤立存在的，它们之间存在一定的关系。关系表达了相应职责的划分和组合。它们的强弱顺序为：依赖&lt;关联&lt;聚合&lt;组合&lt;继承。</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032332977.png" alt="image-20220612103321241"></p>
+<h2 id="协作"><a href="#协作" class="headerlink" title="协作"></a>协作</h2><p>面向对象设计的过程中，根据协作建立动态模型：（1）从小到大，将对象的小职责聚合形成大职责；<br>（2）从大到小，将大职责分配给各个小对象。</p>
+<p>通过这两种方法，共同完成对协作的抽象。</p>
+<h2 id="控制风格"><a href="#控制风格" class="headerlink" title="控制风格"></a>控制风格</h2><ol>
+<li>集中式控制风格：做决策的往往只有<strong>一个</strong>对象，其他对象都与中心控制对象进行交互。</li>
+<li>委托式控制风格：做出决策的对象<strong>不止</strong>一个，职责的分解决定了控制对象的层次。</li>
+<li>分散式控制风格：无法找到明确的控制对象，每个对象只承担一个相对较小的职责，靠各个<strong>对象自治</strong>的方式实现大的职责。</li>
+</ol>
+<p><img src="https://spricoder.oss-cn-shanghai.aliyuncs.com/2020-Software-Engineering-and-Computing-II/img/cpt12/27.png"></p>
+<h2 id="给定分析类图、系统顺序图和设计因素描述"><a href="#给定分析类图、系统顺序图和设计因素描述" class="headerlink" title="给定分析类图、系统顺序图和设计因素描述"></a>给定分析类图、系统顺序图和设计因素描述</h2><h3 id="建立设计类图"><a href="#建立设计类图" class="headerlink" title="建立设计类图"></a>建立设计类图</h3><p>设计类图是通过<strong>职责</strong>建立静态设计模型。（相比概念类图添加方法、接口、辅助类povo等）</p>
+<p>步骤：</p>
+<ul>
+<li>抽象类的职责：把属性和行为写出来<img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032332019.png" alt="image-20220612110346576" style="zoom: 33%;" /></li>
+<li>抽象类之间的关系：依赖关联聚合组合继承<img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032332058.png" alt="image-20220612110427704" style="zoom:33%;" /><ul>
+<li>依赖：虚线 单向加箭头，双向不加箭头</li>
+<li>关联：实线</li>
+<li>聚合组成聚成：实线</li>
+</ul>
+</li>
+<li>添加辅助类：接口类、记录类（数据类）、 启动类、控制器类、实现数据类型的类、容器类</li>
+<li><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032332080.png" alt="image-20220612111240511"></li>
+</ul>
+<h3 id="建立详细顺序图"><a href="#建立详细顺序图" class="headerlink" title="建立详细顺序图"></a>建立详细顺序图</h3><p>详细顺序图是通过<strong>协作</strong>建立动态设计模型。（和顺序图基本没区别）</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032332111.png" alt="image-20220612111757404"></p>
+<p>设计类图就是满足三种控制风格的类图，如下图是集中式，中心是<strong>顾客</strong><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032332235.png" alt="image-20220612112842729" style="zoom:25%;" /></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032332266.png" alt="image-20220612112610584"></p>
+<h3 id="协作的测试"><a href="#协作的测试" class="headerlink" title="协作的测试"></a>协作的测试</h3><p>Mock Object：类间协作的桩程序，类似于Stub，但是更加简单</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032332309.png" alt="image-20220612113413149"></p>
+<h1 id="14-模块化与信息隐藏"><a href="#14-模块化与信息隐藏" class="headerlink" title="14-模块化与信息隐藏"></a>14-模块化与信息隐藏</h1><h2 id="耦合"><a href="#耦合" class="headerlink" title="耦合"></a>耦合</h2><ul>
+<li>描述的是两个模块之间关系的<strong>复杂程度</strong>：包括内容耦合，公共耦合，重复耦合，控制耦合，印记耦合，数据耦合。其中<strong>控制耦合</strong>及以上可以接受，<strong>数据耦合最好</strong>。</li>
+</ul>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032332347.png" alt="image-20220612114450446"></p>
+<ol>
+<li><p>内容耦合：A的GOTO跳转到B的内部；A改变B的内部私有数据；A改变B的代码。</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032332373.png" alt="image-20220612115403756" style="zoom:25%;" /><img src="C:\Users\84368\AppData\Roaming\Typora\typora-user-images\image-20220612115554301.png" alt="image-20220612115554301" style="zoom:25%;" /></p>
+</li>
+<li><p>公共耦合：使用了全局变量。共享资源改变，所有都会变。<img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032332651.png" alt="image-20220612115225679" style="zoom: 50%;" /><img src="C:\Users\84368\AppData\Roaming\Typora\typora-user-images\image-20220612115624583.png" alt="image-20220612115624583" style="zoom: 25%;" /></p>
+</li>
+<li><p>重复耦合：一段业务逻辑在多个地方被调用，修改时会很麻烦。</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032332457.png" alt="image-20220612115503192"></p>
+</li>
+<li><p>控制耦合：AB类之间非独立，都知道另一个的内部结构和逻辑。<img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032332478.png" alt="image-20220612115152995" style="zoom: 33%;" /><img src="C:\Users\84368\AppData\Roaming\Typora\typora-user-images\image-20220612115825860.png" alt="image-20220612115825860" style="zoom: 25%;" /></p>
+</li>
+<li><p>印记耦合：传了一整个数据结构，但只在该数据结构的个别组件上进行了操作。<img src="C:\Users\84368\AppData\Roaming\Typora\typora-user-images\image-20220612114900436.png" alt="image-20220612114900436" style="zoom: 25%;" /><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032332572.png" alt="image-20220612114919680" style="zoom: 25%;" /></p>
+<img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032332306.png" alt="image-20220612115911877" style="zoom:25%;" />
+</li>
+<li><p>数据耦合：模块间通过参数传递，只共享对方需要的数据。**<img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032332328.png" alt="image-20220612115946667">**</p>
+</li>
+</ol>
+<h2 id="内聚"><a href="#内聚" class="headerlink" title="内聚"></a>内聚</h2><ol>
+<li>内聚：表达的是一个模块内部的联系的<strong>紧密性</strong>：包括偶然内聚、逻辑内聚、时间内聚、过程内聚、通信内聚、功能内聚和信息内聚。其中<strong>偶然内聚和逻辑内聚</strong>不可以接受。</li>
+</ol>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032332356.png" alt="image-20220612120411654"></p>
+<ol>
+<li><p>偶然内聚：毫无关系，恰好堆砌在这个模块内。<img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032332391.png" alt="image-20220612120251879"></p>
+</li>
+<li><p>逻辑内聚：模块执行一系列逻辑上相似但没有直接关联（因为都调用其他模块的方法），比如坐汽车&#x2F;飞机。</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032332414.png" alt="image-20220612120328438"></p>
+</li>
+<li><p>时间内聚：一系列操作在同一时间段内发生。比如刷牙\洗脸\洗澡，顺序不一定但有时间相关性。初始化的时候一般是这个。<img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032332444.png" alt="image-20220612120625247"></p>
+</li>
+<li><p>过程内聚：多个操作有顺序关系，比如洗车、打磨、上蜡。<img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032332225.png" alt="image-20220612120929941"></p>
+</li>
+<li><p>通信内聚：操作针对<strong>同一数据</strong>，比如查询书名、价格、出版社和作者。</p>
+<p>改写的话：拆成两个<img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032332253.png" alt="image-20220612121058842"></p>
+<p>​	<img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032332284.png" alt="image-20220612121140745"></p>
+</li>
+<li><p>功能内聚：每个方法执行<strong>单一目的的操作</strong>，比如计算平方根，计算最短路径。<img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032332315.png" alt="image-20220612121200252"></p>
+</li>
+<li><p>信息内聚：每个操作都有入口点和出口点，代码相对独立。主要用来实现抽象的数据类型。<img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032332338.png" alt="image-20220612121234149"></p>
+</li>
+</ol>
+<h2 id="信息隐藏"><a href="#信息隐藏" class="headerlink" title="信息隐藏"></a>信息隐藏</h2><h3 id="基本思想"><a href="#基本思想" class="headerlink" title="基本思想"></a>基本思想</h3><p>信息隐藏利用了抽象的方法，抽象出每个类的关键细节，也就是模块的职责（什么是公开给其他人的，什么是隐藏在自己模块中的）。换句话说，抽象出来的就是<strong>接口</strong>，隐藏的就是<strong>实现</strong>，他们共同体现了模块的职责。</p>
+<p>核心设计思路：每个模块都隐藏⼀个重要的设计决策——职责。职责体现为模块对外的⼀份契约，并且在这份契约之下隐藏的只有这个模块知道的<strong>决策或者说秘密</strong>，决策实现的细节仅模块自己知道。 </p>
+<h3 id="两种常见的信息隐藏决策"><a href="#两种常见的信息隐藏决策" class="headerlink" title="两种常见的信息隐藏决策"></a>两种常见的信息隐藏决策</h3><ol>
+<li><strong>根据需求分配的职责</strong>，因为实践表明，需求是经常变化的，频率和幅度都很大；</li>
+<li><strong>内部实现机制</strong>，常见的变化主题包括硬件依赖，输入输出形式，非标准语言特征和库，负责的设计和实现，复杂的数据结构，复杂的逻辑，全局变量。数据大小限制等。</li>
+</ol>
+<h3 id="说明例子信息隐藏程度好坏"><a href="#说明例子信息隐藏程度好坏" class="headerlink" title="说明例子信息隐藏程度好坏"></a>说明例子信息隐藏程度好坏</h3><p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032332362.png" alt="image-20220612132630360"></p>
+<blockquote>
+<p>感觉是看职责分配的好不好，有没有合适的<strong>接口</strong>，有没有<strong>隐藏具体实现</strong>，发生变更时只孤立在模块内部，不影响其他的类。</p>
+<p>信息隐藏就是隐藏认为会改变的角色，把设计指派给单独的模块，使得变化局限在内部，不会影响整体</p>
+</blockquote>
+<p>看封装、职责、接口做的好不好</p>
+<h1 id="15-面向对象的模块化"><a href="#15-面向对象的模块化" class="headerlink" title="15-面向对象的模块化"></a>15-面向对象的模块化</h1><h2 id="模块化设计原则"><a href="#模块化设计原则" class="headerlink" title="模块化设计原则"></a>模块化设计原则</h2><p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032332078.png" alt="image-20220613101202464"></p>
+<ol>
+<li><p>原则一:全局变量是被认为是有害的</p>
+<ol>
+<li><strong>公共耦合</strong>有风险，而且会增加潜在连接数量</li>
+</ol>
+</li>
+<li><p>原则二:如果没有特殊要求，让代码清晰一点:</p>
+<ol>
+<li>让代码兼顾明确和可修改性</li>
+<li>显式（代码清晰，不进行不必要的隐藏，但有时候可能与可修改性冲突）</li>
+</ol>
+</li>
+<li><p>原则三:避免重复</p>
+<ol>
+<li>面向接口编程，而不是重复地写逻辑上一致的代码</li>
+<li>避免重复耦合</li>
+</ol>
+</li>
+<li><p>原则四:<strong>面向接口编程</strong></p>
+</li>
+<li><p>原则五:迪米特法则</p>
+<ol>
+<li>你可以自己玩。(this)</li>
+<li>你可以玩自己的玩具，但不能拆开它们(自己的成员变量)</li>
+<li>你可以玩送给你的玩具。(方法)</li>
+<li>你可以玩自己制作的玩具。(自己创建的对象)</li>
+<li>强调的是不能出现<strong>a.b.Methods</strong>这类情况，不能人去动狗的腿，而是人命令狗a调b，狗动腿b自己调method</li>
+</ol>
+</li>
+<li><p>原则六:接口隔离原则(ISP)&#x2F;也叫接口最小化原则</p>
+<ol>
+<li><p>将大的接口拆解成几个<strong>小的接口</strong>。</p>
+</li>
+<li><p>这样可以有效避免出现不必要的依赖，显著降低耦合。</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032332099.png" alt="image-20220613104549001"></p>
+</li>
+</ol>
+</li>
+<li><p>原则七:里氏替换原则(LSP)</p>
+<ol>
+<li>所有派生类都必须可以<strong>替代其基类</strong></li>
+<li>派生类的前置条件更弱，后置条件更强</li>
+<li>解决方案:在父类中添加方法或者函数（如把子类的更强条件移到父类），或者拆分接口</li>
+</ol>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032332125.png" alt="image-20220613104337715" style="zoom: 50%;" /><img src="C:\Users\84368\AppData\Roaming\Typora\typora-user-images\image-20220613104406479.png" alt="image-20220613104406479" style="zoom: 50%;" /></p>
+</li>
+</ol>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032332201.png" alt="image-20220613103016084"></p>
+<ul>
+<li>应该分为Door和Alerm两个接口，第一个CommonDoor不应该实现alarm（）</li>
+<li><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032332234.png" alt="image-20220613103004719"></li>
+</ul>
+<ol start="8">
+<li><p>原则八:组合代替继承</p>
+<ol>
+<li><p>MyStack继承Vector不合适，可以用组合Vector</p>
+</li>
+<li><p>适用于不符合LSP但想要进行代码复用，尤其是只用部分接口时用继承没必要</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032332990.png" alt="image-20220613104016181" style="zoom:25%;" /><img src="C:\Users\84368\AppData\Roaming\Typora\typora-user-images\image-20220613104031160.png" alt="image-20220613104031160" style="zoom:25%;" /></p>
+</li>
+</ol>
+</li>
+<li><p>原则九:单一职责原则:一个类只能有一个改变的理由</p>
+<p><img src="C:\Users\84368\AppData\Roaming\Typora\typora-user-images\image-20220613103758080.png" alt="image-20220613103758080" style="zoom: 33%;" /><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032332067.png" alt="image-20220613103822609" style="zoom:25%;" /></p>
+</li>
+</ol>
+<h1 id="16-面向对象的信息隐藏"><a href="#16-面向对象的信息隐藏" class="headerlink" title="16-面向对象的信息隐藏"></a>16-面向对象的信息隐藏</h1><h2 id="信息隐藏的含义"><a href="#信息隐藏的含义" class="headerlink" title="信息隐藏的含义"></a>信息隐藏的含义</h2><p>模块需要隐藏的决策主要有“职责的实现”和“实现的变更”两类 。</p>
+<p>面向对象中，需要做到：</p>
+<p>1） 封装类的职责，隐藏职责的实现</p>
+<p>2）预计将会发生的变更，抽象它的接口，隐藏内部实现机制 （为变更而设计？）</p>
+<h2 id="封装"><a href="#封装" class="headerlink" title="封装"></a>封装</h2><ol>
+<li>封装将数据和行为同时包含在类中，分离对外接口与内部是实现。</li>
+</ol>
+<h3 id="封装实现的细节"><a href="#封装实现的细节" class="headerlink" title="封装实现的细节"></a>封装实现的细节</h3><ol>
+<li>封装数据和行为：<strong>Getter-Setter</strong>，不是单单将方法和类成员关联，还可以获得间接持有信息，进行约束检查或者数据转换</li>
+<li>封装内部结构：不应该知道内部实现（数组&#x2F;链表）<ul>
+<li>getPositions&#x2F;getPositionsArray不好，用getPosition(int index)</li>
+</ul>
+</li>
+<li>封装其他对象的引用：<strong>不要返回内部的对象</strong>，新建一个返回，这样外部如何操作引用都不会影响到内部实现</li>
+<li>封装类型信息：隐藏其具体子类型，只需要知道共性类别 LSP</li>
+<li>封装潜在变更：把会变更的地方独立，把不会变更的地方抽象为稳定接口（如算平方根）</li>
+</ol>
+<h2 id="OCP开闭原则"><a href="#OCP开闭原则" class="headerlink" title="OCP开闭原则"></a>OCP开闭原则</h2><ol>
+<li><p>开闭原则是指：在发生变更时，好的设计只需要添加新的代码而不需要修改原有的代码，就能够实现变更。</p>
+</li>
+<li><p>具体内容是：1）好的设计应该对“扩展”开放   2）好的设计应该对“修改”关闭</p>
+</li>
+<li><p>示例：可以用<strong>多态或DIP</strong>实现OCP，只要满足不修改原来的，还能加新的就行。</p>
+<ul>
+<li><p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032332091.png" alt="image-20220613114548109"></p>
+</li>
+<li><p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032332121.png" alt="image-20220613114224890"></p>
+</li>
+</ul>
+</li>
+</ol>
+<h2 id="DIP依赖倒置原则"><a href="#DIP依赖倒置原则" class="headerlink" title="DIP依赖倒置原则"></a>DIP依赖倒置原则</h2><ol>
+<li><p>定义：</p>
+<ul>
+<li><p>抽象不应该依赖于细节，细节应该依赖于抽象。因为抽象是稳定的，细节是不稳定的</p>
+</li>
+<li><p>高层模块不应该依赖于低层模块，而是<strong>双方都依赖于抽象</strong>。因为<strong>抽象是稳定的</strong>，而高层模块和低层模块都可能是不稳定的。</p>
+</li>
+</ul>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032332043.png" alt="image-20220613114209601"></p>
+</li>
+<li><p>示例：这个是强耦合的，通过添加Mapper接口分离<img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032332062.png" alt="image-20220613114013868" style="zoom: 80%;" /></p>
+</li>
+</ol>
+<img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032332085.png" alt="image-20220613114043730" style="zoom: 80%;" />
+
+<p>例题</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032332122.png" alt="image-20220613114656643"></p>
+<h1 id="设计原则汇总-12"><a href="#设计原则汇总-12" class="headerlink" title="设计原则汇总(12)"></a>设计原则汇总(12)</h1><ol>
+<li>原则一:全局变量是被认为是有害的<ol>
+<li>公共耦合是有风险，而且会增加潜在连接数量</li>
+</ol>
+</li>
+<li>原则二:如果没有特殊要求，让代码清晰一点:<ol>
+<li>让代码兼顾明确和可修改性</li>
+</ol>
+</li>
+<li>原则三:避免重复<ol>
+<li>面向接口编程，而不是重复地写逻辑上一致的代码</li>
+</ol>
+</li>
+<li>原则四:面向接口编程</li>
+<li>原则五:迪米特法则<ol>
+<li>强调的是不能出现a.b.Methods这类情况，不能人去动狗的腿，而是人命令狗，狗动腿</li>
+</ol>
+</li>
+<li>原则六:接口隔离原则(ISP)&#x2F;也叫接口最小化原则<ol>
+<li>将大的接口拆解成几个小的接口。</li>
+<li>这样可以有效避免出现不必要的依赖。</li>
+</ol>
+</li>
+<li>原则七:里氏替换原则(LSP)<ol>
+<li><strong>所有派生类都必须可以替代其基类</strong></li>
+<li>派生类的前置条件更弱，后置条件更强</li>
+<li>解决方案:在父类中添加方法或者函数，或者拆分接口</li>
+</ol>
+</li>
+</ol>
+<p><img src="https://spricoder.oss-cn-shanghai.aliyuncs.com/2020-Software-Engineering-and-Computing-II/img/cpt14/30.png"></p>
+<ul>
+<li>应该分为Door和Alerm两个接口，第一个CommonDoor不应该实现alerm</li>
+</ul>
+<ol start="8">
+<li>原则八:组合代替继承<ol>
+<li>MyStack 组合 Vector</li>
+</ol>
+</li>
+<li>原则九:单一职责原则:一个类只能有一个改变的理由</li>
+<li>原则十:<strong>最小化类和成员的可访问性</strong>(x是可见)<ul>
+<li>是不是需要public</li>
+<li>类声明前没有public，则包内可见</li>
+<li>方法生命前没有public，则包内可见</li>
+<li>public修饰是全局可见</li>
+</ul>
+</li>
+</ol>
+<p><img src="https://spricoder.oss-cn-shanghai.aliyuncs.com/2020-Software-Engineering-and-Computing-II/img/cpt15/11.png"></p>
+<ol start="11">
+<li>原则十一:开放&#x2F;封闭原则(OCP)<ol>
+<li>对扩展开放：模块的行为可以被扩展，比如新添加一个子类</li>
+<li>对修改关闭：模块中的源代码不应该被修改</li>
+<li>RTTI(运行时类型信息违反了开闭原则LSP)，就是如果都有的话则抽象成基类的方法。</li>
+</ol>
+</li>
+<li>原则十二:依赖倒置原则(DIP):高级模块不应依赖于低级模块：两者都应依赖抽象。</li>
+</ol>
+<h1 id="17-设计模式"><a href="#17-设计模式" class="headerlink" title="17-设计模式"></a>17-设计模式</h1><h2 id="可修改性、可扩展性、灵活性"><a href="#可修改性、可扩展性、灵活性" class="headerlink" title="可修改性、可扩展性、灵活性"></a>可修改性、可扩展性、灵活性</h2><ol>
+<li><p>如何实现？接口和实现的分离</p>
+<p>1）通过接口和实现该接口的类完成<strong>接口与实现</strong>的分离</p>
+<p>2）通过子类继承父类，将<strong>父类的接口和子类的实现</strong>相分离（override）</p>
+<ol>
+<li>实现的<strong>可修改性</strong><ol>
+<li>方法实现的修改和类的调用代码无关</li>
+<li>例如：修改现有促销策略</li>
+</ol>
+</li>
+<li>实现的<strong>可扩展性</strong>(DIP &amp; OCP)<ol>
+<li>创建新的子类，不影响原来的旧代码</li>
+<li>例如：增加一条新的促销策略(策略模式)</li>
+</ol>
+</li>
+<li>实现的<strong>灵活性</strong><ol>
+<li>调用的接口不变，但指向不同的对象时会动态绑定不同实现</li>
+<li>例如：动态修改更改某商品对应促销策略</li>
+</ol>
+</li>
+</ol>
+</li>
+</ol>
+<h2 id="设计模式"><a href="#设计模式" class="headerlink" title="设计模式"></a>设计模式</h2><p><img src="https://spricoder.oss-cn-shanghai.aliyuncs.com/2020-Software-Engineering-and-Computing-II/img/cpt16/7.png"></p>
+<ol>
+<li>策略模式:减少耦合、依赖倒置。</li>
+<li>抽象工厂模式:职责抽象、接口重用。</li>
+<li>单件模式:信息隐藏、职责抽象。</li>
+<li>迭代器模式:减少耦合、依赖倒置。</li>
+</ol>
+<h3 id="策略模式"><a href="#策略模式" class="headerlink" title="策略模式"></a>策略模式</h3><p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032332151.png" alt="image-20220617203230753"></p>
+<p>1. </p>
+<ol>
+<li>在策略模式中，一个类的行为或其算法都可以在运行时改变。属<strong>行为型模式</strong>。</li>
+<li>在策略模式中，我们创建表示各种策略的对象和一个行为随着策略对象改变而改变的<strong>context对象</strong>。策略独享改变context对象的执行算法.</li>
+</ol>
+<p>   <img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032332190.png" alt="image-20220613171055398"></p>
+<p>   <img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032332101.png" alt="image-20220613171230985"></p>
+<h3 id="抽象工厂模式"><a href="#抽象工厂模式" class="headerlink" title="抽象工厂模式"></a>抽象工厂模式</h3><p>下面两张图是普通工厂模式。</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032332130.png" alt="image-20220613171434196" style="zoom:25%;" /><img src="C:\Users\84368\AppData\Roaming\Typora\typora-user-images\image-20220613171444403.png" alt="image-20220613171444403" style="zoom:25%;" /></p>
+<p>下面是抽象工厂模式：</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032332194.png" alt="image-20220617203402737"></p>
+<p>定义了一个创建对象的接口，由子类决定要使实例化哪一个类。</p>
+<p>工厂方法让类的实例化延迟到子类。</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032332237.png" alt="image-20220613171708479"></p>
+<h3 id="迭代器模式"><a href="#迭代器模式" class="headerlink" title="迭代器模式"></a>迭代器模式</h3><p>对迭代功能的创新，屏蔽是HashSet还是LinkedList等实现。</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032332270.png" alt="image-20220613172218280"></p>
+<img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032332066.png" alt="image-20220613172453772" style="zoom:33%;" />
+
+<h3 id="单件模式"><a href="#单件模式" class="headerlink" title="单件模式"></a>单件模式</h3><p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032332086.png" alt="image-20220613172043677"></p>
+<h1 id="18-软件构造"><a href="#18-软件构造" class="headerlink" title="18-软件构造"></a>18-软件构造</h1><h2 id="构造包含的活动"><a href="#构造包含的活动" class="headerlink" title="构造包含的活动"></a><strong>构造包含的活动</strong></h2><p>构造包含的活动：详细设计；编程；测试；调试；代码评审；集成与构建；构造管理（构造计划、度量、配置管理）</p>
+<h2 id="软件构造实践方法"><a href="#软件构造实践方法" class="headerlink" title="软件构造实践方法"></a>软件构造实践方法</h2><ol>
+<li>重构：修改软件系统的严谨方法，它在不改变代码外部表现的情况下<strong>改进其内部结构</strong>。</li>
+<li>测试驱动开发：要求程序员在编写⼀段代码之前，优先完成该段代码的<strong>测试代码</strong>。 测试代码之后，程序员再编写程序代码，并在编程中重复执行测试代码，以验证正确性。</li>
+<li>结对编程：两个程序员挨着坐在一起，共同协作进行软件构造活动。</li>
+</ol>
+<h2 id="代码改进"><a href="#代码改进" class="headerlink" title="代码改进"></a>代码改进</h2><ol>
+<li>简洁性&#x2F;可维护性</li>
+<li>使用数据结构消减复杂判定</li>
+<li>控制结构</li>
+<li>变量使用</li>
+<li>语句处理</li>
+<li>How to write unmaintainable（难以维持的） code</li>
+<li>防御与错误处理</li>
+</ol>
+<blockquote>
+<p>复杂决策：使用有意义的名称封装复杂决策，例如对于决策“ If( (id&gt;0) &amp;&amp; (id&lt;&#x3D;MAX_ID))”，可以封装为“If ( <strong>isIdValid(id)** )”，方法isIdValid(id)的内容为 “return ((id&gt;0) &amp;&amp; (id&lt;&#x3D;MAX_ID) )”<br>数据使用<br>（1）不要将变量应用于</strong>与命名不相符<strong>的目的。例如使用变量total表示销售的总价，而不是临时客串for循环的计数器。<br>（2）不要将单个变量用于</strong>多个目的<strong>。在代码的前半部分使用total表示销售总价，在代码后半部分不再需要“销售总价”信息时再用total客串for循环的计数器也是不允许的。<br>（3）限制</strong>全局变量<strong>的使用，如果不得不使用全局变量，就明确注释全局变量的声明和使用处。<br>（4）不要使用</strong>突兀**的数字与字符，例如15（天）、“MALE”等，要将它们定义为常量或变量后使用。<br>明确依赖关系：类之间模糊的依赖关系会影响到代码的理解与修改，非常容易导致修改时产生未预期的连锁反应。对于这些模糊的依赖关系，需要进行明确的注释</p>
+</blockquote>
+<h1 id="23-代码设计"><a href="#23-代码设计" class="headerlink" title="23-代码设计"></a>23-代码设计</h1><h2 id="单元测试用例的设计"><a href="#单元测试用例的设计" class="headerlink" title="单元测试用例的设计"></a>单元测试用例的设计</h2><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032332108.png" alt="image-20220616093308651" style="zoom:25%;" />
+
+<p>测试一个程序单元时，需要构建<strong>桩程序和驱动程序</strong>，将其与其他程序单元隔离。</p>
+<ul>
+<li><p>为方法开发测试用例</p>
+</li>
+<li><p>使用Mock Object测试类方法</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032332147.png" alt="image-20220616100124006"></p>
+</li>
+<li><p>为类开发测试用例</p>
+<ul>
+<li>用状态图，不仅看一个方法，而看不同方法间相互影响的情况</li>
+</ul>
+</li>
+</ul>
+<h2 id="契约式设计"><a href="#契约式设计" class="headerlink" title="契约式设计"></a>契约式设计</h2><ul>
+<li><p>异常方式：throw PreException&#x2F;PostException，可对前置后置条件进行检查</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032332174.png" alt="image-20220616094712681"></p>
+</li>
+<li><p>断言方式：</p>
+<ul>
+<li>Java提供的断言语句:<code>assert Expression1(: Expression2);</code> </li>
+<li>如果不写2，1不满足就抛AssertionError异常；否则就用2作为参数构造AssertionError</li>
+</ul>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032332200.png" alt="image-20220616094857474"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032332994.png" alt="image-20220616095124446"></p>
+</li>
+</ul>
+<h2 id="防御式编程"><a href="#防御式编程" class="headerlink" title="防御式编程"></a>防御式编程</h2><p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032332023.png" alt="image-20220616095550527"></p>
+<h2 id="表驱动"><a href="#表驱动" class="headerlink" title="表驱动*"></a>表驱动*</h2><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032332051.png" alt="image-20220616094413921" style="zoom:50%;" />
+
+<img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032332081.png" alt="image-20220616094430688" style="zoom: 33%;" />
+
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032332103.png" alt="image-20220616094457997"></p>
+<p>对于特别复杂的决策，可以将其包装为<strong>决策表</strong>，然后用使用表驱动编程的方式加以解决。可以增强代码复用。</p>
+<h2 id="圈复杂度"><a href="#圈复杂度" class="headerlink" title="圈复杂度*"></a>圈复杂度*</h2><p>就记：V(G)&#x3D;E-N+2</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032332143.png" alt="image-20220616100620051"></p>
+<h1 id="19-软件测试"><a href="#19-软件测试" class="headerlink" title="19-软件测试"></a>19-软件测试</h1><h2 id="黑盒测试"><a href="#黑盒测试" class="headerlink" title="黑盒测试"></a>黑盒测试</h2><p>黑盒测试是将测试对象作为一个黑盒子，完全基于输入和输出数据来判断测试对象的正确性。</p>
+<h3 id="等价类划分"><a href="#等价类划分" class="headerlink" title="等价类划分"></a>等价类划分</h3><p>把所有可能的输入数据，即<strong>程序的输入域</strong>划分为若干部分(子集)，从每个子集中选取少量具有代表性的数据作为测试用例。</p>
+<ul>
+<li>需要同时考虑有效等价类和无效等价类</li>
+</ul>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032332961.png" alt="image-20220616101242398"></p>
+<h3 id="边界值分析"><a href="#边界值分析" class="headerlink" title="边界值分析"></a>边界值分析</h3><ol>
+<li>边界值分析是<strong>等价类划分方法的补充</strong>，实践证明，错误最容易发生在各等价类的<strong>边界</strong>，而不是等价类的内部。</li>
+<li>对定价类划分的补充，错误容易发生在各个等价类的<strong>边界</strong>上，而不是等价类的内部，因此针对边界情况设计测试用例，可以发现更多的缺陷。</li>
+</ol>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032332984.png" alt="image-20220616101444861"></p>
+<h3 id="决策表"><a href="#决策表" class="headerlink" title="决策表"></a>决策表</h3><p>决策表是为复杂逻辑判断设计测试用例的技术。决策表示由条件声明、行动声明、规则选项和行动选项等四个象限组成的表格。</p>
+<ul>
+<li>包装为决策表后，用表驱动测试</li>
+</ul>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032332006.png" alt="image-20220616101657157"></p>
+<h3 id="状态转换"><a href="#状态转换" class="headerlink" title="状态转换"></a>状态转换</h3><ul>
+<li>状态转换是针对复杂测试对象的测试技术。该类复杂测试对象对输入数据的反映是多样的，还需要依赖自身的状态才能决定。</li>
+<li>状态转换包含<strong>有效转换和无效转换</strong>，只有在复杂情况和可靠性要求较高的情况下才会为无效转换设计测试用例。</li>
+</ul>
+<p><img src="https://spricoder.oss-cn-shanghai.aliyuncs.com/2020-Software-Engineering-and-Computing-II/img/cpt19/25.png"></p>
+<p><img src="https://spricoder.oss-cn-shanghai.aliyuncs.com/2020-Software-Engineering-and-Computing-II/img/cpt19/26.png"></p>
+<p>根据状态图，看每个状态下可能的状态转换</p>
+<h2 id="白盒测试"><a href="#白盒测试" class="headerlink" title="白盒测试"></a>白盒测试</h2><p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032332045.png" alt="image-20220616104520816"></p>
+<h3 id="语句覆盖"><a href="#语句覆盖" class="headerlink" title="语句覆盖"></a>语句覆盖</h3><p>每行至少执行一次</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032332065.png" alt="image-20220616105251944"></p>
+<h3 id="条件覆盖"><a href="#条件覆盖" class="headerlink" title="条件覆盖"></a>条件覆盖</h3><p>每种条件至少执行一次，尤其是if-else的部分</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032332096.png" alt="image-20220616105232482"></p>
+<h3 id="路径覆盖"><a href="#路径覆盖" class="headerlink" title="路径覆盖"></a>路径覆盖</h3><p>所有路径都至少执行一次，即所有可能的情况，最多。</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032332077.png" alt="image-20220616105217016"></p>
+<h2 id="题型"><a href="#题型" class="headerlink" title="题型*"></a>题型*</h2><p><img src="https://spricoder.oss-cn-shanghai.aliyuncs.com/2020-Software-Engineering-and-Computing-II/img/summary/6.png"></p>
+<ul>
+<li>单元测试用例：使用Mock Object测试类方法，见上文23-代码设计<ul>
+<li>感觉Mock Object是Stub，JUnit是Driver？</li>
+<li>Mock Object:要调但是还没有写好</li>
+</ul>
+</li>
+<li>集成测试用例：使用driver+stub，见11-软件体系结构设计<ul>
+<li>通常替换整个模块</li>
+</ul>
+</li>
+<li>功能测试用例：根据需求，写出完整有价值的序列，感觉用黑白盒比较多<ul>
+<li><img src="https://spricoder.oss-cn-shanghai.aliyuncs.com/2020-Software-Engineering-and-Computing-II/img/cpt7/6.png"></li>
+</ul>
+</li>
+<li>测试的度量<ul>
+<li>需求覆盖率&#x3D;被测试的需求数量&#x2F;需求总数</li>
+<li>模块覆盖率&#x3D;被测试的模块数量&#x2F;模块总数</li>
+<li>代码覆盖率&#x3D;被测试的代码行&#x2F;代码行数</li>
+</ul>
+</li>
+</ul>
+<h1 id="20-软件交付"><a href="#20-软件交付" class="headerlink" title="20-软件交付"></a>20-软件交付</h1><h2 id="用户文档、系统文档"><a href="#用户文档、系统文档" class="headerlink" title="用户文档、系统文档"></a>用户文档、系统文档</h2><p>（1）用户文档：这里的文档支持是指<strong>为用户</strong>编写参考指南或者操作教程，常见的如用户使用手册、联机帮助文档等，统称为用户文档。</p>
+<ul>
+<li>文档内容的组织应当支持其使用模式，常见的是<strong>指导模式</strong>和<strong>参考模式</strong>两种。指导模式根据用户的<strong>任务组织程序规程</strong>，相关的软件任务组织在相同的章节或主题。指导模式要先描述简单的、共性的任务，然后再以其为基础组织更加复杂的任务描述。<br>参考模式按照方便<strong>随机访问独立信息单元</strong>的方式组织内容。例如，按字母顺序排列软件的命令或错误消息列表。如果文档需要同时包含两种模式，就需要将其清楚地区分成不同的章节或主题，或者在同一个章节或主题内区分为不同的格式。</li>
+</ul>
+<p>（2）系统文档：更注重<strong>系统维护</strong>方面的内容，例如系统性能调整、访问权限控制、常见故障解决等等。因此，系统管理员文档需要详细介绍软硬件的配置方式、网络连接方式、安全验证与访问授权方法、备份与容灾方法、部件替换方法等等。</p>
+<h1 id="21-软件维护与演化"><a href="#21-软件维护与演化" class="headerlink" title="21-软件维护与演化"></a>21-软件维护与演化</h1><h2 id="软件维护的重要性"><a href="#软件维护的重要性" class="headerlink" title="软件维护的重要性"></a>软件维护的重要性</h2><p>（1）由于会出现<strong>新的需求</strong>，如不维护软件将减小甚至失去服务用户的作用。<br>（2）随着软件产品的生命周期越来越长，在软件生存期内<strong>外界环境发生变化</strong>的可能性越来越大，因此，软件经常需要修改以适应外界环境的改变<br>（3）软件产品或多或少会有<strong>缺陷</strong>，当缺陷暴露出来时，必须予以及时的解决</p>
+<h2 id="开发可维护软件的方法"><a href="#开发可维护软件的方法" class="headerlink" title="开发可维护软件的方法"></a>开发可维护软件的方法</h2><ol>
+<li><p>考虑软件的<strong>可变性</strong>：</p>
+<ol>
+<li>分析需求易变性</li>
+<li>为变更进行设计</li>
+</ol>
+</li>
+<li><p>为<strong>降低维护困难</strong>而开发</p>
+<ol>
+<li>编写详细的<strong>技术文档</strong>并保持及时更新</li>
+<li>保证代码可读性</li>
+<li>维护需求跟踪链</li>
+<li>维护回归测试基线</li>
+</ol>
+</li>
+</ol>
+<h2 id="演化式生命周期模型"><a href="#演化式生命周期模型" class="headerlink" title="演化式生命周期模型"></a>演化式生命周期模型</h2><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032332103.png" alt="image-20220616112642238" style="zoom: 33%;" />
+
+<p>初步开发—演化—服务—逐步淘汰—停止</p>
+<p>前三个阶段：开发团队在负责，会进行维护</p>
+<p>后两个阶段：开发团队不维护</p>
+<ul>
+<li>优点：<ul>
+<li>使用了迭代式开发、并行开发高效、渐进交互降低风险</li>
+</ul>
+</li>
+<li>缺点：<ul>
+<li>无法在早期确定范围</li>
+</ul>
+</li>
+</ul>
+<h3 id="初步开发"><a href="#初步开发" class="headerlink" title="初步开发"></a>初步开发</h3><p>初始开发阶段按照传统的软件开发方式完成<strong>第一个版本</strong>的软件产品开发。第一版的软件产品可以实现全部需求，也可以（通常是）只包含部分需求——对用户来说非常重要和紧急的最高优先级需求。</p>
+<h3 id="演化"><a href="#演化" class="headerlink" title="演化"></a>演化</h3><p>可能会有预先安排的需求增量，也可能完全是对变更请求的处理，它们的共同点都是保持软件产品的持续增值，让软件产品能够满足用户越来越多的需要，实现更大的业务价值。<br>总的来说，该阶段可能的演化增量有：预先安排的<strong>需求增量</strong>；因为问题变化或者环境变化产生的<strong>变更请求</strong>；修正已有的<strong>缺陷</strong>；随着用户与开发者之间越来越相互熟悉对方领域而<strong>新增加的需求</strong>。<br>演化阶段的软件产品要具备两个特征：(1) 软件产品具有较好的<strong>可演化性</strong>。一个软件产品在演化过程中复杂性会逐渐增高，可演化性会逐渐降低直至无法继续演化。演化阶段的软件产品虽然其可演化性低于初始开发阶段的软件产品，但是还没有到达无法演化的地步，还具有较好的可演化性。(2) 软件产品能够帮助用户实现较好的<strong>业务价值</strong>。只有这样，用户才会继续需要该产品，并持续提供资金支持。<br>如果在演化过程中，一个软件产品开始不满足第（2）条特征，那么该产品就会提前进入<strong>停止阶段</strong>。如果软件产品满足第（2）条的同时不满足第（1）条特征，那么该产品就会进入<strong>服务阶段</strong>。如果开发团队因为竞争产品的出现或者其他市场考虑，也可以让同时满足上面两条特征的软件产品提前进入服务阶段。</p>
+<h3 id="服务"><a href="#服务" class="headerlink" title="服务"></a>服务</h3><p>服务阶段的软件产品不再持续的增加自己的价值，而只是周期性的<strong>修正已有的缺陷</strong>。<br>服务阶段的产品还仍然被用户使用，因为它仍然能够给用户提供一定的业务价值，所以开发团队仍然需要修正已有缺陷或者进行一些低程度的需求增量，保证用户的正常使用。</p>
+<h3 id="逐步淘汰"><a href="#逐步淘汰" class="headerlink" title="逐步淘汰"></a>逐步淘汰</h3><p>在逐步淘汰阶段，开发者已经不再提供软件产品的任何服务，也即不再继续维护该软件。虽然在开发者看来软件的生命周期已经结束，但是用户可能会继续使用处于该阶段的软件产品，因为它们仍然能够帮助用户实现一定的业务价值。只是用户在使用软件时必须要<strong>容忍软件产品中的各种不便</strong>，包括仍然存在的缺陷和对新环境的不适应。对于该阶段的产品，开发者需要考虑该产品是否可以作为有用的遗留资源用于新软件的开发，用户需要考虑如何更换新的软件产品并转移已有的业务数据。</p>
+<h3 id="停止"><a href="#停止" class="headerlink" title="停止"></a>停止</h3><p>一个软件正式退出使用状态之后就进行停止状态。开发者不再进行维护，<strong>用户也不再使用</strong>。</p>
+<h2 id="逆向工程、再工程"><a href="#逆向工程、再工程" class="headerlink" title="逆向工程、再工程"></a>逆向工程、再工程</h2><ol>
+<li>逆向工程：<strong>分析目标系统，标识系统的部件及其交互关系，并且使用其它形式或者更高层的抽象创建系统表现的过程。</strong>逆向工程的基本原理是<strong>抽取软件系统的需求与设计而隐藏实现细节</strong>，然后在需求与设计的层次上描述软件系统，以建立对系统更加准确和清晰的理解。</li>
+</ol>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032332130.png" alt="image-20220616113808142">2. 再工程：检查和改造一个目标系统，用新的模式式及其实现复原该目标系统。目的是对遗留软件系统进行<strong>分析和重新开发</strong>，以便进一步利用新技术来改善系统或促进现存系统的再利用。<br>主要包括：改进人们对软件的理解；改进软件自身，通常是提高其可维护性、可复用性和可演化性。<br>常见具体活动有：重新文档化；重组系统的结构；将系统转换为更新的编程语言；修改数据的结构组织。</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032332154.png" alt="image-20220616113937360"></p>
+<h1 id="22-软件开发过程模型"><a href="#22-软件开发过程模型" class="headerlink" title="22-软件开发过程模型"></a>22-软件开发过程模型</h1><h2 id="软件生命周期"><a href="#软件生命周期" class="headerlink" title="软件生命周期"></a>软件生命周期</h2><p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032332178.png" alt="image-20220616114910826"></p>
+<p>6个阶段，书本也正是按照这个编写的。</p>
+<ul>
+<li>软件开发生命周期模型</li>
+</ul>
+<h2 id="软件过程模型"><a href="#软件过程模型" class="headerlink" title="软件过程模型"></a>软件过程模型</h2><h3 id="构建-修复模型"><a href="#构建-修复模型" class="headerlink" title="构建-修复模型"></a>构建-修复模型</h3><ol>
+<li>最早也是最自然产生的软件开发模型，对软件开发活动没有任何规划和组织，是完全依靠开发人员个人能力进行软件开发的方式。</li>
+<li>缺点：<ol>
+<li>在这种模型中，没有对开发工作进行规范和组织，所以随着软件系统的<strong>复杂度提升</strong>，开发活动会超出个人的直接控制能力，构建-修复模型就会导致开发活动无法有效进行而失败；</li>
+<li>没有分析<strong>需求的真实性</strong>，给软件开发带来很大的风险；</li>
+<li>没有考虑<strong>软件结构的质量</strong>，使得软件结构在不断的修改中变得质量越来越糟，直至无法修改；</li>
+<li>没有考虑测试和程序的<strong>可维护性</strong>，也没有任何文档，软件的维护十分困难。</li>
+</ol>
+</li>
+<li>适用：软件规模很小的软件</li>
+</ol>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032332216.png" alt="image-20220616145317155"></p>
+<h3 id="瀑布模型"><a href="#瀑布模型" class="headerlink" title="瀑布模型"></a>瀑布模型</h3><ol>
+<li>瀑布模型是按照<strong>软件生命周期模型</strong>将软件开发活动组织为需求开发、软件设计、软件实现、软件测试、软件交付和软件维护等活动，并且规定了它们自上而下、相互邻接的次序。</li>
+<li>优点：为软件开发活动定义了清晰的阶段划分(包括输入&#x2F;输出、主要工作及其关注点)，这让开发者能够以关注点分离的方式更好地进行那些复杂度超越个人能力的软件项目的开发活动。</li>
+<li>缺点：<ol>
+<li>对<strong>文档的过高的期望</strong>具有局限性</li>
+<li>对开发活动的<strong>线性顺序</strong>假设具有局限性</li>
+<li><strong>客户、用户的参与</strong>具有局限性：成功的项目开发需要客户、用户从始至终的参与，而不仅仅是一个阶段。（只把需求限制为一个阶段）</li>
+<li><strong>里程碑粒度</strong>具有局限性：里程碑粒度过粗，基本丧失了”早发现缺陷早修复”这一思想（一个阶段后才验证）</li>
+</ol>
+</li>
+<li>适用：<ol>
+<li>适用于比较成熟，没有技术难点的软件</li>
+</ol>
+</li>
+</ol>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032332124.png" alt="image-20220616145526117"></p>
+<h3 id="增量迭代模型"><a href="#增量迭代模型" class="headerlink" title="增量迭代模型"></a>增量迭代模型</h3><ol>
+<li>增量迭代模型是在项目开始时，通过系统需求开发和核心体系结构设计活动完成项目对前景和范围的界定，然后再将后续开发活动组织为多个迭代、并行的瀑布式开发模型。<strong>需求驱动</strong>（开始时就知道需求）。</li>
+<li>少量的不确定性和影响不大的需求变更通过迭代的方式加以解决 </li>
+<li>优点:<ol>
+<li>迭代式开发更加符合软件开发的实践情况，具有更好的适用性；</li>
+<li><strong>并行</strong>开发可以帮助缩短软件产品的开发时间；</li>
+<li>渐进交付可以加强用户反馈，降低开发风险。</li>
+</ol>
+</li>
+<li>缺点：<ol>
+<li>由于各个构件是逐渐并入已有的软件体系结构中的，所以加入构件必须不破坏已构造好的系统部分，这需要软件具备<strong>开放式的体系结构</strong>。</li>
+<li>增量交付模型需要一个<strong>完备、清晰的项目前景和范围</strong>以进行并发开发规划，但是在一些不稳定的领域，不确定性太多或者需求变化非常频繁，很难在项目开始就确定前景和范围。（每个增量可以单独完成交付）</li>
+</ol>
+</li>
+<li>适用范围：适用于大规模软件系统的开发</li>
+</ol>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032332148.png" alt="image-20220616145819797"></p>
+<h3 id="演化模型"><a href="#演化模型" class="headerlink" title="演化模型"></a>演化模型</h3><ol>
+<li>演化模型将软件开发活动组织为多个迭代、并行的瀑布式开发活动。演化模型能够更好地应对需求变更，更适用于需求变更比较频繁或不确定性较多的领域</li>
+<li>优点：<ol>
+<li><strong>使用了迭代式开发，具有更好的适用性</strong>，尤其是其演化式迭代安排能够适用于那些需求变更比较频繁或不确定性较多的软件系统的开发；</li>
+<li>并行开发可以帮助<strong>缩短</strong>软件产品的开发时间；</li>
+<li>渐进交付可以<strong>加强用户反馈</strong>，降低开发风险。</li>
+</ol>
+</li>
+<li>缺点：<ol>
+<li>无法在项目早期阶段建立项目范围，所以项目的整体计划、进度调度、尤其是商务协商事宜无法准确把握；</li>
+<li>后续迭代的开发活动是在前导迭代基础上进行修改和扩展的，这容易让后续迭代忽略设分析与设计工作，蜕变为构建-修复方式。</li>
+</ol>
+</li>
+<li>适用与不稳定领域的大规模软件系统开发</li>
+</ol>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032332174.png" alt="image-20220616150300620"></p>
+<h4 id="比较"><a href="#比较" class="headerlink" title="比较"></a>比较</h4><p>相同点：都是迭代、<strong>并行</strong>开发和<strong>渐进交付</strong>，都适合大规模开发</p>
+<p>不同点：</p>
+<ul>
+<li>增量迭代模型需要在项目<strong>早期确定目标和范围</strong>，有较完整的系统需求开发和核心体系结构设计；</li>
+<li>而演化模型<strong>模糊了维护与新开发的界限</strong>，能够更好地应对需求变更，更适用于需求变更比较频繁或不确定性较多的领域。</li>
+</ul>
+<h3 id="原型模型"><a href="#原型模型" class="headerlink" title="原型模型"></a>原型模型</h3><ol>
+<li>原型模型将需求开发活动展开为抛弃式原型开发活动和演化式原型开发活动。原型模型在整体安排迭代的情况下，强调”<strong>抛弃式原型</strong>“的演化模型。抛弃式原型解决对未来知识的局限性产生的<strong>不确定性</strong>，将未来置于现在进行推敲。</li>
+<li>抛弃式原型（作出一些功能，但不一定有用）<ol>
+<li>它通过<strong>模拟”未来”的产品</strong>，将”未来”的知识置于”现在” 进行推敲，解决不确定性。</li>
+<li>存在的原因是”不确定的”，这一类原型在后续的开发过程中会被抛弃</li>
+</ol>
+</li>
+<li>演化式原型（确定被使用的软件部分）<ol>
+<li>在迭代中构建，是系统的核心，并不断扩充，最终成为真正的软件产品。</li>
+<li>它将作为<strong>真正产品的一部分</strong>，所以必须有很好的质量。在迭代式开发中，通常会在第一个迭代中构建一个核心的体系结构演化式原型，并且在后续迭代中不断扩充，成为真正的软件产品。</li>
+</ol>
+</li>
+<li>优点：<ol>
+<li>对原型方法的使用加强了与客户、用户的交流，可以让最终产品取得更好的满意度；</li>
+<li>适用于非常新颖的领域，这些领域因为新颖所以有着大量的不确定性。</li>
+</ol>
+</li>
+<li>缺点<ol>
+<li>原型方法能够解决风险，但是自身也能带来新的风险，例如原型开发的成本较高，可能会耗尽项目的费用和时间；</li>
+<li>实践中，很多项目负责人不舍得抛弃”抛弃式原型”，使得质量较差的代码进入了最终产品，导致了最终产品的低质量。</li>
+</ol>
+</li>
+<li>适用性：适用于具有大量不确定的新颖领域进行开发活动组织。</li>
+</ol>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032332201.png" alt="image-20220616151016940"></p>
+<h3 id="螺旋模型"><a href="#螺旋模型" class="headerlink" title="螺旋模型"></a>螺旋模型</h3><ol>
+<li>螺旋模型是<strong>风险驱动</strong>的，完全按照风险解决的方式组织软件开发活动。<ol>
+<li>确定目标、解决方案和约束</li>
+<li>评估方案，发现风险</li>
+<li>寻找风险解决方法</li>
+<li>落实风险解决方案</li>
+<li>计划下一个迭代</li>
+</ol>
+</li>
+<li>自内向外，螺旋模型有<strong>4次风险解决迭代</strong>，分别解决了几个高风险的阶段的问题<ol>
+<li>解决系统需求开发中的风险，尤其是产品概念设计风险，得到一个确定的产品前景和范围。</li>
+<li>解决软件需求开发中的风险，得到清晰的软件需求</li>
+<li>解决软件体系结构设计中的技术风险，构建高质量的核心体系结构原型。</li>
+<li>解决详细设计和实现中的关键技术风险，建立一个可实现的高质量软件结构。</li>
+</ol>
+</li>
+<li>优点：可以降低风险，减少项目因风险造成的损失</li>
+<li>缺点：<ol>
+<li>风险解决<strong>需要使用原型手段</strong>，也就会存在原型自身带来的风险，这一点与原型模型相同；</li>
+<li>模型<strong>过于复杂</strong>，不利于管理者依据其组织软件开发活动</li>
+</ol>
+</li>
+<li>适用于高风险的大规模软件系统开发</li>
+</ol>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032332228.png" alt="image-20220616151628321"></p>
+<table>
+<thead>
+<tr>
+<th>模型</th>
+<th>适用</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>构建-修复</td>
+<td>规模很小，质量、维护要求不高</td>
+</tr>
+<tr>
+<td>瀑布</td>
+<td>很少使用，需求、技术非常成熟可靠，复杂度适中，<strong>文档驱动</strong></td>
+</tr>
+<tr>
+<td>增量迭代</td>
+<td>成熟稳定的领域（需求、设计明确），大规模，<strong>需求驱动</strong></td>
+</tr>
+<tr>
+<td>演化</td>
+<td>不稳定领域（需求、设计开始时不知道），大规模</td>
+</tr>
+<tr>
+<td>原型</td>
+<td>不确定的新颖领域</td>
+</tr>
+<tr>
+<td>螺旋</td>
+<td>高风险，大规模，<strong>风险驱动</strong></td>
+</tr>
+</tbody></table>
+<h2 id="软件工程知识体系的知识域"><a href="#软件工程知识体系的知识域" class="headerlink" title="软件工程知识体系的知识域"></a><strong>软件工程知识体系的知识域</strong></h2><p>软件需求，软件设计，软件构造，软件测试，软件维护，软件配置管理，软件工程管理，软件工程过程，软件工程工具和方法，软件质量</p>
+
+        </div>
+
+        
+            <section class="post-copyright">
+                
+                
+                
+                
+
+            </section>
+        
+        <section class="post-tags">
+            <div>
+                <span>标签:</span>
+                <span class="tag">
+                    
+                    
+                        <a href="/tags/%E8%AF%BE%E7%A8%8B/"># 课程</a>
+                    
+                        
+                </span>
+            </div>
+            <div>
+                <a href="javascript:window.history.back();">返回</a>
+                <span>· </span>
+                <a href="/">主页</a>
+            </div>
+        </section>
+        <section class="post-nav">
+            
+                <a class="prev" rel="prev" href="/2022/07/01/2022%E6%98%A5%E5%AD%A3%E3%80%8AC++%E3%80%8B%E8%AF%BE%E7%A8%8B%E7%AC%94%E8%AE%B0/">2022春季《C++》课程笔记</a>
+            
+            
+            <a class="next" rel="next" href="/2021/02/01/2021%E7%A7%8B%E5%AD%A3%E3%80%8A%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E3%80%8B%E8%AF%BE%E7%A8%8B%E7%AC%94%E8%AE%B0/">2021秋季《计算机组成》课程笔记</a>
+            
+        </section>
+
+
+    </article>
+</div>
+
+
+    <div id="gitalk-container"></div>
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.css">
+<script src="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.min.js"></script>
+<script src="//cdn.bootcss.com/blueimp-md5/2.10.0/js/md5.js"></script>
+<div id="gitalk-container"></div>
+<script type="text/javascript">
+      var gitalk = new Gitalk({
+        clientID: '',
+        clientSecret: '',
+        repo: 'blog_comment',
+        owner: 'lyxx2535',
+        admin: 'lyxx2535',
+        id: md5(location.pathname),
+        labels: 'Gitalk'.split(',').filter(l => l),
+        perPage: 10,
+        pagerDirection: 'last',
+        createIssueManually: true,
+        distractionFreeMode: false
+      })
+      gitalk.render('gitalk-container')
+</script>
+
+            </div>
+            <footer id="footer" class="footer">
+    <div class="copyright">
+        <span>© Annie | Powered by <a href="https://hexo.io" target="_blank">Hexo</a> & <a href="https://github.com/Siricee/hexo-theme-Chic" target="_blank">Chic</a> | 2020 - 2025
+            <br>
+            <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+<span class="site-uv">
+    Total visitors:
+    <i class="busuanzi-value" id="busuanzi_value_site_uv"></i>
+</span>&nbsp;|&nbsp;
+
+
+<span class="site-pv">
+    Total views:
+    <i class="busuanzi-value" id="busuanzi_value_site_pv"></i>
+</span>
+
+          </span>
+    </div>
+</footer>
+
+    </div>
+</body>
+
+</html>

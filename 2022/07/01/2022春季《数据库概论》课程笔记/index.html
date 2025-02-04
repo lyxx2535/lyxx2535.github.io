@@ -1,0 +1,2669 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <meta name="author" content="Annie">
+
+
+
+
+
+<title>2022春季《数据库概论》课程笔记 | Annie&#39;s Blog</title>
+
+
+
+    <link rel="icon" href="/favicon.ico">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+    <script src="/js/tocbot.min.js"></script>
+    
+
+
+
+    
+    
+        
+    
+
+
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+<body>
+    <script>
+        // this function is used to check current theme before page loaded.
+        (() => {
+            const currentTheme = window.localStorage && window.localStorage.getItem('theme') || '';
+            const isDark = currentTheme === 'dark';
+            const pagebody = document.getElementsByTagName('body')[0]
+            if (isDark) {
+                pagebody.classList.add('dark-theme');
+                // mobile
+                document.getElementById("mobile-toggle-theme").innerText = "· Dark"
+            } else {
+                pagebody.classList.remove('dark-theme');
+                // mobile
+                document.getElementById("mobile-toggle-theme").innerText = "· Light"
+            }
+        })();
+    </script>
+
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">Annie&#39;s Blog</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default">
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+        </div>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">Annie&#39;s Blog</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; 菜单</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+            <div class="main">
+                <div class="container">
+    
+    
+        <div class="post-toc">
+    <div class="tocbot-list">
+    </div>
+    <div class="tocbot-list-menu">
+        <a class="tocbot-toc-expand" onclick="expand_toc()">全部展开</a>
+        <a onclick="go_top()">回到顶部</a>
+        <a onclick="go_bottom()">前往底部</a>
+    </div>
+</div>
+
+<script>
+    var tocbot_timer;
+    var DEPTH_MAX = 6; // 为 6 时展开所有
+    var tocbot_default_config = {
+        tocSelector: '.tocbot-list',
+        contentSelector: '.post-content',
+        headingSelector: 'h1, h2, h3, h4, h5',
+        orderedList: false,
+        scrollSmooth: true,
+        onClick: extend_click,
+    };
+
+    function extend_click() {
+        clearTimeout(tocbot_timer);
+        tocbot_timer = setTimeout(function() {
+            tocbot.refresh(obj_merge(tocbot_default_config, {
+                hasInnerContainers: true
+            }));
+        }, 420); // 这个值是由 tocbot 源码里定义的 scrollSmoothDuration 得来的
+    }
+
+    document.ready(function() {
+        tocbot.init(obj_merge(tocbot_default_config, {
+            collapseDepth: 1
+        }));
+    });
+
+    function expand_toc() {
+        var b = document.querySelector('.tocbot-toc-expand');
+        var expanded = b.getAttribute('data-expanded');
+        expanded ? b.removeAttribute('data-expanded') : b.setAttribute('data-expanded', true);
+        tocbot.refresh(obj_merge(tocbot_default_config, {
+            collapseDepth: expanded ? 1 : DEPTH_MAX
+        }));
+        b.innerText = expanded ? 'Expand all' : 'Collapse all';
+    }
+
+    function go_top() {
+        window.scrollTo(0, 0);
+    }
+
+    function go_bottom() {
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+
+    function obj_merge(target, source) {
+        for (var item in source) {
+            if (source.hasOwnProperty(item)) {
+                target[item] = source[item];
+            }
+        }
+        return target;
+    }
+</script>
+    
+
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">2022春季《数据库概论》课程笔记</h1>
+            
+                <div class="post-meta">
+                    
+                        作者: <a itemprop="author" rel="author" href="/">Annie</a>
+                    
+
+                    
+                        <span class="post-time">
+                        日期: <a href="#">July 1, 2022&nbsp;&nbsp;10:51:05</a>
+                        </span>
+                    
+                    
+                        <span class="post-category">
+                        分类:
+                            
+                                <a href="/categories/%E6%9C%AC%E7%A7%91%E7%94%9F%E8%AF%BE%E7%A8%8B/">本科生课程</a>
+                            
+                        </span>
+                    
+                </div>
+            
+        </header>
+
+        <div class="post-content">
+            <h1 id="第一章-绪论"><a href="#第一章-绪论" class="headerlink" title="第一章 绪论"></a>第一章 绪论</h1><h2 id="01-管理数据的方式"><a href="#01-管理数据的方式" class="headerlink" title="01 管理数据的方式"></a>01 管理数据的方式</h2><ol>
+<li>数据管理有几种方式？特点是什么？</li>
+</ol>
+<ul>
+<li>人工管理</li>
+<li>文件系统</li>
+<li>数据库系统</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>人工管理</th>
+<th>文件系统</th>
+<th>数据库系统</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>数据的管理者</td>
+<td>用户（程序员），数据不保存</td>
+<td>文件系统，数据可长期<strong>保存</strong></td>
+<td>数据库管理系统，数据可长期保存</td>
+</tr>
+<tr>
+<td>数据面向的对象</td>
+<td>某一应用程序</td>
+<td>某一应用</td>
+<td>某一应用</td>
+</tr>
+<tr>
+<td>数据的共享程度</td>
+<td>无共享、冗余度极大</td>
+<td>共享性差、冗余度大</td>
+<td>可为各种用户共享，冗余度较小</td>
+</tr>
+<tr>
+<td>数据的独立性</td>
+<td>不独立，完全依赖于程序</td>
+<td>独立性差</td>
+<td>独立性较高</td>
+</tr>
+<tr>
+<td>数据的结构化</td>
+<td><strong>无结构</strong></td>
+<td>记录内有结构，整体无结构</td>
+<td>数据结构化（<strong>整体结构化</strong>，数据用数据模型描述）</td>
+</tr>
+<tr>
+<td>数据控制能力</td>
+<td>应用程序自己控制</td>
+<td>应用程序自己控制</td>
+<td>数据库管理系统控制</td>
+</tr>
+</tbody></table>
+<ol start="2">
+<li>为什么要使用数据库？</li>
+</ol>
+<ul>
+<li>可以负责<strong>定义和管理</strong>这些数据<ul>
+<li>确保<strong>数据结构和存储机制</strong>对于所有应用来说都是可以接受的</li>
+<li>确保数据安全性，完整性</li>
+<li>解决数据的<strong>并发</strong></li>
+<li>在动态条件下解决上述问题</li>
+</ul>
+</li>
+</ul>
+<h2 id="02-数据库相关概念"><a href="#02-数据库相关概念" class="headerlink" title="02 数据库相关概念"></a>02 数据库相关概念</h2><ol>
+<li>基础概念：</li>
+</ol>
+<ul>
+<li>数据：描述事物的符号记录。数据的含义称为数据的语义，数据与其<strong>语义</strong>是不可分的。</li>
+<li>数据库：数据库（Database）是<strong>长期</strong>储存在计算机内、有<strong>组织</strong>的、可<strong>共享</strong>的<strong>大量数据</strong>的集合。<ul>
+<li>特点（5）：<ul>
+<li>数据按一定的数据模型<strong>组织、描述和储存</strong></li>
+<li>可为各种用户<strong>共享</strong></li>
+<li>冗余度较小</li>
+<li>数据独立性较高</li>
+<li>易扩展</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>数据库管理系统：位于<strong>用户与操作系统之间</strong>的一层<strong>数据管理软件</strong>（基础软件）<ul>
+<li>功能（6）：选择题选<ul>
+<li>数据定义功能（DDL）</li>
+<li>数据组织、存储和管理</li>
+<li>数据操纵功能（DML）</li>
+<li>数据库的事务管理和运行管理</li>
+<li>数据库的建立和维护功能</li>
+<li>其它功能，如不同数据库之间的互访和互操作功能。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>数据库系统（见07）：由<ul>
+<li>数据库（数据结构、数据项，值和形）</li>
+<li>数据库管理系统（及其应用开发工具，如DMLDDL编译器）</li>
+<li>应用程序</li>
+<li>数据库管理员（DBA） 四方面构成。</li>
+</ul>
+</li>
+</ul>
+<img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032328782.png" alt="image-20220611093035513" style="zoom:67%;" />
+
+<ol start="2">
+<li>数据库的主要功能？数据库用来做什么？数据库有什么特点？（4）<ol>
+<li>数据结构化<ul>
+<li><strong>整体结构化</strong>（与文件系统的本质区别）</li>
+<li>数据用数据模型描述</li>
+</ul>
+</li>
+<li>数据的共享性高，冗余度低且易扩充</li>
+<li>数据独立性高：物理存储+逻辑结构</li>
+<li>数据由数据管理系统统一<strong>管理和控制</strong><ul>
+<li>安全性保护</li>
+<li>完整性检查</li>
+<li>并发控制</li>
+<li>数据库恢复</li>
+</ul>
+</li>
+</ol>
+</li>
+</ol>
+<h2 id="03-模型"><a href="#03-模型" class="headerlink" title="03 模型"></a>03 模型</h2><ol>
+<li>数据模型的定义是什么？有什么组成要素？<ol>
+<li>数据模型是对现实世界数据特征的抽象，用以<strong>抽象、表示和处理</strong>现实世界中的数据和信息</li>
+<li>有3个组成要素：<ul>
+<li>数据结构（刻画模型性质的最基本方面）</li>
+<li>数据操作（查询+更新）</li>
+<li>数据的完整性约束条件</li>
+</ul>
+</li>
+</ol>
+</li>
+<li>概念&#x2F;逻辑&#x2F;物理模型分别完成的任务？功能？<ul>
+<li><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032328996.png" alt="image-20220611094736005" style="zoom:50%;" /></li>
+</ul>
+</li>
+</ol>
+<ul>
+<li>概念模型：<ul>
+<li>按<strong>用户</strong>的观点来对数据和信息建模<ul>
+<li>把现实世界中的客观对象变成<strong>E-R模型</strong></li>
+</ul>
+</li>
+</ul>
+</li>
+<li>逻辑模型：<ul>
+<li>按<strong>计算机系统</strong>的观点对数据建模，用于DBMS实现<ul>
+<li>决定如何抽象数据结构和组织存放数据（比如用NoSQL，表）</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>物理模型：<ul>
+<li>对数据最底层的抽象，描述数据在<strong>系统内部</strong>的表示方式和存取方法。<ul>
+<li>和环境、部署、数据库系统挂钩（如MySQL）</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="04-概念模型"><a href="#04-概念模型" class="headerlink" title="04 概念模型"></a>04 概念模型</h2><ol>
+<li><p>概念模型的定义和组成？</p>
+<ul>
+<li><p>按<strong>用户的观点</strong>来对数据和信息建模，用于数据库设计（E-R图表示）</p>
+</li>
+<li><p>实体</p>
+</li>
+<li><p>属性：注意<strong>实体和联系</strong>都可以有属性！</p>
+</li>
+<li><p>码：唯一标识实体</p>
+</li>
+<li><p>实体型：<strong>实体名+属性名</strong>，如学生（学号，姓名，性别）是一个实体型</p>
+</li>
+<li><p>实体集：同一类型实体的集合</p>
+</li>
+<li><p>联系</p>
+<ul>
+<li>组成实体的各属性之间的联系（内部）<img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032328893.png" alt="image-20220611095738803" style="zoom: 50%;" /></li>
+<li>不同实体集之间的联系（之间）<ul>
+<li>一对一</li>
+<li>一对多</li>
+<li>多对多<img src="C:\Users\84368\AppData\Roaming\Typora\typora-user-images\image-20220611095653367.png" alt="image-20220611095653367"></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>如何画E-R模型？</p>
+<ul>
+<li><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032328814.png" alt="image-20220611100933154" style="zoom: 80%;" />
+</li>
+<li><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032328790.png" alt="image-20220611100905008" style="zoom: 50%;" /></li>
+<li><p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032328139.png" alt="image-20220611101135445" style="zoom: 33%;" />码下方有下划线</p>
+</li>
+<li><img src="C:\Users\84368\AppData\Roaming\Typora\typora-user-images\image-20220611101209532.png" alt="image-20220611101209532" style="zoom: 33%;" /></li>
+</ul>
+</li>
+</ol>
+<h2 id="05-逻辑模型"><a href="#05-逻辑模型" class="headerlink" title="05 逻辑模型"></a>05 逻辑模型</h2><ol>
+<li><p>逻辑模型：按<strong>计算机系统的观点</strong>对数据建模，用于<strong>DBMS</strong>实现</p>
+<ul>
+<li><p>格式化模型（现在没人用了）</p>
+<ul>
+<li>层次模型（Hierarchical Model）</li>
+<li>网状模型（Network Model）</li>
+</ul>
+</li>
+<li><p><strong>关系模型</strong>（Relational Model)）重点</p>
+<ul>
+<li>关系：一个表</li>
+<li>元组：一行</li>
+<li>属性：一列</li>
+<li>码：某个属性组，可以<strong>唯一确定</strong>一个元组</li>
+<li><strong>域：属性的取值范围</strong></li>
+<li><strong>分量：元组中的一个属性值</strong></li>
+<li>关系模式：对关系的描述，一般表示为关系名（属性1，属性2…）</li>
+</ul>
+<p>不允许<strong>表中有表</strong>！</p>
+<p>数据操作是<strong>集合操作</strong>，对象和结果都是关系（顺序无关，无相同元素）</p>
+</li>
+<li><p>对象模型</p>
+<ul>
+<li>面向对象数据模型（Object Oriented Data Model）</li>
+<li>对象关系数据模型（Object Relational Data Model）</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>关系的完整性约束条件是什么？（见09）</p>
+<ol>
+<li>实体完整性</li>
+<li>参照完整性</li>
+<li>用户定义的完整性</li>
+</ol>
+</li>
+<li><p>关系模型的优缺点？</p>
+</li>
+</ol>
+<p><img src="/../../../../84368/AppData/Roaming/Typora/typora-user-images/image-20220620125943739.png" alt="image-20220620125943739"></p>
+<h2 id="06-三级模式结构和二级映像"><a href="#06-三级模式结构和二级映像" class="headerlink" title="06 三级模式结构和二级映像"></a>06 三级模式结构和二级映像</h2><ol>
+<li>模式和实例是什么？</li>
+</ol>
+<ul>
+<li><p>模式：数据库<strong>逻辑结构和特征</strong>的描述，是<strong>型</strong>的描述，不涉及具体值（Class）相对稳定</p>
+</li>
+<li><p>实例：模式的一个具体值（Object）相对变动 </p>
+<p><img src="/../../../../84368/AppData/Roaming/Typora/typora-user-images/image-20220611103732122.png" alt="image-20220611103732122"></p>
+</li>
+</ul>
+<ol start="2">
+<li><strong>三级模式结构</strong>和<strong>二级映像</strong>是什么？</li>
+</ol>
+<p><img src="/../../../../84368/AppData/Roaming/Typora/typora-user-images/image-20220611103933535.png" alt="image-20220611103933535"></p>
+<p>三级模式结构：</p>
+<ul>
+<li><p>模式（<strong>数据库的中心与关键</strong>）：也称逻辑模式，数据库中全体数据的逻辑结构和特征的描述，所有用户的<strong>公共数据视图</strong></p>
+<ul>
+<li>一个数据库<strong>只有一个模式</strong></li>
+<li>由模式DDL定义</li>
+</ul>
+</li>
+<li><p>外模式：也称子模式或用户模式，数据库用户（包括应用程序员和最终用户）使用的局部数据的逻辑结构和特征的描述，数据库用户的<strong>数据视图</strong>，是<strong>与某一应用有关</strong>的数据的逻辑表示</p>
+<ul>
+<li>是模式的<strong>子集</strong>（部分镜像）</li>
+<li>一个数据库可以有<strong>多个</strong>外模式，一个应用程序只能使用<strong>一个</strong>外模式</li>
+<li>由模式DDL定义</li>
+</ul>
+</li>
+<li><p>内模式：也称存储模式，是数据<strong>物理结构和存储方式</strong>的描述，是数据在数据库内部的表示方式</p>
+<ul>
+<li>一个数据库只有<strong>一个</strong>内模式</li>
+</ul>
+</li>
+</ul>
+<p>二级映像：保证外模式的稳定性，<strong>数据与程序</strong>之间的独立性</p>
+<ul>
+<li>外模式&#x2F;模式映像<ul>
+<li>模式：描述的是数据的<strong>全局逻辑结构</strong>，外模式：描述的是数据的<strong>局部逻辑结构</strong> </li>
+<li>保证数据的<strong>逻辑独立性</strong>：模式改变时外模式可以不变，而应用程序依据外模式编写，所以保证了数据与程序的逻辑独立性</li>
+</ul>
+</li>
+<li>模式&#x2F;内模式映像<ul>
+<li>定义了数据<strong>全局逻辑结构与存储结构</strong>之间的对应关系</li>
+<li>模式／内模式映像是<strong>唯一</strong>的，通常包含在<strong>模式</strong>描述中</li>
+<li>保证数据的<strong>物理独立性</strong>：底层存储结构变，模式可不变，应用程序随之也不变</li>
+</ul>
+</li>
+</ul>
+<ol start="3">
+<li>为什么要有三级模式和二级映像？<ol>
+<li>实现数据与程序之间的<strong>独立性</strong>，使得数据的定义和描述可以从应用程序中分离出去 <ul>
+<li>可以讲讲逻辑独立性和物理独立性</li>
+</ul>
+</li>
+<li>让<strong>数据的存取</strong>由数据库管理系统管理，简化应用程序的维护和修改</li>
+</ol>
+</li>
+</ol>
+<h2 id="07-数据库系统的组成"><a href="#07-数据库系统的组成" class="headerlink" title="07 数据库系统的组成"></a>07 数据库系统的组成</h2><ol>
+<li>数据库系统的组成是什么？</li>
+</ol>
+<ul>
+<li>数据库：软硬件性能越高越好 </li>
+<li>数据库管理系统（及其应用开发工具）</li>
+<li>应用程序</li>
+<li>数据库管理员：管理两类共享资源——数据库和数据库管理系统软件</li>
+</ul>
+<p><img src="/../../../../84368/AppData/Roaming/Typora/typora-user-images/image-20220611105606626.png" alt="image-20220611105606626"></p>
+<h1 id="第二章-关系数据库"><a href="#第二章-关系数据库" class="headerlink" title="第二章 关系数据库"></a>第二章 关系数据库</h1><h2 id="08-关系与关系模式"><a href="#08-关系与关系模式" class="headerlink" title="08 关系与关系模式"></a>08 关系与关系模式</h2><blockquote>
+<p>关系：属性名+表名+<strong>数据</strong>（就是一个表）</p>
+<p>关系模式：属性名+表名</p>
+<p><strong>同一关系模式下可能存在多种关系</strong>，比如随着时间的推移，表中数据发生了变化，所以关系模式是稳定的，关系是不稳定的。</p>
+</blockquote>
+<ol>
+<li><p>单一的数据结构——关系</p>
+<p>从集合论角度给出的关系数据结构的形式化定义</p>
+</li>
+</ol>
+<ul>
+<li>域：一组具有<strong>相同数据类型</strong>的值的集合。不同取值个数叫基数。</li>
+<li>笛卡尔积：n元组的集合。笛卡尔积的基数是域的基数的连乘。<ul>
+<li><img src="/../../../../84368/AppData/Roaming/Typora/typora-user-images/image-20220611110150395.png" alt="image-20220611110150395"></li>
+</ul>
+</li>
+<li>关系：笛卡尔积的子集。<ul>
+<li>元组：表中的一行</li>
+<li>属性：一列</li>
+<li>候选码：某一属性组的值能<strong>唯一标识</strong>一个元组，里面的属性为主属性</li>
+<li>主属性：候选码中的诸属性</li>
+<li>主码：多个候选码选一个</li>
+<li>3个种类：基本关系（实际存在的二维表）、查询表和视图表</li>
+</ul>
+</li>
+</ul>
+<ol start="2">
+<li><strong>关系模式（静态）</strong>：对关系（动态）的描述。</li>
+</ol>
+<ul>
+<li><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032328045.png" alt="image-20220611111140870"></li>
+</ul>
+<h2 id="09-关系的三类完整性约束"><a href="#09-关系的三类完整性约束" class="headerlink" title="09 关系的三类完整性约束"></a>09 <strong>关系的三类完整性约束</strong></h2><ol>
+<li><strong>关系的三类完整性约束</strong>分别是什么？</li>
+</ol>
+<ul>
+<li><p>实体完整性（必须满足）：每个元组应该是可区分的，是<strong>唯一</strong>的</p>
+<ul>
+<li>主属性不能为空值null</li>
+</ul>
+</li>
+<li><p>参照完整性（必须满足）：实体及实体间的联系</p>
+<ul>
+<li><p>属性（参照关系）-&gt;外码（被参照关系，目标关系）</p>
+</li>
+<li><p>“学生”的专业号要么是空值，要么是“专业”中的某个主码值</p>
+<ul>
+<li><strong>如果参照关系不是主码</strong>，要么是null，要么是被参照关系的主码</li>
+</ul>
+</li>
+<li><p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032328583.png" alt="image-20220611205817185"></p>
+<ul>
+<li>如果参照关系是主码，则不能为null，如下</li>
+</ul>
+<img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032328590.png" alt="image-20220611111453873" style="zoom: 33%;" />
+
+<img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032328594.png" alt="image-20220611111546635" style="zoom: 33%;" /></li>
+</ul>
+</li>
+<li><p>用户定义的完整性</p>
+<ul>
+<li><p>某一<strong>具体</strong>关系数据库的约束条件</p>
+<blockquote>
+<p>例：课程（课程号，课程名，学分）</p>
+<p>“课程名”属性必须取唯一值</p>
+<p>非主属性“课程名”也不能取空值</p>
+<p>“学分”属性只能取值{1，2，3，4}</p>
+</blockquote>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="10-关系运算"><a href="#10-关系运算" class="headerlink" title="10 关系运算"></a>10 关系运算</h2><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032328588.png" alt="image-20220611112123281" style="zoom:33%;" />
+
+<ol>
+<li>对关系的运算来表达查询，要学会怎么运算</li>
+</ol>
+<ul>
+<li><p>传统的集合运算（二目）</p>
+<ul>
+<li>并</li>
+<li>差</li>
+<li>交</li>
+<li>笛卡尔积</li>
+</ul>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032328609.png" alt="image-20220611112526138"></p>
+</li>
+<li><p>专门的关系运算</p>
+<ul>
+<li>选择：σF(<em>R</em>) &#x3D; {<em>t</em>|<em>t</em>Î<em>R</em>∧<em>F</em>(<em>t</em>)&#x3D; ‘真’}<img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032328997.png" alt="image-20220611112634800" style="zoom: 25%;" /></li>
+<li>投影：π<em>A</em>(<em>R</em>) &#x3D; { <em>t</em>[<em>A</em>] | <em>t</em> Î<em>R</em> }<img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032328315.png" alt="image-20220611112747240" style="zoom:25%;" /></li>
+<li>连接（考自然连接）<ul>
+<li><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032328353.png" alt="image-20220611113616841"></li>
+<li>为了不丢失信息，保留悬浮元组，有时会用外连接（需要了解）<img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032328388.png" alt="image-20220611113628003"></li>
+</ul>
+</li>
+<li>除运算<ul>
+<li>用S的属性进行筛选，但去除S的属性</li>
+<li><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032328432.png" alt="image-20220611114141703"></li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p>选择对行，投影对列，连接和除运算操作多个关系</p>
+</blockquote>
+</li>
+</ul>
+<ol start="2">
+<li>综合例题</li>
+</ol>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032328514.png" alt="image-20220611114518881"></p>
+<ul>
+<li>查询至少选修1号课程和3号课程的学生号码 。<img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032328610.png" alt="image-20220611114811861" style="zoom:25%;" /></li>
+<li>查询选修了2号课程的学生的学号。  <ul>
+<li>πSno(σCno&#x3D;‘2’(SC))&#x3D;{201215121,201215122}</li>
+</ul>
+</li>
+<li>查询至少选修了一门其直接先行课为5号课程的学生姓名。<ul>
+<li><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032328677.png" alt="image-20220611115431108"></li>
+</ul>
+</li>
+<li>查询选修了全部课程的学生号码和姓名。<ul>
+<li><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032328694.png" alt="image-20220611115725834"></li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p>连接时可以先投影一下去除多余的列，当然不写也行</p>
+</blockquote>
+<h1 id="第三章-关系数据库标准语言SQL"><a href="#第三章-关系数据库标准语言SQL" class="headerlink" title="第三章 关系数据库标准语言SQL"></a>第三章 关系数据库标准语言SQL</h1><h2 id="11-SQL概述"><a href="#11-SQL概述" class="headerlink" title="11 SQL概述"></a>11 SQL概述</h2><ol>
+<li><p>SQL（Structured Query Language）结构化查询语言，是关系数据库的标准语言</p>
+</li>
+<li><p>SQL的特点（考选择）</p>
+<ul>
+<li>综合统一<ul>
+<li>集数据定义语言（DDL），数据操纵语言（DML），数据控制语言（DCL）功能于一体。</li>
+</ul>
+</li>
+<li>高度非过程化<ul>
+<li>非关系数据模型的DML“面向过程”—-做什么+怎么做</li>
+<li>SQL“非过程化”—-做什么 存取路径的选择以及SQL的操作过程由<strong>系统自动</strong>完成</li>
+</ul>
+</li>
+<li>面向<strong>集合</strong>的操作方式<ul>
+<li>非关系数据模型面向记录</li>
+<li>SQL操作元组集合</li>
+</ul>
+</li>
+<li>以同一种语法结构提供多种使用方式<ul>
+<li>可独立可嵌入（例如C，C++，Java）</li>
+</ul>
+</li>
+<li>语言简洁，易学易用<ul>
+<li>数据定义：CREATE，DROP，ALTER</li>
+<li>数据查询：SELECT</li>
+<li>数据操作：INSERT，UPDATE，DELETE</li>
+<li>数据控制：GRANT，REVOKE</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>SQL与关系数据库三级模式</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032328713.png" alt="image-20220611143527786"></p>
+<ul>
+<li>模式：基本表</li>
+<li>内模式：存储文件</li>
+<li>外模式：视图</li>
+</ul>
+</li>
+</ol>
+<h2 id="12-数据定义"><a href="#12-数据定义" class="headerlink" title="12 数据定义"></a>12 数据定义</h2><p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032328736.png" alt="image-20220620131533006"></p>
+<ul>
+<li>4种数据定义功能</li>
+</ul>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032328758.png" alt="image-20220322133814172"></p>
+<h4 id="模式"><a href="#模式" class="headerlink" title="模式"></a>模式</h4><ul>
+<li>定义<ul>
+<li>CREATE SCHEMA &lt;模式名&gt; AUTHORIZATION &lt;用户名&gt; [&lt;表定义子句&gt;| &lt;视图定义子句&gt;|&lt;授权定义子句&gt;]</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p>[例3.3]为用户ZHANG创建了一个模式TEST，并且在其中定义一个表TAB1</p>
+<p>CREATE SCHEMA <strong>TEST</strong> AUTHORIZATION <strong>ZHANG</strong></p>
+<p>​    CREATE TABLE <strong>TAB1</strong>  ( COL1 SMALLINT, </p>
+<p>​                      COL2 INT,</p>
+<p>​                         COL3 CHAR(20),</p>
+<p>​                         COL4 NUMERIC(10,3),</p>
+<p>​                         COL5 DECIMAL(5,2));</p>
+</blockquote>
+<ul>
+<li><p>删除</p>
+<ul>
+<li><p>DROP SCHEMA &lt;模式名&gt; &lt;CASCADE|RESTRICT&gt;</p>
+</li>
+<li><p>CASCADE（<strong>级联</strong>）</p>
+<p>删除模式的同时把该模式中所有的数据库对象全部删除</p>
+<p>RESTRICT（限制）</p>
+<p>如果该模式中定义了下属的数据库对象（如表、视图等），则拒绝该删除语句的执行。</p>
+</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p>[例3.4] DROP SCHEMA ZHANG CASCADE;</p>
+</blockquote>
+<h4 id="基本表"><a href="#基本表" class="headerlink" title="基本表"></a>基本表</h4><ul>
+<li><p>定义</p>
+<ul>
+<li><p>CREATE TABLE &lt;表名&gt;</p>
+<p>(&lt;列名&gt; &lt;数据类型&gt;[ &lt;列级完整性约束条件&gt; ]</p>
+<p>[,&lt;列名&gt; &lt;数据类型&gt;[ &lt;列级完整性约束条件&gt;] ] </p>
+<p>…</p>
+<p> [,&lt;表级完整性约束条件&gt; ] );</p>
+</li>
+<li><p>列级完整性：PRIMARY KEY UNIQUE NOT NULL等</p>
+</li>
+<li><p>表级完整性：</p>
+<ul>
+<li>PRIMARY KEY(Sno,Cno) </li>
+<li>FOREIGN KEY (Cno) REFERENCES Course(Cno)等</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>修改</p>
+<ul>
+<li><p>ALTER TABLE &lt;表名&gt;</p>
+<p>[ ADD[COLUMN] &lt;新列名&gt; &lt;数据类型&gt; [ 完整性约束 ] ]</p>
+<p>[ ADD &lt;表级完整性约束&gt;]</p>
+<p>[ DROP [ COLUMN ] &lt;列名&gt; [CASCADE| RESTRICT] ]</p>
+<p>[ DROP CONSTRAINT&lt;完整性约束名&gt;[ RESTRICT | CASCADE ] ]</p>
+<p>[ ALTER COLUMN &lt;列名&gt;&lt;数据类型&gt; ] ;</p>
+</li>
+</ul>
+</li>
+<li><p>删除</p>
+<ul>
+<li><p>DROP TABLE &lt;表名&gt;［RESTRICT| CASCADE］;</p>
+</li>
+<li><p>RESTRICT：删除表是有限制的。</p>
+<p>如果存在依赖该表的对象，则此表不能被删除</p>
+<p>CASCADE：删除该表没有限制。</p>
+<p>在删除基本表的同时，相关的依赖对象一起删除</p>
+</li>
+</ul>
+</li>
+</ul>
+<p><strong>索引（x）</strong></p>
+<ul>
+<li><p>执行查询时自动选择合适的索引作为存取路径</p>
+</li>
+<li><p>建立</p>
+<ul>
+<li><p>CREATE [UNIQUE] [CLUSTER] INDEX &lt;索引名&gt; </p>
+<p>ON &lt;表名&gt;(&lt;列名&gt;[&lt;次序&gt;][,&lt;列名&gt;[&lt;次序&gt;] ]…);</p>
+<blockquote>
+<p>CREATE UNIQUE INDEX SCno ON SC(Sno ASC,Cno DESC);</p>
+</blockquote>
+</li>
+</ul>
+</li>
+<li><p>修改（名字）</p>
+<ul>
+<li>ALTER INDEX &lt;旧索引名&gt; RENAME TO &lt;新索引名&gt;</li>
+</ul>
+</li>
+<li><p>删除</p>
+<ul>
+<li>DROP INDEX &lt;索引名&gt;;（MySQL中需要指明表名 +ON &lt;表名&gt;）</li>
+</ul>
+</li>
+</ul>
+<h2 id="13-单表查询"><a href="#13-单表查询" class="headerlink" title="13 单表查询"></a>13 单表查询</h2><p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032328781.png" alt="image-20220611145528157"></p>
+<ul>
+<li>可以是Sno(列)&#x2F;*(与原表顺序相同)&#x2F;2014-Sage(表达式)&#x2F;别名(改变列标题)</li>
+<li>DISTINCT：去掉重复行</li>
+<li>WHERE表示指定条件（作用于表）<ul>
+<li>BETWEEN AND(范围) IN(集合)LIKE(匹配字符)IS NULL(空值)AND OR(多重条件查询)</li>
+<li>ORDER BY(升降排列)</li>
+</ul>
+</li>
+<li>聚集函数 COUNT SUM AVG MAX MIN(需要指定DISTINCT或ALL)<ul>
+<li><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032328818.png" alt="image-20220611145605872"></li>
+<li>WHERE不能用聚集函数作为条件表达式，聚集函数只用于SELECT和GROUP BY中的HAVING子句。</li>
+</ul>
+</li>
+<li>GROUP BY按照某一列或多列的值分组（作用于组）<ul>
+<li>如所有相同Cno值的元组为一组，然后<strong>对每一组作用聚集函数</strong>进行计算。若分组后再进行筛选，则用HAVING指定条件。</li>
+<li><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032328149.png" alt="image-20220611145803455"></li>
+<li><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032328282.png" alt="image-20220611145942460"><ul>
+<li>HAVING写在GROUP BY后面</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="14-连接查询"><a href="#14-连接查询" class="headerlink" title="14 连接查询"></a>14 连接查询</h2><p>嵌套循环法、排序合并法、索引连接</p>
+<ul>
+<li>等值连接与非等值连接<ul>
+<li><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032328299.png" alt="image-20220611150529452"></li>
+</ul>
+</li>
+<li>自身连接：取两个别名，可选择间接先修课等<ul>
+<li><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032328317.png" alt="image-20220611150541166"></li>
+</ul>
+</li>
+<li>多表连接：两个以上的表进行连接<img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032328338.png" alt="image-20220611150702328"></li>
+</ul>
+<h2 id="15-嵌套查询"><a href="#15-嵌套查询" class="headerlink" title="15 嵌套查询"></a>15 嵌套查询</h2><p>基本可以转换为自身连接，多表连接</p>
+<ul>
+<li><p>注意子查询不能有ORDER BY，ORDER BY只能对最终查询结果排序</p>
+<ul>
+<li>不相关子查询：由里向外逐层处理。</li>
+<li>相关子查询：从外到里，重复每一层</li>
+</ul>
+</li>
+<li><p>谓词IN  </p>
+</li>
+<li><p>谓词EXISTS </p>
+<ul>
+<li>只返回逻辑真假，若为真，就把SELECT的东西送入结果表</li>
+<li>不可被其他子查询等价替换，但可替换IN&#x2F;比较&#x2F;ANY ALL等子查询</li>
+<li><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032328373.png" alt="image-20220611151631764"></li>
+</ul>
+</li>
+<li><p>谓词ANY（SOME）或ALL</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032328751.png" alt="image-20220611151229051"></p>
+<p>和多值进行了比较（聚集函数效率更高）</p>
+</li>
+</ul>
+<h2 id="16-集合查询"><a href="#16-集合查询" class="headerlink" title="16 集合查询"></a>16 集合查询</h2><ul>
+<li><p>UNION并 INTERSECT交 EXCEPT差</p>
+<ul>
+<li>UNION返回若干个查询结果，但重复时不显示 </li>
+<li>UNION ALL显示重复的</li>
+</ul>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032328771.png" alt="image-20220611151756219"></p>
+</li>
+</ul>
+<h2 id="18-插入元组"><a href="#18-插入元组" class="headerlink" title="18 插入元组"></a>18 插入元组</h2><p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032328795.png" alt="image-20220611152051433"></p>
+<h2 id="19-修改元组"><a href="#19-修改元组" class="headerlink" title="19 修改元组"></a>19 修改元组</h2><p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032328816.png" alt="image-20220611152148278"></p>
+<h2 id="20-删除元组"><a href="#20-删除元组" class="headerlink" title="20 删除元组"></a>20 删除元组</h2><p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032328848.png" alt="image-20220611152230381"></p>
+<h2 id="21-空值"><a href="#21-空值" class="headerlink" title="21 空值"></a>21 空值</h2><ul>
+<li>产生：没赋值&#x2F;修改&#x2F;外连接&#x2F;关系运算</li>
+<li>判断：IS NULL&#x2F;<strong>IS NOT NULL</strong> （注意IS一直有）</li>
+<li>约束条件：NOT NULL&#x2F;UNIQUE&#x2F;PRIMARY KEY不能取空值</li>
+<li>逻辑运算：TRUE FALSE UNKNOWN</li>
+</ul>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032328873.png" alt="image-20220611152443736"></p>
+<p>注意任何情况下都要考虑空值的情况，比如<strong>缺考的学生不属于Grade&lt;60</strong>，要专门写Grade IS NULL</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032328255.png" alt="image-20220620132224014"></p>
+<h2 id="22-视图"><a href="#22-视图" class="headerlink" title="22 视图"></a>22 视图</h2><ol>
+<li>基本概念</li>
+</ol>
+<ul>
+<li><p>建立</p>
+<ul>
+<li><p>CREATE VIEW </p>
+<p>​       &lt;视图名&gt; [(&lt;列名&gt; [,&lt;列名&gt;]…)]</p>
+<p>​    AS &lt;子查询&gt;</p>
+<p>​    [WITH CHECK OPTION];</p>
+</li>
+<li><p>WITH CHECK OPTION：增删改时要保证更新、插入或删除的行满足视图定义的<strong>谓词条件</strong>（即<strong>子查询</strong>中的条件表达式）</p>
+<ul>
+<li>如create  view  IS_student<br>as<br>select  sno,sname,sage<br>from  student<br>where  sdept&#x3D;’IS’<br>with  check  option;<br>加上了with  check  option后，插入修改删除时DBAS会自动加上Sdept &#x3D; ‘IS’操作。</li>
+</ul>
+</li>
+<li><p><strong>行列子集视图</strong>：从单个表导出某些列，保留主码</p>
+</li>
+<li><p>实现增删改视图–&gt;增删改基本表：不要写聚集函数</p>
+</li>
+<li><p>指定属性列比较好，否则基表结构改变后视图不能正常工作</p>
+</li>
+</ul>
+</li>
+<li><p>删除</p>
+<ul>
+<li>DROP VIEW &lt;视图名&gt;[CASCADE];<ul>
+<li>删除基表后视图无法使用，但定义需要显式删除。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>查询：视图消解</p>
+<ul>
+<li><p>对行列子集视图可以正确转换，遇到非行列子集视图则不一定。如该写HAVING时写了WHERE。</p>
+</li>
+<li><p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032328273.png" alt="image-20220611152840000"></p>
+</li>
+</ul>
+</li>
+<li><p>更新</p>
+<ul>
+<li><strong>肯定是同步的</strong>，毕竟是虚表。</li>
+<li>一般来说，行列子集视图可更新，其他（如AVG等）不能更新。（可看书本规定）</li>
+</ul>
+</li>
+</ul>
+<ol start="2">
+<li><p>视图有哪些作用？使用视图的理由？</p>
+<ul>
+<li>简化用户的操作</li>
+<li>使用户能以多种角度看待同一数据</li>
+<li>视图对重构数据库提供了一定程度的逻辑独立性<ul>
+<li>外模式不变，即使模式变更也不影响</li>
+</ul>
+</li>
+<li>对机密数据提供安全保护<ul>
+<li>每个用户看到的视图不一样</li>
+</ul>
+</li>
+<li>可以更清晰的表达查询</li>
+</ul>
+</li>
+<li><p>哪些事情视图做不到？</p>
+<ul>
+<li><p><strong>行列子集视图</strong>是可更新的，但部分特殊视图不允许更新。</p>
+</li>
+<li><p>视图消解法有局限性，有时不能正确地查询。</p>
+</li>
+</ul>
+</li>
+</ol>
+<h1 id="第四章-数据库安全性"><a href="#第四章-数据库安全性" class="headerlink" title="第四章 数据库安全性"></a>第四章 数据库安全性</h1><h2 id="23-安全性概述"><a href="#23-安全性概述" class="headerlink" title="23 安全性概述"></a>23 安全性概述</h2><p>数据库的安全性是指保护数据库以防止不合法使用所造成的<strong>数据泄露、更改或破坏</strong> 。</p>
+<p>系统安全保护措施是否有效是数据库系统主要的性能指标之一。</p>
+<p>不安全因素：</p>
+<ul>
+<li>非授权用户对数据库的恶意存取和破坏</li>
+<li>数据库中重要或敏感的数据被泄露</li>
+<li>安全环境的脆弱性</li>
+</ul>
+<p>安全标准简介：</p>
+<ul>
+<li>TCSEC&#x2F;TDI<ul>
+<li>C1：自主存取控制（DAC）</li>
+<li>B1：强制存取控制（MAC）以及审计 </li>
+<li>B1以上为安全产品</li>
+</ul>
+</li>
+<li>CC<ul>
+<li>安全功能要求和安全保证要求</li>
+</ul>
+</li>
+</ul>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032328296.png" alt="image-20220327104325069"></p>
+<h2 id="24-存取控制"><a href="#24-存取控制" class="headerlink" title="24 存取控制"></a>24 存取控制</h2><ol>
+<li>存取机制的组成是什么？</li>
+</ol>
+<ul>
+<li>定义用户权限<ul>
+<li>定义后存储在数据字典中</li>
+</ul>
+</li>
+<li>合法权限检查<ul>
+<li>查找数据字典，看请求是否超出权限</li>
+</ul>
+</li>
+<li><strong>用户权限定义</strong>和<strong>合法权检查机制</strong>一起组成了DBMS的存取控制子系统</li>
+</ul>
+<h4 id="自主存取控制（DAC）"><a href="#自主存取控制（DAC）" class="headerlink" title="自主存取控制（DAC）"></a>自主存取控制（DAC）</h4><ul>
+<li><p>用户权限组成</p>
+<ul>
+<li>数据库对象</li>
+<li>操作类型</li>
+</ul>
+</li>
+<li><p>定义存取权限称为授权</p>
+</li>
+</ul>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032328317.png" alt="image-20220327105311025"></p>
+<p>给列UPDATE要遵循主码和其他约束</p>
+<p>给列INSERT要给主码的INSERT权限</p>
+<ul>
+<li><p>GRANT</p>
+<ul>
+<li><p>GRANT &lt;权限&gt;[,&lt;权限&gt;]… </p>
+<p>​    ON &lt;对象类型&gt; &lt;对象名&gt;[,&lt;对象类型&gt; &lt;对象名&gt;]…</p>
+<p>​    TO &lt;用户&gt;[,&lt;用户&gt;]…</p>
+<p>​    <strong>[WITH GRANT OPTION</strong>];&#x2F;&#x2F;若指定：可以再授予</p>
+</li>
+<li><p>不允许循环授权！</p>
+</li>
+</ul>
+</li>
+<li><p>REVOKE</p>
+<ul>
+<li><p>REVOKE &lt;权限&gt;[,&lt;权限&gt;]… </p>
+<p>ON &lt;对象类型&gt; &lt;对象名&gt;[,&lt;对象类型&gt;&lt;对象名&gt;]…</p>
+<p>FROM &lt;用户&gt;[,&lt;用户&gt;]…[CASCADE | RESTRICT];</p>
+</li>
+</ul>
+</li>
+<li><p>CREATE USER创建用户时实现对象的授权</p>
+<ul>
+<li><p>CREATE USER &lt;username&gt; </p>
+<p>[WITH][DBA|RESOURCE|CONNECT];</p>
+</li>
+</ul>
+</li>
+</ul>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032328337.png" alt="image-20220327112758222"></p>
+<ul>
+<li><p>角色：被命名的权限，权限的集合</p>
+<ul>
+<li><p>创建：CREATE ROLE &lt;角色名&gt; </p>
+</li>
+<li><p>给角色授权：GRANT &lt;权限&gt;[,&lt;权限&gt;]… </p>
+<p>ON &lt;对象类型&gt;对象名 </p>
+<p>TO &lt;角色&gt;[,&lt;角色&gt;]…</p>
+</li>
+<li><p>角色授予另一个：GRANT &lt;角色1&gt;[,&lt;角色2&gt;]…</p>
+<p>TO &lt;角色3&gt;[,&lt;用户1&gt;]… </p>
+<p>[WITH ADMIN OPTION]</p>
+</li>
+<li><p>收回权限：REVOKE &lt;权限&gt;[,&lt;权限&gt;]…</p>
+<p>ON &lt;对象类型&gt; &lt;对象名&gt;</p>
+<p>FROM &lt;角色&gt;[,&lt;角色&gt;]…</p>
+</li>
+</ul>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032328363.png" alt="image-20220611154246059"></p>
+</li>
+<li><p>缺点：存在“<strong>无意泄露</strong>” ，可以传递副本</p>
+<ul>
+<li>虽然甲要求乙不能传播，但乙可以将数据备份，获得副本进行传播</li>
+</ul>
+</li>
+</ul>
+<h4 id="强制存取控制（MAC）"><a href="#强制存取控制（MAC）" class="headerlink" title="强制存取控制（MAC）"></a>强制存取控制（MAC）</h4><ul>
+<li>主体：用户或进程<ul>
+<li>敏感度标记：许可证级别</li>
+</ul>
+</li>
+<li>客体：文件、基本表、索引、视图等<ul>
+<li>敏感度标记：密级</li>
+</ul>
+</li>
+<li>每个实例指派一个敏感度标记，通过对比主客体标记，确定主体是否能存取客体<ul>
+<li>主体的许可证级别&gt;&#x3D;客体的密级—–&gt;可读取</li>
+<li>主体的许可证级别&lt;&#x3D;客体的密级—–&gt;可写：用户可以对写入的对象赋予<strong>高于自己的密级</strong>，否则密级可以高流向低，造成数据泄露</li>
+</ul>
+</li>
+<li>标记和数据不可分</li>
+<li>要首先实现自主存取控制，进行DAC+MAC两次安全检查</li>
+</ul>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032328772.png" alt="image-20220611160612108"></p>
+<h2 id="25-视图机制、审计、数据加密"><a href="#25-视图机制、审计、数据加密" class="headerlink" title="25 视图机制、审计、数据加密"></a>25 视图机制、审计、数据加密</h2><ol>
+<li>视图机制：通过视图进行<strong>数据隐藏</strong></li>
+</ol>
+<ul>
+<li>把要保密的数据对无权存取这些数据的用户隐藏起来-&gt;对数据已经进行了一次选择</li>
+</ul>
+<ol start="2">
+<li>审计：启用一个专用的<strong>审计日志</strong>（Audit Log）将用户对数据库的所有操作记录在上面</li>
+</ol>
+<ul>
+<li><p>可选性：因为费时间和空间</p>
+</li>
+<li><p>AUDIT语句：设置审计功能 </p>
+</li>
+<li><p>NOAUDIT语句：取消审计功能</p>
+</li>
+<li><p>用户级审计、系统级审计</p>
+</li>
+<li><p>存在数据字典中，提供事后检查的安全机制</p>
+</li>
+</ul>
+<ol start="3">
+<li>数据加密</li>
+</ol>
+<ul>
+<li>明文-&gt;密文</li>
+<li>存储加密<ul>
+<li>透明</li>
+<li>非透明</li>
+</ul>
+</li>
+<li>传输加密<ul>
+<li>链路加密<ul>
+<li>报头和报文<strong>均</strong>加密</li>
+</ul>
+</li>
+<li>端到端加密<ul>
+<li>发送端加密，接收端解密 </li>
+<li>只加密<strong>报文</strong>不加密报头</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ol start="4">
+<li>其他安全性保护</li>
+</ol>
+<ul>
+<li>推理控制：避免用已知数据推得更高级数据</li>
+<li>隐蔽信道：间接信息传递</li>
+<li>数据隐私：已掌握的信息可以推理出不愿他人知道或他人不便知道的数据，如确定身高、性别、住址后只有一个人</li>
+</ul>
+<h1 id="第五章-数据库完整性"><a href="#第五章-数据库完整性" class="headerlink" title="第五章 数据库完整性"></a>第五章 数据库完整性</h1><h2 id="26-数据库完整性"><a href="#26-数据库完整性" class="headerlink" title="26 数据库完整性"></a>26 数据库完整性</h2><ol>
+<li>数据库完整性的组成是什么？</li>
+</ol>
+<ul>
+<li>数据的正确性：符合语义，<strong>实际</strong>情况</li>
+<li>数据的相容性：符合<strong>逻辑</strong>，防止恶意非法操作</li>
+</ul>
+<ol start="2">
+<li>数据库管理系统怎么实现完整性？</li>
+</ol>
+<ul>
+<li>提供定义完整性约束条件的机制</li>
+<li>提供完整性<strong>检查</strong>的方法</li>
+<li>违约处理</li>
+</ul>
+<h2 id="27-实体完整性"><a href="#27-实体完整性" class="headerlink" title="27 实体完整性"></a>27 实体完整性</h2><ol>
+<li>保证实体完整性的方式：定义主码</li>
+</ol>
+<ul>
+<li>是否唯一<ul>
+<li>全表扫描防止主码重复（效率低）</li>
+<li><strong>B+树</strong>索引（高效）<img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032328790.png" alt="image-20220611204433231" style="zoom: 33%;" /></li>
+</ul>
+</li>
+<li>是否为空，只要有一个为空就拒绝插入或修改</li>
+</ul>
+<h2 id="28-参照完整性"><a href="#28-参照完整性" class="headerlink" title="28 参照完整性"></a>28 参照完整性</h2><ol>
+<li>保证参照完整性的方式：定义外码及外码参照的表的<strong>主码</strong></li>
+<li>破坏参照完整性时：<ul>
+<li>拒绝：默认策略，不允许该操作的执行</li>
+<li>级联：删除或修改参照表中的所有造成不一致的元组</li>
+<li>设置为空值<ul>
+<li>外码可以为空，但只能在参照表里为空！否则被参照表不满足实体完整性！</li>
+</ul>
+</li>
+<li>显式说明参照完整性的违约处理示例：<img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032328808.png" alt="image-20220611205403179" style="zoom:50%;" /></li>
+</ul>
+</li>
+</ol>
+<h2 id="29-用户定义完整性"><a href="#29-用户定义完整性" class="headerlink" title="29 用户定义完整性"></a>29 用户定义完整性</h2><ol>
+<li>保证参照完整性的方式：</li>
+</ol>
+<ul>
+<li>属性上约束（针对<strong>一个</strong>属性）<ul>
+<li>列值非空NOT NULL</li>
+<li>列值唯一UNIQUE</li>
+<li>检查列值是否满足一个条件表达式CHECK<ul>
+<li><code>Ssex CHAR(2) CHECK (Ssex IN (‘男’,’女’))</code></li>
+<li><code>Grade SMALLINT CHECK (Grade&gt;=0 AND Grade&lt;=100)</code></li>
+</ul>
+</li>
+</ul>
+</li>
+<li>元组上约束（针对<strong>多个</strong>属性）<ul>
+<li>可以设置<strong>不同属性</strong>之间取值的相互约束状态<ul>
+<li><code>CHECK (Ssex=&#39;女&#39; OR Sname NOT LIKE &#39;Ms.%&#39;)</code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ol start="2">
+<li>完整性约束命名子句</li>
+</ol>
+<ul>
+<li>CONSTRAINT &lt;完整性约束条件名&gt;&lt;完整性约束条件&gt;</li>
+<li>使用ALTER TABLE语句修改表中的完整性限制</li>
+</ul>
+<h2 id="31-触发器"><a href="#31-触发器" class="headerlink" title="31 触发器"></a>31 触发器</h2><ul>
+<li><p>创建：CREATE TRIGGER &lt;触发器名&gt; </p>
+<p>​    {BEFORE | AFTER} &lt;触发事件&gt; ON &lt;表名&gt;</p>
+<p>​    REFERENCING NEW|OLD ROW AS&lt;变量&gt;</p>
+<p>​    FOR EACH {ROW | STATEMENT}</p>
+<p>​    [WHEN &lt;触发条件&gt;]&lt;触发动作体&gt;</p>
+<ul>
+<li>行级每行都执行，语句级只执行一次</li>
+<li>NEW OLD表示操作前后的新值和旧值</li>
+</ul>
+</li>
+<li><p>触发：事件激活，自动执行 “谁先创建谁先执行”</p>
+</li>
+<li><p>删除：DROP TRIGGER &lt;触发器名&gt; ON &lt;表名&gt;;</p>
+</li>
+</ul>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032328828.png" alt="image-20220611211445952"></p>
+<h1 id="第六章-范式"><a href="#第六章-范式" class="headerlink" title="第六章 范式"></a>第六章 范式</h1><h2 id="32-关系模式与范式"><a href="#32-关系模式与范式" class="headerlink" title="32 关系模式与范式"></a>32 关系模式与范式</h2><ol>
+<li><p>关系模式是什么？</p>
+<ul>
+<li>可以把关系模式看作一个三元组：<em>R</em>&lt;*U*,*F*&gt;</li>
+<li>U是一组属性，F是属性组U上的一组<strong>数据依赖</strong>，如学号可以唯一确定学生的名字。</li>
+<li>当且仅当U上的一个关系r满足F时，称为r是关系模式<em>R</em>&lt;*U*,*F*&gt;的一个关系</li>
+</ul>
+</li>
+<li><p>什么是第一范式？</p>
+<ul>
+<li>每个分量必须是<strong>不可分开</strong>的数据项。</li>
+<li>满足这个条件的关系模式属于1NF。</li>
+</ul>
+</li>
+<li><p>数据依赖是什么？</p>
+<ul>
+<li>关系内部<strong>属性与属性之间</strong>的一种约束关系</li>
+<li>函数依赖：Sname&#x3D;<em>f</em>(Sno)，Sdept&#x3D;<em>f</em>(Sno) 学号可以决定学生的姓名和院系，记作Sno→Sname，Sno→Sdept<ul>
+<li><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032328869.png" alt="image-20220612155517939"></li>
+</ul>
+</li>
+<li>多值依赖</li>
+</ul>
+</li>
+<li><p>1NF存在的问题？（4）</p>
+<ul>
+<li><p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032328901.png" alt="image-20220612155720777"></p>
+</li>
+<li><p>解决：用<strong>规范化理论</strong>改造关系模式，拆成三个。</p>
+</li>
+</ul>
+</li>
+</ol>
+<h2 id="33-函数依赖与码"><a href="#33-函数依赖与码" class="headerlink" title="33 函数依赖与码"></a>33 函数依赖与码</h2><ol>
+<li><p>什么是函数依赖？</p>
+<ol>
+<li>能否通过X确定Y</li>
+<li>语义范畴的概念</li>
+</ol>
+</li>
+<li><p>函数依赖的几组对比分类？</p>
+<ol>
+<li><p>平凡VS非平凡：平凡永远成立，所以关注非平凡。</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032328338.png" alt="image-20220612160224945"></p>
+</li>
+<li><p>完全VS部分：完全是少一个属性都推不出来，部分是有多的属性，如Cno可以去掉</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032328360.png" alt="image-20220612160522418"></p>
+</li>
+<li><p>传递：通过两个非平凡的X-&gt;Y,Y-&gt;Z,得到X-传递-&gt;Z<img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032328385.png" alt="image-20220612161403852"></p>
+<blockquote>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032328404.png" alt="image-20220612161318682"></p>
+</blockquote>
+</li>
+</ol>
+</li>
+<li><p>什么是码？在多个候选码里面选一个当主码。</p>
+<ul>
+<li><p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032328429.png" alt="image-20220612161749855"></p>
+</li>
+<li><p>主属性：包含在任意一个<strong>候选码</strong>中的属性</p>
+</li>
+<li><p>全码：整个属性组都是码</p>
+</li>
+<li><p>外码：不是这个模式的码，是另一个模式的码</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032328446.png" alt="image-20220612162006456"></p>
+<ul>
+<li>可表示关系间的联系</li>
+</ul>
+</li>
+</ul>
+</li>
+</ol>
+<h2 id="34-1NF-2NF-3NF"><a href="#34-1NF-2NF-3NF" class="headerlink" title="34 1NF,2NF,3NF"></a>34 1NF,2NF,3NF</h2><ol>
+<li><p>1NF：R的所有属性都是<strong>不可分</strong>的基本数据项</p>
+</li>
+<li><p>2NF：R∈1NF，并且每一个<strong>非主属性</strong>都完全函数依赖于任何一个候选码</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032328870.png" alt="image-20220612162849207"></p>
+</li>
+<li><p>3NF：每个非主属性既不<strong>传递依赖</strong>于码，也不部分依赖于码。（SL有从传递依赖）</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032328890.png" alt="image-20220612163125818"></p>
+</li>
+</ol>
+<table>
+<thead>
+<tr>
+<th>1NF</th>
+<th>2NF</th>
+<th>3NF</th>
+<th>BCNF</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>数据冗余</td>
+<td>变少了</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>插入异常</td>
+<td>有改进</td>
+<td></td>
+<td>消除</td>
+</tr>
+<tr>
+<td>删除异常</td>
+<td>大问题</td>
+<td>有改进</td>
+<td>消除</td>
+</tr>
+<tr>
+<td>更新异常</td>
+<td>有改进</td>
+<td></td>
+<td></td>
+</tr>
+</tbody></table>
+<h2 id="35-BCNF"><a href="#35-BCNF" class="headerlink" title="35 BCNF"></a>35 BCNF</h2><ol>
+<li><p>定义：若X-&gt;Y是非平凡依赖，X必含有码。即每个决定属性集都包含候选码。</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032328913.png" alt="image-20220612164200793"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032328941.png" alt="image-20220612164334704"></p>
+</li>
+</ol>
+<h1 id="第七章-数据库设计"><a href="#第七章-数据库设计" class="headerlink" title="第七章 数据库设计"></a>第七章 数据库设计</h1><h2 id="37-数据库设计概述"><a href="#37-数据库设计概述" class="headerlink" title="37 数据库设计概述"></a>37 数据库设计概述</h2><ol>
+<li>什么是数据库设计？<ol>
+<li>对于一个给定的应用环境，构造（设计）优化的数据库逻辑模式和物理结构，并据此建立数据库及其应用系统，使之能够有效地存储和管理数据，满足各种用户的应用需求，包括<strong>信息管理要求</strong>和<strong>数据操作要求</strong>。</li>
+<li><strong>目标</strong>：为用户和各种应用系统提供一个<strong>信息基础设施和高效率的运行环境</strong> 。</li>
+<li>要求多方面的知识和技术：<ul>
+<li>计算机的基础知识</li>
+<li>软件工程的原理和方法</li>
+<li>程序设计的方法和技巧</li>
+<li>数据库的基本知识</li>
+<li>数据库设计技术</li>
+<li>应用领域的知识</li>
+</ul>
+</li>
+<li>方法：（x）<ul>
+<li>手工试凑法</li>
+<li>规范设计法<ul>
+<li>新奥尔良（New Orleans）方法</li>
+<li>基于E-R模型的数据库设计方法</li>
+<li>3NF（第三范式）的设计方法</li>
+<li>面向对象的数据库设计方法</li>
+<li>统一建模语言（UML）方法</li>
+</ul>
+</li>
+</ul>
+</li>
+</ol>
+</li>
+<li>数据库设计的基本步骤有哪些？（与三个模型相对应）</li>
+</ol>
+<ul>
+<li><p>需求分析</p>
+</li>
+<li><p><strong>概念结构设计</strong>：形成概念模型</p>
+</li>
+<li><p>逻辑结构设计：转换为数据模型</p>
+</li>
+<li><p>物理结构设计：选择物理结构</p>
+</li>
+<li><p>数据库实施</p>
+</li>
+<li><p>数据库运行和维护</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032328974.png" alt="image-20220612165746635"></p>
+</li>
+</ul>
+<ol start="3">
+<li><p>数据库设计过程中的各级模式</p>
+<ol>
+<li><p>需求分析阶段（最左）：综合各个用户的应用需求</p>
+</li>
+<li><p>概念设计阶段：形成独立于机器特点，独立于各个数据库管理系统产品的<strong>概念模式</strong>（E-R图）</p>
+</li>
+<li><p>逻辑设计阶段：</p>
+<ol>
+<li><p>首先将E-R图转换成具体的数据库产品支持的数据模型，如关系模型，形成数据库<strong>逻辑模式</strong></p>
+</li>
+<li><p>然后根据用户处理的要求、安全性的考虑，在基本表的基础上再建立必要的视图（View），形成数据的<strong>外模式</strong></p>
+</li>
+</ol>
+</li>
+<li><p>物理设计阶段（最右）：根据数据库管理系统特点和处理的需要，进行物理存储安排，建立索引，形成数据库<strong>内模式</strong></p>
+</li>
+</ol>
+</li>
+</ol>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032328004.png" alt="image-20220612170423601"></p>
+<h2 id="38-需求分析"><a href="#38-需求分析" class="headerlink" title="38 需求分析"></a>38 需求分析</h2><ol>
+<li>数据字典是关于数据库中数据的描述，即<strong>元数据</strong>，不是数据本身。数据字典在<strong>需求分析阶段</strong>建立，在数据库设计过程中不断修改、充实、完善。<ol>
+<li>内容：通过对<strong>数据项和数据结构</strong>的定义来描述<strong>数据流、数据存储</strong>的逻辑内容<ul>
+<li>数据项（数据的最小组成单位）</li>
+<li>数据结构（由若干个数据项组成）</li>
+<li>数据流：<strong>数据结构</strong>在系统内传输的<strong>路径</strong>。</li>
+<li>数据存储：数据结构<strong>停留或保存</strong>的地方，也是数据流的来源和去向之一。</li>
+<li>处理过程：一般用判定表或判定树来描述。</li>
+</ul>
+</li>
+</ol>
+</li>
+<li>第一阶段收集的基础数据（用数据字典来表达）是下一步进行概念设计的<strong>基础</strong>。</li>
+</ol>
+<h2 id="39-概念模型和E-R模型"><a href="#39-概念模型和E-R模型" class="headerlink" title="39 概念模型和E-R模型"></a>39 概念模型和E-R模型</h2><ol>
+<li><p>定义：将需求分析得到的用户需求抽象为信息结构（即概念模型）的过程就是概念结构设计。</p>
+</li>
+<li><p>实体联系部分见第一章04</p>
+</li>
+<li><p>E-R模型：</p>
+<ul>
+<li><p>联系的度：参与联系的实体型的数目</p>
+</li>
+<li><p>联系可以有属性</p>
+</li>
+<li><p>如何画E-R模型？</p>
+<ul>
+<li><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032328814.png" alt="image-20220611100933154" style="zoom:25%;" />
+</li>
+<li><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032328790.png" alt="image-20220611100905008" style="zoom: 25%;" /></li>
+</ul>
+</li>
+<li><p>ISA联系：父类-子类联系称为ISA联系（下面要掌握）</p>
+<ul>
+<li><strong>分类属性</strong>是父实体型的一个属性，其值把父实体型中的实体分派到<strong>子实体型</strong>中</li>
+</ul>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032328257.png" alt="image-20220612173143724"></p>
+<ul>
+<li>不相交约束：父类中的一个实体<strong>不能同时属于</strong>多个子类中的实体集。<ul>
+<li><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032328279.png" alt="image-20220612185450750"></li>
+</ul>
+</li>
+<li>完备性约束：父类中的一个实体是否必须是某一个子类中的实体。若是，则叫做完全特化。用<strong>双线连接</strong>表示。<img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032328397.png" alt="image-20220612185510747"></li>
+</ul>
+</li>
+<li><p>基数约束：最少次数和最多次数。</p>
+<ul>
+<li><p>min&#x3D;1的约束叫做强制参与约束，如每个学生都要属于一个班级</p>
+</li>
+<li><p>min&#x3D;0的约束叫做非强制参与约束，如0..*</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032328402.png" alt="image-20220612190057000"></p>
+</li>
+</ul>
+</li>
+<li><p>Part-of联系：</p>
+<ul>
+<li><p>非独占：整体被破坏，另一部分实体仍可以存在；用0..1即可表示，如汽车和轮子</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032328520.png" alt="image-20220612190842248"></p>
+</li>
+<li><p>独占：整体实体如果被破坏，部分实体不能存在；用弱实体类型和识别联系表示</p>
+</li>
+<li><p><strong>双矩形</strong>表示弱实体型，用<strong>双菱型</strong>表示识别联系，如果贷款没了还款也没了，所以贷款独占还款，还款是弱实体型</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032328610.png" alt="image-20220612190943206"></p>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ol>
+<h2 id="40-概念结构设计"><a href="#40-概念结构设计" class="headerlink" title="40 概念结构设计"></a>40 概念结构设计</h2><ol>
+<li><p>概念结构设计有哪些方法？</p>
+<ol>
+<li>自顶向下</li>
+<li>自底向上</li>
+<li>逐步扩张</li>
+<li>混合策略<ul>
+<li>自顶向下地进行需求分析</li>
+<li>自底向上地设计概念结构</li>
+</ul>
+</li>
+</ol>
+</li>
+<li><p>实体与属性的划分？</p>
+<ul>
+<li><p>属性不可再分，不能与其他实体具有联系</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032328654.png" alt="image-20220612191537584"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032328691.png" alt="image-20220612191700568"></p>
+</li>
+</ul>
+</li>
+</ol>
+<p>实例：注意订单和订单细节的划分。</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032328862.png" alt="image-20220612192353127"></p>
+<h2 id="42-逻辑结构设计"><a href="#42-逻辑结构设计" class="headerlink" title="42 逻辑结构设计"></a>42 逻辑结构设计</h2><ol>
+<li>任务：将E-R图转换为关系模型<ol>
+<li>如图中供应和参加虽然是联系，但有属性，所以作为实体了。</li>
+</ol>
+</li>
+</ol>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032328943.png" alt="image-20220612193806724"></p>
+<ol start="2">
+<li>数据模型的优化</li>
+</ol>
+<ul>
+<li>关系模式的分解<ul>
+<li>水平分解：把(基本)关系的<strong>元组</strong>分为若干子集合，定义每个子集合为一个子关系。（拿几行出来）<ul>
+<li>对符合“80&#x2F;20原则”的，把经常被使用的数据（约20%）水平分解出来，形成一个子关系。</li>
+</ul>
+</li>
+<li>垂直分解：R的<strong>属性分解</strong>为若干子集合，形成若干子关系模式。（拿几列出来）</li>
+</ul>
+</li>
+</ul>
+<ol start="3">
+<li>如何设计外模式（用户子模式）？<ol>
+<li>使用更符合用户习惯的别名</li>
+<li>针对不同级别的用户定义不同的视图，以保证系统的安全性。</li>
+<li>简化用户对系统的使用</li>
+</ol>
+</li>
+</ol>
+<h2 id="43-物理结构设计"><a href="#43-物理结构设计" class="headerlink" title="43 物理结构设计"></a>43 物理结构设计</h2><ol>
+<li><p>什么是物理设计？</p>
+<ul>
+<li>数据库在物理设备上的<strong>存储结构与存取方法</strong>称为数据库的<strong>物理结构</strong>，它依赖于选定的数据库管理系统。</li>
+<li>为一个给定的逻辑数据模型选取一个最适合应用要求的物理结构的过程，就是数据库的物理设计。</li>
+</ul>
+</li>
+<li><p>怎样进行物理设计？</p>
+<ul>
+<li>确定数据库的物理结构，在关系数据库中主要指<strong>存取方法和存储结构</strong>;</li>
+<li>对物理结构进行<strong>评价</strong>，评价的重点是时间和空间效率</li>
+</ul>
+</li>
+<li><p>存取方法如何选择？（原理）</p>
+<ul>
+<li><p>B+树索引存取方法</p>
+</li>
+<li><p>Hash索引存取方法</p>
+</li>
+<li><p>聚簇存取方法</p>
+<ul>
+<li><p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032328092.png" alt="image-20220612195522600"></p>
+</li>
+<li><p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032328112.png" alt="image-20220612200117761"></p>
+</li>
+</ul>
+</li>
+<li><p>局限性和适合的场景：</p>
+<ul>
+<li><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032328134.png" alt="image-20220612200227543"></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>存储结构如何确定？受硬件环境和应用需求的影响。</p>
+</li>
+</ol>
+<h2 id="44-数据库的实施和维护x"><a href="#44-数据库的实施和维护x" class="headerlink" title="44 数据库的实施和维护x"></a>44 数据库的实施和维护x</h2><p><strong>组织数据入库</strong>是数据库实施阶段最主要的工作。</p>
+<p><strong>试运行</strong>：功能测试和性能测试，测量性能指标。</p>
+<p>维护：</p>
+<ul>
+<li>重组织（全部或部分）：不会改变原设计的<strong>数据逻辑结构和物理结构</strong>，一般DBMS会提供实用程序</li>
+<li>重构造：根据新环境调整数据库的<strong>模式和内模式</strong></li>
+</ul>
+<h1 id="第八章-数据库编程"><a href="#第八章-数据库编程" class="headerlink" title="第八章 数据库编程"></a>第八章 数据库编程</h1><h2 id="JDBC"><a href="#JDBC" class="headerlink" title="JDBC"></a>JDBC</h2><h3 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h3><p>从根本上来说，JDBC 是一种规范，它提供了一套完整的接口，允许便携式访问到底层数据库，因此可以用 Java 编写不同类型的可执行文件，例如：</p>
+<ul>
+<li>Java 应用程序</li>
+<li>Java Applets</li>
+<li>Java Servlets</li>
+<li>Java ServerPages (JSPs)</li>
+<li>Enterprise JavaBeans (EJBs)</li>
+</ul>
+<p>所有这些不同的可执行文件就可以使用 JDBC 驱动程序来访问数据库，这样可以方便的访问数据。</p>
+<p>JDBC 具有 ODBC 一样的性能，允许 Java 程序包含与数据库无关的代码。</p>
+<p><strong>架构</strong></p>
+<p>JDBC 的 API 支持两层和三层处理模式进行数据库访问，但一般的 JDBC 架构由两层处理模式组成：</p>
+<ul>
+<li><strong>JDBC API</strong>: 提供了应用程序对 JDBC 管理器的连接。</li>
+<li><strong>JDBC Driver API</strong>: 提供了 JDBC 管理器对驱动程序连接。</li>
+</ul>
+<p><strong>常见的 JDBC 组件</strong></p>
+<p>JDBC 的 API 提供了以下接口和类：</p>
+<p><strong>DriverManager ：</strong>这个类管理一系列数据库驱动程序。匹配连接使用通信子协议从 JAVA 应用程序中请求合适的数据库驱动程序。识别 JDBC 下某个子协议的第一驱动程序将被用于建立数据库连接。</p>
+<p><strong>Driver :</strong> 这个接口处理与数据库服务器的通信。你将很少直接与驱动程序互动。相反，你使用 DriverManager 中的对象，它管理此类型的对象。它也抽象与驱动程序对象工作相关的详细信息。</p>
+<p><strong>Connection :</strong> 此接口具有接触数据库的所有方法。该连接对象表示通信上下文，即，所有与数据库的通信仅通过这个连接对象进行。</p>
+<p><strong>Statement :</strong> 使用创建于这个接口的对象将 SQL 语句提交到数据库。除了执行存储过程以外，一些派生的接口也接受参数。</p>
+<p><strong>ResultSet :</strong> 在你使用语句对象执行 SQL 查询后，这些对象保存从数据获得的数据。它作为一个迭代器，让您可以通过它的数据来移动。</p>
+<p><strong>SQLException :</strong> 这个类处理发生在数据库应用程序的任何错误。</p>
+<h3 id="驱动类型"><a href="#驱动类型" class="headerlink" title="驱动类型"></a>驱动类型</h3><p>JDBC 驱动实现了 JDBC API 中定义的接口，该接口用于与数据库服务器进行交互。</p>
+<p>例如，使用 JDBC 驱动程序可以让你打开数据库连接，并通过发送 SQL 或数据库命令，然后通过 Java 接收结果。</p>
+<ul>
+<li>MySQL Connector&#x2F;J 的驱动程序是一个类型4驱动程序。你不需要在客户端或服务端上安装特殊的软件。此外，这些驱动程序是可以动态下载的。</li>
+</ul>
+<h3 id="连接数据库"><a href="#连接数据库" class="headerlink" title="连接数据库"></a>连接数据库</h3><ul>
+<li><p><strong>导入 JDBC 包</strong>：在你的 Java 代码中，用 <strong>import</strong> 语句添加你所需的类。</p>
+<ul>
+<li><pre><code class="java">import java.sql.* ;  // for standard JDBC programs
+import java.math.* ; // for BigDecimal and BigInteger 
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">- **注册 JDBC 驱动程序**：这一步会导致 JVM 加载所需的驱动程序到内存中执行，因此它可以实现你的 JDBC 请求。</span><br><span class="line"></span><br><span class="line">  - 法一：   Class.forName()</span><br><span class="line"></span><br><span class="line">  - ```java</span><br><span class="line">    try &#123;</span><br><span class="line">       Class.forName(&quot;oracle.jdbc.driver.OracleDriver&quot;);</span><br><span class="line">    &#125;</span><br><span class="line">    catch(ClassNotFoundException ex) &#123;</span><br><span class="line">       System.out.println(&quot;Error: unable to load driver class!&quot;);</span><br><span class="line">       System.exit(1);</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+可以使用 **getInstance()** 方法来解决不兼容的 JVM，但必须编写如下所示的两个额外的异常:
+
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">try</span> &#123;</span><br><span class="line">   Class.forName(<span class="string">&quot;oracle.jdbc.driver.OracleDriver&quot;</span>).newInstance();</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">catch</span>(ClassNotFoundException ex) &#123;</span><br><span class="line">   System.out.println(<span class="string">&quot;Error: unable to load driver class!&quot;</span>);</span><br><span class="line">   System.exit(<span class="number">1</span>);</span><br><span class="line"><span class="keyword">catch</span>(IllegalAccessException ex) &#123;</span><br><span class="line">   System.out.println(<span class="string">&quot;Error: access problem while loading!&quot;</span>);</span><br><span class="line">   System.exit(<span class="number">2</span>);</span><br><span class="line"><span class="keyword">catch</span>(InstantiationException ex) &#123;</span><br><span class="line">   System.out.println(<span class="string">&quot;Error: unable to instantiate driver!&quot;</span>);</span><br><span class="line">   System.exit(<span class="number">3</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</code></pre>
+</li>
+<li><p>法二：DriverManager.registerDriver()使用的是不兼容 JVM 的非 JDK</p>
+</li>
+<li><pre><code class="java">try &#123;
+   Driver myDriver = new oracle.jdbc.driver.OracleDriver();
+   DriverManager.registerDriver( myDriver );
+&#125;
+catch(ClassNotFoundException ex) &#123;
+   System.out.println(&quot;Error: unable to load driver class!&quot;);
+   System.exit(1);
+&#125;
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">- **数据库 URL 制定**：这是用来创建格式正确的地址指向你想要连接的数据库。</span><br><span class="line"></span><br><span class="line">  - getConnection(String url)</span><br><span class="line"></span><br><span class="line">  - getConnection(String url, Properties prop)</span><br><span class="line"></span><br><span class="line">  - getConnection(String url, String user, String password)</span><br><span class="line"></span><br><span class="line">    URL制定根据数据库种类来。</span><br><span class="line"></span><br><span class="line">- **创建连接对象**：最后，代码调用 *DriverManager* 对象的 *getConnection()* 方法来建立实际的数据库连接。</span><br><span class="line"></span><br><span class="line">  - 3个信息都需要，只是表示不同。</span><br><span class="line"></span><br><span class="line">- **关闭 JDBC 连接**</span><br><span class="line"></span><br><span class="line">  - ```java</span><br><span class="line">    conn.close();</span><br></pre></td></tr></table></figure>
+</code></pre>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="Statement对象"><a href="#Statement对象" class="headerlink" title="Statement对象"></a>Statement对象</h3><p>JDBC 的 Statement，CallableStatement 和 PreparedStatement 接口定义的方法和属性，可以让你发送 SQL 命令或 PL&#x2F;SQL 命令到数据库，并从你的数据库接收数据。</p>
+<p><strong>Statement</strong></p>
+<ul>
+<li><strong>boolean execute(String SQL) :</strong> 如果 ResultSet 对象可以被检索，则返回的布尔值为 true ，否则返回 false 。当你需要使用真正的动态 SQL 时，可以使用这个方法来执行 SQL DDL 语句。</li>
+<li><strong>int executeUpdate(String SQL) :</strong> 返回执行 SQL 语句影响的行的数目。使用该方法来执行 SQL 语句，是希望得到一些受影响的行的数目，例如，INSERT，UPDATE 或 DELETE 语句。</li>
+<li><strong>ResultSet executeQuery(String SQL) :</strong> 返回一个 ResultSet 对象。当你希望得到一个结果集时使用该方法，就像你使用一个 SELECT 语句。</li>
+</ul>
+<p><strong>PreparedStatement</strong></p>
+<p>计划多次使用 SQL 语句， PreparedStatement 接口运行时接受输入的参数。</p>
+<p><strong>CallableStatement</strong></p>
+<p>适用于当你要访问数据库存储过程的时候， CallableStatement 接口运行时也接受输入的参数。</p>
+<h3 id="结果集"><a href="#结果集" class="headerlink" title="结果集"></a>结果集</h3><p>默认前移，不并发。可以查看，更新结果集等（不影响原数据库）。</p>
+<h3 id="数据类型"><a href="#数据类型" class="headerlink" title="数据类型"></a>数据类型</h3><p>大多数有默认的映射关系。</p>
+<p>日期和时间数据类型需要处理一下。</p>
+<p>null也有区别，使用 ResultSet 对象的 wasNull()方法来测试。</p>
+<h3 id="事务"><a href="#事务" class="headerlink" title="事务"></a>事务</h3><p>一般来说是自动提交。关闭自动提交模式：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">conn.<span class="built_in">setAutoCommit</span>(<span class="literal">false</span>);</span><br></pre></td></tr></table></figure>
+
+<p>提交修改：conn.commit( );</p>
+<p>回滚数据到数据库：conn.rollback( );</p>
+<p>如第二条语句有格式错误，会导致整个事务失败，会回滚到最初状态。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">try</span>&#123;</span><br><span class="line">   <span class="comment">//Assume a valid connection object conn</span></span><br><span class="line">   conn.setAutoCommit(<span class="literal">false</span>);</span><br><span class="line">   <span class="type">Statement</span> <span class="variable">stmt</span> <span class="operator">=</span> conn.createStatement();</span><br><span class="line"></span><br><span class="line">   <span class="type">String</span> <span class="variable">SQL</span> <span class="operator">=</span> <span class="string">&quot;INSERT INTO Employees  &quot;</span> +</span><br><span class="line">                <span class="string">&quot;VALUES (106, 20, &#x27;Rita&#x27;, &#x27;Tez&#x27;)&quot;</span>;</span><br><span class="line">   stmt.executeUpdate(SQL);  </span><br><span class="line">   <span class="comment">//Submit a malformed SQL statement that breaks</span></span><br><span class="line">   <span class="type">String</span> <span class="variable">SQL</span> <span class="operator">=</span> <span class="string">&quot;INSERTED IN Employees  &quot;</span> +</span><br><span class="line">                <span class="string">&quot;VALUES (107, 22, &#x27;Sita&#x27;, &#x27;Singh&#x27;)&quot;</span>;</span><br><span class="line">   stmt.executeUpdate(SQL);</span><br><span class="line">   <span class="comment">// If there is no error.</span></span><br><span class="line">   conn.commit();</span><br><span class="line">&#125;<span class="keyword">catch</span>(SQLException se)&#123;</span><br><span class="line">   <span class="comment">// If there is any error.</span></span><br><span class="line">   conn.rollback();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>还原点：可以指定还原到哪个状态</p>
+<h3 id="异常"><a href="#异常" class="headerlink" title="异常"></a>异常</h3><h3 id="批处理"><a href="#批处理" class="headerlink" title="批处理"></a>批处理</h3><p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032324656.png" alt="image-20220413195903644"></p>
+<h1 id="第十章"><a href="#第十章" class="headerlink" title="第十章"></a>第十章</h1><h2 id="48-事务"><a href="#48-事务" class="headerlink" title="48 事务"></a>48 事务</h2><ol>
+<li><p>什么是事务？</p>
+<ol>
+<li>事务(Transaction)是用户定义的一个数据库操作序列，这些操作<strong>要么全做，要么全不做</strong>，是一个不可分割的工作单位。</li>
+<li>事务和程序是两个概念<ul>
+<li>在关系数据库中，一个事务可以是<strong>一条SQL语句，一组SQL语句或整个程序</strong></li>
+<li>一个程序通常包含多个事务</li>
+</ul>
+</li>
+<li>事务是<strong>恢复和并发控制</strong>的基本单位</li>
+</ol>
+</li>
+<li><p>事务的定义：</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032328165.png" alt="image-20220613145357291"></p>
+<ul>
+<li>COMMIT提交事务的<strong>所有操作</strong>（读+更新），事务中所有对数据库的更新写回到<strong>磁盘上的物理数据库</strong>中</li>
+<li>ROLLBACK系统将事务中对数据库的所有已完成的操作<strong>全部撤销</strong>，事务滚回到开始时的状态</li>
+</ul>
+</li>
+<li><p>ACID特性(*)：</p>
+<ol>
+<li>原子性：事务是基本单位，要么都做要么都不做</li>
+<li>一致性：<ol>
+<li>若一致，数据库中<strong>只包含</strong>成功事务提交的结果；</li>
+<li>若不一致，数据库系统运行中发生<strong>故障</strong>，有些事务尚未完成就被迫中断；这些未完成事务对数据库所做的修改有一部分已写入<strong>物理数据库</strong>，这时数据库就处于一种不正确的状态</li>
+</ol>
+</li>
+<li>隔离性：一个事务的执行不被其他并发事务<strong>干扰</strong></li>
+<li>持续性：一个事务一旦提交，它对数据库中数据的改变就应该是<strong>永久</strong>性的</li>
+</ol>
+</li>
+<li><p>破坏ACID的因素？</p>
+<ol>
+<li>多个事务并行运行时，不同事务的操作<strong>交叉执行</strong></li>
+<li>事务在运行过程中被<strong>强行停止</strong></li>
+</ol>
+</li>
+</ol>
+<h2 id="49-故障和数据库恢复"><a href="#49-故障和数据库恢复" class="headerlink" title="49 故障和数据库恢复"></a>49 故障和数据库恢复</h2><ol>
+<li>故障的种类<ol>
+<li>事务内部的故障</li>
+<li>系统故障</li>
+<li>介质故障</li>
+<li>计算机病毒</li>
+</ol>
+</li>
+<li>事务故障（仅指以下的非预期故障）<ol>
+<li>运算<strong>溢出</strong></li>
+<li>并发事务发生死锁而被选中<strong>撤销该事务</strong></li>
+<li>违反了某些<strong>完整性限制</strong>而被终止等</li>
+<li>通过<strong>事务撤销</strong>（UNDO）解决：<strong>强行回滚</strong>（ROLLBACK）该事务，撤销该事务已经作出的任何对数据库的修改，使得该事务像根本没有启动一样</li>
+</ol>
+</li>
+<li>系统故障：软故障，不破坏数据库<ol>
+<li>一些尚未完成的事务的结果可能<strong>已送入物理数据库</strong>，造成数据库可能处于不正确状态。<ol>
+<li>恢复策略：系统重新启动时，恢复程序让<strong>所有非正常终止的事务回滚</strong>，强行撤消（UNDO）所有未完成事务</li>
+</ol>
+</li>
+<li>发生系统故障时，有些已完成的事务可能有一部分甚至全部留在<strong>缓冲区</strong>，尚未写回到磁盘上的物理数据库中，系统故障使得这些事务对数据库的修改部分或全部丢失<ol>
+<li>恢复策略：系统重新启动时，恢复程序需要<strong>重做</strong>（REDO）所有已提交的事务</li>
+</ol>
+</li>
+</ol>
+</li>
+<li>介质故障：硬故障，破坏数据库或部分数据库，影响正在存取这部分数据的<strong>所有事务</strong></li>
+<li>计算机病毒：破坏数据库</li>
+</ol>
+<table>
+<thead>
+<tr>
+<th>故障类型</th>
+<th>恢复策略</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>事务故障</td>
+<td>强行回滚该事务</td>
+</tr>
+<tr>
+<td>系统故障</td>
+<td>1.强行撤销所有<strong>未完成</strong>事务<br>2.重做所有<strong>已提交</strong>的事务</td>
+</tr>
+</tbody></table>
+<ol start="6">
+<li>恢复操作：<ol>
+<li>基本原理：冗余。利用存储在系统别处的<strong>冗余数据</strong>来重建数据库中已被破坏或不正确的那部分数据</li>
+<li>关键问题：<ol>
+<li>如何建立冗余数据（数据转储，登记日志文件）</li>
+<li>如何利用冗余数据进行恢复</li>
+</ol>
+</li>
+</ol>
+</li>
+</ol>
+<h2 id="50-数据转储和日志文件"><a href="#50-数据转储和日志文件" class="headerlink" title="50 数据转储和日志文件"></a>50 数据转储和日志文件</h2><ol>
+<li><p>数据转储</p>
+<ol>
+<li><p>数据库管理员定期地将整个数据库<strong>复制</strong>到磁带、磁盘或其他存储介质上保存起来的过程</p>
+</li>
+<li><p>只能将数据库恢复到转储时的状态，要想恢复到故障发生时的状态，必须重新运行<strong>自转储以后的所有更新事务</strong></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032328356.png" alt="image-20220613152408556"></p>
+<p>运行自<em>T</em>b ～ <em>T</em>f时刻的所有更新事务</p>
+</li>
+<li><p>转储类型</p>
+<ul>
+<li>静态转储：在系统中<strong>无运行事务</strong>时进行的转储操作，转储期间<strong>不允许</strong>对数据库的任何存取、修改活动，得到的一定是一个数据一致性的副本 </li>
+<li>动态转储：转储操作与用户事务<strong>并发</strong>进行，需要把<strong>动态转储期间</strong>各事务对数据库的修改活动登记下来，建立<strong>日志文件</strong></li>
+<li>海量转储：每次转储<strong>全部</strong>数据库</li>
+<li>增量转储：只转储上次转储后<strong>更新过</strong>的数据</li>
+</ul>
+</li>
+</ol>
+</li>
+<li><p>日志文件：</p>
+<ol>
+<li><p>用来记录事务对数据库的更新操作的文件</p>
+</li>
+<li><p>格式：以<strong>记录</strong>为单位；</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032328374.png" alt="image-20220613153545732" style="zoom:25%;" /><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032328392.png" alt="image-20220613153612593" style="zoom:25%;" /></p>
+<p>以<strong>数据块</strong>为单位；<img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032328418.png" alt="image-20220613153647777" style="zoom: 33%;" /></p>
+</li>
+<li><p>用途：进行事务故障恢复，进行系统故障恢复，协助后备副本（转储）进行介质故障恢复</p>
+</li>
+</ol>
+</li>
+</ol>
+<table>
+<thead>
+<tr>
+<th>必须使用日志文件</th>
+<th>可以建立日志文件</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>事务故障</td>
+<td>静态转储（利用日志文件重做已完成，撤销未完成）</td>
+</tr>
+<tr>
+<td>系统故障</td>
+<td></td>
+</tr>
+<tr>
+<td>动态转储</td>
+<td></td>
+</tr>
+</tbody></table>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032328438.png" alt="image-20220613154023169"></p>
+<ul>
+<li><p>可以选择重做或者登记日志文件</p>
+<ol start="4">
+<li><p>登记日志文件的原则：</p>
+<ol>
+<li><p>登记的次序严格按并发事务执行的<strong>时间次序</strong></p>
+</li>
+<li><p>必须先写日志文件，后写数据库</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032328524.png" alt="image-20220613154243487"></p>
+<ul>
+<li>中途有故障，说明该事务未完成，会利用日志文件进行撤销，那多余的UNDO不影响的</li>
+</ul>
+</li>
+</ol>
+</li>
+</ol>
+</li>
+</ul>
+<h2 id="51-恢复策略"><a href="#51-恢复策略" class="headerlink" title="51 恢复策略"></a>51 恢复策略</h2><ol>
+<li>事务故障的恢复：恢复到<strong>最开始</strong>，系统自动完成<ol>
+<li>反向扫描文件日志</li>
+<li>对该事务的<strong>更新操作</strong>执行<strong>逆操作</strong>。即将日志记录中“更新前的值” 写入数据库。</li>
+<li>继续反向扫描日志文件，查找该事务的其他<strong>更新操作</strong>，并做同样处理。</li>
+<li>如此处理下去，直至读到此事务的<strong>开始标记</strong>，事务故障恢复就完成了。</li>
+</ol>
+</li>
+<li>系统故障的恢复：恢复到故障时<ol>
+<li><strong>正向扫描日志文件</strong>（即从头扫描日志文件），建立重做(REDO)队列和撤销(UNDO)队列</li>
+<li>对撤销(UNDO)队列事务进行<strong>撤销</strong>(UNDO)处理：反向扫描日志文件，执行逆操作</li>
+<li>对重做(REDO)队列事务进行<strong>重做</strong>(REDO)处理：正向扫描日志文件，重新执行登记的操作</li>
+</ol>
+</li>
+<li>介质故障的恢复：<ol>
+<li><strong>装入最新的后备数据库副本</strong>(离故障发生时刻最近的转储副本) ，使数据库恢复到最近一次转储时的一致性状态</li>
+<li>装入有关的日志文件副本(转储结束时刻的日志文件副本) ，<strong>重做已完成的事务</strong>。</li>
+</ol>
+</li>
+</ol>
+<h2 id="52-具有检查点的恢复技术"><a href="#52-具有检查点的恢复技术" class="headerlink" title="52 具有检查点的恢复技术"></a>52 具有检查点的恢复技术</h2><p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032328950.png" alt="image-20220613161953689"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032328976.png" alt="image-20220613163321377"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032328997.png" alt="image-20220613163318157"></p>
+<p>恢复策略：就是看从检查点到故障中间有没有提交，有提交就重做（防止已完成未写入），没提交就撤销（防止未完成在缓存）</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032328019.png" alt="image-20220613163407924"></p>
+<ol>
+<li><p>检查点的作用？使用检查点方法可以<strong>改善恢复效率</strong></p>
+<ul>
+<li>节约了搜索日志和重做的时间</li>
+</ul>
+<blockquote>
+<ul>
+<li>当事务T在一个检查点之前提交，T对数据库所做的修改已写入数据库</li>
+<li>写入时间是在这个检查点建立之前或在这个检查点建立之时 </li>
+<li>在进行恢复处理时，没有必要对事务T执行重做操作</li>
+</ul>
+</blockquote>
+</li>
+</ol>
+<h2 id="53-数据库镜像x"><a href="#53-数据库镜像x" class="headerlink" title="53 数据库镜像x"></a>53 数据库镜像x</h2><p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032328040.png" alt="image-20220619193525338"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032328066.png" alt="image-20220619193604240"></p>
+<p>数据库镜像：数据库管理系统<strong>自动</strong>把整个数据库或其中的关键数据复制到另一个磁盘上</p>
+<ul>
+<li>出现介质故障时，可由镜像磁盘<strong>继续提供使用</strong>，同时数据库管理系统<strong>自动</strong>利用镜像磁盘数据进行数据库的<strong>恢复</strong>，不需要关闭系统和重装数据库副本。</li>
+<li>没有出现故障时，可用于<strong>并发操作</strong>。一个用户对数据加排他锁修改数据，其他用户可以<strong>读镜像数据库上的数据</strong>，而不必等待该用户释放锁</li>
+</ul>
+<p>频繁地复制数据自然会降低系统运行效率，所以在实际应用中用户往往只选择对<strong>关键数据和日志文件</strong>镜像，不是对整个数据库进行镜像。</p>
+<h1 id="第十一章-并发控制"><a href="#第十一章-并发控制" class="headerlink" title="第十一章 并发控制"></a>第十一章 并发控制</h1><h2 id="54-并发控制"><a href="#54-并发控制" class="headerlink" title="54 并发控制"></a>54 并发控制</h2><ol>
+<li>事务串行执行：每个时刻<strong>只有一个</strong>事务运行，其他事务必须等到这个事务结束以后方能运行</li>
+<li>交叉并发方式：因为是单处理机，并没有真正地并行运行，但能够减少处理机的空闲时间，提高系统的效率</li>
+<li>同时并发方式（多处理机系统）：每个处理机可以运行一个事务，<strong>多个处理机可以同时运行多个事务</strong>，实现多个事务真正的并行运行。最理想的并发方式，但受制于硬件环境。</li>
+</ol>
+<p>并发控制机制的任务？</p>
+<ol>
+<li>对并发操作进行<strong>正确调度</strong></li>
+<li>保证事务的<strong>隔离性和一致性</strong></li>
+</ol>
+<p>并发操作带来的数据不一致性：</p>
+<ol>
+<li>丢失修改（Lost Update）<ul>
+<li>如T2的提交结果<strong>破坏了</strong>（覆盖了）T1提交的结果，导致T1的修改被丢失。</li>
+</ul>
+</li>
+<li>不可重复读（Non-repeatable Read）<ul>
+<li>事务T1读取数据后，事务T2执行更新操作，使T1无法<strong>再现前一次</strong>读取结果。<strong>校验</strong>时就会出错。<ul>
+<li>T2对其做了修改</li>
+<li>T2删除了其中部分记录</li>
+<li>T2插入了一些记录</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>读“脏”数据（Dirty Read）<ul>
+<li>事务T1修改某一数据，并将其写回磁盘</li>
+<li>事务T2读取同一数据后， T1由于某种原因被<strong>撤销</strong>ROLLBACK</li>
+<li>这时T1已修改过的数据恢复原值， T2读到的数据就与数据库中的数据不一致</li>
+<li>T2读到的数据就为“脏”数据，即<strong>不正确</strong>的数据</li>
+</ul>
+</li>
+</ol>
+<p>造成上述三类数据不一致性的主要原因是并发操作破坏了事务的隔离性。</p>
+<p>并发控制就是要用<strong>正确的方式调度并发操作</strong>，使一个用户事务的执行不受其他事务的<strong>干扰</strong>，从而<strong>避免</strong>造成数据的不一致性 </p>
+<p>并发控制的主要技术？</p>
+<ol>
+<li>封锁(Locking)</li>
+<li>时间戳(Timestamp)</li>
+<li>乐观控制法</li>
+<li>多版本并发控制(MVCC)</li>
+</ol>
+<h2 id="55-封锁"><a href="#55-封锁" class="headerlink" title="55 封锁"></a>55 封锁</h2><p>封锁就是事务T在对某个数据对象（例如表、记录等）操作之前，先向系统发出请求，对其<strong>加锁</strong>（对数据对象加锁）。</p>
+<p>加锁后事务T就对该数据对象有了一定的控制，在事务T释放它的锁之前，其它的事务<strong>不能更新</strong>此数据对象。</p>
+<ul>
+<li><p>排它锁：若事务T对数据对象A加上<strong>X锁</strong>，则只允许T<strong>读取和修改</strong>A，其它任何事务都不能再对A加任何类型的锁，直到T释放A上的锁</p>
+<ul>
+<li>保证其他事务在T释放A上的锁之前<strong>不能再读取和修改A</strong> （独占标记）</li>
+</ul>
+</li>
+<li><p>共享锁：若事务T对数据对象A加上S锁，则事务T可以<strong>读A但不能修改A</strong>，其它事务只能再对A加S锁，而不能加X锁，直到T释放A上的S锁</p>
+<ul>
+<li>保证其他事务<strong>可以读A</strong>，但在T释放A上的S锁之前不能对A做任何<strong>修改</strong> （大家都能读但不能改）</li>
+</ul>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032328435.png" alt="image-20220619200157913"></p>
+</li>
+</ul>
+<h3 id="封锁协议"><a href="#封锁协议" class="headerlink" title="封锁协议"></a>封锁协议</h3><ul>
+<li>何时申请X锁或S锁</li>
+<li>持锁时间</li>
+<li>何时释放</li>
+</ul>
+<ol>
+<li>一级封锁协议<ol>
+<li>事务T在修改数据R之前必须先对其加X锁，直到事务结束才释放。包括正常结束（COMMIT）和非正常结束（ROLLBACK）</li>
+</ol>
+</li>
+<li>二级封锁协议<ol>
+<li>一级封锁协议基础上增加事务T在读取数据R之前必须先对其加S锁，<strong>读完后</strong>即可释放S锁。</li>
+</ol>
+</li>
+<li>三级封锁协议<ol>
+<li>一级封锁协议基础上加上事务T在读取数据R之前必须先对其加S锁，直到<strong>事务结束</strong>才释放。</li>
+</ol>
+</li>
+</ol>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>写</th>
+<th>读</th>
+<th>解决</th>
+<th>未解决</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>一级封锁协议</td>
+<td>加X锁</td>
+<td>不加锁</td>
+<td>丢失修改</td>
+<td>不可重复读、读“脏”数据</td>
+</tr>
+<tr>
+<td>二级封锁协议</td>
+<td>加X锁</td>
+<td>加S锁，<strong>读完后</strong>释放</td>
+<td>丢失修改，读“脏”数据</td>
+<td>不可重复读</td>
+</tr>
+<tr>
+<td>三级封锁协议</td>
+<td>加X锁</td>
+<td>加S锁，<strong>事务结束后</strong>释放</td>
+<td>丢失修改、读脏数据、不可重复读</td>
+<td>无</td>
+</tr>
+</tbody></table>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032328461.png" alt="image-20220619202336971"></p>
+<h3 id="活锁与死锁"><a href="#活锁与死锁" class="headerlink" title="活锁与死锁"></a>活锁与死锁</h3><ol>
+<li><p>避免活锁：先来先服务。当多个事务请求封锁同一数据对象时，按<strong>请求封锁的先后次序</strong>对这些事务排队，该数据对象上的锁一旦释放，首先批准申请队列中<strong>第一个事务</strong>获得锁</p>
+</li>
+<li><p>死锁：为什么不释放自己的锁？因为<strong>事务结束</strong>时才能释放。<img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032328487.png" alt="image-20220619202710467" style="zoom:50%;" /></p>
+<ul>
+<li>预防：<ul>
+<li>一次封锁法：要求每个事务必须<strong>一次将所有要使用的数据</strong>全部加锁，否则就不能继续执行</li>
+<li>顺序封锁法：预先对数据对象<strong>规定一个封锁顺序</strong>，所有事务都按这个顺序实行封锁。</li>
+</ul>
+</li>
+<li>诊断并解除死锁：更普遍采用<ul>
+<li>超时法：如果一个事务的等待时间超过了<strong>规定的时限</strong>，就认为发生了死锁</li>
+<li>等待图法：<strong>并发控制</strong>子系统周期性地（比如每隔数秒）生成事务等待图，检测事务。如果发现图中<strong>存在回路</strong>，则表示系统中出现了死锁。<ul>
+<li>结点为正在运行的事务，边为事务等待的情况</li>
+<li><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032328509.png" alt="image-20220619203259374"></li>
+</ul>
+</li>
+<li>选择一个<strong>处理死锁代价最小</strong>的事务，将其<strong>撤消</strong>；<strong>释放此事务持有的所有的锁</strong>，使其它事务能继续运行下去</li>
+</ul>
+</li>
+</ul>
+</li>
+</ol>
+<h2 id="56-事务调度"><a href="#56-事务调度" class="headerlink" title="56 事务调度"></a>56 事务调度</h2><ol>
+<li><p>可串行化(Serializable)调度</p>
+<ul>
+<li>多个事务的并发执行是正确的，当且仅当其结果与按某一次序<strong>串行地执行</strong>这些事务时的结果相同（即和<strong>不并发</strong>得到的结果一样，显然就得到了正确的结果）</li>
+</ul>
+</li>
+<li><p>可串行性(Serializability)</p>
+<ul>
+<li>是并发事务正确调度的准则</li>
+<li>一个给定的并发调度，当且仅当它是<strong>可串行化</strong>的，才认为是正确调度</li>
+</ul>
+</li>
+<li><p>冲突可串行化（比可串行化更严格）</p>
+<ol>
+<li>冲突操作：仅指T1、T2对同一数据的<strong>读写</strong>操作和<strong>写写</strong>操作</li>
+<li>不能交换（Swap）的动作：同一事务的两个操作和不同事务的冲突操作</li>
+<li>定义：一个调度Sc在保证冲突操作的次序不变的情况下，通过交换<strong>两个事务不冲突操作的次序</strong>得到另一个调度Sc’，如果Sc’是<strong>串行</strong>的，称调度Sc是冲突可串行化的调度</li>
+</ol>
+</li>
+</ol>
+<h3 id="两段锁协议"><a href="#两段锁协议" class="headerlink" title="两段锁协议"></a>两段锁协议</h3><ol>
+<li>实现并发调度的可串行性，从而保证调度的正确性</li>
+<li>指所有事务必须分<strong>两个阶段</strong>对数据项加锁和解锁 <ul>
+<li>在对任何数据进行读、写操作之前，事务首先要获得对该数据的<strong>封锁</strong>：扩展阶段</li>
+<li>在<strong>释放</strong>一个封锁之后，事务不再申请和获得任何其他封锁：收缩阶段</li>
+</ul>
+</li>
+<li>“两段”锁的含义，事务分为两个阶段<ul>
+<li>第一阶段是获得封锁，也称为扩展阶段<ul>
+<li>事务可以<strong>申请</strong>获得任何数据项上的任何类型的锁，但是<strong>不能释放</strong>任何锁</li>
+</ul>
+</li>
+<li>第二阶段是释放封锁，也称为收缩阶段<ul>
+<li>事务可以<strong>释放</strong>任何数据项上的任何类型的锁，但是<strong>不能再申请</strong>任何锁</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>若并发事务都遵守两段锁协议，则对这些事务的任何并发调度策略都是可串行化的；若并发事务的一个调度是可串行化的，<strong>不一定</strong>所有事务都符合两段锁协议。</li>
+<li>两段锁协议与防止死锁的一次封锁法：<ul>
+<li>一次封锁法要求每个事务必须一次将所有要使用的数据全部加锁，否则就不能继续执行，因此一次封锁法<strong>遵守两段锁协议</strong>（释放后没得再加的东西了）</li>
+<li>两段锁协议并不要求事务必须一次将所有要使用的数据全部加锁，因此遵守两段锁协议的事务<strong>可能发生死锁</strong></li>
+</ul>
+</li>
+</ol>
+<h2 id="57-封锁粒度"><a href="#57-封锁粒度" class="headerlink" title="57 封锁粒度"></a>57 封锁粒度</h2><ol>
+<li>封锁对象的大小称为封锁粒度(Granularity) </li>
+<li>封锁的对象：<ol>
+<li>逻辑单元：属性值、属性值的集合、元组、关系、索引项、整个索引、整个数据库等</li>
+<li>物理单元：页（数据页或索引页）、物理记录等</li>
+</ol>
+</li>
+<li>封锁粒度与系统的并发度和并发控制的开销密切相关。<ol>
+<li>封锁的粒度越大，数据库所能够封锁的数据单元就越少，并发度就越小，系统开销也越小；</li>
+<li>封锁的粒度越小，<strong>并发度较高</strong>，但系统<strong>开销也就越大</strong></li>
+<li>所以选择时同时考虑<strong>封锁开销</strong>和<strong>并发度</strong><ol>
+<li>需要处理<strong>多个关系</strong>的大量元组的用户事务：以数据库为封锁单位</li>
+<li>需要处理大量元组的用户事务：以<strong>关系</strong>为封锁单元</li>
+<li>只处理少量元组的用户事务：以元组为封锁单位</li>
+</ol>
+</li>
+</ol>
+</li>
+<li>多粒度封锁：在一个系统中同时支持多种封锁粒度供不同的事务选择<ol>
+<li>首先要定义多粒度树。如三级粒度树：<img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032328534.png" alt="image-20220619210828525" style="zoom:50%;" /></li>
+<li>多粒度封锁协议：对一个结点加锁意味着这个结点的所有后裔结点也被加以同样类型的锁。因此在多粒度封锁中一个数据对象可能以两种方式封锁：<ul>
+<li>显式封锁：直接加到<strong>数据对象</strong>上的封锁</li>
+<li>隐式封锁：是该数据对象没有独立加锁，是由于其<strong>上级结点</strong>加锁而使该数据对象加上了锁</li>
+</ul>
+</li>
+<li>所以检查封锁冲突时显式和隐式都要检查。即该数据对象，所有上级节点，所有下级结点都要检查。<ol>
+<li>例如，事务T要对关系R1加X锁：<ul>
+<li>系统必须搜索其<strong>上级结点</strong>数据库、关系R1</li>
+<li>还要搜索R1的<strong>下级结点</strong>，即R1中的每一个元组</li>
+<li>如果其中某一个数据对象已经加了不相容锁，则T必须等待</li>
+</ul>
+</li>
+</ol>
+</li>
+</ol>
+</li>
+</ol>
+<p>意向锁：提高对某个数据对象加锁时系统的检查效率</p>
+<ol>
+<li>如果对一个结点加意向锁，则说明该结点的下层结点正在被加锁</li>
+<li>对任一结点加基本锁，必须先对它的上层结点加意向锁</li>
+</ol>
+<table>
+<thead>
+<tr>
+<th>常见意向锁</th>
+<th>内容</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>意向共享锁IS锁</td>
+<td>表示它的后裔结点拟（意向）加S锁</td>
+</tr>
+<tr>
+<td>意向排它锁IX锁</td>
+<td>表示它的后裔结点拟（意向）加X锁</td>
+</tr>
+<tr>
+<td>共享意向排它锁SIX锁</td>
+<td>如果对一个数据对象加SIX锁，表示对它加S锁，再加IX锁，即SIX &#x3D; S + IX</td>
+</tr>
+</tbody></table>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032328555.png" alt="image-20220619215324332"></p>
+<p>锁的强度：<img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032328846.png" alt="image-20220619215236759" style="zoom:25%;" />申请时自上而下检查，释放时自下而上</p>
+<h1 id="第十二章-NoSQL"><a href="#第十二章-NoSQL" class="headerlink" title="第十二章 NoSQL"></a>第十二章 NoSQL</h1><h2 id="63-NoSQL的由来"><a href="#63-NoSQL的由来" class="headerlink" title="63 NoSQL的由来"></a>63 NoSQL的由来</h2><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032328874.png" alt="image-20220619215959546" style="zoom:50%;" />
+
+<ol>
+<li><p><strong>阻抗失谐</strong>： 关系模型和内存中的数据结构之间存在差异</p>
+<ol>
+<li>如果在内存中使用了较为丰富的数据结构，那么要把它保存到磁盘之前，必须先将其转换成关系形式（关系+元组）。</li>
+<li>于是就发生了“阻抗失谐”：需要在<strong>两种不同的表示形式</strong>之间转译。但关系型数据库经受住了考验，而面向对象数据库销声匿迹。</li>
+<li>解决方法：“对象-关系映射框架”通过<strong>映射模式</strong>表达转换。但仍有<strong>查询性能问题和集成问题</strong>。</li>
+</ol>
+</li>
+<li><p>关系型数据库战胜面向对象数据库的原因？SQL充当了应用程序之间的一种<strong>集成</strong>机制。数据库在这种情况下成了“集成数据库”</p>
+</li>
+<li><p>但也可以将数据库视为“应用程序数据库”， 其内容只能由<strong>一个</strong>应用程序的代码库直接访问</p>
+<ul>
+<li>区别：<ul>
+<li>前者由不同团队所开发的<strong>多个</strong>应用程序，将其数据存储在一个<strong>公用</strong>的数据库中。为了保持数据库的完整性，我们需要将更新数据的责任交由<strong>数据库自身</strong>负责。</li>
+<li>后者中一个应用程序对应一个数据库，由于只有开发应用程序的团队才需要知道其结构，模式的维护与更新就更容易了。由于应用程序开发团队同时管理数据库和应用程序代码，因此可以把维护数据库完整性的工作放在<strong>应用程序代码</strong>中。</li>
+</ul>
+</li>
+<li>在使用应用程序数据库后，由于内部数据库与外部通信服务之间已经解耦，所以外界并不关心数据如何存储，这样就可以选用<strong>非关系型数据库</strong>了。关系型数据库的许多特性，诸如安全性等，可以交给使用该数据库的外围应用程序来做。</li>
+</ul>
+</li>
+<li><p>集群问题：纵向扩展及横向扩展来应对数据和流量的增加。而采用<strong>多个小型计算机组成的集群</strong>是一种解决方案。</p>
+<ul>
+<li>但关系型数据库不是给集群用的。</li>
+<li>1.用共享磁盘子系统”，但磁盘子系统就变成了整个集群的软肋。</li>
+<li>2.将数据划分为几个集合。在<strong>负载分散</strong>的同时，应用程序必须控制所有<strong>分片</strong>，需要知道数据库中的每份小数据的存储情况。而且跨分片的查询、参照完整性、 事务、一致性控制等操作也都无法以跨分片的方式执行。</li>
+<li>总之怎么弄都不太协调。</li>
+</ul>
+</li>
+</ol>
+<ul>
+<li>而面向聚合的数据库非常适用于横向扩展。</li>
+</ul>
+<ol start="5">
+<li>NoSQL：开源分布式的非关系型数据库。特征有<ol>
+<li>不使用SQL</li>
+<li>在集群中运行良好：关系型数据库使用ACID事务来保持整个数据库的<strong>一致性</strong>，而这种方式本身与集群环境相冲突。NoSQL数据库为处理<strong>并发及分布问题</strong>提供了众多选项。</li>
+<li>开源</li>
+<li>适用于21世纪的互联网公司</li>
+<li>无模式：不用事先修改结构定义，即可自由添加字段了</li>
+</ol>
+</li>
+</ol>
+<h2 id="64-聚合"><a href="#64-聚合" class="headerlink" title="64 聚合"></a>64 聚合</h2><ol>
+<li>把一组相互关联的对象视为<strong>一个整体单元</strong>来操作，而这个单元就叫聚合。比如键值、文档、列族、图等。</li>
+</ol>
+<ul>
+<li>通过<strong>原子操作</strong>更新聚合的值（含一致性管理）</li>
+<li>以<strong>聚合</strong>为单位与数据存储通信</li>
+<li>在集群中操作数据库时，用聚合为单位来<strong>复制和分片</strong></li>
+<li>由于程序员经常通过聚合结构来操作数据，故而采用聚合也能让其工作更为轻松。</li>
+</ul>
+<ol start="2">
+<li><strong>聚合无知</strong>：关系型数据库的数据模型中，没有“聚合”这一概念。“图数据库”也是聚合无知的。<ol>
+<li>采用“聚合无知”模型，那么很容易就能以不同方式来查看数据。在操作数据时，如果没有一种占主导地位的结构，那么选用此模型效果会更好，如关系型数据库和图数据库。</li>
+<li>聚合的边界难以划分。</li>
+</ol>
+</li>
+<li>选用的决定性因素：面向聚合模型非常适合在<strong>集群</strong>上运行，可以把节点数降到最小。</li>
+<li>面向聚合的数据库不支持多个聚合的ACID事务，只能保证单一聚合内部内容的原子性（在单一操作中更新跨越多张表的数个行，要么完全成功，要么彻底失败），即<strong>每次只能在一个聚合结构上执行原子操作</strong>。如果想以原子方式操作多个聚合，那么就必须自己组织应用程序的代码。</li>
+</ol>
+<h2 id="65-主要的NoSQL数据模型"><a href="#65-主要的NoSQL数据模型" class="headerlink" title="65 主要的NoSQL数据模型"></a>65 主要的NoSQL数据模型</h2><ol>
+<li><p><strong>键值数据模型</strong></p>
+<ol>
+<li>键值数据库的聚合<strong>不透明</strong>，只包含一些没有太多意义的大块信息<ul>
+<li>聚合中可以存储<strong>任意数据</strong>。数据库可能会限制聚合的总大小，但除此之外，其他方面都很随意</li>
+<li>在键值数据库中，要访问聚合内容，只能通过<strong>键</strong>来查找</li>
+</ul>
+</li>
+</ol>
+</li>
+<li><p><strong>文档数据模型</strong></p>
+<ol>
+<li>在文档数据库的聚合中，可以看到其<strong>结构</strong>。<ul>
+<li>限制其中存放的内容，它定义了其允许的结构与数据类型</li>
+<li>能够更加灵活地访问数据。通过用聚合中的<strong>字段查询</strong>，可以只获取一部分聚合，而不用获取全部内容</li>
+<li>可以按照聚合内容创建索引</li>
+</ul>
+</li>
+</ol>
+</li>
+<li><p><strong>列族存储</strong> </p>
+<ol>
+<li>大部分数据库都以行为单元存储数据。然而，有些情况下写入操作执行得很少，但是经常需要一次读取若干行中的很多列。此时，列存储数据库将<strong>所有行的某一组列</strong>作为基本数据存储单元。</li>
+<li>两级聚合结构：get(‘1234’,’name’)&#x3D;”martin”</li>
+<li>设计前提：某个列族中的数据经常需要<strong>一起访问</strong>。<img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032328896.png" alt="image-20220620000332648"></li>
+</ol>
+</li>
+</ol>
+<h3 id="面向聚合数据库总结"><a href="#面向聚合数据库总结" class="headerlink" title="面向聚合数据库总结"></a>面向聚合数据库总结</h3><ol>
+<li><p>共同点</p>
+<ol>
+<li>都使用聚合这一概念，而且聚合中都有一个可以查找其内容的<strong>索引键</strong>。</li>
+<li>在集群上运行时，聚合是中心环节，因为数据库必须保证将<strong>聚合内的数据存放在同一个节点</strong>上。</li>
+<li>聚合是“更新”操作的最小数据单位，对事务控制来说，<strong>以聚合为操作单元</strong></li>
+</ol>
+</li>
+<li><p>差别</p>
+<ol>
+<li>键值数据模型将聚合看作<strong>不透明</strong>的整体，只能根据键来查出<strong>整个聚合</strong>，而不能仅仅查询或获取其中的一部分</li>
+<li>文档模型的聚合对数据库<strong>透明</strong>，于是就可以只查询并获取其中一部分数据了，不过，由于文档没有模式，因此在想优化存储并获取聚合中的部分内容时，数据库不太好调整文档结构</li>
+<li>列族模型把聚合分为列族，让数据库将其视为行聚合内的一个数据单元。此类聚合的结构有某种<strong>限制</strong>，但是数据库可利用此种结构的优点来提高其易访问性。</li>
+</ol>
+</li>
+</ol>
+<p><strong>图数据库</strong></p>
+<ol>
+<li>图数据库的基本数据模型：由边(或称“弧”)连接而成的若干节点。</li>
+<li>可以用专门为“图”而设计的查询操作来搜寻图数据库的网络了。遍历：非常迅速。</li>
+<li>与面向聚合数据库的明显差异：重视数据间的关系。</li>
+</ol>
+<h3 id="SQL与NoSQL最大的区别"><a href="#SQL与NoSQL最大的区别" class="headerlink" title="SQL与NoSQL最大的区别"></a>SQL与NoSQL最大的区别</h3><p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032328919.png" alt="image-20220620001323997"></p>
+<p>更改数据有差别，且无模式更易处理<strong>格式不一致的数据</strong></p>
+<p>问题：</p>
+<ol>
+<li>存在“<strong>隐含模式</strong>”。在编写数据操作代码时，对数据结构所做的一系列假设</li>
+<li><strong>不同程序</strong>访问相同数据库比较麻烦，因为无模式本质是将模式交给访问其数据的应用程序代码来处理。好在有两种解决方法：<ol>
+<li>使用应用程序数据库，并使用Web Services、SOA等完成<strong>集成</strong></li>
+<li>在聚合中为不同应用程序明确<strong>划分出不同区域</strong>。在文档数据库中，可以把文档分成不同的区段。在列族数据库，可以把不同的列族分给不同的应用程序。</li>
+</ol>
+</li>
+</ol>
+<h2 id="66-分布式模型"><a href="#66-分布式模型" class="headerlink" title="66 分布式模型"></a>66 分布式模型</h2><ol>
+<li><p>数据分布有两条路径:复制与分片。既可以在两者中选一个来用，也可以同时使用它们。</p>
+<ol>
+<li>“分片”则是将不同数据存放在不同节点中</li>
+<li>“复制”就是将同一份数据拷贝至多个节点;<ul>
+<li>“主从式’和“对等式”</li>
+</ul>
+</li>
+</ol>
+</li>
+<li><p>单一服务器：最简单的分布形式<strong>根本不分布</strong>。<strong>将数据库放在一台电脑中</strong>，让它处理对数据存储的读取与写入操作。</p>
+</li>
+<li><p>分片：把数据的各个部分存放于不同的服务器中，以此实现横向扩展。</p>
+<ol>
+<li>在理想情况下，不同的服务器节点会服务于<strong>不同的用户</strong>。每位用户只需与一台服务器通信，并且很快就能获得服务器的响应。<strong>网络负载相当均衡</strong>地分布于各台服务器上。</li>
+<li>为达成目标，必须保证需要<strong>同时访问的那些数据都存放在同一节点上</strong>，而且节点必须排布好这些数据块，使访问速度最优<ol>
+<li>若使用面向聚合的数据库，可以把<strong>聚合</strong>作为分布数据的单元。</li>
+<li>地理：距离近一点</li>
+<li>负载均衡：聚合数据均匀分布在各个节点</li>
+<li>聚合有序放置：依次读取的聚合放一起</li>
+<li>如果采用应用程序的逻辑实现分片，会变复杂。所以应该使用NoSQL数据库提供的<strong>“自动分片”</strong>功能。</li>
+</ol>
+</li>
+<li>分片可以同时提升读取与写入效率。</li>
+<li>分片对改善数据库的“故障恢复能力”帮助并不大。尽管数据分布在不同的节点上，但是和“单一服务器”方案一样，<strong>只要某节点出错，那么该分片上的数据就无法访问了</strong>。反而会<strong>降低</strong>数据库的错误恢复能力。</li>
+</ol>
+</li>
+<li><p>主从复制：<img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032328935.png" alt="image-20220620093502601"></p>
+<ul>
+<li>在需要<strong>频繁读取</strong>数据集的情况下，“主从复制”有助于提升数据访问性能</li>
+<li>“主从复制” 可以增强“读取操作的<strong>故障恢复能力</strong>”。主节点出错时可以立即指派<strong>新节点</strong>。</li>
+<li>缺陷：数据不一致性。</li>
+</ul>
+</li>
+<li><p>对等复制：</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032328503.png" alt="image-20220620094108225"></p>
+<ul>
+<li>麻烦：数据的一致性。两个结点可以同时处理写入操作，可能出现“写入冲突”。但可以解决。</li>
+</ul>
+</li>
+<li><p><strong>结合“主从复制”与“分片”</strong>：整个系统有多个主节点，然而对每项数据来说，<strong>负责它的主节点只有一一个</strong>。同一个节点既可以做某些数据的主节点，也可以充当其他数据的从节点，此外，也可以指派全职的主节点或从节点。</p>
+</li>
+<li><p><strong>结合“对等复制”与“分片”</strong>：在采用“对等复制”方案时，一开始可以用“3”作为<strong>复制因子</strong>, 也就是把每个分片数据放在3个节点中。一旦某个节点出错，那么它上面保存的那些分片数据会由其他节点重建。</p>
+</li>
+</ol>
+<h2 id="67-分布式模型中的一致性"><a href="#67-分布式模型中的一致性" class="headerlink" title="67 分布式模型中的一致性"></a>67 <strong>分布式模型中的一致性</strong></h2><ol>
+<li><p>更新一致性</p>
+<ul>
+<li>当两个客户端试图同时修改一份数据时，会发生“写入冲突”。而当某客户端在另一个客户端执行写入操作的过程中读取数据时，则会发生“读写冲突”。</li>
+<li>悲观方式：写入锁</li>
+<li>乐观方式：<strong>条件更新</strong>，即任意客户在执行更新操作之前，都要先测试数据的当前值和其上一次读入的值是否相同</li>
+</ul>
+</li>
+<li><p>读取一致性</p>
+<ul>
+<li><strong>事务</strong>可以避免读写冲突造成的逻辑不一致。</li>
+<li>“图数据库”常常和关系型数据库一样，也支持ACID事务。所以可以用事务解决。</li>
+<li>面向聚合的数据库通常支持“原子更新”,但仅限于单一聚合内部。所以<strong>内部可以保持逻辑一致性，但各聚合之间不可以。</strong></li>
+</ul>
+</li>
+<li><p>复制一致性：要求从不同副本中读取同一个数据项时，所得到的值相同。</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032328674.png" alt="image-20220620095443897"></p>
+<ul>
+<li>若写入操作已经传播至所有节点，则此刻的数据库就具备“<strong>最终一致性</strong>”</li>
+<li>复制不一致性带来的“不一致窗口”，在考虑网络环境后，会比单一节点导致的“不一致窗口”长的多</li>
+</ul>
+</li>
+<li><p>照原样读出所写内容的一致性：在执行完更新操作之后，要能够<strong>立刻看到新值</strong>。在具备“最终一致性” 的系统中，可以提供“<strong>会话一致性</strong>”</p>
+<ul>
+<li>使用“黏性会话“</li>
+<li>使用“版本戳”</li>
+</ul>
+</li>
+</ol>
+<h2 id="68-放宽“一致性”和“持久性”约束"><a href="#68-放宽“一致性”和“持久性”约束" class="headerlink" title="68 放宽“一致性”和“持久性”约束"></a>68 <strong>放宽</strong>“一致性”和“持久性”约束</h2><ol>
+<li>使用“事务”达成强一致性。引入放松“隔离级别”的功能，以允许查询操作读取尚未提交的数据。<ol>
+<li>会降低性能</li>
+</ol>
+</li>
+</ol>
+<h3 id="CAP定理"><a href="#CAP定理" class="headerlink" title="CAP定理"></a>CAP定理</h3><ol>
+<li><p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032328699.png" alt="image-20220620135707631"></p>
+</li>
+<li><p>CAP定理是需要放宽一致性约束的原因。同时满足两个即可。</p>
+<ol>
+<li><p>一致性</p>
+</li>
+<li><p>可用性：如果客户可以同集群中的某个节点通信，那么该节点就必然能够处理读取及写入操作。</p>
+<p>可用性定义为“系统中某个<strong>无故障节点</strong>所接收的每一条请求， 无论成功或失败，都必将<strong>得到响应</strong>。”</p>
+</li>
+<li><p>分区耐受性：如果发生通信故障，导致整个集群被分割成多个无法互相通信的分区时(这种情况也叫“ 脑裂”)，集群仍然可用。如下图，中间被分割，两侧均可用。</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032328720.png" alt="image-20220620100525612"></p>
+</li>
+</ol>
+</li>
+<li><p>CA系统：大多数关系型数据库</p>
+<ol>
+<li>无法保证“分区耐受性”，这使得一旦“分区”发生，所有节点必须停止运作</li>
+</ol>
+</li>
+<li><p>尽管“CAP定理”经常表述为“三个属性中只能保有两个”，实际上当系统可能会遭遇“分区”状况时(比如分布式系统)，需要在<strong>“一致性”与“可用性”</strong>之间进行权衡。不是二选一！</p>
+<ol>
+<li>改善可用性：不用对等式而用主从式；或者直接都接受</li>
+</ol>
+</li>
+<li><p>BASE属性：基本可用，柔性状态，最终一致性</p>
+</li>
+<li><p>对于一个读写请求，越多的结点参与，一致性就越高，但响应时间越长，延迟越高，可用性越低</p>
+</li>
+<li><p>如一个节点处理完更新操作之后，在更新数据尚未复制到其他节点之前就出错了，那么则会发生“<strong>复制持久性</strong>” 故障</p>
+<p>解决：不重新指派新的主节点；确保主节点在收到某些副本对更新数据的确认之后，再告知用户它已接纳此更新</p>
+</li>
+</ol>
+<h2 id="69-仲裁"><a href="#69-仲裁" class="headerlink" title="69 仲裁"></a>69 仲裁</h2><p>处理请求所的节点越多，避免“不一致”问题的能力就越强，要想保证“强一致性”， 需要使用多少个节点才行?想要保证能够读到最新数据，必须与多少个节点联系才行?</p>
+<p>对于对等式分布模型：</p>
+<ol>
+<li><p>写入仲裁：如果发生两个相互冲突的写入操作，那么只有其中一个操作能为超过半数的节点所认可，<strong>W&gt;N&#x2F;2</strong> 。即，<strong>参与写入操作</strong>的节点数(W)，必须超过副本节点数(N)的一半。副本个数又称为“复制因子”</p>
+</li>
+<li><p>读取仲裁：只有当<strong>R+W&gt;N</strong>时，才能保证读取操作的“强一致性”。其中，执行读取操作时所需联系的节点数(R)，确认写入操作时所需征询的节点数(W)，以及复制因子(N)</p>
+<ol>
+<li>即使写入不具备强一致性，该公式也能保证读取具有强一致性</li>
+<li>如果通信读取的数据一样，肯定是没问题的。</li>
+</ol>
+</li>
+</ol>
+<p>对于主从式分布模型：对主节点读写准没错。</p>
+<h2 id="70-版本戳x"><a href="#70-版本戳x" class="headerlink" title="70 版本戳x"></a>70 版本戳x</h2><ol>
+<li><p>“条件更新”：乐观离线锁是条件更新的一种形。客户端执行操作时，将重新读取“商业活动”所依赖的信息，并检测该信息在首次读取之后是否一直没有变动，若<strong>一直未变</strong>，则将其展示给用户。</p>
+</li>
+<li><p>通过保证数据库中的记录都有某种形式的“版本戳”实现“乐观离线锁”。</p>
+<ol>
+<li>版本戳是一个字段，每当记录中的底层数据改变时，其值也随之改变。</li>
+<li>读取数据时可以记下版本戳，这样的话，在写入数据之前，就可以先检查一下<strong>数据版本是否已经变了</strong>。</li>
+<li>CAS操作：数据库条件更新时比较的是值对应的版本戳。</li>
+<li>构建方式：<ol>
+<li>使用计数器</li>
+<li>使用GUID（全局唯一标识符），也就是一个值很大且保证唯一的随机数。</li>
+<li>根据资源内容生成哈希码(hash)。只要哈希键足够大，那么“内容哈希码”(content hash)就可以像GUID那样全局唯一，而且任何人都可以来生成它。</li>
+<li>使用上一次更新时的时间戳( timestamp)。</li>
+<li>复合版本戳</li>
+</ol>
+</li>
+<li>主从式模型中：从节点必须使用主节点的版本戳。<ol>
+<li>若有多个主节点：<ol>
+<li>确保所有节点都有一份“版本戳记录”</li>
+<li>使用“时间戳”</li>
+</ol>
+</li>
+</ol>
+</li>
+<li>对等式模型中：没有统一设置版本戳的地方<ol>
+<li>“数组式版本戳” 由一系列计数器组成，每个计数器都代表一个节点。</li>
+<li>[blue: 43，green :<strong>54</strong>，black: 12] 。假设绿色节点执行了一次更新操作，那么现在这个“数组式版本戳”就成了[blue: 43，green: <strong>55</strong>， black: 12]。</li>
+<li>若两个版本戳中都有一个计数器比对方大，那么就发生了“写入冲突”</li>
+<li>数组中可能缺失某些值，我们将其<strong>视为0</strong>。比如，[blue: 6, black: 2] 与[blue: 6，green: 0，black: 2]等价。</li>
+<li>只能检测，不能解决冲突！依赖领域知识。</li>
+</ol>
+</li>
+<li>在“一致性”与延迟之间权衡时：如果偏向“一致性”，那么系统在出现“<strong>网络分区</strong>”现象时就无法使用反之，若要减少延迟，则必须<strong>自己检测并处理“不一致”问题。</strong></li>
+</ol>
+</li>
+</ol>
+<h2 id="71-键值数据库"><a href="#71-键值数据库" class="headerlink" title="71 键值数据库"></a>71 键值数据库</h2><p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032328752.png" alt="image-20220620111252416"></p>
+<ol>
+<li><p>在键值数据库中，所存储的聚合不一定是领域对象，也可以拥有通用数据结构</p>
+</li>
+<li><p>使用单一存储区，把所有数据都放在<strong>一个对象</strong>里，并将其存入单一的存储区中<img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032328781.png" alt="image-20220620111515012" style="zoom:50%;" /></p>
+<p>将各类对象(也就是聚合)全部存放在一个“存储区”中，其缺点是：“存储区”中可能要存放类型不同的多个聚合，这增加了<strong>关键字冲突</strong>的几率。把对象名放在键名后面即可。<img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032328597.png" alt="image-20220620111701477"></p>
+</li>
+<li><p>“领域存储区”来存放特定数据，可以把数据分割为对象，放在不同的存储区中</p>
+</li>
+<li><p>键值数据库特性</p>
+<ol>
+<li>一致性：分布式键值数据库，用“最终一致性模型” 实现“一致性”。在创建“存储区”时设置与一致性有关的选项。</li>
+<li>事务：一般来说无法保证写入操作的“一致性”。用W和复制因子实现仲裁。</li>
+<li>查询功能：关键字查询，只能获得整个value。通过某种算法生成key。</li>
+<li>数据结构：不关心键值对里的值。</li>
+<li>可扩展性：可用分片技术扩展。采用此技术后，键的名字就决定了负责存储该键的节点。</li>
+</ol>
+</li>
+<li><p><strong>适用案例</strong>：</p>
+<ol>
+<li>存放会话信息</li>
+<li>用户配置信息</li>
+<li>购物车数据</li>
+</ol>
+</li>
+<li><p><strong>不适合场合</strong>：</p>
+<ol>
+<li>数据间关系</li>
+<li>含有多项操作的事务</li>
+<li>查询数据</li>
+<li>操作关键字集合</li>
+</ol>
+</li>
+</ol>
+<h2 id="72-文档数据库"><a href="#72-文档数据库" class="headerlink" title="72 文档数据库"></a>72 文档数据库</h2><ol>
+<li>文档数据库中，放在同一“集合”内的各文档的“数据模式”可以不同</li>
+<li>文档中可以嵌套数组等基本数据类型，也可以将“子文档” 以“子对象” 的形式嵌入主文档。</li>
+<li>由于没有“数据模式”约定，文档数据库的文档中<strong>无需空属性</strong>，若其中不存在某属性，就假定该属性值未设定或与此文档无关。向文档中新增属性时，<strong>既无需预先定义，也不用修改已有文档内容。</strong></li>
+<li>特性：<ol>
+<li>一致性：配置副本集</li>
+<li>事务：其写入操作要么成功，要么失败。</li>
+<li>可用性：可以用主从式数据复制技术来增强“可用性”。副本集中有一个主节点，若干从结点。</li>
+<li>查询功能：<strong>可以查询文档中的数据</strong>，而不用像键值数据库那样，必须根据关键字获取整个文档，然后再检视其内容。</li>
+<li>可扩展性：<ol>
+<li><strong>增加更多的“读取从节点</strong>”，将读取操作导引至从节点上，这样就可以扩展数据库应对<strong>频繁读取</strong>的能力了。</li>
+<li>如果想扩展写入能力，可以<strong>把数据“分片”</strong> 。</li>
+<li>可以把<strong>每个”分片”都做成“副本集”</strong>，以提高其读取效率。</li>
+</ol>
+</li>
+</ol>
+</li>
+<li>适用案例：<ol>
+<li>事件记录</li>
+<li>内容管理系统及博客平台</li>
+<li>网站分析与实时分析</li>
+<li>电子商务应用程序</li>
+</ol>
+</li>
+<li>不适合场合：<ol>
+<li>包含多项操作的复杂事务</li>
+<li>查询持续变化的聚合结构</li>
+</ol>
+</li>
+</ol>
+<h2 id="73-列族数据库"><a href="#73-列族数据库" class="headerlink" title="73 列族数据库"></a>73 列族数据库</h2><p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032328754.png" alt="image-20220620114343249"></p>
+<ol>
+<li>Cassandra的基本存储单元为“列”，列由一个“名值对”组成，其中的名字也充当关键字。</li>
+<li>每个键值对都占据一列，并且都存有一个“时间戳”值。</li>
+<li>特性：<ol>
+<li>一致性：Cassandra收到写入请求后，会先将待写数据记录到“提交日志”中，然后将其写入内存里一个名为“内存表”的结构中。<strong>写入操作在写入“提交日志”及“内存表”后，就算成功了。</strong></li>
+<li>事务：Cassandra 的写入操作在“行”级别是“原子的”。根据某个给定的行键向行中<strong>插入或更新多个列</strong>，将算作一个写入操作，它要么成功，要么失败。</li>
+<li>可用性：没有主节点。(R+W) &gt;N。</li>
+<li>查询功能：由于Cassandra没有功能丰富的查询语言，所以在设计其数据模型时，应该优化列与列族，以提升数据读取速度。比如排序，选行键。</li>
+<li>可扩展性：在已有的Cassandra集群中扩展，也就意味着增加更多节点。</li>
+</ol>
+</li>
+<li>适用案例：<ol>
+<li>事件记录</li>
+<li>内容管理系统与博客平台</li>
+<li>计数器</li>
+<li>限期使用</li>
+</ol>
+</li>
+<li>不适合场合：<ol>
+<li>需要以“ACID事务”执行写入及读取操作的系统。</li>
+<li>在开发早期原型或刚开始试探某个技术方案时。</li>
+</ol>
+</li>
+</ol>
+<h2 id="74-图数据库"><a href="#74-图数据库" class="headerlink" title="74 图数据库"></a>74 图数据库</h2><ol>
+<li><p>图数据库可存放实体及实体间关系。实体和关系都带有属性。</p>
+</li>
+<li><p>特性：</p>
+<ol>
+<li><p>一致性：通过<strong>事务</strong>来保证“一致性”。</p>
+</li>
+<li><p>事务：兼容ACID事务。<strong>修改节点或向现有节点新增关系前</strong>，必须先启动事务。读取操作可不通过事务执行。</p>
+</li>
+<li><p>可用性：支持“副本从节点”。</p>
+</li>
+<li><p>查询功能：可以使用查询语言，可以建立索引。遍历图时，可以通过查询索引找出起始节点。DFS图、查找路径是优点。</p>
+</li>
+<li><p>可扩展性：因为不面向聚合而是面向关系，所以分片比较难。把相关节点放在同一台服务器中，遍历图时会更方便些。若数据集太大，导致多节点复制不太现实，那么可用“领域特定知识”在应用程序端对其分片。</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032328769.png" alt="image-20220620120027850"></p>
+</li>
+</ol>
+</li>
+<li><p>适用案例：</p>
+<ol>
+<li>互联数据</li>
+<li>安排运输路线、分派货物和基于位置的服务</li>
+<li>推荐引擎</li>
+</ol>
+</li>
+<li><p>不适合场合：</p>
+<ol>
+<li>图数据库在更新全部或某子集内的实体时也许不适用。</li>
+<li>即便数据模型适合问题领域，某些图数据库可能也无法处理那么大的数据量，尤其在执行“全局图操作”时更是如此。</li>
+</ol>
+</li>
+</ol>
+<h1 id="SQL语句书写"><a href="#SQL语句书写" class="headerlink" title="SQL语句书写"></a>SQL语句书写</h1><h2 id="13-单表查询-1"><a href="#13-单表查询-1" class="headerlink" title="13 单表查询"></a>13 单表查询</h2><p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032326990.png" alt="image-20220611145528157"></p>
+<ul>
+<li>可以是Sno(列)&#x2F;*(与原表顺序相同)&#x2F;2014-Sage(表达式)&#x2F;别名(改变列标题)</li>
+<li>DISTINCT：去掉重复行</li>
+<li>WHERE表示指定条件（作用于表）<ul>
+<li>BETWEEN AND(范围) IN(集合)LIKE(匹配字符)IS NULL(空值)AND OR(多重条件查询)</li>
+<li>ORDER BY(升降排列)</li>
+</ul>
+</li>
+<li>聚集函数 COUNT SUM AVG MAX MIN(需要指定DISTINCT或ALL)<ul>
+<li><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032326003.png" alt="image-20220611145605872"></li>
+<li>WHERE不能用聚集函数作为条件表达式，聚集函数只用于SELECT和GROUP BY中的HAVING子句。</li>
+</ul>
+</li>
+<li>GROUP BY按照某一列或多列的值分组（作用于组）<ul>
+<li>如所有相同Cno值的元组为一组，然后<strong>对每一组作用聚集函数</strong>进行计算。若分组后再进行筛选，则用HAVING指定条件。</li>
+<li><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032326014.png" alt="image-20220611145803455"></li>
+<li><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032326016.png" alt="image-20220611145942460"><ul>
+<li>HAVING写在GROUP BY后面</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="14-连接查询-1"><a href="#14-连接查询-1" class="headerlink" title="14 连接查询"></a>14 连接查询</h2><p>嵌套循环法、排序合并法、索引连接</p>
+<ul>
+<li>等值连接与非等值连接<ul>
+<li><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032326024.png" alt="image-20220611150529452"></li>
+</ul>
+</li>
+<li>自身连接：取两个别名，可选择间接先修课等<ul>
+<li><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032326029.png" alt="image-20220611150541166"></li>
+</ul>
+</li>
+<li>多表连接：两个以上的表进行连接<img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032326553.png" alt="image-20220611150702328"></li>
+</ul>
+<h2 id="15-嵌套查询-1"><a href="#15-嵌套查询-1" class="headerlink" title="15 嵌套查询"></a>15 嵌套查询</h2><p>基本可以转换为自身连接，多表连接</p>
+<ul>
+<li><p>注意子查询不能有ORDER BY，ORDER BY只能对最终查询结果排序</p>
+<ul>
+<li>不相关子查询：由里向外逐层处理。</li>
+<li>相关子查询：从外到里，重复每一层</li>
+</ul>
+</li>
+<li><p>谓词IN  </p>
+</li>
+<li><p>谓词EXISTS </p>
+<ul>
+<li>只返回逻辑真假，若为真，就把SELECT的东西送入结果表</li>
+<li>不可被其他子查询等价替换，但可替换IN&#x2F;比较&#x2F;ANY ALL等子查询</li>
+<li><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032326570.png" alt="image-20220611151631764"></li>
+</ul>
+</li>
+<li><p>谓词ANY（SOME）或ALL</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032326588.png" alt="image-20220611151229051"></p>
+<p>和多值进行了比较（聚集函数效率更高）</p>
+</li>
+</ul>
+<h2 id="16-集合查询-1"><a href="#16-集合查询-1" class="headerlink" title="16 集合查询"></a>16 集合查询</h2><ul>
+<li><p>UNION并 INTERSECT交 EXCEPT差</p>
+<ul>
+<li>UNION返回若干个查询结果，但重复时不显示 </li>
+<li>UNION ALL显示重复的</li>
+</ul>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502032326606.png" alt="image-20220611151756219"></p>
+</li>
+</ul>
+
+        </div>
+
+        
+            <section class="post-copyright">
+                
+                
+                
+                
+
+            </section>
+        
+        <section class="post-tags">
+            <div>
+                <span>标签:</span>
+                <span class="tag">
+                    
+                    
+                        <a href="/tags/%E8%AF%BE%E7%A8%8B/"># 课程</a>
+                    
+                        
+                </span>
+            </div>
+            <div>
+                <a href="javascript:window.history.back();">返回</a>
+                <span>· </span>
+                <a href="/">主页</a>
+            </div>
+        </section>
+        <section class="post-nav">
+            
+                <a class="prev" rel="prev" href="/2022/07/01/2022%E6%98%A5%E5%AD%A3%E3%80%8A%E7%AE%97%E6%B3%95%E3%80%8B%E8%AF%BE%E7%A8%8B%E7%AC%94%E8%AE%B0/">2022春季《算法》课程笔记</a>
+            
+            
+            <a class="next" rel="next" href="/2022/07/01/2022%E6%98%A5%E5%AD%A3%E3%80%8A%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E3%80%8B%E8%80%83%E8%AF%95%E9%87%8D%E7%82%B9/">2022春季《计算机网络》考试重点</a>
+            
+        </section>
+
+
+    </article>
+</div>
+
+
+    <div id="gitalk-container"></div>
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.css">
+<script src="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.min.js"></script>
+<script src="//cdn.bootcss.com/blueimp-md5/2.10.0/js/md5.js"></script>
+<div id="gitalk-container"></div>
+<script type="text/javascript">
+      var gitalk = new Gitalk({
+        clientID: '',
+        clientSecret: '',
+        repo: 'blog_comment',
+        owner: 'lyxx2535',
+        admin: 'lyxx2535',
+        id: md5(location.pathname),
+        labels: 'Gitalk'.split(',').filter(l => l),
+        perPage: 10,
+        pagerDirection: 'last',
+        createIssueManually: true,
+        distractionFreeMode: false
+      })
+      gitalk.render('gitalk-container')
+</script>
+
+            </div>
+            <footer id="footer" class="footer">
+    <div class="copyright">
+        <span>© Annie | Powered by <a href="https://hexo.io" target="_blank">Hexo</a> & <a href="https://github.com/Siricee/hexo-theme-Chic" target="_blank">Chic</a> | 2020 - 2025
+            <br>
+            <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+<span class="site-uv">
+    Total visitors:
+    <i class="busuanzi-value" id="busuanzi_value_site_uv"></i>
+</span>&nbsp;|&nbsp;
+
+
+<span class="site-pv">
+    Total views:
+    <i class="busuanzi-value" id="busuanzi_value_site_pv"></i>
+</span>
+
+          </span>
+    </div>
+</footer>
+
+    </div>
+</body>
+
+</html>
