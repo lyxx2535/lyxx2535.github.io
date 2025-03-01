@@ -1,0 +1,955 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <meta name="author" content="Annie">
+
+
+
+
+
+<title>字节青训营大数据方向部分笔记 | Annie&#39;s Blog</title>
+
+
+
+    <link rel="icon" href="/favicon.ico">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+    <script src="/js/tocbot.min.js"></script>
+    
+
+
+
+    
+    
+        
+    
+
+
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+<body>
+    <script>
+        // this function is used to check current theme before page loaded.
+        (() => {
+            const currentTheme = window.localStorage && window.localStorage.getItem('theme') || '';
+            const isDark = currentTheme === 'dark';
+            const pagebody = document.getElementsByTagName('body')[0]
+            if (isDark) {
+                pagebody.classList.add('dark-theme');
+                // mobile
+                document.getElementById("mobile-toggle-theme").innerText = "· Dark"
+            } else {
+                pagebody.classList.remove('dark-theme');
+                // mobile
+                document.getElementById("mobile-toggle-theme").innerText = "· Light"
+            }
+        })();
+    </script>
+
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">Annie&#39;s Blog</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default">
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+        </div>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">Annie&#39;s Blog</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; 菜单</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+            <div class="main">
+                <div class="container">
+    
+    
+        <div class="post-toc">
+    <div class="tocbot-list">
+    </div>
+    <div class="tocbot-list-menu">
+        <a class="tocbot-toc-expand" onclick="expand_toc()">全部展开</a>
+        <a onclick="go_top()">回到顶部</a>
+        <a onclick="go_bottom()">前往底部</a>
+    </div>
+</div>
+
+<script>
+    var tocbot_timer;
+    var DEPTH_MAX = 6; // 为 6 时展开所有
+    var tocbot_default_config = {
+        tocSelector: '.tocbot-list',
+        contentSelector: '.post-content',
+        headingSelector: 'h1, h2, h3, h4, h5',
+        orderedList: false,
+        scrollSmooth: true,
+        onClick: extend_click,
+    };
+
+    function extend_click() {
+        clearTimeout(tocbot_timer);
+        tocbot_timer = setTimeout(function() {
+            tocbot.refresh(obj_merge(tocbot_default_config, {
+                hasInnerContainers: true
+            }));
+        }, 420); // 这个值是由 tocbot 源码里定义的 scrollSmoothDuration 得来的
+    }
+
+    document.ready(function() {
+        tocbot.init(obj_merge(tocbot_default_config, {
+            collapseDepth: 1
+        }));
+    });
+
+    function expand_toc() {
+        var b = document.querySelector('.tocbot-toc-expand');
+        var expanded = b.getAttribute('data-expanded');
+        expanded ? b.removeAttribute('data-expanded') : b.setAttribute('data-expanded', true);
+        tocbot.refresh(obj_merge(tocbot_default_config, {
+            collapseDepth: expanded ? 1 : DEPTH_MAX
+        }));
+        b.innerText = expanded ? 'Expand all' : 'Collapse all';
+    }
+
+    function go_top() {
+        window.scrollTo(0, 0);
+    }
+
+    function go_bottom() {
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+
+    function obj_merge(target, source) {
+        for (var item in source) {
+            if (source.hasOwnProperty(item)) {
+                target[item] = source[item];
+            }
+        }
+        return target;
+    }
+</script>
+    
+
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">字节青训营大数据方向部分笔记</h1>
+            
+                <div class="post-meta">
+                    
+                        作者: <a itemprop="author" rel="author" href="/">Annie</a>
+                    
+
+                    
+                        <span class="post-time">
+                        日期: <a href="#">February 26, 2025&nbsp;&nbsp;11:52:06</a>
+                        </span>
+                    
+                    
+                        <span class="post-category">
+                        分类:
+                            
+                                <a href="/categories/%E5%BC%80%E5%8F%91/">开发</a>
+                            
+                        </span>
+                    
+                </div>
+            
+        </header>
+
+        <div class="post-content">
+            <h1 id="1-SQL-Optimizer解析"><a href="#1-SQL-Optimizer解析" class="headerlink" title="1. SQL Optimizer解析"></a>1. SQL Optimizer解析</h1><h2 id="1-大数据体系介绍与SQL处理流程"><a href="#1-大数据体系介绍与SQL处理流程" class="headerlink" title="1. 大数据体系介绍与SQL处理流程"></a>1. 大数据体系介绍与SQL处理流程</h2><p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502261157293.png" alt="image-20250226115658151"></p>
+<p>消息队列用来解耦存储和计算</p>
+<p>分析引擎都支持SQL，如Spark，MapReduce逐渐开始支持</p>
+<p>最终目标是通过SQL处理所有大数据</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502261200284.png" alt="image-20250226120018246"></p>
+<p>Parser：词法分析和语法分析已经很成熟了，有很多API，得到AST</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502261200164.png" alt="image-20250226120053021"></p>
+<p>Analyzer：检查合法性，把AST变成Logical Plan</p>
+<p>逻辑：只是逻辑，没有指定一定要用哪一种算法</p>
+<ul>
+<li>三张表连接，一些过滤条件和选择，group by是聚合，top n用堆排序（limit 10）</li>
+<li>left-deep tree：</li>
+</ul>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502261214296.png" alt="image-20250226121421163"></p>
+<p>查询优化：找到正确和执行代价最小的计划，对效率的帮助很大，有些是NP的。单机可能优化比较简单，大数据：多机、多张表，执行性能相差很大，需要优化</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502261216363.png" alt="image-20250226121651256"></p>
+<p>拆分执行计划（F#1-&gt;F#7），发送给节点，充分利用并行机制。子树拆分也是一个优化问题</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502261219698.png" alt="image-20250226121943574"></p>
+<p>总结：</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502261220726.png" alt="image-20250226122024639"></p>
+<h2 id="2-常见查询优化"><a href="#2-常见查询优化" class="headerlink" title="2. 常见查询优化"></a>2. 常见查询优化</h2><p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502261222744.png" alt="image-20250226122208612"></p>
+<h3 id="RBO"><a href="#RBO" class="headerlink" title="RBO"></a>RBO</h3><p>运算符可以拆分（结合律），表连接时顺序可以变（交换律）</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502261223776.png" alt="image-20250226122317661"></p>
+<p>优化网络：project选出两列出来</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502261225097.png" alt="image-20250226122551981"></p>
+<p>优化规则1列裁剪：用不到的列去掉，可以减少IO和内存占用，只使用需要的列</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502261227924.png" alt="image-20250226122732798"></p>
+<p>优化规则2微词下推：filter是谓词，尽早地过滤数据，减少传输和计算开销。下推是有条件的，这里的join不影响</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502261229576.png" alt="image-20250226122927449"></p>
+<p>优化规则3传递闭包：没有filter创造filter</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502261230661.png" alt="image-20250226123033527"></p>
+<p>优化规则4 Runtime Filter Builder构建哈希表：min-max：右边的数据的最大值和最小值；in-list：0-100的101个数，和100万的1个数，用集合排列；bloom filter：固定大小，不随集合大小改变</p>
+<ul>
+<li>传递给左边，减少左边的扫描量</li>
+</ul>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502261238425.png" alt="image-20250226123852279"></p>
+<p>缺点是不保证得到最优的执行计划</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502261241418.png" alt="image-20250226124102247"></p>
+<h3 id="CBO"><a href="#CBO" class="headerlink" title="CBO"></a>CBO</h3><p>用模型来估算执行代价-&gt;拆解成所有算子，得到所有可能得执行计划</p>
+<p>公式比较多，每个系统不一样</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502261241926.png" alt="image-20250226124149754"></p>
+<p>选择率：对于过滤条件，会返回多少比例得数据</p>
+<p>基数：算子需要处理得行数</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502261245873.png" alt="image-20250226124500748"></p>
+<p>三种方式在实际中都会用到，用于统计信息便于推导代价最小的计划</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502261246745.png" alt="image-20250226124615611"></p>
+<p>fs是filter selectivity 选择率</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502261252597.png" alt="image-20250226125232467"></p>
+<p>有些列是有关联性的，比如车型和制造商，不能按照独立性相乘，需要特殊处理此类统计信息</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502261254078.png" alt="image-20250226125433881"></p>
+<p>得到统计信息后，如何找到代价最小的执行计划？枚举：贪心或动态规划，全局最优-&gt;局部最优</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502261255877.png" alt="image-20250226125547741"></p>
+<p>计算子问题的代价：如三表连接先用两表连接（两种连接方式），选最好的</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502261257420.png" alt="image-20250226125718651" style="zoom:50%;" /><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502261258634.png" alt="image-20250226125812528" style="zoom: 33%;" /></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502261258573.png" alt="image-20250226125849454"></p>
+<p>大表和小表连接开销会很大：</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502261259437.png" alt="image-20250226125941327"></p>
+<p>CBO可以减少数据量（这个例子是spark的）</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502261301635.png" alt="image-20250226130101517"></p>
+<p>有一些query在CBO下有很好的提升</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502261301987.png" alt="image-20250226130140889"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502261302603.png" alt="image-20250226130202524"></p>
+<p>大数据下CBO重要</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502261302509.png" alt="image-20250226130223416"></p>
+<h2 id="3-社区开源实践"><a href="#3-社区开源实践" class="headerlink" title="3. 社区开源实践"></a>3. 社区开源实践</h2><p>Calcite是Java，Orca是C++</p>
+<p>Clickhouse只有简单的RBO</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502261303154.png" alt="image-20250226130352034"></p>
+<p>作为通用的SQL查询引擎</p>
+<p>核心是Query Optimizer</p>
+<ul>
+<li>Metadata是统计信息</li>
+<li>Pluggable Rules是插件，可以不同系统定义不同的规则</li>
+</ul>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502261305248.png" alt="image-20250226130504128"></p>
+<p>RBO：遍历树，等价替换成新的规则</p>
+<p>把Logical Filter拆成两个Filter</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502261306481.png" alt="image-20250226130644351"></p>
+<p>CBO：求每个子问题的最优，用memo记录，初始每个算子放在一个group里</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502261606699.png" alt="image-20250226160548268"></p>
+<p>从上往下遍历，才能得到完整的执行计划</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502261608338.png" alt="image-20250226160814220"></p>
+<p>最优解是递归退出来的，best1-&gt;best3…</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502261608147.png" alt="image-20250226160855029"></p>
+<p>剪枝：避免遍历所有空间，如果已经超过上限了就不看了</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502261609956.png" alt="image-20250226160937856"></p>
+<p>Top-down：注意是全局最优，所以第二行选了cost&#x3D;80</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502261611391.png" alt="image-20250226161108310"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502261618280.png" alt="image-20250226161823187"></p>
+<h2 id="4-前沿趋势"><a href="#4-前沿趋势" class="headerlink" title="4. 前沿趋势"></a>4. 前沿趋势</h2><blockquote>
+<p>视频是22年录的</p>
+</blockquote>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502261619545.png" alt="image-20250226161911379"></p>
+<p>趋势：</p>
+<p>数据仓库：预先定义表和模型，对原始日志进行管理，存入：对业务迭代不太好，因为固定结构，不包含原始日志。数据湖就比较灵活，希望两者结合。联邦查询。</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502261619516.png" alt="image-20250226161956448"></p>
+<p>用AI进行SQL查询优化。建索引、视图根据经验。</p>
+<p>在数据库里嵌入AI算法，让用户学习成本更少</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502261622967.png" alt="image-20250226162224857"></p>
+<p>优化器必不可少，很重要</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502261624354.png" alt="image-20250226162428313"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502261624723.png" alt="image-20250226162451687"></p>
+<h1 id="2-流-批-OLAP-一体的Flink引擎介绍"><a href="#2-流-批-OLAP-一体的Flink引擎介绍" class="headerlink" title="2. 流&#x2F;批&#x2F;OLAP 一体的Flink引擎介绍"></a>2. 流&#x2F;批&#x2F;OLAP 一体的Flink引擎介绍</h1><p>Flink：实时分析</p>
+<h2 id="1-Apache-Flink-概述"><a href="#1-Apache-Flink-概述" class="headerlink" title="1. Apache Flink 概述"></a>1. Apache Flink 概述</h2><p>不仅有结构化数据，还有音频、视频等非结构化数据。</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502261646118.png" alt="image-20250226164634053"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502261647394.png" alt="image-20250226164713342"></p>
+<p>随着数据规模扩大，Google发布了三个论文：HDFS&#x2F;MD&#x2F;离线计算。</p>
+<p>Spark：MD的数据罗盘，Spark内存迭代；MD有两个算子，api比较固化，Spark支持sql</p>
+<p>Flink：流式数据处理实时数据，支持SQL</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502261648871.png" alt="image-20250226164842810"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502261649692.png" alt="image-20250226164910660"></p>
+<p>批式数据处理的是静态数据，一批到了才处理</p>
+<p>流式计算：水龙头，对实时数据，动态无边界，持续不断地运行</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502261650167.png" alt="image-20250226165016127"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502261650817.png" alt="image-20250226165044756"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502261651504.png" alt="image-20250226165113449"></p>
+<p>能否做到精确一次计算</p>
+<p>状态：Flink之前，中间结果会存在外部数据库，现在不用依赖外部系统，用引擎完成处理需求</p>
+<p>SQL很重要，对业务维护成本低</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502261653831.png" alt="image-20250226165345770"></p>
+<p>可以基于无边界（Kafka消息队列，流数据）和有边界数据集（批数据）进行处理，既可以处理流也可以处理批数据</p>
+<ul>
+<li>Dataflow思想</li>
+</ul>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502261655166.png" alt="image-20250226165540086"></p>
+<p>可以部署在k8s等</p>
+<p>可以支持图计算</p>
+<h2 id="2-Flink整体架构"><a href="#2-Flink整体架构" class="headerlink" title="2. Flink整体架构"></a>2. Flink整体架构</h2><p>有些场景SQL写不了，用DataStream的Java API，Python是实现一些ML解决方案的基础</p>
+<p>Task之间会有一些数据交换，使用Shuffle Service</p>
+<p>状态数据</p>
+<p>SDK是<strong>Software Development Kit</strong>（软件开发工具包），可以同时使用不同的SDK</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502261702529.png" alt="image-20250226170251459"></p>
+<p>JM：恢复task重新调度</p>
+<p>TM：TM之间有数据交换的需求</p>
+<p>Client端会将用户代码抽象为逻辑的执行图，JM将逻辑执行图转化为物理执行图，调度到不同的Worker节点执行</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502261704053.png" alt="image-20250226170458984"></p>
+<p>Dispatcher：</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502261707167.png" alt="image-20250226170718110"></p>
+<p>从Kafka消息队列中读流数据</p>
+<p>timeWindow是10s一次，“sink”（接收器）指的是数据处理流水线的末端，负责将处理后的数据输出到外部系统 。</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502261711272.png" alt="image-20250226171137223"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502261712847.png" alt="image-20250226171227807"></p>
+<p><strong>配置情况</strong>：sink 算子的并发配置为 1，意味着只有 1 个任务处理数据输出；其余算子（Source、map、keyBy&#x2F;window&#x2F;apply）并发为 2，表示这些算子分别有 2 个并行的子任务来处理数据。不同子任务间通过 Stream Partition 传输数据。而 Sink 算子只有一个子任务，它会接收来自上游两个并行子任务处理后的数据进行最终输出 。 这种配置体现了数据处理过程中不同阶段的并行程度差异。</p>
+<p>下图是从逻辑图（精简视图）到并发视图的过程</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502261712864.png" alt="image-20250226171246818"></p>
+<p>source和map可以chain在一起，可以在一个线程，读到数据就马上map，不存在线程的切换、数据序列化和反序列化，chain在一起后提升效率（减少了数据在TM缓冲区的交换，减少延迟提高吞吐率）</p>
+<p>什么算子可以chain在一起是有一些判断条件的</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502261718714.png" alt="image-20250226171856667"></p>
+<p>TM申请了一些资源，一个TM包括几个slot是用户自己定义的，一个slot是一个独立的线程，slot之间的cpu和内存没有完全隔离，有一定隔离</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502261723418.png" alt="image-20250226172326366"></p>
+<p>上面就是完整的一段代码从精简试图到TM中slot这样具体结构的过程</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502261724481.png" alt="image-20250226172447453"></p>
+<h3 id="流批一体"><a href="#流批一体" class="headerlink" title="流批一体"></a>流批一体</h3><p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502261726257.png" alt="image-20250226172600188"></p>
+<p>1是流处理，2是批处理</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502261726856.png" alt="image-20250226172637828"></p>
+<p>数据源：app的行为数据、活动数据等</p>
+<p>实时Flink：统计一些数据，放到服务层</p>
+<p>离线：查到一些用户的数据，提供服务</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502261904758.png" alt="image-20250226190412597"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502261905911.png" alt="image-20250226190519776"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502261905490.png" alt="image-20250226190531392"></p>
+<p>如何实现流批一体：</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502261906322.png" alt="image-20250226190634103"></p>
+<p>批式数据是特殊的流式数据，因为是有界的</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502261908002.png" alt="image-20250226190826874"></p>
+<p>如何支持：对于流式数据，按照时间段切成有边界</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502261910353.png" alt="image-20250226191052153"></p>
+<p>SQL：支持有边界和无边界的输入</p>
+<p>DataStream：Java&#x2F;Scala</p>
+<p>调度层：流调度、批调度</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502261911200.png" alt="image-20250226191118075"></p>
+<p>Scheduler：DAG指有向无环图，可以用来表示这些任务之间的依赖关系和执行顺序，其中节点代表任务，边代表任务之间的依赖方向，且不存在循环依赖，这样可以保证任务按照正确的顺序执行。</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502261913701.png" alt="image-20250226191308480"></p>
+<p>EAGER：流场景，一个作业需要全部的资源</p>
+<p>LAZY：批场景，先处理上游，处理完后资源会释放掉</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502261915930.png" alt="image-20250226191555795"></p>
+<p>哈希Shuffle</p>
+<p>需要12个任务的资源全部拿到后，才能开始工作</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502262247157.png" alt="image-20250226224718085"></p>
+<p>因为A1数据是有可能结束的（和流不同），所以可以一个个工作，复用资源</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502262248609.png" alt="image-20250226224817543"></p>
+<p>上文是1.12版本之前，下文是最新的调度机制：</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502262249044.png" alt="image-20250226224949992"></p>
+<p>BLOCKING：A1的数据会写入磁盘，不是实时传给B1，B1再从磁盘拿，实时性不强，用于批处理</p>
+<p>pipeline region：如果有BLOCKING，则认为是2个pipeline region</p>
+<p>PIPELINED：用于流处理，数据没有中间被存储下来，性能高</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502262302032.png" alt="image-20250226230223963"></p>
+<h3 id="Shuffle"><a href="#Shuffle" class="headerlink" title="Shuffle"></a>Shuffle</h3><p>用于连接上下游数据交互的过程是Shuffle</p>
+<p>A-&gt;B，B-&gt;C，C-&gt;D，只要是涉及上下游衔接就叫Shuffle</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502262304166.png" alt="image-20250226230424077"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502262305252.png" alt="image-20250226230533191"></p>
+<p>流作业的Shuffle和Task是绑定的，因为Shuffle存在内存钟，而批处理的数据存在磁盘里面了</p>
+<p>机器挂机了后批处理重跑的代价高，所以批处理数据有时会复制几份</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502262308425.png" alt="image-20250226230859356"></p>
+<p>Flink提出了满足两个模式的Shuffle架构</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502262310923.png" alt="image-20250226231055864"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502262311622.png" alt="image-20250226231113573"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502262312367.png" alt="image-20250226231201291"></p>
+<h2 id="3-Flink-架构优化与项目实战"><a href="#3-Flink-架构优化与项目实战" class="headerlink" title="3. Flink 架构优化与项目实战"></a>3. Flink 架构优化与项目实战</h2><p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502262315824.png" alt="image-20250226231548760"></p>
+<p>抖音红包：如红包雨的数据可以决定下一场红包雨的时间</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502262316927.png" alt="image-20250226231603848"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502262316645.png" alt="image-20250226231631599"></p>
+<p>OLAP需要高并发</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502262316794.png" alt="image-20250226231648742"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502262320979.png" alt="image-20250226232052906"></p>
+<p>OLAP是特殊的批处理</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502262321607.png" alt="image-20250226232124568"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502262321622.png" alt="image-20250226232151570"></p>
+<h3 id="Flink支持OLAP"><a href="#Flink支持OLAP" class="headerlink" title="Flink支持OLAP"></a>Flink支持OLAP</h3><p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502262322326.png" alt="image-20250226232229279"></p>
+<p>Flink可以从很多数据源读取数据</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502262322983.png" alt="image-20250226232254910"></p>
+<p>挑战：面向s级，还要高并发，频繁申请内存和磁盘如何处理</p>
+<p>QPS：并发调度和执行能力</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502262323169.png" alt="image-20250226232334110"></p>
+<p>Gateway：和前文Flink Client有点像，给SQL语法解析优化，然后生成DAG图</p>
+<p>Session Cluster：</p>
+<ol>
+<li>Per-Job模式的集群，一个集群只<strong>运行一个作业</strong>，作业执行完毕则集群销毁。</li>
+<li>Session-Cluster模式的集群，一个集群中<strong>运行多个作业</strong>。</li>
+</ol>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502262324936.png" alt="image-20250226232409848"></p>
+<h3 id="OLAP场景的难点"><a href="#OLAP场景的难点" class="headerlink" title="OLAP场景的难点"></a>OLAP场景的难点</h3><p>一些字节内部的设想与提升方向：</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502262339906.png" alt="image-20250226233918817"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502262340657.png" alt="image-20250226234008580"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502262341082.png" alt="image-20250226234119998"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502262341099.png" alt="image-20250226234155026"></p>
+<p>总结：</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502262342610.png" alt="image-20250226234252551"></p>
+<h3 id="使用案例"><a href="#使用案例" class="headerlink" title="使用案例"></a>使用案例</h3><p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502262344730.png" alt="image-20250226234404672"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502262344476.png" alt="image-20250226234420426"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502262344169.png" alt="image-20250226234452117"></p>
+<p>希望把流批变成一体，而不是现在分开</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502262345310.png" alt="image-20250226234544252"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502262346876.png" alt="image-20250226234611821"></p>
+<blockquote>
+<ul>
+<li><strong>OLTP（联机事务处理，Online Transaction Processing）</strong>：主要用于处理日常的、高并发的事务性操作，像电商系统中的下单、支付，银行系统中的转账等。图中 app data 对 OLTP 进行 Update 操作，就是典型的联机事务处理场景，注重数据的实时性、一致性和事务完整性。</li>
+<li><strong>Hive</strong>：是基于 Hadoop 的数据仓库工具。可以将结构化的数据文件映射为一张数据库表，并提供类 SQL 的查询功能（HiveQL），用于处理大规模的离线数据。图中 OLTP 通过 binlog（数据库二进制日志）将数据传输到 Hive，之后经过 ETL（Extract，Transform，Load，即数据抽取、转换和加载）处理，再存入 Clickhouse 进行查询分析，体现了 Hive 在离线数据处理流程中的作用。</li>
+<li><strong>HTAP（混合事务分析处理，Hybrid Transactional&#x2F;Analytical Processing）</strong>：融合了 OLTP 和 OLAP（联机分析处理）的功能，既能处理事务性操作，又能进行实时分析。图中走 HTAP 之后的链路，相比原来链路减少了中间环节，Flink 可以直接基于 HTAP 提供数据查询与分析能力，且延迟达到毫秒级，大大提升了数据处理和分析的效率 。</li>
+</ul>
+</blockquote>
+<p>以前在线和离线是完全分开的，Hive是离线的数据仓库，小时&#x2F;天级别的延时</p>
+<p>现在查询、分析都能在HTAP中，秒级别，很快</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502262347911.png" alt="image-20250226234758840"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502262349610.png" alt="image-20250226234902450"></p>
+<h1 id="3-Exactly-Once语义在Flink中的实现"><a href="#3-Exactly-Once语义在Flink中的实现" class="headerlink" title="3. Exactly Once语义在Flink中的实现"></a>3. Exactly Once语义在Flink中的实现</h1><h2 id="1-数据流和动态表"><a href="#1-数据流和动态表" class="headerlink" title="1. 数据流和动态表"></a>1. 数据流和动态表</h2><p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502271537094.png" alt="image-20250227153740006"></p>
+<p>端到端的exactly once是什么</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502271542189.png" alt="image-20250227154201135"></p>
+<p>流是无限的，不能被完整访问</p>
+<p>传统批处理的处理时间一定是可以终止的，流查询是永远不会终止的</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502271544155.png" alt="image-20250227154414106"></p>
+<p>表和流可以动态进行转化</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502271544047.png" alt="image-20250227154451972"></p>
+<p>查询的语义跟批处理完全一样（相当于某一刻时间静止），只是一直在进行连续查询，不会终止</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502271546253.png" alt="image-20250227154646182"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502271549574.png" alt="image-20250227154929512"></p>
+<p>第一个sql统计用户在网站查询的所有次数，第二个统计用户在每个小时段内的点击次数</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502271555185.png" alt="image-20250227155501111"></p>
+<p>Mary点击1次，后面又有，下游要更新，如何？发retract进行回撤，再发更新后的消息Mary,2</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502271556041.png" alt="image-20250227155624995"></p>
+<p>SQL连续查询时会建立clicks的数据表，作为状态保存中间计算结果，当新的数据到来时就可以更新</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502271557563.png"></p>
+<p>查询结果是动态变化的</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502271559493.png" alt="image-20250227155945420"></p>
+<p>消费：从消息队列或流式数据源中读取并处理数据的过程。消费者（Consumer）是负责执行这一过程的实体，它们从生产者（Producer）发送的数据中提取信息，并根据需要进行处理、分析或存储。</p>
+<p>At-most-once：出现故障时啥也不做，下游数据可能丢失，可以保证所有时间都处理数据流，时延最低，对数据准确性不高就可以用</p>
+<p>At-least-once：虽然存在数据重复处理的风险，但它确保了数据不会丢失。这种语义适用于可以容忍少量数据重复，但不能接受数据丢失的场景</p>
+<p>Exactly-once：提供了最高的数据处理准确性和一致性，但实现起来相对复杂，通常需要结合状态管理和一致的检查点机制。</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502271604844.png" alt="image-20250227160418770"></p>
+<h2 id="2-Exactly-Once-和-Checkpoint"><a href="#2-Exactly-Once-和-Checkpoint" class="headerlink" title="2. Exactly-Once 和 Checkpoint"></a>2. Exactly-Once 和 Checkpoint</h2><p>设置状态保存的时间点作为故障恢复点进行备份，如果有故障回退到此刻</p>
+<ul>
+<li>sum_even和sum_odd分别负责计算偶数和奇数的总和</li>
+<li>Recovery 1: Restart application 如果直接重启应用而不使用检查点，那么sum_odd任务会丢失之前的状态信息。在这种情况下，当新的数据到来时，sum_odd将从零开始重新计算，这会导致数据不一致。</li>
+<li>Recovery 2: Reset application state from Checkpoint 利用检查点进行恢复。JobManager从最近的检查点加载状态信息，并重置所有任务的状态。这样，sum_odd任务可以恢复到故障前的状态，继续处理数据。此时，sum_odd的值仍然是9，而不是从零开始。</li>
+<li>Recovery 3: Continue processing 恢复完成后，系统继续处理新的数据。例如，当新的数字8到来时，sum_even将其累加到当前值上，得到12；而sum_odd则保持不变，因为8是偶数。最终，当另一个奇数到来时，sum_odd将继续累加。</li>
+</ul>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502271622106.png" alt="image-20250227162241041"></p>
+<p>时间点不能选择任意的时间点，要等到所有处理逻辑消费完成</p>
+<p>这个算法要等所有逻辑消费完成，效率差，所以提出Chandy-Lamport算法</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502271626758.png" alt="image-20250227162609685"></p>
+<h3 id="Chandy-Lamport算法"><a href="#Chandy-Lamport算法" class="headerlink" title="Chandy-Lamport算法"></a>Chandy-Lamport算法</h3><p>两个source，并行独立处理各自的数据，统计偶数累加和和奇数累加和</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502271639297.png" alt="image-20250227163943244"></p>
+<p>JM会往下游发送Checkpoint Barrier，将数据流分割成多个部分，这些部分代表了不同检查点周期的数据。</p>
+<p>当一个算子（Operator）从其输入流接收到barrier时，它不会立即继续处理后续的数据，而是等待从所有输入流接收到对应于同一检查点的barrier。这意味着该算子会暂停处理位于barrier之后的数据，直到所有的输入流都达到了相同的检查点边界。</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502271652219.png" alt="image-20250227165204164"></p>
+<p>一旦所有输入流的barrier都已经到达，算子会触发自己的状态快照操作，将当前的状态保存下来。这个状态包括所有中间计算结果，如聚合值或窗口内容等。完成状态快照后，算子会向下游发送barrier，允许下游算子也执行相同的过程。这确保了整个作业图中的所有算子都能同步地创建一致的状态快照。</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502271652862.png" alt="image-20250227165256795"></p>
+<p>在所有必要的状态快照完成后，算子将继续处理那些被暂时搁置的数据记录，即位于barrier之后的数据。</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502271654727.png" alt="image-20250227165405657"></p>
+<p>barrier下发后就可以数据处理了，barrier和数据处理是解耦的</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502271655415.png" alt="image-20250227165557365"></p>
+<p>所有算子的状态都保存好了</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502271659898.png" alt="image-20250227165912844"></p>
+<p>异步将快照保存到远端</p>
+<p>用Checkpoint保证故障发生时有exactly once，保证数据只被消费一次</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502271700675.png" alt="image-20250227170015612"></p>
+<h2 id="3-端到端-Exactly-Once-实现"><a href="#3-端到端-Exactly-Once-实现" class="headerlink" title="3. 端到端 Exactly-Once 实现"></a>3. 端到端 Exactly-Once 实现</h2><p>sink是往下游发数据的，恢复的时间这段时间sink会重复下发，这是不对的，如银行重复存储</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502271703620.png" alt="image-20250227170334553"></p>
+<p>两阶段提交协议：分布式协议</p>
+<p>事务性（原子性）：要不全部执行操作，要不全部不执行</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502271711821.png" alt="image-20250227171110760"></p>
+<p>预提交阶段：没有真正提交</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502271712862.png" alt="image-20250227171217810"></p>
+<p>提交阶段：</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502271713467.png" alt="image-20250227171313416"></p>
+<p>协作者：管理和统筹所有协议</p>
+<p>参与者：参与决策</p>
+<p>Kafka：2维数组，有序，无限长，从头读数据，新数据存入尾</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502271714660.png" alt="image-20250227171446598"></p>
+<p>第一步：协作者告诉参与者要准备提交了，类似checkpoint barrier，状态制作的开始</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502271716188.png" alt="image-20250227171652141"></p>
+<p>第二步：告诉剩下的参与者要准备提交</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502271717665.png" alt="image-20250227171721627"></p>
+<p>提交结束后，向JM说提交完成了，JM再发说所有节点提交成功了</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502271717267.png" alt="image-20250227171758226"></p>
+<p>有一个算子失败，就会回滚</p>
+<p>一旦有延时和数据慢，会堵塞，要避免</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502271720500.png" alt="image-20250227172014422"></p>
+<h2 id="4-Flink-案例讲解"><a href="#4-Flink-案例讲解" class="headerlink" title="4. Flink 案例讲解"></a>4. Flink 案例讲解</h2><p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502271726615.png" alt="image-20250227172630560"></p>
+<p>简单实现的Exactly-Once：</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502271727606.png" alt="image-20250227172732534"></p>
+<p>问题：实际上是At-least-once</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502271729868.png" alt="image-20250227172915797"></p>
+<p>用Flink解决以上问题，实现严格的端到端Exactly-Once</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502271730903.png" alt="image-20250227173056828"><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502271732777.png" alt="image-20250227173241683"></p>
+<h1 id="4-流计算中的Window计算"><a href="#4-流计算中的Window计算" class="headerlink" title="4. 流计算中的Window计算"></a>4. 流计算中的Window计算</h1><h2 id="1-流式计算的概述"><a href="#1-流式计算的概述" class="headerlink" title="1. 流式计算的概述"></a>1. 流式计算的概述</h2><p>SQL是主导，Flink在字节也用的非常多</p>
+<p>企业数仓围绕Hadoop，每天凌晨准备好数据，以天为单位，流式计算是以秒为级别</p>
+<p>资源模型：指使用的计算资源是什么，批跑完任务就结束了，所以是定时的，流的计算资源是长期使用，没有释放和申请，一直在使用</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502271758401.png" alt="image-20250227175800336"></p>
+<p>如何更实时？从天变成小时，技术上没问题，申请&#x2F;释放的周期调度需要资源，数仓需要分层，数据产生到计算完成有时在1小时做不到</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502271800461.png" alt="image-20250227180041389"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502271801994.png" alt="image-20250227180114942"></p>
+<p>时间窗口：数据进来就直接计算，时间结束就下发数据</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502271802529.png" alt="image-20250227180241467"></p>
+<p>引入Watermark：表示数据处理到哪里了，表示窗口结束</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502271810517.png" alt="image-20250227181006448"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502271811449.png" alt="image-20250227181111396"></p>
+<h2 id="2-Watermark-基本机制概述"><a href="#2-Watermark-基本机制概述" class="headerlink" title="2. Watermark 基本机制概述"></a>2. Watermark 基本机制概述</h2><p>对比机器时间：现在是10：30，但真实事件时间可能是昨天</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502271813441.png" alt="image-20250227181321389"></p>
+<p>从原始时间-5s&#x2F;-20s作为Watermark，表示事件时间</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502271813680.png" alt="image-20250227181350613"></p>
+<p>33会传递W(33)给29</p>
+<p>window1取上游传递数值的最小值，也就是14</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502271814608.png" alt="image-20250227181430554"></p>
+<p>Flink应用有数据输入，没有数据输出：很有可能是Watermark不正常</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502271815987.png" alt="image-20250227181536932"></p>
+<p>上图一个source消费两个partition，多个partition可能加重乱序</p>
+<p>新版本取最小值，解决问题</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502271817411.png" alt="image-20250227181704346"></p>
+<p>白天有数据，晚上没数据，让断流了怎么办：设置超时时间，忽略这个subtask</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502271818066.png" alt="image-20250227181835940"></p>
+<p>迟到数据：晚于watermark</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502271820299.png" alt="image-20250227182009236"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502271821653.png" alt="image-20250227182118604"></p>
+<h2 id="3-Window-基本功能和高级优化"><a href="#3-Window-基本功能和高级优化" class="headerlink" title="3. Window 基本功能和高级优化"></a>3. Window 基本功能和高级优化</h2><blockquote>
+<p>窗口的目的：将无限流数据划分为有限块、支持基于时间或数量的聚合操作</p>
+</blockquote>
+<p>累计窗口:如0-1点累计是多少</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502271824544.png" alt="image-20250227182411493"></p>
+<p>SQL大部分的算子是自己优化过的，并不是直接用window</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502271824646.png" alt="image-20250227182443583"></p>
+<p>图里有14个窗口，3有4个，12有5个</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502272150744.png" alt="image-20250227215027682"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502272151759.png" alt="image-20250227215134694">前面两个窗口是根据时间划分的，会话窗口不是，并不确定数据所处的窗口，划分是动态过程，可能与其他数据合并</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502272153243.png" alt="image-20250227215326185"></p>
+<p>迟到数据：只有事件时间才会迟到，来了就算的模式不算迟到</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502272156120.png" alt="image-20250227215642052"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502272158490.png" alt="image-20250227215832419"></p>
+<p>增量：每条数据来了就计算，保存的值少一些，如只保留中间结果sum</p>
+<p>全量计算：需要大量的缓存，积累一定数据后再一起计算</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502272218520.png" alt="image-20250227221817451"></p>
+<p>窗口结束才触发，窗口时间可以设置</p>
+<p>EMIT允许中间结果可以输出多次，防止窗口比较大，实时计算慢</p>
+<p>FIRE跟案例场景一致，相当于保留中间结果</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502272219434.png" alt="image-20250227221930349"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502272239025.png" alt="image-20250227223859964"></p>
+<h3 id="高级优化"><a href="#高级优化" class="headerlink" title="高级优化"></a>高级优化</h3><p>解决中间结果偏多和访问频繁的问题</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502272239179.png" alt="image-20250227223938107"></p>
+<p>mini-batch：将多条数据打包成一个批次（Mini-batch）进行处理，减少状态操作的频率。</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502272242345.png" alt="image-20250227224203268"></p>
+<p>倾斜问题通常发生在数据分布不均匀的情况下，导致某些任务需要处理大量数据，而其他任务则相对空闲，从而影响整体处理效率。</p>
+<p>局部聚合会在本地对数据进行初步的聚合操作，减少后续传输的数据量。</p>
+<ul>
+<li>由于已经进行了局部聚合，每个Global Agg节点接收到的数据量大大减少，避免了单个节点过载的问题。</li>
+</ul>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502272243616.png" alt="image-20250227224356513"></p>
+<p>每个COUNT(DISTINCT item_id) FILTER (WHERE flag IN (…))都需要独立地计算唯一值，这会导致大量的重复计算和资源浪费。</p>
+<p>distinct（去除查询结果中的重复记录）有时会优化为group by，而flink有窗口，不能随便优化</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502272245178.png" alt="image-20250227224513054"></p>
+<p>TODO:这里看不懂<img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502272246197.png" alt="image-20250227224653124"></p>
+<p>同时属于1和2，开两个窗口，让两个窗口都计算，数据参与2个，这样计算量会大，能否划分成更小的粒度？</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502272250313.png" alt="image-20250227225035240"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502272251141.png" alt="image-20250227225132071"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502272252784.png" alt="image-20250227225209715"></p>
+<h2 id="4-流计算相关案例分析"><a href="#4-流计算相关案例分析" class="headerlink" title="4. 流计算相关案例分析"></a>4. 流计算相关案例分析</h2><p>日活曲线：每个分钟都有点，看从早到晚DAU（Daily Active Users，即日活跃用户数量）的变化过程</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502281950152.png" alt="image-20250228195007037"></p>
+<p>思路：滚动窗口，每隔一段时间输出</p>
+<p>这个SQL的问题：不能进行全局的聚合</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502281951038.png" alt="image-20250228195147921"></p>
+<p>改进：变成2阶段，每个桶进行distinct uid</p>
+<p>第一部分聚合后数据量已经小了</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502281952570.png" alt="image-20250228195231393"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502281954004.png" alt="image-20250228195403919"></p>
+<p>大数据任务特指离线计算，尽可能快的在任务结束后拿到资源开销</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502281956761.png" alt="image-20250228195628620"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502281957312.png" alt="image-20250228195713197"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502281958785.png" alt="image-20250228195835634"></p>
+<h1 id="5-Spark原理与实践"><a href="#5-Spark原理与实践" class="headerlink" title="5. Spark原理与实践"></a>5. Spark原理与实践</h1><h2 id="1-大数据处理引擎-Spark-介绍"><a href="#1-大数据处理引擎-Spark-介绍" class="headerlink" title="1. 大数据处理引擎 Spark 介绍"></a>1. 大数据处理引擎 Spark 介绍</h2><p>云原生方向</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502282013221.png" alt="image-20250228201342007"></p>
+<p>存储要选择合适的格式，可以存到HDFS也可以存到Kafka</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502282019754.png" alt="image-20250228201943605"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502282020672.png" alt="image-20250228202018528"></p>
+<p>Spark的几个feature：仪表盘、机器学习</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502282021792.png" alt="image-20250228202108594"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502282021043.png" alt="image-20250228202136841"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502282022398.png" alt="image-20250228202217188"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502282022184.png" alt="image-20250228202241009"></p>
+<p>多语言支持，很多的资源调度</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502282023089.png" alt="image-20250228202327938"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502282023484.png" alt="image-20250228202346313"></p>
+<p>RDD：弹性数据集，对任何函数的计算可以看作一个算子</p>
+<p>DataFrame：类似传统的二维表格</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502282024455.png" alt="image-20250228202421308"></p>
+<p>CM：监控Worker节点，负责支援调度</p>
+<p>Worker：从节点，可称为Node Manager</p>
+<p>任务：只有一个Driver</p>
+<p>Executor：实际执行任务</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502282025479.png" alt="image-20250228202556297"></p>
+<p>–master表示委托给谁进行资源管理</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502282027505.png" alt="image-20250228202715296"></p>
+<p>bin目录有很多提交命令，后面可以跟许多参数<img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502282027615.png" alt="image-20250228202727473"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502282028376.png" alt="image-20250228202822105"></p>
+<p>线上时，大部分用Spark scala来提交</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502282028191.png" alt="image-20250228202847034"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502282029682.png" alt="image-20250228202901554"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502282029986.png" alt="image-20250228202954855"></p>
+<h2 id="2-SparkCore-重要机制解析"><a href="#2-SparkCore-重要机制解析" class="headerlink" title="2. SparkCore 重要机制解析"></a>2. SparkCore 重要机制解析</h2><p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502282031670.png" alt="image-20250228203132524"></p>
+<p>RDD：创建时要指定分区；每个RDD有计算函数；每个RDD依赖别人，像pipeline一样</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502282032327.png" alt="image-20250228203236090"></p>
+<p>创建RDD：</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502282033053.png" alt="image-20250228203340910"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502282033807.png" alt="image-20250228203355630"></p>
+<p>窄依赖：父RDD至多对应一个子RDD</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502282035412.png" alt="image-20250228203520196"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502282036897.png" alt="image-20250228203608716"></p>
+<p>遇到宽依赖，就划分stage，不然加入stage</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502282037997.png" alt="image-20250228203727809"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502282038143.png" alt="image-20250228203759942"></p>
+<p><strong>内存机制</strong></p>
+<blockquote>
+<p>栈（Stack）：栈是一种后进先出（LIFO, Last In First Out）的数据结构。栈上的内存分配和释放速度通常比堆上快得多。这是因为栈的操作仅仅是移动<strong>栈顶指针</strong>来分配或释放内存，这个过程非常迅速且高效。此外，栈上的数据存储位置是在进程的调用栈中，这使得对栈内数据的访问也很快，因为这些数据通常是连续存储的，能够更好地利用CPU缓存。每当一个函数被调用时，一个新的“栈帧”（也叫活动记录）就会被创建并压入调用栈中。<br>堆（Heap）：堆则是一个更复杂的自由存储区，允许动态分配内存。与栈不同，堆上的内存分配（如通过malloc()或new操作）涉及到<strong>搜索可用空间</strong>并将<strong>该块标记为已使用</strong>的过程，这通常比简单地调整栈指针要复杂和耗时。同样，释放堆上的内存也可能需要额外的操作来维护堆的结构。因此，堆的分配和释放速度较栈慢。</p>
+<p>当一个程序执行时，操作系统会为该程序分配一定的内存空间，这部分内存包括了代码区、数据区、堆区以及栈区等。</p>
+</blockquote>
+<p>这些是堆内存，off-heap也有，比heap更好管理</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502282038474.png" alt="image-20250228203846236"></p>
+<p>存储和执行内存是可以互相借用的</p>
+<p>一个Executor可以允许多个Task</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502282052715.png" alt="image-20250228205211578"></p>
+<p><strong>Shuffle</strong></p>
+<p>Shuffle是指数据重新分配的过程，这个过程通常发生在并行计算任务之间，目的是将<strong>数据按照某种规则重新分组或排序</strong>，以便后续的任务可以基于这些重组后的数据进行处理。Shuffle是实现许多常见操作（如groupByKey、reduceByKey、join等）的关键步骤。</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502282052891.png" alt="image-20250228205241755"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502282052012.png" alt="image-20250228205248878"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502282053459.png" alt="image-20250228205337298"></p>
+<h2 id="3-SparkSQL-原理解析"><a href="#3-SparkSQL-原理解析" class="headerlink" title="3. SparkSQL 原理解析"></a>3. SparkSQL 原理解析</h2><p>优化逻辑计划-&gt;选择最佳的物理执行计划：基于规则的优化等</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502282054214.png" alt="image-20250228205450079"></p>
+<p>Catalyst：生成可以执行的代码</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502282056270.png" alt="image-20250228205608143"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502282056601.png" alt="image-20250228205642436"></p>
+<p>RBO：经验式、启发式，谓词下推<img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502282057967.png" alt="image-20250228205738770"></p>
+<p>CBO：依赖数据库对象的统计</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502282058171.png" alt="image-20250228205848000"></p>
+<p>自适应查询：执行中检测哪些可以进行优化，边执行边优化并有反馈</p>
+<ul>
+<li>动态合并Shuffle分区</li>
+<li>动态切换join策略</li>
+<li>处理状态数据倾斜的问题</li>
+</ul>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502282100993.png" alt="image-20250228210032816"></p>
+<p>partition要适中，刚开始shuffle较大，然后合并相邻的（下图从5-&gt;3）</p>
+<p>实现时开启参数即可</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502282100505.png" alt="image-20250228210058331"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502282102717.png" alt="image-20250228210220515"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502282118873.png" alt="image-20250228211813688"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502282119526.png" alt="image-20250228211919341"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502282120105.png" alt="image-20250228212036945"></p>
+<p>常规代码是遍历语法树，每个节点都要进行类型匹配，会额外创建很多对象：没必要，只是一个表达式</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502282123907.png" alt="image-20250228212302721"></p>
+<p>每个filter只用关注自己的逻辑<img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502282123804.png" alt="image-20250228212322600"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502282124063.png" alt="image-20250228212433921"></p>
+<h2 id="4-Spark-在业界的挑战与实践"><a href="#4-Spark-在业界的挑战与实践" class="headerlink" title="4. Spark 在业界的挑战与实践"></a>4. Spark 在业界的挑战与实践</h2><p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502282125041.png" alt="image-20250228212527860"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502282126747.png" alt="image-20250228212613620"></p>
+<p>近些年的优化关注CPU<img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502282126910.png" alt="image-20250228212650778"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502282127213.png" alt="image-20250228212741051"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502282127781.png" alt="image-20250228212754641"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502282128172.png" alt="image-20250228212804049"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502282128491.png" alt="image-20250228212827340"></p>
+<h1 id="6-大数据Shuffle原理与实践"><a href="#6-大数据Shuffle原理与实践" class="headerlink" title="6. 大数据Shuffle原理与实践"></a>6. 大数据Shuffle原理与实践</h1><h2 id="1-Shuffle-概述"><a href="#1-Shuffle-概述" class="headerlink" title="1. Shuffle 概述"></a>1. Shuffle 概述</h2><p>从Oracle单机引擎到现在的分布式MapReduce</p>
+<p>把数据拆分成小份partition，做并发处理</p>
+<ul>
+<li>对不同颜色的数据分别处理</li>
+<li>Shuffle：移动数据</li>
+</ul>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502282129894.png" alt="image-20250228212926664"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502282147701.png" alt="image-20250228214733621"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502282130721.png" alt="image-20250228213038555"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502282130403.png" alt="image-20250228213047273"></p>
+<p>不光有网络连接，还有网络请求</p>
+<p>可能要以颜色进行排序</p>
+<p>序列化消耗大量CPU</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502282131914.png" alt="image-20250228213117696"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502282131756.png" alt="image-20250228213158568"></p>
+<h2 id="2-Shuffle-算子"><a href="#2-Shuffle-算子" class="headerlink" title="2. Shuffle 算子"></a>2. Shuffle 算子</h2><p>repartition：改变分区</p>
+<p>join：本身不在一起的数据放在一起</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502282137151.png" alt="image-20250228213241259"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502282138799.png" alt="image-20250228213800653"></p>
+<p>需要数据移动就使用shuffle</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502282138555.png" alt="image-20250228213840300"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502282139514.png" alt="image-20250228213904374"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502282139051.png" alt="image-20250228213914912"></p>
+<p>numberPartitions：一共有多少分区，get：给一个k返回所在分区</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502282139060.png" alt="image-20250228213928871"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502282139935.png" alt="image-20250228213959819"></p>
+<h2 id="3-Shuffle-过程"><a href="#3-Shuffle-过程" class="headerlink" title="3. Shuffle 过程"></a>3. Shuffle 过程</h2><p>tradeoff问题</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502282140416.png" alt="image-20250228214042252"></p>
+<p>写满了就把file写入磁盘，同时打开和生成的文件都很多<img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502282141212.png" alt="image-20250228214106068"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502282141985.png" alt="image-20250228214138813"></p>
+<p>不是给每个partition一个buffer，现在是一个task一个buffer，包含所有数据</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502282142463.png" alt="image-20250228214204311"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502282142584.png" alt="image-20250228214237430"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502282142752.png" alt="image-20250228214249605"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502282143327.png" alt="image-20250228214341128"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502282143806.png" alt="image-20250228214354668"></p>
+<p>最终生成两个文件。没排序，只适合数据较少时</p>
+<p>OS中的zero copy？</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502282144924.png" alt="image-20250228214402762"></p>
+<p>unsafe：没有垃圾回收的开销</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502282144391.png" alt="image-20250228214458227"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502282145376.png" alt="image-20250228214526189"></p>
+<p>有排序和combine，和mapreduce有点类似</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502282145675.png" alt="image-20250228214549493"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502282146163.png" alt="image-20250228214641991"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502282227794.png" alt="image-20250228222759637"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502282228631.png" alt="image-20250228222816443"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502282228834.png" alt="image-20250228222830694"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502282229458.png" alt="image-20250228222901250"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502282229853.png" alt="image-20250228222917770"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502282229479.png" alt="image-20250228222934278"></p>
+<p>做wordcount，右侧shuffle的数据量多，左边提前算了hello的count，算子是有优先级的。如果能聚合尽量做聚合</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502282230509.png" alt="image-20250228223000283"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502282230988.png" alt="image-20250228223051795"></p>
+<p>倾斜：某个reduce数据非常多，其他很少，因为总时间取决于最大的作业</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502282231034.png" alt="image-20250228223104839"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502282232937.png" alt="image-20250228223200757"></p>
+<p>84万文件，5千task，数据量非常大</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502282232579.png" alt="image-20250228223259439"></p>
+<p>优化后只有5000个partition，shuffle数据量变少（因为单个task处理的变多了），有combine用conbine</p>
+<p>减缓随机读的要求</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502282234113.png" alt="image-20250228223412900"></p>
+<h2 id="4-Push-Shuffle"><a href="#4-Push-Shuffle" class="headerlink" title="4. Push Shuffle"></a>4. Push Shuffle</h2><p>大量随机读的问题：用push聚合在一起，写在远程buffer</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502282306387.png" alt="image-20250228230604240"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502282306220.png" alt="image-20250228230657119"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502282307452.png" alt="image-20250228230717237"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502282307487.png" alt="image-20250228230745295"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502282308784.png" alt="image-20250228230800600"></p>
+<p>新的问题：数据丢失的成本变多了</p>
+<p>自己进行数据备份</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502282308890.png" alt="image-20250228230831689"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502282309740.png" alt="image-20250228230915517"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502282309435.png" alt="image-20250228230929291"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502282309622.png" alt="image-20250228230957434"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502282310018.png" alt="image-20250228231011793"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502282310585.png" alt="image-20250228231032385"></p>
+<h1 id="7-Presto架构原理与优化浅析"><a href="#7-Presto架构原理与优化浅析" class="headerlink" title="7. Presto架构原理与优化浅析"></a>7. Presto架构原理与优化浅析</h1><h2 id="1-大数据与-OLAP-的演进"><a href="#1-大数据与-OLAP-的演进" class="headerlink" title="1. 大数据与 OLAP 的演进"></a>1. 大数据与 OLAP 的演进</h2><p>不等价于，如何提取想要的数据</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502282311737.png" alt="image-20250228231155520"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502282312468.png" alt="image-20250228231258351"></p>
+<p>OLAP：多维分析</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502282313621.png" alt="image-20250228231338410"></p>
+<p>可以以时间为单位、分析某一类产品<img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502282314368.png" alt="image-20250228231443236"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502282315212.png" alt="image-20250228231518104"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502282315602.png" alt="image-20250228231548422"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502282316382.png" alt="image-20250228231635252"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502282316462.png" alt="image-20250228231641396"></p>
+<h2 id="2-Presto-基本原理与概念"><a href="#2-Presto-基本原理与概念" class="headerlink" title="2. Presto 基本原理与概念"></a>2. Presto 基本原理与概念</h2><p>黄色：数据源</p>
+<p>绿色：Presto的服务</p>
+<p>蓝色：用户 根据需求最后会得到结果</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502282317886.png" alt="image-20250228231727723"></p>
+<p>多数据源引擎，每个connector是适配多数据源的接口，可以联邦查询</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502282318842.png" alt="image-20250228231805656"></p>
+<p>stage之间用shuffle来区分</p>
+<p>pipeline根据算子拆分成不同的涵义</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502282318390.png" alt="image-20250228231845202"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502282319761.png" alt="image-20250228231909557"></p>
+<p>stage内部可以rehash，类似进程和线程的关系</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502282319640.png" alt="image-20250228231957420"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502282320295.png" alt="image-20250228232040113"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502282321136.png" alt="image-20250228232114994"></p>
+<p>浅绿色负责桥接</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502282321874.png" alt="image-20250228232132686"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502282321555.png" alt="image-20250228232154376"></p>
+<p>SHUTDOWN：不是worker本身关闭了就关闭，属于想要关闭，本现在在跑的task尽量处理完，处理不完到达超时时间了也会结束。<img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502282322703.png" alt="image-20250228232216664"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502282322462.png" alt="image-20250228232235343"></p>
+<p>考虑到task下所有的pipeline，最后乘以worker数（因为一个worker调度很多task）</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502282323107.png" alt="image-20250228232317925"></p>
+<h2 id="3-Presto-重要机制"><a href="#3-Presto-重要机制" class="headerlink" title="3. Presto 重要机制"></a>3. Presto 重要机制</h2><p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502282326390.png" alt="image-20250228232603263"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502282326493.png" alt="image-20250228232616313"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502282326347.png" alt="image-20250228232643156"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502282326480.png" alt="image-20250228232655346"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502282327258.png" alt="image-20250228232714038"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502282327509.png" alt="image-20250228232739440"></p>
+<p>默认同时调度，符合流式数据处理的特点<img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502282327107.png" alt="image-20250228232748991"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502282328973.png" alt="image-20250228232817762"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502282328362.png" alt="image-20250228232846292"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502282328625.png" alt="image-20250228232857526"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502282329928.png" alt="image-20250228232909791"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502282329677.png" alt="image-20250228232928548"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502282329679.png" alt="image-20250228232940574"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502282329544.png" alt="image-20250228232956396"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502282330361.png" alt="image-20250228233025309"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502282330489.png" alt="image-20250228233039317"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502282330321.png" alt="image-20250228233049147"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502282331461.png" alt="image-20250228233104292"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502282331014.png" alt="image-20250228233128867"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502282331207.png" alt="image-20250228233156167"></p>
+<h2 id="4-Presto-性能优化实战"><a href="#4-Presto-性能优化实战" class="headerlink" title="4. Presto 性能优化实战"></a>4. Presto 性能优化实战</h2><p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502282332240.png" alt="image-20250228233224935"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502282332111.png" alt="image-20250228233241941"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502282332751.png" alt="image-20250228233255542"></p>
+<p>通过url可以直接查询task的状态</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502282333802.png" alt="image-20250228233309656"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502282333818.png" alt="image-20250228233334712"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502282333279.png" alt="image-20250228233351963"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502282334407.png" alt="image-20250228233419156"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502282334663.png" alt="image-20250228233433534"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502282334995.png" alt="image-20250228233441837"></p>
+<p>把配置文件copy，会产生很多rehash</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502282335487.png" alt="image-20250228233509317"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502282336938.png" alt="image-20250228233608788"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502282337883.png" alt="image-20250228233716814"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502282337649.png" alt="image-20250228233728499"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502282338522.png" alt="image-20250228233858490"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502282339972.png" alt="image-20250228233924305"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502282337740.png" alt="image-20250228233748564"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502282337499.png" alt="image-20250228233759250"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502282338654.png" alt="image-20250228233811561"></p>
+
+        </div>
+
+        
+            <section class="post-copyright">
+                
+                
+                
+                
+
+            </section>
+        
+        <section class="post-tags">
+            <div>
+                <span>标签:</span>
+                <span class="tag">
+                    
+                    
+                        <a href="/tags/%E5%BC%80%E5%8F%91/"># 开发</a>
+                    
+                        
+                </span>
+            </div>
+            <div>
+                <a href="javascript:window.history.back();">返回</a>
+                <span>· </span>
+                <a href="/">主页</a>
+            </div>
+        </section>
+        <section class="post-nav">
+            
+            
+            <a class="next" rel="next" href="/2025/01/03/%E4%B9%A6%E7%94%9F%E5%A4%A7%E6%A8%A1%E5%9E%8B%E7%AC%AC%E5%9B%9B%E6%9C%9F%E7%AC%94%E8%AE%B0%E4%B8%8E%E5%AE%9E%E8%B7%B5/">书生大模型第四期笔记与实践</a>
+            
+        </section>
+
+
+    </article>
+</div>
+
+
+    <div id="gitalk-container"></div>
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.css">
+<script src="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.min.js"></script>
+<script src="//cdn.bootcss.com/blueimp-md5/2.10.0/js/md5.js"></script>
+<div id="gitalk-container"></div>
+<script type="text/javascript">
+      var gitalk = new Gitalk({
+        clientID: '',
+        clientSecret: '',
+        repo: 'blog_comment',
+        owner: 'lyxx2535',
+        admin: 'lyxx2535',
+        id: md5(location.pathname),
+        labels: 'Gitalk'.split(',').filter(l => l),
+        perPage: 10,
+        pagerDirection: 'last',
+        createIssueManually: true,
+        distractionFreeMode: false
+      })
+      gitalk.render('gitalk-container')
+</script>
+
+            </div>
+            <footer id="footer" class="footer">
+    <div class="copyright">
+        <span>© Annie | Powered by <a href="https://hexo.io" target="_blank">Hexo</a> & <a href="https://github.com/Siricee/hexo-theme-Chic" target="_blank">Chic</a> | 2020 - 2025
+            <br>
+            <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+<span class="site-uv">
+    Total visitors:
+    <i class="busuanzi-value" id="busuanzi_value_site_uv"></i>
+</span>&nbsp;|&nbsp;
+
+
+<span class="site-pv">
+    Total views:
+    <i class="busuanzi-value" id="busuanzi_value_site_pv"></i>
+</span>
+
+          </span>
+    </div>
+</footer>
+
+    </div>
+</body>
+
+</html>
