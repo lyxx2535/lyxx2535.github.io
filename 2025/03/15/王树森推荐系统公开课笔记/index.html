@@ -1,0 +1,1505 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <meta name="author" content="Annie">
+
+
+
+
+
+<title>王树森推荐系统公开课笔记 | Annie&#39;s Blog</title>
+
+
+
+    <link rel="icon" href="/favicon.ico">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+    <script src="/js/tocbot.min.js"></script>
+    
+
+
+
+    
+    
+        
+    
+
+
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+<body>
+    <script>
+        // this function is used to check current theme before page loaded.
+        (() => {
+            const currentTheme = window.localStorage && window.localStorage.getItem('theme') || '';
+            const isDark = currentTheme === 'dark';
+            const pagebody = document.getElementsByTagName('body')[0]
+            if (isDark) {
+                pagebody.classList.add('dark-theme');
+                // mobile
+                document.getElementById("mobile-toggle-theme").innerText = "· Dark"
+            } else {
+                pagebody.classList.remove('dark-theme');
+                // mobile
+                document.getElementById("mobile-toggle-theme").innerText = "· Light"
+            }
+        })();
+    </script>
+
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">Annie&#39;s Blog</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default">
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+        </div>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">Annie&#39;s Blog</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; 菜单</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+            <div class="main">
+                <div class="container">
+    
+    
+        <div class="post-toc">
+    <div class="tocbot-list">
+    </div>
+    <div class="tocbot-list-menu">
+        <a class="tocbot-toc-expand" onclick="expand_toc()">全部展开</a>
+        <a onclick="go_top()">回到顶部</a>
+        <a onclick="go_bottom()">前往底部</a>
+    </div>
+</div>
+
+<script>
+    var tocbot_timer;
+    var DEPTH_MAX = 6; // 为 6 时展开所有
+    var tocbot_default_config = {
+        tocSelector: '.tocbot-list',
+        contentSelector: '.post-content',
+        headingSelector: 'h1, h2, h3, h4, h5',
+        orderedList: false,
+        scrollSmooth: true,
+        onClick: extend_click,
+    };
+
+    function extend_click() {
+        clearTimeout(tocbot_timer);
+        tocbot_timer = setTimeout(function() {
+            tocbot.refresh(obj_merge(tocbot_default_config, {
+                hasInnerContainers: true
+            }));
+        }, 420); // 这个值是由 tocbot 源码里定义的 scrollSmoothDuration 得来的
+    }
+
+    document.ready(function() {
+        tocbot.init(obj_merge(tocbot_default_config, {
+            collapseDepth: 1
+        }));
+    });
+
+    function expand_toc() {
+        var b = document.querySelector('.tocbot-toc-expand');
+        var expanded = b.getAttribute('data-expanded');
+        expanded ? b.removeAttribute('data-expanded') : b.setAttribute('data-expanded', true);
+        tocbot.refresh(obj_merge(tocbot_default_config, {
+            collapseDepth: expanded ? 1 : DEPTH_MAX
+        }));
+        b.innerText = expanded ? 'Expand all' : 'Collapse all';
+    }
+
+    function go_top() {
+        window.scrollTo(0, 0);
+    }
+
+    function go_bottom() {
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+
+    function obj_merge(target, source) {
+        for (var item in source) {
+            if (source.hasOwnProperty(item)) {
+                target[item] = source[item];
+            }
+        }
+        return target;
+    }
+</script>
+    
+
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">王树森推荐系统公开课笔记</h1>
+            
+                <div class="post-meta">
+                    
+                        作者: <a itemprop="author" rel="author" href="/">Annie</a>
+                    
+
+                    
+                        <span class="post-time">
+                        日期: <a href="#">March 15, 2025&nbsp;&nbsp;13:05:46</a>
+                        </span>
+                    
+                    
+                        <span class="post-category">
+                        分类:
+                            
+                                <a href="/categories/%E7%AE%97%E6%B3%95/">算法</a>
+                            
+                        </span>
+                    
+                </div>
+            
+        </header>
+
+        <div class="post-content">
+            <h1 id="推荐系统基础"><a href="#推荐系统基础" class="headerlink" title="推荐系统基础"></a>推荐系统基础</h1><h2 id="概要01：推荐系统的基本概念"><a href="#概要01：推荐系统的基本概念" class="headerlink" title="概要01：推荐系统的基本概念"></a>概要01：推荐系统的基本概念</h2><p>推荐内容</p>
+<p>曝光-点击-停留几秒（有效点击而不是手滑）-阅读（滑动到底）-点赞-收藏-转发-评论</p>
+<p>每个产品的转化流程不一样，抖音没有曝光和点击</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202501212216530.png" alt="image-20250121221639446"></p>
+<p>短期消费指标：评估推荐的效果</p>
+<ul>
+<li>只关注这些，多样性会很差，让用户失去兴趣</li>
+</ul>
+<p>归一化函数跟笔记长度有关，不然对长笔记不公平</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202501212217947.png" alt="image-20250121221712866"></p>
+<p>长期消费指标：小红书使用的，表示金标准，比短期指标更重要</p>
+<ul>
+<li>不管一天、一个月登陆几次，DAU和MAU都是一次</li>
+</ul>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202501212218718.png" alt="image-20250121221843662"></p>
+<p>离线实验：不需要部署，不占用线上流量，不影响实际用户和产品</p>
+<p>线上实验：北极星指标只能通过线上实验获得</p>
+<ul>
+<li>小流量测试：把用户随机分为A\B，实验组是新策略，对照组是旧策略。如果新策略显著好，就可以加大流量最终推全。</li>
+</ul>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202501212224246.png" alt="image-20250121222413159"></p>
+<h2 id="概要02：推荐系统的链路"><a href="#概要02：推荐系统的链路" class="headerlink" title="概要02：推荐系统的链路"></a>概要02：推荐系统的链路</h2><blockquote>
+<p>TODO：截断不是很懂，应该是带着打分分数进入重排</p>
+</blockquote>
+<p>召回：从物品数据库（很多笔记，每个通道取回一些）选用户可能感兴趣的几千篇笔记</p>
+<p>粗排：规模小的机器学习模型给笔记逐一打分，用分数截断，保留分数高</p>
+<p>精排：规模大的神经网络打分，可以做截断或者不做截断，小红书不做排序和截断</p>
+<p>重排：根据精排分数和多样性分数随机选择，打散，加入广告和运营内容</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202501212229693.png" alt="image-20250121222958629"></p>
+<p>小红书有几十条召回通道</p>
+<p>融合：去重、过滤（去掉用户不喜欢的作者和话题）</p>
+<p>排序分为粗排和精排，减少工作量</p>
+<ul>
+<li>精排的特征多，网络层多，计算量大，分数更准确</li>
+</ul>
+<p>重排：主要是考虑多样性，随机抽样，用规则把内容相似的笔记打散</p>
+<blockquote>
+<p>注意数字都是随便说的，只是举例子，不是公司真实使用的</p>
+</blockquote>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202501212234780.png" alt="image-20250121223409699"></p>
+<p>神经网络结构各异，输出很多数值，是对用户行为的预估。分数是加权和，表示是否曝光，以及笔记曝光的位次</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202501212236216.png" alt="image-20250121223639138"></p>
+<p>重排：相似的笔记要打散，生态要求（比如前面不能全是美女图）</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202501212238288.png" alt="image-20250121223848229"></p>
+<p>粗排也会有一些规则，保证多样性</p>
+<p>重排的规则非常复杂</p>
+<p>漏斗很重要，如果笔记数量过大就用不了MMR和DPP了</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202501212246027.png" alt="image-20250121224656955"></p>
+<h2 id="概要03：推荐系统的AB测试"><a href="#概要03：推荐系统的AB测试" class="headerlink" title="概要03：推荐系统的AB测试"></a>概要03：推荐系统的AB测试</h2><h3 id="基本原理"><a href="#基本原理" class="headerlink" title="基本原理"></a>基本原理</h3><p>离线实验有提升，上线不一定也提升</p>
+<p>小流量：只给一小部分用户，如随机选的10%</p>
+<p>还可以测试参数，如深度学习网络的层数，哪组效果好就用哪个</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202501230000084.png" alt="image-20250122235853012"></p>
+<p>如果用户数量足够大，那DAU&#x2F;留存&#x2F;渗透率这些指标都是相等的</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202501230002568.png" alt="image-20250123000227474"></p>
+<p>三个桶的参数分别是1&#x2F;2&#x2F;3层，四号桶没有用GNN。每个用户落在哪个桶，策略都不一样。</p>
+<p>推全：流量扩大到100%</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202501230003131.png" alt="image-20250123000336058"></p>
+<h3 id="分层实验"><a href="#分层实验" class="headerlink" title="分层实验"></a>分层实验</h3><p>分层实验：解决流量不够用的问题。比如分为10个桶，同时只能做9组实验，但AB测试需要很多桶（组）。</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202501230004682.png" alt="image-20250123000442613"></p>
+<p>解决方案：分层实验。把实验分为很多层，同层互斥（避免一个用户同时被两个召回实验影响），不同层正交（召回2号桶和粗排2号桶可交集小）</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202501230006937.png" alt="image-20250123000632860"></p>
+<p>数学形式表示：u&#x2F;v对用户来说各有10种选择，所以交集有100种选择</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202501230008651.png" alt="image-20250123000851578"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202501230009608.png" alt="image-20250123000923532"></p>
+<p>用户界面和召回不会互相影响，所以同时进行正交实验<img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202501230009965.png" alt="image-20250123000952882"></p>
+<p>两组召回实验（两种策略）可能同时对指标造成影响，所以要控制变量<img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202501230011170.png" alt="image-20250123001158072"></p>
+<h3 id="Holdout机制"><a href="#Holdout机制" class="headerlink" title="Holdout机制"></a>Holdout机制</h3><p>实验叠加到一起往往效果会折损，holdout用于整体比较（融合每层后的结果）</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202501230014320.png" alt="image-20250123001402250"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202501230015302.png" alt="image-20250123001553244"></p>
+<p>推全是完成一次实验的完整覆盖，让所有用户都体验到新策略</p>
+<p>划分后接近为0是实验开始前的理想状态，随着实验diff增大，说明策略有正反馈或负反馈</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202501230017495.png" alt="image-20250123001701419"></p>
+<h3 id="实验推全-反转实验"><a href="#实验推全-反转实验" class="headerlink" title="实验推全&amp;反转实验"></a>实验推全&amp;反转实验</h3><p>diff正向则推全，推全会影响非holdout的用户，diff理论上会扩大9倍（原来是10%，现在是90%）</p>
+<p>其实就是比如说一个新的召回策略应用到90%的用户上，但因为其他层正交所以仍然可以做其他层的实验，经过考核周期就扩大到holdout</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202501230024448.png" alt="image-20250123002428361"></p>
+<p>有些指标需要长期观测，但尽快推全也有好处，这个矛盾用反转实验解决</p>
+<p>开反转桶：用旧策略。一个考核周期结束后，holdout会被清除而推全，但反转桶不会。大概就是即使推全，也留一个桶不推，做这个AB test一段时间</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202501230026478.png" alt="image-20250123002606406"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202501230027905.png" alt="image-20250123002726825"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202501230030071.png" alt="image-20250123003012979"></p>
+<p>先在10%-&gt;推全到90%-&gt;推全到holdout 100%（为了看长期指标用反转实验，其实还是推全到90%）</p>
+<h1 id="召回"><a href="#召回" class="headerlink" title="召回"></a>召回</h1><h2 id="召回01：基于物品的协同过滤（ItemCF）"><a href="#召回01：基于物品的协同过滤（ItemCF）" class="headerlink" title="召回01：基于物品的协同过滤（ItemCF）"></a>召回01：基于物品的协同过滤（ItemCF）</h2><p>CF：协同过滤的缩写</p>
+<p>通过用户的好评行为知道相似</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502061734556.png" alt="image-20250206173414283"></p>
+<p>通过对旧物品的兴趣*旧物品与新物品的相似度预估对新物品的兴趣</p>
+<p>如果有2000个候选物品，逐一计算分数，然后返回分数最高的物品</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502061736271.png" alt="image-20250206173605028"></p>
+<h3 id="物品相似度"><a href="#物品相似度" class="headerlink" title="物品相似度"></a>物品相似度</h3><p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502061743059.png" alt="image-20250206174337908"></p>
+<p>边表示用户喜欢的物品</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502061744614.png" alt="image-20250206174431430"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502061744335.png" alt="image-20250206174450093"></p>
+<p>开根号是为了保证sim在0-1之间，因为|v|&lt;|w1|,|v|&lt;|w2|,|v|*2&lt;|w1|*|w2|</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502061747229.png" alt="image-20250206174713032"></p>
+<p>不考虑喜欢的程度：喜欢看作1，不喜欢看作0</p>
+<p>考虑喜欢的程度：对同时喜欢i1,i2的用户v求喜欢程度的乘积，分母是对物品i1和i2的兴趣分数</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502061812054.png" alt="image-20250206181219940"></p>
+<p>用户对j感兴趣，传递到候选物品，就是用户对候选物品的兴趣：需要知道sim和like</p>
+<p>兴趣分数：比如点赞、收藏、转发、评论各算1分，相加就是兴趣分数（最高4分）</p>
+<p>为什么是余弦相似度？因为物品i1,i2是两个向量，向量值是用户对物品的偏好（只考虑用户和物品有交互时的非零元素），余弦相似度关注的是向量在方向上的相似性，而不是向量的长度，取值为0-1（0不相似，1相似）</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502062000243.png" alt="image-20250206200006154"></p>
+<h3 id="完整流程"><a href="#完整流程" class="headerlink" title="完整流程"></a>完整流程</h3><p>事先做离线计算：k&#x3D;10&#x2F;100</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502062008119.png" alt="image-20250206200828024"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502062010815.png" alt="image-20250206201002736"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502062010782.png" alt="image-20250206201028689"></p>
+<p>线上做召回：last-n是用户最近交互过的列表</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502062011225.png" alt="image-20250206201133143"></p>
+<p>索引：即已经离线计算好了like和k个sim，让兴趣分数好计算，计算量没那么大</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502062049236.png" alt="image-20250206204920148"></p>
+<p>使用上面列表的兴趣分数和下面列表的相似度分数即可获得兴趣分数</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502062050908.png" alt="image-20250206205010813"></p>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>根据用户的行为而不是物品的类别，判断物品相似</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502062104491.png" alt="image-20250206210403430"></p>
+<p>该条召回通道很重要，需要维护两个索引（通常用哈希表记录key-value）：用户-&gt;物品，物品-&gt;物品</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502062104978.png" alt="image-20250206210457906"></p>
+<h2 id="召回02：Swing-模型"><a href="#召回02：Swing-模型" class="headerlink" title="召回02：Swing 模型"></a>召回02：Swing 模型</h2><p>ItemCF的变体：唯一的区别是定义物品的相似度</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502071321617.png" alt="image-20250207132123475"></p>
+<p>如果重叠部分V多，那两个文章的相似度就高</p>
+<p>不足之处：两篇不同的笔记完全不同，但分享到同一个微信群，所以小圈子里的人都交互过两个物品</p>
+<ul>
+<li>解决：避免小圈子，设置用户权重</li>
+</ul>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502071322855.png" alt="image-20250207132220762"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502071323819.png" alt="image-20250207132325747"></p>
+<p>α是人工设置的参数，需要调。用overlap可以降低小圈子对sim的影响。</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502071324005.png" alt="image-20250207132422907"></p>
+<h3 id="总结-1"><a href="#总结-1" class="headerlink" title="总结"></a>总结</h3><p>如果u1,u2来自同一个小圈子，对物品相似度的贡献比较小</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502071325872.png" alt="image-20250207132553746"></p>
+<h2 id="召回03：基于用户的协同过滤（UserCF）"><a href="#召回03：基于用户的协同过滤（UserCF）" class="headerlink" title="召回03：基于用户的协同过滤（UserCF）"></a>召回03：基于用户的协同过滤（UserCF）</h2><p>ItemCF基于物品相似度，UserCF基于用户相似度</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502072020625.png" alt="image-20250207202056466"></p>
+<p>实现：离线算好每两个用户的相似度，然后利用相似用户对候选物品的兴趣，预估当前用户对候选物品的兴趣</p>
+<ul>
+<li>相比ItemCF就是把sim(item)变成了sim(user)</li>
+</ul>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502072022951.png" alt="image-20250207202222778"></p>
+<h3 id="用户相似度"><a href="#用户相似度" class="headerlink" title="用户相似度"></a>用户相似度</h3><p>相似表示兴趣点相似，喜欢的物品类似</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502072023644.png" alt="image-20250207202315520"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502072023021.png" alt="image-20250207202324870"></p>
+<p>以物品作为集合（相比item以用户作为集合）<img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502072023254.png" alt="image-20250207202352155"></p>
+<p>越热门的物品对用户相似度越没有价值，因为大家都喜欢。重合的冷门才更有可能是同行<img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502072025624.png" alt="image-20250207202521368"></p>
+<p>权重相同时：分子是|I|<img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502072025045.png" alt="image-20250207202555981"></p>
+<p>权重不同时：让热门物品的权重降低（nl大）</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502072141232.png" alt="image-20250207214121164"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502072143045.png" alt="image-20250207214300906"></p>
+<h3 id="完整流程-1"><a href="#完整流程-1" class="headerlink" title="完整流程"></a>完整流程</h3><p>离线计算：建立两个索引</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502072147836.png" alt="image-20250207214737694"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502072147597.png" alt="image-20250207214746476"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502072148322.png" alt="image-20250207214802175"></p>
+<p>召回通道：从nk种选出100个物品，因为有索引所以很快</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502072148792.png" alt="image-20250207214829668"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502072149749.png" alt="image-20250207214906587"></p>
+<h3 id="总结-2"><a href="#总结-2" class="headerlink" title="总结"></a>总结</h3><p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502072150219.png" alt="image-20250207215045114"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502072151458.png" alt="image-20250207215117345"></p>
+<h2 id="召回04：离散特征处理"><a href="#召回04：离散特征处理" class="headerlink" title="召回04：离散特征处理"></a>召回04：离散特征处理</h2><p>前三节课是协同过滤召回，后面几节课介绍向量召回。</p>
+<p>one-hot编码和embedding</p>
+<p>离散特征有很多种类型，所以难处理。每个用户id会映射成一个向量。</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502072153604.png" alt="image-20250207215313490"></p>
+<p>one-hot：200个国家，就是200维的向量</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502072230413.png" alt="image-20250207223010306"></p>
+<h3 id="one-hot"><a href="#one-hot" class="headerlink" title="one-hot"></a>one-hot</h3><p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502072239147.png" alt="image-20250207223903310"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502072239976.png" alt="image-20250207223935861"></p>
+<p>局限性：维度太大，性别2维可以，物品ID和单词太高维了</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502072239643.png" alt="image-20250207223952525"></p>
+<h3 id="Embedding"><a href="#Embedding" class="headerlink" title="Embedding"></a>Embedding</h3><p>每个类别是低维稠密向量</p>
+<p>如国籍这里的大小是4*1，未知国籍是全0（如可以是浮点数0-0.0001，可以表示9999个数）</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502072241916.png" alt="image-20250207224112792"></p>
+<p>神经网络中的反向传播会自动学习embedding参数，这里的参数矩阵是(4,200)</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502072242979.png" alt="image-20250207224247842"></p>
+<p>一个神经网络绝大多数的参数都在embedding层（嵌入向量），所以会对其进行存储和效率的优化</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502072243107.png" alt="image-20250207224339989"></p>
+<p>如果神经网络训练的好，相似的embedding会更靠近</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502072245373.png" alt="image-20250207224530325"></p>
+<p>每个embedding都是参数矩阵的一个列（红色部分）</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502072246243.png" alt="image-20250207224648195"></p>
+<h3 id="总结-3"><a href="#总结-3" class="headerlink" title="总结"></a>总结</h3><p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502072247375.png" alt="image-20250207224750337"></p>
+<h2 id="召回05：矩阵补充、最近邻查找"><a href="#召回05：矩阵补充、最近邻查找" class="headerlink" title="召回05：矩阵补充、最近邻查找"></a>召回05：矩阵补充、最近邻查找</h2><p>输入是两个ID（a,b都是参数矩阵的一列），输出是用户对物品兴趣的预估值，即内积</p>
+<p>模型有两个embedding层，不共享参数</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502081538187.png" alt="image-20250208153848054"></p>
+<h3 id="训练"><a href="#训练" class="headerlink" title="训练"></a>训练</h3><p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502081539039.png" alt="image-20250208153911866"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502081539741.png" alt="image-20250208153942667"></p>
+<p>矩阵AB是需要学的，数据集是已知的</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502081541179.png" alt="image-20250208154104075"></p>
+<p>训练：定义优化问题的目标函数</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502081541867.png" alt="image-20250208154155770"></p>
+<p>为什么叫矩阵补充？用绿色位置的值预估灰色位置，是该训练的目的</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502081543346.png" alt="image-20250208154336164"></p>
+<p>缺点：用属性可以弥补id embedding信息不足的问题</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502081545820.png" alt="image-20250208154510715"></p>
+<p>负样本：在学术中可以，但在实践中效果不好</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502081546882.png" alt="image-20250208154653795"></p>
+<p>工业界使用余弦相似度和交叉熵</p>
+<ul>
+<li>回归和分类都是<strong>对输入做出预测</strong>，并且都是<strong>监督学习</strong></li>
+<li><strong>分类</strong>（classification）将实例数据划分到合适的类别中。例如 判断网站是否被黑客入侵（二分类 ），手写数字的自动识别（多分类），多目标分类（多分类）。输出的是物体所属的<strong>类别</strong>（工业界用分类判定正负样本）</li>
+<li><strong>回归</strong>（regression）主要用于预测数值型数据。例如: 股票价格波动的预测，房屋价格的预测等。输出的是物体的<strong>值</strong>。</li>
+</ul>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502081547785.png" alt="image-20250208154726718"></p>
+<h3 id="线上服务"><a href="#线上服务" class="headerlink" title="线上服务"></a>线上服务</h3><p>训练好模型后，把模型用作召回通道，即可在用户刷xhs时快速做推荐</p>
+<p>模型存储：矩阵很大（几亿维），存储成key-value表</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502081556843.png" alt="image-20250208155648729"></p>
+<p>查找：逐一计算a和每个物品向量bi的时间复杂度非常大，如何优化？用近似最近邻查找</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502081558663.png" alt="image-20250208155811523"></p>
+<p>衡量最近邻的标准：目前推荐系统最常用的是余弦相似度。有些系统不支持余弦相似度，很好解决，把所有向量做归一化，让分母等于1，这样内积就等于余弦相似度</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502081613604.png" alt="image-20250208161316569"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502081607623.png" alt="image-20250208160736528"></p>
+<p>每个点是物品的embedding向量，用户的id是a</p>
+<p>如何避免暴力枚举？数据预处理，把数据划分成很多区域（用cosine相似度就是扇形，用L2就是多边形）</p>
+<p>每个区域用一个向量表示，向量的长度都是1，把向量作为key，区域里的每个物品点作为value</p>
+<p>假设有一万个向量（一万个key），给定一个向量可以快速取回该区域内所有的点（类似聚类的分层查找）</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502081614251.png" alt="image-20250208161447184"></p>
+<p>有了向量索引后，把a和向量对比，找到最近的向量。再计算a和区域内所有点的相似度</p>
+<p>如果有几亿个物品被划分到几万个区域，平均每个区域只有几万个点，计算量也不大。找最相近的三个点（夹角最小的三个点）</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502081617913.png" alt="image-20250208161756838"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502081619613.png" alt="image-20250208161909569" style="zoom:50%;" /><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502081619974.png" alt="image-20250208161959930" style="zoom:50%;" /></p>
+<h3 id="总结-4"><a href="#总结-4" class="headerlink" title="总结"></a>总结</h3><p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502081620579.png" alt="image-20250208162051510"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502081623909.png" alt="image-20250208162317819"></p>
+<h2 id="召回06：双塔模型——模型结构、训练方法"><a href="#召回06：双塔模型——模型结构、训练方法" class="headerlink" title="召回06：双塔模型——模型结构、训练方法"></a>召回06：双塔模型——模型结构、训练方法</h2><h3 id="模型结构"><a href="#模型结构" class="headerlink" title="模型结构"></a>模型结构</h3><p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502081639373.png" alt="image-20250208163941252"></p>
+<p>对于性别等类别少的特征，用one-hot即可，可以不做embedding</p>
+<p>连续特征：年龄、活跃程度、消费金额等</p>
+<p>神经网络可以是简单的全连接，也可以是复杂的深度交叉等，输出是用户的表征，做召回要用到这个向量</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502081642153.png" alt="image-20250208164209991"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502081642790.png" alt="image-20250208164235649"></p>
+<p>双塔模型：模型最终的输出是内积，评估用户对物品的兴趣</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502081750541.png"></p>
+<p>现在更常用的是余弦相似度，就是先做归一化再做内积，大小位于-1到+1之间</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502081751483.png" alt="image-20250208175100444"></p>
+<h3 id="训练方法"><a href="#训练方法" class="headerlink" title="训练方法"></a>训练方法</h3><p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502081753863.png" alt="image-20250208175306714"></p>
+<p>负样本的选择各厂商不同<img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502081754628.png" alt="image-20250208175451497"></p>
+<h4 id="Pointwise训练"><a href="#Pointwise训练" class="headerlink" title="Pointwise训练"></a>Pointwise训练</h4><p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502081756276.png" alt="image-20250208175619177"></p>
+<h4 id="Pairwise训练"><a href="#Pairwise训练" class="headerlink" title="Pairwise训练"></a>Pairwise训练</h4><p>物品正负样本的embedding层是相同的，用一样的参数和全连接层获得表征</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502082310994.png" alt="image-20250208231023835"></p>
+<p>跟pointwise的区别是每个训练样本是三元组，希望损失函数越小越好</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502082311474.png" alt="image-20250208231115341"></p>
+<p>还有其他的损失函数：还是让cos(a,b-)尽量小，cos(a,b+)尽量大。σ是大于0的超参数，需要手动设置</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502082312072.png" alt="image-20250208231229048"></p>
+<h4 id="Listwise训练"><a href="#Listwise训练" class="headerlink" title="Listwise训练"></a>Listwise训练</h4><p>这里的负样本打错了</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502082314554.png" alt="image-20250208231430457"></p>
+<p>类似对比学习</p>
+<p>softmax输出的s分数介于0-1之间，希望s+越大越好接近1，s-接近0</p>
+<p>最小化交叉熵，作为损失函数（虽然损失函数与负样本无关，但softmax用到了负样本）</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502082316151.png" alt="image-20250208231643978"></p>
+<h3 id="总结-5"><a href="#总结-5" class="headerlink" title="总结"></a>总结</h3><p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502082317384.png" alt="image-20250208231756261"></p>
+<p>以下是粗排&#x2F;精排模型，而不是召回模型：</p>
+<p>分别提取用户和物品的特征，前期融合（进入全连接前就拼接）不是召回，召回是后期融合（两个塔在输出相似度时才连接起来）</p>
+<p>不适用的原因是需要把所有的用户和物品输入。假设有1亿个物品，每给用户做一次召回，模型就要跑一亿次，计算量很大，且用不了近似最近邻优化</p>
+<ul>
+<li>双塔神经网络输出的是用户和物品的复杂embedding，可以离线存储，支持用最近邻查找来优化计算，因为已经知道向量</li>
+<li>前期融合神经网络直接输出的是相似度，不知道复杂向量，只知道特征变换后的简单用户&#x2F;物品特征，这不足以获得离线的用户向量和物品向量 ，所以不能用最近邻查找</li>
+</ul>
+<p>这种模型通常用于排序，从几千个中选出几百个</p>
+<h2 id="召回07：双塔模型——正负样本"><a href="#召回07：双塔模型——正负样本" class="headerlink" title="召回07：双塔模型——正负样本"></a><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502082324298.png" alt="image-20250208232406149">召回07：双塔模型——正负样本</h2><p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502092055320.png" alt="image-20250209205516113"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502092058715.png" alt="image-20250209205817567"></p>
+<p>如何选双塔模型的负样本？在不同阶段有着不同表现的样本</p>
+<ul>
+<li>这里的图和后文有矛盾，被曝光但没被点击不能作为负样本</li>
+</ul>
+<h3 id="简单负样本：针对没有被召回"><a href="#简单负样本：针对没有被召回" class="headerlink" title="简单负样本：针对没有被召回"></a>简单负样本：针对没有被召回</h3><p>几乎和全体物品一样</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502092119794.png" alt="image-20250209211910691"></p>
+<p>注意打压热门物品：0.75是经验值</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502092119286.png" alt="image-20250209211953140"></p>
+<p>选取正样本的标准是一个用户点击了一个物品，而与剩下的物品都是负样本</p>
+<img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502092120199.png" alt="image-20250209212042086" style="zoom:50%;" />
+
+<img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502092123274.png" alt="image-20250209212302179" style="zoom:50%;" />
+
+<p>n个用户，n个物品，组成n个正样本，n(n-1)个负样本</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502092216549.png" alt="image-20250209221619378"></p>
+<p>但注意这样做需要修正偏差，即让热门物品称为负样本的概率减小：-logpi让物品没有那么热门，有等价的结果</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502092240694.png" alt="image-20250209224018572" style="zoom:50%;" /><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502092241979.png" alt="image-20250209224108896" style="zoom:50%;" /></p>
+<h3 id="困难负样本：针对粗排、精排淘汰"><a href="#困难负样本：针对粗排、精排淘汰" class="headerlink" title="困难负样本：针对粗排、精排淘汰"></a>困难负样本：针对粗排、精排淘汰</h3><p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502092244602.png" alt="image-20250209224413504"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502092244030.png" alt="image-20250209224437935"></p>
+<p>注意不能使用曝光但没有点击的物品作为负样本，双塔模型效果会变差</p>
+<ul>
+<li>只要被曝光了的物品都通过了排序（粗排+精排），不作为负样本</li>
+<li>因为召回的任务是区分用户感兴趣和不感兴趣的物品，而不是可能感兴趣和非常感兴趣的物品</li>
+</ul>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502092246772.png" alt="image-20250209224608597"></p>
+<p>能曝光就说明很感兴趣了（已经很匹配了，理论上是正样本），只是相比其他的没有那么有兴趣</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502092249438.png" alt="image-20250209224948254"></p>
+<h3 id="总结-6"><a href="#总结-6" class="headerlink" title="总结"></a>总结</h3><p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502092250507.png" alt="image-20250209225041406"></p>
+<h2 id="召回08：双塔模型——线上服务、模型更新"><a href="#召回08：双塔模型——线上服务、模型更新" class="headerlink" title="召回08：双塔模型——线上服务、模型更新"></a>召回08：双塔模型——线上服务、模型更新</h2><h3 id="线上召回"><a href="#线上召回" class="headerlink" title="线上召回"></a>线上召回</h3><p>模型训练好之后，可以部署到线上做召回，让用户迅速找到感兴趣的200篇笔记</p>
+<p>将物品存入数据库，方便最近邻查找；而对用户线上计算向量a，作为query在数据库找出k个最相近的笔记（最近邻查找）</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502111547040.png" alt="image-20250211154737769"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502111549192.png" alt="image-20250211154920984"></p>
+<p>建索引：把向量划成很多区域，每个区域用一个向量表示</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502111551616.png" alt="image-20250211155111460"></p>
+<p>建好索引后，可以开始做线上召回</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502111551638.png" alt="image-20250211155159455"></p>
+<p>用户现算的开销少，虽然也可以离线计算，但工程效果一般，也因为用户兴趣动态变化。相比之下，物品特征相对稳定，短期内不变化。</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502111553047.png" alt="image-20250211155302895"></p>
+<h3 id="模型更新"><a href="#模型更新" class="headerlink" title="模型更新"></a>模型更新</h3><p>全量更新：用前一天的数据更新神经网络和向量数据库（更新索引），对速度要求不高，不需要实时数据流，延迟1&#x2F;2h也没关系，员工只需要每天凌晨把数据落表、批处理、打包成TFRecord即可</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502111800984.png" alt="image-20250211180014890"></p>
+<p>增量更新：每隔几十分钟就把模型发布出去，需要实时数据</p>
+<ul>
+<li>早上刷xhs感兴趣的内容，中午就要重新做推荐</li>
+<li>全连接层的参数是锁住的，不作更新，只更新embedding层参数（应该指特征变换层对用户ID的处理，出于工程实践的考量）</li>
+<li>最新的用户ID Embedding会考虑到最新的兴趣，注意用户向量包括ID embedding和离散&#x2F;连续的用户特征，所以还是要线上计算用户向量</li>
+</ul>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502111806806.png" alt="image-20250211180654716"></p>
+<p>全量：shuffle打乱（为了消除偏差）、随机梯度下降、1 epoch</p>
+<ul>
+<li>完成新一天的全量更新后，增量更新就可以不要了</li>
+<li>只做增量更新效果不好，有偏差，从早到晚并不好；而且全量更新全参数</li>
+</ul>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502112244870.png" alt="image-20250211224421798"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502112245668.png" alt="image-20250211224544590"></p>
+<h3 id="总结-7"><a href="#总结-7" class="headerlink" title="总结"></a>总结</h3><p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502112246566.png" alt="image-20250211224630502"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502112247332.png" alt="image-20250211224703264"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502112247171.png" alt="image-20250211224729091"></p>
+<h2 id="召回09：双塔模型-自监督学习"><a href="#召回09：双塔模型-自监督学习" class="headerlink" title="召回09：双塔模型+自监督学习"></a>召回09：双塔模型+自监督学习</h2><p>自监督学习可以改善双塔模型的业务指标（让物品塔做得更好）</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502151805481.png" alt="image-20250215180517351"></p>
+<p>点击数据是正样本，长尾物品的曝光和点击少，所以表征学习的不好</p>
+<ul>
+<li>自监督改良的方法来自谷歌，可以复现</li>
+</ul>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502151806168.png" alt="image-20250215180637066"></p>
+<p>（用户-点击过的物品）是正样本，和没点击过的物品组成负样本</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502151807417.png" alt="image-20250215180755311"></p>
+<p>让模型给正样本打分尽量高，给负样本打分尽量低</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502151808826.png" alt="image-20250215180841750"></p>
+<p>n个概率值pi,1-n，正样本的概率值应该接近1。希望pi尽量接近yi，通过和标签对比获得交叉熵</p>
+<ul>
+<li>以下是ListWIse的损失函数，希望损失尽可能小</li>
+</ul>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502151811028.png" alt="image-20250215181133908"></p>
+<p>纠偏：让热门物品稍被打压。训练结束，线上召回时，用原本的相似度cos，说明只在模型训练时做纠偏</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502151814665.png" alt="image-20250215181415578"></p>
+<p>加入纠偏后的损失函数：batch中有n个用户，所以会求平均</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502151816120.png" alt="image-20250215181627034"></p>
+<h3 id="自监督学习训练物品塔"><a href="#自监督学习训练物品塔" class="headerlink" title="自监督学习训练物品塔"></a>自监督学习训练物品塔</h3><p>对比学习进行数据增强，对于同一个物品的两个变换，应该相近，和不同变换的相似度应该小</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502151821846.png" alt="image-20250215182143737"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502151822229.png" alt="image-20250215182218146"></p>
+<h4 id="特征变换"><a href="#特征变换" class="headerlink" title="特征变换"></a>特征变换</h4><p>random mask：正常是对数码和摄影分别做embedding，mask以后替换为默认值或掩码值，作用是数据增强、防止过拟合、模拟缺失数据<img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502152140431.png" alt="image-20250215214021359">dropout：仅对多值离散特征，随机丢弃一些而不是全部（与mask区分)</p>
+<ul>
+<li>mask：把全部类目特征都丢掉</li>
+</ul>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502152142637.png" alt="image-20250215214242551"></p>
+<p>互补：正常是4种分别做embedding，然后一起放入物品塔。这里分组后得到表征。由于是对同一个物品的表征，这两个物品表征应该很相似，训练时要鼓励cos相似度尽量大。</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502152146894.png" alt="image-20250215214601807"></p>
+<p>第四种：随机遮住一组关联的特征</p>
+<ul>
+<li>受众性别是一种特征，物品类目又是一种特征，但UV不是独立的而是存在关联，某些p(u,v)的概率会大</li>
+<li>两个特征关联越强，p(u,v)越大，互信息MI越大</li>
+</ul>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502161411970.png" alt="image-20250216141114876"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502161412156.png" alt="image-20250216141239106"></p>
+<p>比如如果选择受众性别作为种子，那最相关的特征里面就有类目特征，把种子和相关特征都mask掉</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502161429867.png" alt="image-20250216142959824"></p>
+<p>该种变换的推荐指标更好，但复杂：需要计算两两之间的MI，如果新加了一个特征需要算所有特征的MI，在工业界考虑投入产出比，这样开发了也不好维护，不太划算。</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502161431771.png" alt="image-20250216143132730"></p>
+<p>总结：用其中任何一种变换方法都可以。</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502161434857.png" alt="image-20250216143438813"></p>
+<h4 id="训练模型"><a href="#训练模型" class="headerlink" title="训练模型"></a>训练模型</h4><p>这里只抽物品，冷门物品和热门物品被抽到的概率是相同的</p>
+<ul>
+<li>和双塔区别，双塔根据点击行为抽样，正样本为用户点击的物品，热门物品抽中的概率大</li>
+</ul>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502161439447.png" alt="image-20250216143911394"></p>
+<p>损失函数如何得到的？把第i个物品和m个物品的特征作比较，经过softmax得到m个概率值。如果物品塔足够好，正样本cos应该大，概率值接近1，其他m-1个概率值接近0。让si接近yi，交叉熵计算时把si,i替换为softmax的输出。训练时需要最小化损失函数</p>
+<blockquote>
+<p>Softmax 函数将输入向量转换为概率分布。假设有一个输入向量<br>$$<br>\mathbf{z} &#x3D; [z_1, z_2, \dots, z_n]<br>$$<br>，Softmax 函数的输出<br>$$<br>\ \mathbf{p} &#x3D; [p_1, p_2, \dots, p_n] <br>$$<br> 定义为：</p>
+<p>$$<br><br>p_i &#x3D; \frac{e^{z_i}}{\sum_{j&#x3D;1}^n e^{z_j}}<br><br>$$<br>其中：</p>
+<ul>
+<li>( z_i ) 是输入向量的第 ( i ) 个元素。</li>
+<li>( p_i ) 是输出概率分布的第 ( i ) 个元素，表示类别 ( i ) 的概率。</li>
+<li>分母是所有 ( e^{z_j} ) 的和，确保输出的概率分布总和为 1。</li>
+</ul>
+<p><strong>交叉熵</strong>的标准公式用于衡量两个概率分布 ( P ) 和 ( Q ) 之间的差异，公式如下：<br>$$<br><br>H(P, Q) &#x3D; -\sum_{i} P(i) \log Q(i)<br><br>$$<br>其中：</p>
+<ul>
+<li>( P(i) ) 是真实分布 ( P ) 中第 ( i ) 个事件的概率。</li>
+<li>( Q(i) ) 是模型预测分布 ( Q ) 中第 ( i ) 个事件的概率。</li>
+</ul>
+<p>在分类任务中，( P ) 通常是真实标签的 one-hot 编码，( Q ) 是模型的预测概率分布。交叉熵越小，表示预测分布 ( Q ) 越接近真实分布 ( P )。</p>
+</blockquote>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502161452798.png" alt="image-20250216145202739"></p>
+<p>一个batch有m个物品，所以取平均，训练时梯度下降使损失最小</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502161452687.png" alt="image-20250216145255641"></p>
+<h3 id="总结-8"><a href="#总结-8" class="headerlink" title="总结"></a>总结</h3><p>数据存在低曝光的问题（头部效应），谷歌提出自监督学习改善物品数据本身的问题，对比双塔物品的item embedding学的更好了，点击率等指标得到提升</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502161454393.png" alt="image-20250216145429348"></p>
+<p>双塔和自监督用的是一个物品塔（神经网络），训练时两个损失会同时被计算（α控制比例），然后更新用户塔和物品塔的参数。</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502161456570.png" alt="image-20250216145621515"></p>
+<h2 id="召回10：Deep-Retrieval-召回"><a href="#召回10：Deep-Retrieval-召回" class="headerlink" title="召回10：Deep Retrieval 召回"></a>召回10：Deep Retrieval 召回</h2><p>idea是把物品表示为路径，然后查找用户最匹配的路径</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502161521068.png" alt="image-20250216152159004"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502161522849.png" alt="image-20250216152242797"></p>
+<h3 id="索引"><a href="#索引" class="headerlink" title="索引"></a>索引</h3><p>每层有k个节点，路径之间可以有重合节点</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502161524156.png" alt="image-20250216152418092"></p>
+<p>item-&gt;List<Path>：训练神经网络时用到这个索引</p>
+<ul>
+<li>如果有3层，就用3个节点表示路径</li>
+</ul>
+<p>path-&gt;List<item>：线上作召回时用到这个索引</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502161526355.png" alt="image-20250216152613307"></p>
+<h3 id="预估模型"><a href="#预估模型" class="headerlink" title="预估模型"></a>预估模型</h3><p>预估用户对路径的兴趣，可以召回多条路径</p>
+<p>p1&#x2F;p2&#x2F;p3都是神经网络输出的预估结果，相乘即为预估的兴趣</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502161528793.png" alt="image-20250216152809734"></p>
+<p>向量p1对应L1层，k个元素是神经网络给L1层打的分数，分数越高则越有可能被选中。根据分数用beam search选出小a。</p>
+<p>对x和a的embedding作拼接（concatenation），输入给新的神经网络</p>
+<p>p1&#x2F;p2&#x2F;p3对应L1&#x2F;L2&#x2F;L3，选择abc后组成了一条路径</p>
+<ul>
+<li>三层神经网络不共享参数</li>
+</ul>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502161532967.png" alt="image-20250216153228897"></p>
+<h3 id="线上召回-1"><a href="#线上召回-1" class="headerlink" title="线上召回"></a>线上召回</h3><p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502161534348.png" alt="image-20250216153402295"></p>
+<p>beam size越大，计算量越大，search结果越好。</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502161542011.png" alt="image-20250216154214965"></p>
+<p>第一层神经网络给节点打分，得到k个分数，size&#x3D;1则只选一个节点（比如选分数最高的节点）</p>
+<p>用第二层神经网络给k条路径打分（5到1-k），仍然只选一条路径</p>
+<p>再用第三层神经网络给k条路径打分（5到4到1-k）</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502161538757.png" alt="image-20250216153818702"></p>
+<p>p1&#x2F;p2&#x2F;p3是三层的输出，刚才beam size&#x3D;1时分别最大化了p1&#x2F;p2&#x2F;p3，但这种贪心不保证总概率最大，所以size越大越可能达到最优（最优的路径数量是k*3，但每条路径都打分计算量太大了，size可以让最大计算量是size*size*k）</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502161539694.png" alt="image-20250216153956649"></p>
+<p>size&#x3D;4时，最终得到的路径数为4（也有可能超过4，但路径数一定小于size*3）</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502161544331.png" alt="image-20250216154440263"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502161545111.png" alt="image-20250216154521041"></p>
+<p>两个例子分别召回1&#x2F;4条路径、线上已经有索引了，可以得到很多物品，可能会超过推荐的配额，所以需要再排序选出分数最高的子集，作为召回的物品</p>
+<ul>
+<li>排序模型没有限制，可以用双塔模型</li>
+</ul>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502161555502.png" alt="image-20250216155538442"></p>
+<h3 id="训练-1"><a href="#训练-1" class="headerlink" title="训练"></a>训练</h3><p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502161610799.png" alt="image-20250216161054742"></p>
+<p>如果用户点击过物品，则用户对物品对应的所有j条路径都感兴趣。依然用交叉熵作损失函数。</p>
+<ul>
+<li>神经网络的作用是判断用户是否对某条路径感兴趣，所以点击过的分数应该更高</li>
+</ul>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502161616287.png" alt="image-20250216161603224"></p>
+<p>把用户作为物品和路径的中介，即可得到相关性分数，如果<strong>关联高</strong>就可以把路径作为item的表征</p>
+<ul>
+<li>物品表征和神经网络的兴趣分数没有先后之分，是同时学习的。最开始的物品路径表征应该是随机的。</li>
+</ul>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502161619365.png" alt="image-20250216161936313"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502161620966.png" alt="image-20250216162056907"></p>
+<p>score是相关性分数，理论上选分数高的j条路径，但会出现少数路径上有很多物品。为了平衡，用正则项约束path。</p>
+<ul>
+<li>如果某条路径的物品过多，会用正则项惩罚。</li>
+</ul>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502161625559.png" alt="image-20250216162545491"></p>
+<p>假设已经有了j条路径表示物品，会选出新的路径l（满足损失函数+正则项符合要求）</p>
+<ul>
+<li>TODO似乎没讲l路径是否会顶替j路径的细节，j是通过相关性获得的，但相关性中的p也会因为j而变化，具体如何交替训练，物品表征该如何更新估计还得看论文</li>
+</ul>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502161627567.png" alt="image-20250216162741504"></p>
+<p>交替做两部分的训练</p>
+<ul>
+<li>训练预估模型神经网络时，物品是中介，关联用户和路径</li>
+<li>更新物品表征时，用户是中介，关联物品和路径（利用的依然是上面的预估模型，计算相关性）</li>
+<li>总之都利用“用户点击过物品”这一客观行为，<strong>路径和兴趣都是人为设置的参数来建模这一过程</strong></li>
+</ul>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502161636143.png" alt="image-20250216163638065"></p>
+<h3 id="总结-9"><a href="#总结-9" class="headerlink" title="总结"></a>总结</h3><p>本质是路径是用户和物品的中介（双塔是用向量表征）</p>
+<ol>
+<li>双塔使用单向量召回，导致召回结果集中在单个topic上。字节做deep retrieval的目的是多兴趣召回（multi-interest）。deep retrieval召回多条路径，每条路径是一个兴趣点，所以属于multi-interest。 </li>
+<li>据说抖音已经下掉了deep retrieval，因为有了更好的模型。 </li>
+<li>这是抖音实际在用的multi-interest retrieval，建议读一下：Trinity: Syncretizing Multi-&#x2F;Long-tail&#x2F;Long-term Interests All in One</li>
+</ol>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502161640990.png" alt="image-20250216164053928"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502161643581.png" alt="image-20250216164304517"></p>
+<h2 id="召回11：地理位置召回、作者召回、缓存召回"><a href="#召回11：地理位置召回、作者召回、缓存召回" class="headerlink" title="召回11：地理位置召回、作者召回、缓存召回"></a>召回11：地理位置召回、作者召回、缓存召回</h2><p>重要性稍低的召回通道</p>
+<h3 id="地理位置召回"><a href="#地理位置召回" class="headerlink" title="地理位置召回"></a>地理位置召回</h3><p>GeoHash：经纬度编码成二进制哈希码，方便检索。将它作为优质索引，记录地图上一个长方形区域内的优质笔记，最新的笔记在最前面。因为没有个性化，所以要用优质笔记，才有可能通过后面的粗排和精排。</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502161648936.png" alt="image-20250216164834875"></p>
+<p>只要用户允许定位，就会取出k篇优质笔记，至于哪些感兴趣后面排序再找。</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502161649160.png" alt="image-20250216164912104"></p>
+<p>同城召回：唯一的区别是以城市作为索引（而不是经纬度），城市是现在和曾经生活过的城市。</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502161651739.png" alt="image-20250216165147693"></p>
+<h3 id="作者召回"><a href="#作者召回" class="headerlink" title="作者召回"></a>作者召回</h3><p>xhs会推送关注作者的笔记</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502162234112.png" alt="image-20250216223409029"></p>
+<p>有交互的作者召回：不关注也会推送。交互作者列表会定期更新</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502162236295.png" alt="image-20250216223601239"></p>
+<p>相似作者：基于itemCF判断相似，sim(i1, i2)（用户的粉丝相似）</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502162244636.png" alt="image-20250216224459583"></p>
+<h3 id="缓存召回"><a href="#缓存召回" class="headerlink" title="缓存召回"></a>缓存召回</h3><p>精排的结果被浪费了，只因为随机抽样没被抽中，如何利用？</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502162246565.png" alt="image-20250216224645521"></p>
+<p>缓存大小固定，先入先出。被召回10次指的是作为召回通道的结果进入排序，并不是指到了最后曝光的那一步，所以与成功曝光就退场不冲突</p>
+<ul>
+<li>还可以有更复杂的规则，如低曝光的笔记（指曝光给其他用户少的笔记）在缓存中停留时间更长</li>
+</ul>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502162248733.png" alt="image-20250216224854687"></p>
+<h3 id="总结-10"><a href="#总结-10" class="headerlink" title="总结"></a>总结</h3><p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502162255243.png" alt="image-20250216225533202"></p>
+<h2 id="召回12：曝光过滤-Bloom-Filter"><a href="#召回12：曝光过滤-Bloom-Filter" class="headerlink" title="召回12：曝光过滤 &amp; Bloom Filter"></a>召回12：曝光过滤 &amp; Bloom Filter</h2><p>召回阶段做曝光过滤，具体的方法是Bloom Filter</p>
+<p>实验表明重复曝光同一物品会影响用户体验（但youtube这样的长视频没有）</p>
+<p>本来就只召回1个月内的笔记，所以只需要记录1个月内的曝光历史</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502171647897.png" alt="image-20250217164653797"></p>
+<p>暴力对比计算量很大，n、r都是千级，所以要用bloom filter过滤（可能会误伤）</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502171649861.png" alt="image-20250217164953811"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502171651038.png" alt="image-20250217165142987"></p>
+<p>有映射的地方为1，就可以把6个物品映射成一个01向量</p>
+<p>哈希函数数量为1时，召回的物品映射到0，说明一定没有曝光，不会被误判；但映射到1时可能会被误判，如ID8</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502171654285.png" alt="image-20250217165400234"></p>
+<p>k&#x3D;3，有3个哈希函数时，把映射到的3个位置都设置为1</p>
+<p>只要有一个为0，则未曝光，这里不会误判；仍然可能把未曝光误判为已曝光</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502171656928.png" alt="image-20250217165649880"></p>
+<p>曝光的物品越多，误伤概率越大</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502171657519.png" alt="image-20250217165741474"></p>
+<p> 比如设置δ为1%，即可以得到最优参数k和m，m比n大几倍，说明每个物品占用的bit并不多</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502171659749.png" alt="image-20250217165932720"></p>
+<p>画红圈的前端部分刷新要足够快，在用户下次刷新时就要处理，写入二进制向量，否则下一刷可能会有重复物品</p>
+<ul>
+<li>所以用实时流处理，比如把曝光物品写入kafka消息队列，用flink做实时计算，实时读取消息队列，计算曝光物品的哈希值，把结果写到bloom filter的二进制向量上。曝光发生几秒后，就可以更新向量（实时流处理是很重要的模块，不能轻易挂掉）<ul>
+<li>根据已曝光物品，完成向量计算</li>
+</ul>
+</li>
+<li>曝光过滤具体用在召回完成之后，召回服务器请求曝光过滤服务，服务将这位用户的二进制向量发送给召回服务器，在召回服务器上计算召回物品的哈希值，再与二进制向量做对比，把已经曝光的物品过滤掉，剩余的都是未曝光的，发送给排序服务器。<ul>
+<li>完成召回物品计算，与向量对比</li>
+<li><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502171701402.png" alt="image-20250217170118351"></li>
+</ul>
+</li>
+</ul>
+<p>缺点：不支持删除物品，因为不能把物品对应的1改为0，会误伤其他物品</p>
+<p>这导致每天移除年龄大于1个月的物品时，需要重新计算整个集合的二进制向量，不能复用之前的向量。</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502171713598.png" alt="image-20250217171330543"></p>
+<h1 id="排序"><a href="#排序" class="headerlink" title="排序"></a>排序</h1><h2 id="排序01：多目标模型"><a href="#排序01：多目标模型" class="headerlink" title="排序01：多目标模型"></a>排序01：多目标模型</h2><p>召回：通道很多，几亿-&gt;几千</p>
+<p>粗排、精排：给笔记逐一打分，不截断，带着分数进入重排</p>
+<p>重排：多样性抽样，相似内容打散，最后有几十篇笔记展示给用户</p>
+<p>排序的依据是对笔记的兴趣，会记录下列交互的行为</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502171726722.png" alt="image-20250217172617685"></p>
+<p>点击率差不多有10%-20%，点开才会有后续的点赞、收藏、转发。转发少但是很重要</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502171727379.png" alt="image-20250217172701336"></p>
+<p>排序打分的依据：权重是AB测试调出来的，当然很多融合方式比加权和要好</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502171727819.png" alt="image-20250217172754778"></p>
+<h3 id="多目标模型"><a href="#多目标模型" class="headerlink" title="多目标模型"></a>多目标模型</h3><p>排序模型的输入是各种特征</p>
+<p>统计：包括用户和候选物品的各种特征，如在过去30天的统计数据</p>
+<p>场景：随着用户请求传过来，包括时间、地点，如同城、周末、节假日都会影响兴趣。</p>
+<p>神经网络：可以是简单的全连接，也可以是wide and deep等更复杂的结构</p>
+<p>神经网络输出的向量输入4个神经网络，每个有2-3个全连接层，最后是sigmoid介于0-1之间</p>
+<p>推荐系统排序主要靠这4个预估值，反映用户对推荐系统的兴趣</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502171735098.png" alt="image-20250217173530051"></p>
+<p>训练时，让p1-p4拟合目标，α根据经验设置</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502171805660.png" alt="image-20250217180527619"></p>
+<p>困难：负样本很多，影响训练效果和效率。降采样后，样本数量减少，训练时间减少</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502171806224.png" alt="image-20250217180629182"></p>
+<p>预估值校准：因为负样本降采样了，模型对正样本更乐观了</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502171807622.png" alt="image-20250217180736586"></p>
+<p>使用降采样时的参数α做校准，拿校准之后的点击率p_true作为模型对物品的预估</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502171810616.png" alt="image-20250217181004572"></p>
+<p>总结：多目标模型可以预估点击率、点赞率等指标，做了负样本的降采样后，要对预估值做校准。</p>
+<h2 id="排序02：Multi-gate-Mixture-of-Experts-MMoE"><a href="#排序02：Multi-gate-Mixture-of-Experts-MMoE" class="headerlink" title="排序02：Multi-gate Mixture-of-Experts (MMoE)"></a>排序02：Multi-gate Mixture-of-Experts (MMoE)</h2><p>改进的模型</p>
+<p>三个神经网络都有许多全连接层组成，但不共享参数，各输出一个向量，实际中专家通常是4个或者8个。</p>
+<p>这些特征又输入到另外两个神经网络，p和q都是后面要用来加权平均的权重</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502172001012.png" alt="image-20250217200043391"></p>
+<p>神经网络的输出取决于具体的任务（预估什么业务指标），比如点击率就是0-1的实数</p>
+<p>假设多目标模型只有点击率和点赞率两个目标，所以这里只有pq两组权重。如果有10个目标就要10个权重。</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502172003471.png" alt="image-20250217200343427"></p>
+<p>专家神经网络的数量是一个超参数，需要手动调，一般是4个或8个。</p>
+<p><strong>极化现象和解决方案</strong></p>
+<p>只使用某一个专家，而不是融合多专家，那么MMoE就相当于上文只使用一个神经网络的普通多目标模型</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502172008078.png" alt="image-20250217200855027"></p>
+<p>dropout：强迫每个任务根据部分专家来预测，一般不会发生极化，不然神经网络的预测结果特别差。</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502172011614.png" alt="image-20250217201154580"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502172012788.png" alt="image-20250217201204751"></p>
+<p>MMoE不一定有提升，如果公司没有用很可能是用了之后没效果。</p>
+<h2 id="排序03：预估分数融合"><a href="#排序03：预估分数融合" class="headerlink" title="排序03：预估分数融合"></a>排序03：预估分数融合</h2><p>多目标模型输出了对点击率、点赞率等指标的预估，这节课讲如何融合这些指标，得到分数用于排序</p>
+<p>分母可以是曝光，两种都很常用</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502172038009.png" alt="image-20250217203822971"></p>
+<p>p_time是预估的用户观看时长，超参数w&#x2F;α需要线上AB测试手动调</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502172039089.png" alt="image-20250217203944060"></p>
+<p>预估时长越长，排名越靠前，得分就越高</p>
+<p>这里分数不是用p，而是用每个指标的排名r</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502172041412.png" alt="image-20250217204156377"></p>
+<p>α1-4需要调，假设都是1，那公式就是实际的营收额，具有实际意义</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502172042458.png" alt="image-20250217204257425"></p>
+<h2 id="排序04：视频播放建模"><a href="#排序04：视频播放建模" class="headerlink" title="排序04：视频播放建模"></a>排序04：视频播放建模</h2><h3 id="视频播放时长"><a href="#视频播放时长" class="headerlink" title="视频播放时长"></a>视频播放时长</h3><p>图文和视频的排序依据不同，时长和完播是视频最重要的指标</p>
+<blockquote>
+<p>回归是预测<strong>数值型的目标值</strong>，如房价、股价；分类是预测<strong>有限的、离散的类别标签</strong></p>
+</blockquote>
+<p>直接回归的效果不好，youtube论文效果最好</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502172050621.png" alt="image-20250217205028579"></p>
+<p>神经网络被叫做share bottom，被所有任务共享</p>
+<p>对z做sigmoid得到p，让p拟合y（最小化交叉熵CE），t是用户实际观看视频的时长，我们希望用exp(z)作为播放时长的预估</p>
+<blockquote>
+<p>交叉熵的设计是基于概率的，所以要把输出z加sigmoid，同时把y也限制在(0,1)，这样损失函数的范围也是好计算的</p>
+</blockquote>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502172055478.png" alt="image-20250217205547426"></p>
+<p>p只用作训练，线上做推理用的是exp(z)<img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502172056722.png" alt="image-20250217205612689" style="zoom:67%;" /><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502172056960.png" style="zoom:67%;" /></p>
+<p>实践中，把分母1+t去掉也没问题，相当于给损失函数做加权，权重是播放时长t</p>
+<ul>
+<li>1+t本来就是归一化，去掉后并不会影响模型的训练效果，因为梯度下降算法会自动调整学习率，使得模型能够有效地学习。</li>
+<li>加权的意思是当 <em>t</em> 较大时（即播放时长较长），<em>t</em>⋅log(<em>p</em>) 这一项会占据更大的比重，模型会更关注那些播放时长较长的样本。</li>
+</ul>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502172104091.png" alt="image-20250217210411051"></p>
+<p>最后exp(z)会影响视频排序</p>
+<h3 id="视频完播"><a href="#视频完播" class="headerlink" title="视频完播"></a>视频完播</h3><p>预估完播率会与播放时长、点击率、点赞率等指标一起作为完播依据</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502172105537.png" alt="image-20250217210538497"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502172106651.png" alt="image-20250217210633613"></p>
+<p>直觉上，时长越长，完播率越低，如果直接用完播率对短视频有利</p>
+<p>用函数f拟合蓝色曲线，放在分母上像归一化了一样</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502172108172.png" alt="image-20250217210809126"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502172108724.png" alt="image-20250217210859668"></p>
+<h2 id="排序05：排序模型的特征"><a href="#排序05：排序模型的特征" class="headerlink" title="排序05：排序模型的特征"></a>排序05：排序模型的特征</h2><p>用户属性记录在用户画像中</p>
+<p>ID本身没有有用得信息，但用于作embedding</p>
+<p>账号信息：模型需要对新用户和低活用户做优化</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502172154818.png" alt="image-20250217215409779"></p>
+<p>物品画像：发表的时间越久，价值越低，尤其是八卦等强时效性信息</p>
+<p>笔记内容：包括标题、类目等，通常对这些离散的内容特征作embedding变成向量</p>
+<p>字数等笔记自带的属性反映出笔记的质量，笔记的点击和交互指标与这些属性相关</p>
+<p>信息量、美学是算法打的分数，事先用人工标注的数据训练cv和nlp模型，当新笔记发布时，用模型给笔记打分，把信息量这些分数写到物品画像中，这些分数可以作为排序模型的特征</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502172157714.png" alt="image-20250217215752674"></p>
+<p>统计值：用各种时间粒度反映用户的兴趣</p>
+<p>对图文&#x2F;视频作分桶，对笔记类目分桶</p>
+<ul>
+<li><strong>分桶</strong>（Binning）是一种将连续数据或类别数据划分为多个离散区间（即“桶”）的技术。</li>
+</ul>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502172202124.png" alt="image-20250217220205079">、</p>
+<p>年龄分桶、地域分桶等</p>
+<p>作者特征反映了作品的平均质量</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502172226150.png" alt="image-20250217222630106"></p>
+<p>场景特征：随着推荐请求传来。</p>
+<ul>
+<li>不同时间想看的事情不一样</li>
+<li>手机设备：安卓苹果的特征区别很大</li>
+</ul>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502172227790.png" alt="image-20250217222742756"></p>
+<h3 id="特征处理"><a href="#特征处理" class="headerlink" title="特征处理"></a>特征处理</h3><p>离散特征embedding比较简单，消耗内存不多</p>
+<p>连续特征：</p>
+<ol>
+<li>分桶：年龄等可以one-hot或者embedding</li>
+<li>其他变换：曝光数等指标是长尾分布，大多数都是几百次，极少数才是几百万次。如果直接输入，特别大的数值会让计算异常，如做梯度下降和预估值都很奇怪，这样的特征要用log做变换。或者转换为概率，同时做<strong>平滑</strong>，去掉偶然性产生的波动（如减少噪声和极端值）。<ol>
+<li>注意其他变换的log后的点击数、点击率都可以同时作为特征输入，并不重复</li>
+</ol>
+</li>
+</ol>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502172232459.png" alt="image-20250217223204414"></p>
+<p>以下特征都有用，只是在特征的选择和处理上会贴近业务场景。</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502172233748.png" alt="image-20250217223326711"></p>
+<p><strong>特征覆盖率</strong>：特征工程时，要想办法提高特征覆盖率，还要思考缺失时用什么作为默认值。</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502172234373.png" alt="image-20250217223406334"></p>
+<h3 id="线上服务-1"><a href="#线上服务-1" class="headerlink" title="线上服务"></a>线上服务</h3><p>推荐系统拥有三个数据源，都存在内存数据库中。线上服务时，排序服务器会读取数据，然后做特征处理，然后给模型，模型就能预估出点击率、点赞率等指标。</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502172234294.png" alt="image-20250217223446261"></p>
+<p>召回结束后，召回服务器会把几十路通道的结果作归并，把几千篇笔记的id返回给主服务器。召回需要调用用户画像（ID、离散、连续）</p>
+<p>主服务器传一个用户ID和几千个物品ID，还有场景特征（用户ID和场景特征来自用户请求）给排序服务器，排序服务器从三大数据源中取回特征（用户画像和统计压力小，就1个用户，但物品画像和统计要返回几千篇召回笔记的特征）</p>
+<ul>
+<li><p>用户数据库可以向量可以很多很大，但尽量不要往物品画像塞很大的向量，否则物品画像会承受很大的压力</p>
+</li>
+<li><p>用户画像较为静态，性别年龄几乎不变，兴趣也基本是以天刷新的</p>
+</li>
+<li><p>物品画像几乎是完全静态的，物品自身的属性和算法给物品打的标签在很长时间内不会变化</p>
+<ul>
+<li>对用户和物品画像，最重要的是读取速度快，而不太需要考虑时效性，有时甚至可以缓存到排序服务器本地，让读取更快</li>
+</ul>
+</li>
+<li><p>但是统计数据是动态变化的，时效性强，点赞一篇就都会变，要尽快刷新统计数据库，不适合缓存在本地</p>
+</li>
+</ul>
+<p>排序服务器把特征打包传递给TF Serving。tensorflow会给笔记打分，把分数返回给排序服务器。</p>
+<p>排序服务器会用融合的分数、多样性分数还有业务规则给笔记排序，把排名最高的几十篇笔记返回给主服务器，就是最终给用户曝光的笔记</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502172245274.png" alt="image-20250217224504232"></p>
+<h2 id="排序06：粗排模型"><a href="#排序06：粗排模型" class="headerlink" title="排序06：粗排模型"></a>排序06：粗排模型</h2><p>前面的模型主要用于精排，这节看精排怎么做。</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502182328768.png" alt="image-20250218232754654"></p>
+<p>精排模型：”Concatenation”（串联、连接），shared bottom的意思是被多个任务共享</p>
+<p>精排模型的代价主要在神经网络，因为很大也很复杂</p>
+<p>属于前期融合</p>
+<p>n次推理的原因是每次物品特征仅针对一篇笔记，所以如果有n篇候选笔记则模型要做n次推理</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502182329515.png" alt="image-20250218232926460"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502182331703.png" alt="image-20250218233159667"></p>
+<p>双塔模型：用于召回，物品的embedding存在数据库，在线上不需要物品塔做计算，线上服务仅用物品塔，每做一次推荐用户塔只做一次推理，计算出一个向量a，所以双塔模型的计算代价很小，适合召回。</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502182334039.png" alt="image-20250218233428995"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502182335811.png" alt="image-20250218233502298"></p>
+<h3 id="三塔模型"><a href="#三塔模型" class="headerlink" title="三塔模型"></a>三塔模型</h3><p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502182335208.png" alt="image-20250218233519172"></p>
+<p>训练的方法跟精排差不多，就是端到端</p>
+<p>介于前期融合和后期融合之间</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502182336033.png" alt="image-20250218233601984"></p>
+<p>每个用户做一次推荐，粗排要给几千个物品打分。输出向量可以缓存在prompt server，由于缓存物品塔在线上几乎不用做推理，只有用到新物品时才需要做推理（相当于一次粗排只需要给几十个新物品打分，计算量还好，所以物品塔的规模可以比较大）</p>
+<p>交叉塔的输入会实时变化，所以不应该缓存输出向量，线上推理避免不掉，所以交叉塔需要足够小+计算够快，所以交叉塔通常只有一层，宽度也比较小。</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502182346100.png" alt="image-20250218234604037"></p>
+<p>其实还是跟双塔很像，相比精排就是把shared拆开了，针对各自特征的特点做了缓存和层数的设计</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502182347380.png" alt="image-20250218234740329"></p>
+<p>总结：无论有多少个候选物品，用户只需要做一次推理；物品塔输出的向量先缓存在prompt server上，没有物品缓存时说明是新物品，才需要物品塔做推理。最坏的情况下，物品塔需要做n次推理，实际上缓存命中率很高。交叉塔必须做n次推理，因为是动态特征。</p>
+<p>上层网络必须做n次推理，因为没有缓存，粗排大部分计算量都在上层网络。</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502182351055.png" alt="image-20250218235136011"></p>
+<h1 id="特征交叉"><a href="#特征交叉" class="headerlink" title="特征交叉"></a>特征交叉</h1><p>在召回和排序中都会用到</p>
+<h2 id="特征交叉01：Factorized-Machine-FM-因式分解机"><a href="#特征交叉01：Factorized-Machine-FM-因式分解机" class="headerlink" title="特征交叉01：Factorized Machine (FM) 因式分解机"></a>特征交叉01：Factorized Machine (FM) 因式分解机</h2><p>现在已经不太常用了</p>
+<p>对d个特征的连加，w是权重。这里p没用线性函数，如果做二分类，可以用sigmoid。b是偏移项</p>
+<p>特征之间只有加，没有乘，说明特征没有交叉</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502191714027.png" alt="image-20250219171356152"></p>
+<p>有交叉可以让模型更准确，xi*xj是交叉，这样既有交叉也有相乘，如房屋大小和每平米单价是两个特征，相乘的话很有用</p>
+<p>大多数参数是交叉特征的权重u，如果d很大，参数数量会太大，容易出现过拟合（因为特征稀疏等）</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502191716264.png" alt="image-20250219171651217"></p>
+<p>如何减少参数数量？对矩阵U做低阶近似，k是超参数，k越大V越接近U。用vivj代替uij，作为交叉特征的权重</p>
+<ul>
+<li>U是d*d，V是d*k，这样U&#x3D;V*V^T</li>
+</ul>
+<p>让推理的代价更小，而且不容易过拟合</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502191731933.png" alt="image-20250219173139885"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502191733047.png" alt="image-20250219173342004"></p>
+<p>FM就是在线性模型后面加上交叉项，所以可以替代</p>
+<p>推荐系统中，FM显著比线性模型好。早期的推荐系统通常使用逻辑回归预估点击率，用FM做特征交叉，不过xhs早就下掉了。</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502191736203.png" alt="image-20250219173648153"></p>
+<h2 id="特征交叉02：DCN-深度交叉网络"><a href="#特征交叉02：DCN-深度交叉网络" class="headerlink" title="特征交叉02：DCN 深度交叉网络"></a>特征交叉02：DCN 深度交叉网络</h2><p>用来代替简单的全连接网络，效果更好，可以用来排序和召回</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502191847474.png" alt="image-20250219184722425"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502191848302.png" alt="image-20250219184806259"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502191848062.png" alt="image-20250219184817009"></p>
+<h3 id="交叉层"><a href="#交叉层" class="headerlink" title="交叉层"></a>交叉层</h3><p>输入是x0，经过i层交叉层输出xi，下面是第i层的结构（前面也经过了这样的层）</p>
+<p>哈达玛乘积：逐元素相乘</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502191851157.png" alt="image-20250219185153126"></p>
+<p>xi和z分别是输入和输出，两个向量的维度是一样的</p>
+<p>最后的相加类似ResNet中的跳跃连接</p>
+<p>交叉层的参数全部在全连接层里面，其余的操作是哈达玛乘积和向量加法，没有参数</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502191853395.png" alt="image-20250219185331347"></p>
+<p>输入是x0和xi，哈达玛乘积要求左右两边的向量维度相同</p>
+<p>把输入与输出相加，就是ResNet中的跳跃连接，深度学习中防止梯度消失的常用技巧</p>
+<p>输出xi+1与x0&#x2F;xi是一样的</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502191859739.png" alt="image-20250219185931694"></p>
+<h3 id="交叉网络"><a href="#交叉网络" class="headerlink" title="交叉网络"></a>交叉网络</h3><p>不断把x0（最底层向量）输入给每一个交叉层，层数随意设置</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502191901593.png" alt="image-20250219190134552"></p>
+<p>第二篇论文是交叉网络的原始版本，现在已经没用了，看第一篇改进版就好</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502191902862.png" alt="image-20250219190202818"></p>
+<p>DCN：可以用于召回&#x2F;排序，双塔中的物品塔和用户塔都可以是DCN，多目标模型中的Shared Bottom，MMoE中的神经网络也可以是DCN</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502191903751.png" alt="image-20250219190301704"></p>
+<h2 id="特征交叉03：LHUC-PPNet"><a href="#特征交叉03：LHUC-PPNet" class="headerlink" title="特征交叉03：LHUC (PPNet)"></a>特征交叉03：LHUC (PPNet)</h2><p>只能用于精排</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502192030502.png" alt="image-20250219203037445"></p>
+<p>对语音做表征，然后得到文字。说话人的特征可以帮助语音识别</p>
+<p>神经网络包括多个全连接层，最后一个激活函数是sigmoid*2，单独作用在每个元素上，所以蓝色向量的每个元素在(0,2)</p>
+<p>最后的特征是语音信号结合了说话者特征的最终表征，有个性化</p>
+<p>层数也可以增加（弹幕说是毫无头绪的结构工程还挺贴切）</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502192033415.png" alt="image-20250219203317358"></p>
+<p>乘以2可以把说话者的特征放大，让个性化更明显</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502192033668.png" alt="image-20250219203357616"></p>
+<p>下面只需要把特征类型替换成推荐系统的，实现精排时的个性化。</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502192035314.png" alt="image-20250219203509269"></p>
+<h2 id="特征交叉04：SENet-和-Bilinear-交叉"><a href="#特征交叉04：SENet-和-Bilinear-交叉" class="headerlink" title="特征交叉04：SENet 和 Bilinear 交叉"></a>特征交叉04：SENet 和 Bilinear 交叉</h2><h3 id="SENet"><a href="#SENet" class="headerlink" title="SENet"></a>SENet</h3><p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502192124662.png" alt="image-20250219212431614"></p>
+<p>对矩阵的行做AvgPool，得到一个行向量，向量的每个元素对应一个离散特征，如第一个元素对应用户id</p>
+<p>用一个全连接层和Relu激活函数，把m维向量压缩乘m&#x2F;r维向量，r是压缩比例，设置为大于1的数</p>
+<p>再恢复m维向量</p>
+<p>然后row-wise multiply：中间m维向量的作用就是对特征做加权，比如学出物品id特征不重要，就给它降权</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502192135560.png" alt="image-20250219213513482"></p>
+<p>上图为了方便把m个离散特征全部映射为k维向量，但是注意m个向量的维度可以不同，不会影响SENet</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502192137863.png" alt="image-20250219213750820"></p>
+<p>Field：用户ID是一个离散特征，对应一个向量，算一个Field（一行）</p>
+<p>两个FC训练出来的权重向量是m*1的，重要的Field权重高，不重要的Field权重低</p>
+<p>Field-Wise就是按域的方式，即针对不同的 field（如这里不同的 Embedding 向量整体作为一个 field）分别进行加权操作，每个 field 内的元素共享相同权重，是在 field 这个维度 &#x2F; 层面上开展的加权处理方式。</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502192158340.png" alt="image-20250219215824304"></p>
+<h3 id="Field间特征交叉"><a href="#Field间特征交叉" class="headerlink" title="Field间特征交叉"></a>Field间特征交叉</h3><p>两个field做交叉，得到新的特征</p>
+<p>内积得到一个实数，m^2个实数还好，m的量级也就几十，不算很大</p>
+<p>m^2向量量级有点大了，哈达玛必须要人工选一些特征做交叉，而不能对所有的field两两交叉</p>
+<p>要求每个特征形状一样，都是k维向量，如果形状不一样就不能计算</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502192200400.png" alt="image-20250219220009340"></p>
+<p>Bilinear Cross有内积和哈达玛乘积两种方式</p>
+<ul>
+<li><p>内积：xi和xj的形状可以相同也可以不同<img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502192202080.png" alt="image-20250219220240036"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502192202661.png" alt="image-20250219220249634">参数矩阵的参数量可能很大，需要人工指定相关的、重要的特征做交叉。</p>
+<ul>
+<li>除以2是因为xi和xj，xj和xi是一样的权重，可以复用</li>
+</ul>
+</li>
+<li><p>哈达玛乘积：向量数量太大，也需要人工指定做交叉，而不是所有特征都两两交叉。既可以减少参数数量，也可以让contactenation之后的向量变小。</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502192204785.png" alt="image-20250219220437746"></p>
+</li>
+</ul>
+<p>SENet可以用注意力矩阵理解，就是让重要的特征权重更大</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502192206084.png" alt="image-20250219220605044"></p>
+<h3 id="FiBiNet"><a href="#FiBiNet" class="headerlink" title="FiBiNet"></a>FiBiNet</h3><p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502192206632.png" alt="image-20250219220639598"></p>
+<p>连接后的高维向量，以前就直接把这个特征和其他特征拼起来，输入排序模型，效果也不错</p>
+<p>做Bilinear Cross</p>
+<p>做SENet，加权后再Bilinear Cross（xhs没用这个，好像有些多余）</p>
+<p>红色部分是FiBiNet的改进，用在精排上确实有提升，但实践中xhs和这个区别挺大</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202502192220680.png" alt="image-20250219222027627"></p>
+<h1 id="行为序列"><a href="#行为序列" class="headerlink" title="行为序列"></a>行为序列</h1><h2 id="行为序列01：用户历史行为序列建模"><a href="#行为序列01：用户历史行为序列建模" class="headerlink" title="行为序列01：用户历史行为序列建模"></a>行为序列01：用户历史行为序列建模</h2><p>last-n：用户最近交互过的n个物品</p>
+<p>last-n很有效，用到召回和排序中指标都会涨，last-n属于多目标模型中的用户特征</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202503111843901.png" alt="image-20250311184258212"></p>
+<p>n个物品id映射成多个多个向量然后平均，可以作为用户的一个特征，表示曾经对哪些物品感兴趣</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202503111844242.png" alt="image-20250311184406160"></p>
+<p>用户还有其他特征，比如用户id、连续特征、离散特征，把特征拼接起来作为用户特征输入神经网络</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202503111845810.png" alt="image-20250311184511709"></p>
+<p>xhs的召回、粗排、精排都用到了last-n，分为点击&#x2F;点赞&#x2F;收藏不一样</p>
+<p>现在attention比平均效果更好，但计算量更大</p>
+<p>不止用物品id，还有物品种类等其他特征，把不同embedding拼接到一起效果比只用id好</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202503111846285.png" alt="image-20250311184603173"></p>
+<h2 id="行为序列02：DIN模型（注意力机制）"><a href="#行为序列02：DIN模型（注意力机制）" class="headerlink" title="行为序列02：DIN模型（注意力机制）"></a>行为序列02：DIN模型（注意力机制）</h2><p>对last-n序列建模的一种方法，效果比简单平均好</p>
+<p>加权平均代替平均</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202503111848148.png" alt="image-20250311184831050"></p>
+<p>粗排选出500个，精排的候选物品就是这500个</p>
+<p>计算相似度的方法有很多，如内积、cosine</p>
+<p>权重就是相似度，可以计算出加权和</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202503111850155.png" alt="image-20250311185011080"></p>
+<p>预估的候选物品指标可以用作后续的排序，一般用于精排</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202503111850475.png" alt="image-20250311185049403"></p>
+<p>紫色向量：可以看作对用户last-n历史记录的表征，反映出用户的兴趣，作为一个用户特征，跟其他特征一起作为精排模型的输入</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202503111851011.png"></p>
+<p>召回时的用户塔看不到候选物品，只能看到用户特征，有上亿个物品（太多不可能作为候选），所以din不用于双塔、三塔模型</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202503111852946.png" alt="image-20250311185247857"></p>
+<h2 id="行为序列03：SIM模型（长序列建模）"><a href="#行为序列03：SIM模型（长序列建模）" class="headerlink" title="行为序列03：SIM模型（长序列建模）"></a>行为序列03：SIM模型（长序列建模）</h2><p>目的是保留用户的长期兴趣</p>
+<p>din的缺点：计算量大，只适合n小的情况。n大指标肯定会上涨，但计算量代价也大，性价比不高</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202503111904378.png" alt="image-20250311190427309"></p>
+<p>改进思路：让n变大，能够保留长期行为序列，但这样计算量也大了？用权重接近0的last-n物品去掉也区别不大，可以降低计算量</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202503111905455.png" alt="image-20250311190552361"></p>
+<p>根据候选物品的类目，快速排除掉绝大多数的last-n物品，只保留最相关的topk</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202503111908358.png" alt="image-20250311190833268"></p>
+<p>查找：</p>
+<ol>
+<li>根据规则：不需要做训练，如比较类别就行，简单</li>
+<li>根据物品最近邻查找（类比itemcf）：对比向量相似度，auc更高，计算代价更高</li>
+</ol>
+<p>一般hard就够了，编程实现容易，线上运行速度快</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202503111910416.png" alt="image-20250311191037337"></p>
+<p>区别在于last-n变成了top-k，紫色向量几乎不变</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202503111912465.png" alt="image-20250311191237370"></p>
+<p>小trick：记录用户与每个物品交互发生的时刻离现在的时间，把离散的时间变成区间，把时间也作为物品的表征</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202503111914774.png" alt="image-20250311191404691"></p>
+<p>紫色向量就是对用户兴趣的表征</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202503111914693.png" alt="image-20250311191446627"></p>
+<p>为什么din不用，sim要用？</p>
+<ul>
+<li>din几乎都是近期的，sim的last-n的n值比din大（这样才能保留长期行为，以及需要减少到topk），时间可以反映重要性</li>
+</ul>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202503111917894.png" alt="image-20250311191731828"></p>
+<p>结论：查找+平均，查找+注意力，后者效果更好。soft search的预估准确率优于hard search，但后者实现更容易，基建够好才能用soft（速度&#x2F;计算量）</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202503111918861.png" alt="image-20250311191855772"></p>
+<h1 id="重排"><a href="#重排" class="headerlink" title="重排"></a>重排</h1><h2 id="重排01：物品相似性的度量、提升多样性的方法"><a href="#重排01：物品相似性的度量、提升多样性的方法" class="headerlink" title="重排01：物品相似性的度量、提升多样性的方法"></a>重排01：物品相似性的度量、提升多样性的方法</h2><p>多样性做的好，可以提高留存等</p>
+<p>曝光的物品两两不相似，多样性就高</p>
+<p>基于内容的特征最好：如用cv&#x2F;nlp学到得到图片、文字的特征向量</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202503112016579.png" alt="image-20250311201638509"></p>
+<p>加权求和可以得到总分，权重要根据经验设置</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202503112017653.png" alt="image-20250311201745573"></p>
+<p>通过向量表征计算相似度：内积&#x2F;余弦相似度大</p>
+<p>但物品塔处理不好新物品和长尾物品，最终多样性的效果差</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202503112019145.png" alt="image-20250311201907076"></p>
+<p>该如何训练CNN和BERT？</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202503112019881.png" alt="image-20250311201942804"></p>
+<h3 id="CLIP：基于图文内容的物品向量表征"><a href="#CLIP：基于图文内容的物品向量表征" class="headerlink" title="CLIP：基于图文内容的物品向量表征"></a>CLIP：基于图文内容的物品向量表征</h3><p>图片和文字不同时是负样本</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202503112020657.png" alt="image-20250311202039576"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202503112021111.png" alt="image-20250311202132016"></p>
+<h3 id="提升多样性的方法"><a href="#提升多样性的方法" class="headerlink" title="提升多样性的方法"></a>提升多样性的方法</h3><p>只用打分，不用考虑物品之间的关联。pointwise指每个样本独立评分，而不是混合训练</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202503112022237.png" alt="image-20250311202246154"></p>
+<p>对于粗排，n等于几千；对于精排，n等于几百</p>
+<p>后处理为了保证多样性，如果不考虑多样性，直接对reward进行排序选出topk即可</p>
+<ul>
+<li>工业界中后处理可以提升业务指标，所以要加</li>
+</ul>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202503112024188.png" alt="image-20250311202435081"></p>
+<p>重排：决定哪k个物品得到曝光，以及曝光的顺序</p>
+<p>粗排后的后处理也是有用的，实验可以验证</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202503112025158.png" alt="image-20250311202554089"></p>
+<h2 id="重排02：MMR-多样性算法（Maximal-Marginal-Relevance）"><a href="#重排02：MMR-多样性算法（Maximal-Marginal-Relevance）" class="headerlink" title="重排02：MMR 多样性算法（Maximal Marginal Relevance）"></a>重排02：MMR 多样性算法（Maximal Marginal Relevance）</h2><p>MMR从搜索排序中来，Relevance的意思是相关性，搜索的结果根据相关性做排序，后面用作推荐排序，用于精排的后处理阶段。MMR会决定物品最终的曝光顺序，通常会带滑动窗口。</p>
+<p>精排中n的大小是几百</p>
+<p>sim(i,j)可以是物品标签计算出的，也可以是向量表征计算出的</p>
+<p>结合reward和sim对物品做重排</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202503112038858.png" alt="image-20250311203839766"></p>
+<p>给未选中的物品打分，i是未选中的物品，j是已选中的物品，如果和已选中的物品相似度大，则起反作用，MR的分数会变小小。θ平衡物品的价值与多样性</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202503112040338.png"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202503112041296.png" alt="image-20250311204151199"></p>
+<p>多次循环，每次选一个R中的物品移到S（局部最优的贪心算法，滑动窗口某种程度上也可以增加灵活性，类比正则化增加泛化能力）<img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202503112043172.png" alt="image-20250311204346090"></p>
+<h3 id="滑动窗口"><a href="#滑动窗口" class="headerlink" title="滑动窗口"></a>滑动窗口</h3><p>工业界的重排都会使用滑动窗口</p>
+<p>就是把S变成了W</p>
+<p>解释性：没必要让第30个物品和第1个物品不相似，因为用户已经忘了，离得远的两个物品可以相似，不会影响用户体验</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202503112046207.png" alt="image-20250311204623109"></p>
+<h2 id="重排03：业务规则约束下的多样性算法"><a href="#重排03：业务规则约束下的多样性算法" class="headerlink" title="重排03：业务规则约束下的多样性算法"></a>重排03：业务规则约束下的多样性算法</h2><p>工业界有许多规则，做重排时都要被满足，规则的优先级高于多样性算法</p>
+<p>图文和视频要交叉</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202503112053181.png" alt="image-20250311205356091"></p>
+<p>限制运营推广</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202503112054451.png" alt="image-20250311205440368"></p>
+<p>限制首屏笔记的广告数量</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202503112055081.png" alt="image-20250311205527997"></p>
+<p>R是未选中物品的集合</p>
+<p>重排既要考虑MR也要考虑规则，方法是排除掉R中的部分物品，如现在选第4篇笔记，而第2篇已经选了电商卡片，此时把R中的电商卡片全部过滤掉，在R’中选择MR最高的物品</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202503112057598.png" alt="image-20250311205757495"></p>
+<h2 id="重排04：DPP-多样性算法：数学基础"><a href="#重排04：DPP-多样性算法：数学基础" class="headerlink" title="重排04：DPP 多样性算法：数学基础"></a>重排04：DPP 多样性算法：数学基础</h2><p>行列式点过程 (determinantal point process, DPP)：就是把物品作为向量，在特征空间里面以体积来衡量多样性</p>
+<p>从一个集合中选出尽量多样化的物品</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202503112143828.png" alt="image-20250311214329755"></p>
+<p>3维空间的平行体是平行六面体</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202503112144481.png" alt="image-20250311214424378"></p>
+<p>v1…vk是超平行体的边</p>
+<p>如果让超平行体有意义，则需要线性相关，不然体积为0</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202503112146056.png" alt="image-20250311214656969"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202503112147062.png" alt="image-20250311214726981"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202503112148667.png" alt="image-20250311214808589"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202503112148142.png" alt="image-20250311214845060"></p>
+<p>平行六面体的体积：</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202503112149467.png" alt="image-20250311214917386"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202503112150856.png" alt="image-20250311215010781"></p>
+<p>衡量物品多样性：保证d&gt;&#x3D;k是因为如果向量数大于维度，必然线性相关</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202503112153305.png" alt="image-20250311215301221"></p>
+<p>行列式&#x3D;超平行体体积的平方。多样性越好，体积越大</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202503112154594.png" alt="image-20250311215406498"></p>
+<h2 id="重排05：DPP-多样性算法（下）"><a href="#重排05：DPP-多样性算法（下）" class="headerlink" title="重排05：DPP 多样性算法（下）"></a>重排05：DPP 多样性算法（下）</h2><p>DPP是保证重排时多样性的方法</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202503112157761.png" alt="image-20250311215708665"></p>
+<p>我们把DPP公式应用于推荐系统中，列出从n个物品中选出k个物品的方案</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202503112158079.png" alt="image-20250311215838982"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202503112202541.png" alt="image-20250311220204449"></p>
+<h3 id="Hulu"><a href="#Hulu" class="headerlink" title="Hulu"></a>Hulu</h3><p>贡献在于快速求解这个公式，需要巧妙的算法</p>
+<p>S表示从n个物品中选出的k个物品，这里定义A&#x3D;(V_n^T)(V_n), V是(d,n)维的，为了As方便计算所以先把A计算出来</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202503112204338.png" alt="image-20250311220417256"></p>
+<p>把未选中的物品i和已选中的物品As比（类比MMR，就是把相似度换成超平面体体积了），计算相似度作为负值作用于价值上，让选出的物品既要有价值，又要有多样性</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202503112217589.png" alt="image-20250311221755501"></p>
+<p>i有n种选择，S有k种选择，矩阵行列式的计算复杂度为O(n^3)</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202503112223216.png" alt="image-20250311222301134"></p>
+<p>不懂这里的计算矩阵A是为啥要计算（复杂度的过程倒是在上面有证明），老师说是会不断用到子矩阵，可以理解As∪{i}中会不断用到，但又觉得O(|S|^3)已经包括了原始计算，TODO看证明</p>
+<p>n的量级是几百，k和d的量级是几十，不可行，因为系统给重排的时间是10ms左右，太慢了<img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202503112230570.png" alt="image-20250311223027479"></p>
+<h4 id="快速算法"><a href="#快速算法" class="headerlink" title="快速算法"></a>快速算法</h4><p>必须计算矩阵A，所以有n^2d，因为算法运行过程中不断用到子矩阵</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202503112309045.png" alt="image-20250311230928960"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202503112310615.png" alt="image-20250311231010534"></p>
+<p>利用了As的特点，降低了计算代价</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202503112310050.png" alt="image-20250311231052973"></p>
+<h3 id="DPP扩展"><a href="#DPP扩展" class="headerlink" title="DPP扩展"></a>DPP扩展</h3><p>跟MMR中的优化一样</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202503112311764.png" alt="image-20250311231126680"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202503112313372.png" alt="image-20250311231346261"></p>
+<p>用规则过滤</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202503112314723.png" alt="image-20250311231418641"></p>
+<h1 id="物品冷启动"><a href="#物品冷启动" class="headerlink" title="物品冷启动"></a>物品冷启动</h1><h2 id="物品冷启01：优化目标-评价指标"><a href="#物品冷启01：优化目标-评价指标" class="headerlink" title="物品冷启01：优化目标 &amp; 评价指标"></a>物品冷启01：优化目标 &amp; 评价指标</h2><p>推荐系统中最复杂的一环</p>
+<p>UGC：user generated content 内容是用户自己上传的 PGC(Platform…)：Netflix之类的平台上传内容</p>
+<p>UGC更难</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202503121207917.png" alt="image-20250312120733782"></p>
+<p>新笔记缺失交互，用正常的链路很难得到的曝光</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202503121208062.png" alt="image-20250312120853988"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202503121209461.png" alt="image-20250312120947375"></p>
+<p>作者侧：反映作者的发布意愿</p>
+<p>用户侧：反映推荐是否精准。大盘指标，加入冷启动后的消费指标应该和原来持平</p>
+<p>内容侧：反映冷启是否能挖掘优质笔记</p>
+<p>作者侧和用户侧都在用，内容侧只有少数的厂用 </p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202503121211928.png" alt="image-20250312121136852"></p>
+<p>作者侧的发布渗透率、人均发布量，人均发布量比发布渗透率要大，因为一些作者一天会发好几篇笔记</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202503121212214.png" alt="image-20250312121232136"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202503121212442.png" alt="image-20250312121259352"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202503121214761.png" alt="image-20250312121409672"></p>
+<p>用户侧：看新笔记的消费，基尼系数是用于衡量不平等程度的指标，通常用于评估收入或财富分配的不平等性。</p>
+<p>区分高曝光是为了防止少数影响了指标，低曝光的笔记推荐不容易做好</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202503121215466.png" alt="image-20250312121522390"></p>
+<p>增加低曝光，用户体验会下降，所以希望大盘的消费指标基本持平，不影响用户体验</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202503121218317.png" alt="image-20250312121815230"></p>
+<p>内容侧：高热笔记的占比</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202503121218877.png" alt="image-20250312121859812"></p>
+<p>普通笔记一般只看用户侧指标，而不看其他两个，说明新笔记的处理更复杂</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202503121219213.png" alt="image-20250312121937148"></p>
+<p>流量向新笔记倾斜</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202503121220008.png" alt="image-20250312122001942"></p>
+<h2 id="物品冷启02：简单的召回通道"><a href="#物品冷启02：简单的召回通道" class="headerlink" title="物品冷启02：简单的召回通道"></a>物品冷启02：简单的召回通道</h2><p>召回的难点：新笔记没有交互的依据，所以ItemCF这种需要like程度的做不了，ID向量也是通过交互学的，是召回和排序中最重要的特征之一，而冷启的id还是刚初始化没经过反向传播的</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202503121222456.png" alt="image-20250312122214377"></p>
+<p>缺少ID embedding同时影响召回和排序，绿色笔记作为新笔记没有交互</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202503121223696.png" alt="image-20250312122336606"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202503121224904.png" alt="image-20250312122424815"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202503121225312.png" alt="image-20250312122501224"></p>
+<h3 id="改造双塔模型"><a href="#改造双塔模型" class="headerlink" title="改造双塔模型"></a>改造双塔模型</h3><p>ID Embedding通过embedding层，新笔记学的不好</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202503121225715.png" alt="image-20250312122542634"></p>
+<p>共享default embedding，是学出来的（反向传播？），比随机初始化和全民初始化更好</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202503121226235.png" alt="image-20250312122647153"></p>
+<p>相似物品的embedding，相似可以用文字、图片、类目来定义，寻找topk的相似高曝光</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202503121228413.png" alt="image-20250312122809344"></p>
+<p>实践中，用多个召回池，让新笔记得到曝光的概率增大</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202503121228842.png" alt="image-20250312122843768"></p>
+<h3 id="类目召回"><a href="#类目召回" class="headerlink" title="类目召回"></a>类目召回</h3><p>有些是用户填写的，有些是算法推断的（这里不讲用户冷启动，所以默认有知道的类目和关键词）</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202503121231870.png" alt="image-20250312123109778"></p>
+<p>维护从类目到笔记的索引，最新发布的笔记在最前面，这样取回topk时就包括新笔记</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202503121231759.png" alt="image-20250312123151659"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202503121232186.png" alt="image-20250312123219104"></p>
+<p>关键词：原理完全一样</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202503121233959.png" alt="image-20250312123315875"></p>
+<p>缺点：只对新笔记有效，因为刚发的在最前面，但过了几小时后就没有可能召回了，排在几百&#x2F;几篇了</p>
+<p>弱个性化：可能我喜欢鱼，但新发的几百篇都是猫猫狗狗</p>
+<p>优点：让新发布的笔记立刻得到曝光，增加作者积极性</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202503121234588.png" alt="image-20250312123415513"></p>
+<h2 id="物品冷启03：聚类召回"><a href="#物品冷启03：聚类召回" class="headerlink" title="物品冷启03：聚类召回"></a>物品冷启03：聚类召回</h2><p>通过新笔记的特征向量，判断和1000个cluster哪个最相似，然后把笔记id添加到索引上</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202503121255476.png" alt="image-20250312125540767"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202503121257343.png" alt="image-20250312125738261"></p>
+<p>把n中每篇笔记映射到向量，然后得到cluster，然后在cluster的索引中取最新的笔记，就可以让新笔记得到曝光</p>
+<p>缺点：只对刚刚发布的新笔记有效，发布1&#x2F;2小时就不行了</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202503121300500.png" alt="image-20250312130020424"></p>
+<h3 id="内容相似度模型"><a href="#内容相似度模型" class="headerlink" title="内容相似度模型"></a>内容相似度模型</h3><p>提取图文特征：笔记中只有1张图是比较简单的</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202503121302392.png" alt="image-20250312130229279"></p>
+<p>BERT是预训练好的，也可以做微调；CNN也是预训练好的，比如在ImageNet上做训练，然后微调。全连接层是随机初始化的，需要在数据中学习。</p>
+<ul>
+<li>说这里和CLIP的区别是，这里是融合模态样本之间的对比学习，CLIP是跨模态的对比学习，不过都能学笔记的特征向量</li>
+</ul>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202503121303377.png" alt="image-20250312130302278"></p>
+<p>训练用三元组（种子笔记，正样本，负样本）：种子笔记通常是高质量、代表性样本、</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202503121307986.png" alt="image-20250312130723887"></p>
+<p>正样本：与种子笔记相似</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202503121308839.png" alt="image-20250312130838767"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202503121309641.png" alt="image-20250312130913565"></p>
+<p>历史喜欢的笔记是last-n，映射成向量然后找cluster</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202503131742075.png" alt="image-20250312131051871"></p>
+<h2 id="物品冷启04：Look-Alike-召回"><a href="#物品冷启04：Look-Alike-召回" class="headerlink" title="物品冷启04：Look-Alike 召回"></a>物品冷启04：Look-Alike 召回</h2><p>互联网广告的常见方法，也可以用于推荐系统</p>
+<p>起源于互联网广告</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202503131743478.png" alt="image-20250313174311393"></p>
+<p>如何发现目标用户？看相似的用户，找到的相似用户就是Look-Alike用户</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202503131743719.png" alt="image-20250313174351647"></p>
+<p>如何评估两个用户的相似度</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202503131744177.png" alt="image-20250313174436125"></p>
+<p>用于新笔记召回</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202503131746348.png" alt="image-20250313174645291"></p>
+<p>充分利用新笔记的交互行为（因为不多），用双塔模型学到的用户向量求平均，可以反映新笔记的特征</p>
+<p>近线更新：不用实时更新，做到分钟级的更新就行了，有新的交互就更新。在线实时更新做不到，也没必要。</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202503131747457.png" alt="image-20250313174731396"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202503131749043.png" alt="image-20250313174917977"></p>
+<p>把新笔记的特征向量放在向量数据库里（milvus或者face数据库），用双塔模型计算用户的特征向量，把该向量作为query在向量数据库中进行最近邻查找，取回几十篇笔记</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202503131752313.png" alt="image-20250313175236252"></p>
+<p>总体逻辑就是用交互过的用户表示笔记特征，这样相似用户就能在向量数据库中找到，和广告中原理相同</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202503131758254.png" alt="image-20250313175830193"></p>
+<h2 id="物品冷启05：流量调控"><a href="#物品冷启05：流量调控" class="headerlink" title="物品冷启05：流量调控"></a>物品冷启05：流量调控</h2><p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202503131803623.png" alt="image-20250313180314571"></p>
+<p>提升积极性</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202503131809217.png" alt="image-20250313180940152"></p>
+<p>假设公平竞争，新笔记占比为1&#x2F;30，但现在有单独的扶持</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202503131812634.png" alt="image-20250313181208577"></p>
+<p>强插新笔记（落后）、boost（调权重，让新笔记排序分数大点）、保量（也是提权，如保证每篇新笔记在前24小时获得至少100次曝光）、差异化保量（刚发布时根据保量的质量决定目标是多少次曝光，内容质量高保量的目标就定的高，给更多流量倾斜）</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202503131814873.png" alt="image-20250313181445817"></p>
+<p>链路：如果不用规则干涉，那么新笔记的曝光机会有限</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202503131816798.png" alt="image-20250313181603747"></p>
+<p>干涉粗排和重排，会过滤掉大量笔记，方法就是提权，让新笔记的排序有优势</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202503131816192.png" alt="image-20250313181657136"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202503131825844.png" alt="image-20250313182517783"></p>
+<h3 id="保量"><a href="#保量" class="headerlink" title="保量"></a>保量</h3><p>差异化对待不同的发布时间（动态提权保量），发布久了会把系数增大，让曝光机会增大</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202503131826725.png" alt="image-20250313182654653"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202503131827299.png" alt="image-20250313182742222"></p>
+<p>第一个数越大，第二个数越小，提权系数就应该越大</p>
+<p>难点：</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202503131828733.png" alt="image-20250313182846676"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202503131829457.png" alt="image-20250313182909402"></p>
+<p>能否给一个很大的系数？显然质量会比较低，用户体验差。大幅提升笔记，即使不是感兴趣话题，也会被曝光。所以不能用这样粗暴的方法！</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202503131831689.png" alt="image-20250313183105631"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202503131832230.png" alt="image-20250313183200173"></p>
+<p>保量的目标由算法判定，达到最大值（如500）后就不进行新笔记扶持，正常与老笔记竞争</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202503131832971.png" alt="image-20250313183232914"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202503131833583.png" alt="image-20250313183323501"></p>
+<p>总结：保量是大厂核心部门才做，坑很多，但做的好指标</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202503131834474.png" alt="image-20250313183404412"></p>
+<h2 id="物品冷启06：冷启的AB测试"><a href="#物品冷启06：冷启的AB测试" class="headerlink" title="物品冷启06：冷启的AB测试"></a>物品冷启06：冷启的AB测试</h2><p>用户侧指标也叫消费侧指标</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202503141145783.png" alt="image-20250314114313419"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202503141146854.png" alt="image-20250314114619793"></p>
+<p>可以用来考虑大盘指标</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202503141147824.png" alt="image-20250314114708768"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202503141148450.png" alt="image-20250314114810386"></p>
+<p>实验组的消费指标变差，对照组会变好，所以diff大，但是推全后diff缩小，因为保量是一样的，相当于看到新笔记的用户占总用户的比例相比AB实验变小了，所以diff变小了</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202503141148713.png" alt="image-20250314114846651"></p>
+<p>作者侧不太好做，AB测试观察到的diff不可信，可能上线后会消失</p>
+<p>抢流量：实验组加权后，对照组（也是新笔记）相当于降权了，发布指标就有diff；如果把新策略推全，新笔记的权重都有加权，就不存在两组新笔记抢流量，就没有diff。</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202503141151899.png" alt="image-20250314115156836"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202503141153020.png" alt="image-20250314115324954"></p>
+<p>第二个缺点是新老笔记也会抢流量，导致AB测试的结果在推全后不一样，新笔记原来抢2份老笔记，现在抢1份老笔记</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202503141156819.png" alt="image-20250314115639755"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202503141157977.png" alt="image-20250314115750900"></p>
+<p>方案二：用户也被分成两组，避免两组新笔记抢流量，AB测试的结果更可信。问题是内容池减少了，现在待选笔记的可选范围变少了</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202503141159395.png" alt="image-20250314115952335"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202503141200763.png" alt="image-20250314120030697"></p>
+<p>方案三相当于切成了2个APP，内容池减少一半，用户体验一定会下降</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202503141201736.png" alt="image-20250314120113667"></p>
+<p>AB测试和推全后是怎么抢的？保量的话，在实验组曝光多了，对照组自然就曝光少了</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202503141202273.png" alt="image-20250314120227199"></p>
+<h1 id="涨指标的方法"><a href="#涨指标的方法" class="headerlink" title="涨指标的方法"></a>涨指标的方法</h1><h2 id="涨指标的方法01：概述"><a href="#涨指标的方法01：概述" class="headerlink" title="涨指标的方法01：概述"></a>涨指标的方法01：概述</h2><p>LT的增长一般对应用户体验。LT&#x3D;总活跃天数&#x2F;今天活跃的用户数(DAU)</p>
+<p>低活减少后，分子减少，但分母减少的更多，LT会增长</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202503141206505.png" alt="image-20250314120613437"></p>
+<p>长视频导致刷的视频总数减少。曝光数涉及广告收入，时长涉及留存，要对两者做平衡。</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202503141210176.png" alt="image-20250314121024123"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202503141211837.png" alt="image-20250314121106789"></p>
+<p>DAU和留存是最核心的。前两部分是模型，有很多资料，后三部分是业界的非公开内容。</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202503141211915.png" alt="image-20250314121150855"></p>
+<h2 id="涨指标的方法02：召回"><a href="#涨指标的方法02：召回" class="headerlink" title="涨指标的方法02：召回"></a>涨指标的方法02：召回</h2><p>召回总量不变，添加新的召回模型会挤占其他模型的配额，不会增加计算量</p>
+<p>只需要训练一个双塔模型就可以用于多个内容池，如用在3个内容池得到3个召回通道，每条通道有一定的配额。每个内容池需要ANN索引，还需要ANN检索，需要一定的计算量。</p>
+<ul>
+<li>ANN是近似最近邻，通过牺牲一定的精度来显著提高查询速度。</li>
+</ul>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202503141418393.png" alt="image-20250314141853316"></p>
+<h3 id="双塔模型"><a href="#双塔模型" class="headerlink" title="双塔模型"></a>双塔模型</h3><p>随机组合大概率不被喜欢</p>
+<p>困难是被召回，但排序阶段排名后被淘汰</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202503141426272.png" alt="image-20250314142613212"></p>
+<p>DCN：深度交叉网络</p>
+<p>行为序列建模：最近交互的物品是n，把n个向量的平均作为用户特征输入用户塔</p>
+<p>标准的双塔模型是单向量模型，两个塔各输出一个向量，两个向量的形状相同。</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202503141429417.png" alt="image-20250314142906350"></p>
+<p>物品塔和单向量模型没有区别，用户塔输出很多向量，每个向量和物品向量的形状相同，可以计算内积&#x2F;cosine相似度，用相似度预估点击率、点赞率等。</p>
+<p>如果要预估10个目标，那么用户塔会输出10个向量</p>
+<p>单向量模型只是做简单的二分类区分正负样本，多向量模型类似排序中的多目标模型，同时预估很多目标</p>
+<p>为什么物品塔只输出1个向量？因为事先算出来，存入向量数据库，如果算10个做10套ANN索引那代价太大了，只输出1个就不需要那么多代价</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202503141515793.png" alt="image-20250314151512729"></p>
+<p>冷门物品的点击次数少，向量表征学的不好，用自监督学习（预训练时使用未标注数据，微调时用少量标注数据微调）</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202503141516995.png" alt="image-20250314151601932"></p>
+<h3 id="I2I"><a href="#I2I" class="headerlink" title="I2I"></a>I2I</h3><p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202503141533844.png" alt="image-20250314153353783"></p>
+<p>靠用户行为判断相似，也可以根据向量表征，内积&#x2F;余弦相似度，双塔最常用，因为算出的就是对物品兴趣点的表征</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202503141534136.png" alt="image-20250314153423080"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202503141534617.png" alt="image-20250314153459570"></p>
+<p>其他小众的召回模型：混合使用user&#x2F;item&#x2F;author各种信息，类比usercf,相似作者召回</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202503141542611.png" alt="image-20250314154241537"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202503141542582.png" alt="image-20250314154258487"></p>
+<p>总结：召回总量不变（如所有通道召回5000个进入粗排），召回总量大到一定程度边际效益很低，调整配额会更有用，对不同人群也可以使用不同配额</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202503141543532.png" alt="image-20250314154342461">、</p>
+<h2 id="涨指标的方法03：排序模型"><a href="#涨指标的方法03：排序模型" class="headerlink" title="涨指标的方法03：排序模型"></a>涨指标的方法03：排序模型</h2><p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202503141602533.png" alt="image-20250314160216461"></p>
+<h3 id="精排模型的改进"><a href="#精排模型的改进" class="headerlink" title="精排模型的改进"></a>精排模型的改进</h3><p>蓝色神经网络的输入输出是几百维的向量</p>
+<p>全连接网络不会很大，GPU3-6层；上面的全连接网络通常是2层</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202503141610683.png" alt="image-20250314161020604"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202503141611961.png" alt="image-20250314161115885"></p>
+<p>多目标预估：增加新的指标（增加输出的向量）</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202503141614424.png" alt="image-20250314161405352"></p>
+<p>2和3很容易无效</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202503141614202.png" alt="image-20250314161457131"></p>
+<h3 id="粗排模型的改进"><a href="#粗排模型的改进" class="headerlink" title="粗排模型的改进"></a>粗排模型的改进</h3><p>粗排需要快，因为打分量大</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202503141615448.png" alt="image-20250314161554383"></p>
+<p>蒸馏：用教师模型（精排）打软标签，让学生模型（粗排）去学</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202503141617286.png" alt="image-20250314161702200"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202503141617380.png" alt="image-20250314161757323"></p>
+<p>pointwise简单效果也不错，大厂会做pairwise和listwise</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202503141620929.png" alt="image-20250314162049878"></p>
+<h3 id="用户行为序列建模"><a href="#用户行为序列建模" class="headerlink" title="用户行为序列建模"></a>用户行为序列建模</h3><p>last-n，n个id映射成向量，取平均</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202503141642635.png" alt="image-20250314164255570"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202503141643008.png" alt="image-20250314164314936"></p>
+<p>长序列取决于工程架构，快手做的好，可以覆盖100w个物品，几乎能覆盖用户历史上的全部行为</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202503141654244.png" alt="image-20250314165442201"></p>
+<p>筛选目的是降低序列长度，不可能把100w个物品向量全部输入注意力层，计算量会特大。</p>
+<ol>
+<li>Bert\CLIP提取内容特征</li>
+<li>层次聚类：无监督学习，将数据点分组为多个簇</li>
+</ol>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202503141649602.png" alt="image-20250314164916522"></p>
+<p>加一些id以外的特征，但不能加太多，不然线上推理时通信和计算都会出问题。</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202503141654679.png" alt="image-20250314165405633"></p>
+<p>业界的提升过程基本都是这样：</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202503141655709.png" alt="image-20250314165507639"></p>
+<h3 id="在线学习"><a href="#在线学习" class="headerlink" title="在线学习"></a>在线学习</h3><p>增量更新是在线学习，分钟级别，隔一段时间发布新模型</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202503141656808.png" alt="image-20250314165641745"></p>
+<p>每个不同的模型都要做在线学习，更新梯度等</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202503141716691.png" alt="image-20250314171647616"></p>
+<p>推全一般比holdout新几个版本</p>
+<p>4个模型，需要4套资源，只能看2个新模型，召回和粗排的模型小，消耗的资源没有精排多</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202503141717242.png" alt="image-20250314171758188"></p>
+<p>如M&#x3D;6，每套机器的成本1w cpu core，测试4个模型</p>
+<p>最好在模型相对成熟后再上在线学习，过早上容易把模型锁死在较弱的版本，后续迭代很慢</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202503141719031.png" alt="image-20250314171910964"></p>
+<h3 id="老汤模型"><a href="#老汤模型" class="headerlink" title="老汤模型"></a>老汤模型</h3><p>全量更新：每天对新数据做1epoch训练；老模型积累了很多数据</p>
+<p>有些新模型可能结构更好，但训了100天数据后，还是追不上老模型，此时需要判断还有无信心继续训练下去。新模型用了几十天，而线上老模型训练了上百天，追平老模型需要训练挺久</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202503141723368.png" alt="image-20250314172324295"></p>
+<p>问题1的解决就是随机初始化，让新老模型站在同一起跑线用同样的数据比较模型结构</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202503142128520.png" alt="image-20250314212857424"></p>
+<p>embedding避免重新初始化；蒸馏可以大幅加速收敛，让新模型追的更快</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202503142130962.png" alt="image-20250314213012883"></p>
+<p>总结：三塔很流行；SIM</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202503142131399.png" alt="image-20250314213121320"></p>
+<h2 id="推荐系统涨指标的方法04：多样性"><a href="#推荐系统涨指标的方法04：多样性" class="headerlink" title="推荐系统涨指标的方法04：多样性"></a>推荐系统涨指标的方法04：多样性</h2><p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202503142144501.png" alt="image-20250314214416438"></p>
+<p>同一个聚类中的图片和文字相似，应该被打散</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202503142147611.png" alt="image-20250314214746552"></p>
+<p>先不考虑多样性，优先考虑兴趣分数（前200个），后面再选300个物品，保证了多样性</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202503142148442.png" alt="image-20250314214846367"></p>
+<p>双塔模型是最重要的召回模型。添加随机噪声，兴趣越窄噪声就强，理论上召回会变得不准，但反而会提升多样性</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202503142151849.png" alt="image-20250314215125776"></p>
+<p>对用户行为序列做随机抽样，让双塔召回的结果有随机性。以前可能n设置100，有了抽样后n可以设置1000，但计算代价不变</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202503142153752.png" alt="image-20250314215326672"></p>
+<p>U2I2I召回：用户的兴趣不宽泛，也是用随机抽样，让n可以覆盖更大，类目更丰富</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202503142154631.png" alt="image-20250314215451564"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202503142155626.png" alt="image-20250314215517556"></p>
+<p>跳过排序，强行插入最终的曝光结果。重点是维护精选内容池。</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202503142156566.png" alt="image-20250314215656498"></p>
+<p>总结：</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202503142158866.png" alt="image-20250314215800788"></p>
+<h2 id="推荐系统涨指标的方法05：特殊用户人群"><a href="#推荐系统涨指标的方法05：特殊用户人群" class="headerlink" title="推荐系统涨指标的方法05：特殊用户人群"></a>推荐系统涨指标的方法05：特殊用户人群</h2><p>对待新用户、低活用户</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202503142229781.png" alt="image-20250314222909712"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202503142231134.png" alt="image-20250314223149073"></p>
+<p>特殊内容池：</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202503142232994.png" alt="image-20250314223245936"></p>
+<p>根据交互指标构造特殊内容池</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202503142239462.png" alt="image-20250314223959400"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202503142240511.png" alt="image-20250314224027466"></p>
+<p>召回：需要单独训练模型，用户塔会少一些用户特征，但无论用在多少内容池上，新用户只要一个自己的双塔模型就够了</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202503142241224.png" alt="image-20250314224102169"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202503142246715.png" alt="image-20250314224624663"></p>
+<p>额外的推理代价？计算量与内容池正相关</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202503142250329.png" alt="image-20250314225007275"></p>
+<p>探索是必须要做的，新物品在老用户上进行测试，相当于损害一点老用户的利益帮助新用户（新手保护）</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202503142251581.png" alt="image-20250314225122513"></p>
+<p>先保证点击，所以把点击率权重提高（只用于低活用户）</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202503142302142.png" alt="image-20250314230230056"></p>
+<p>排序模型是主流用户主导的，对特殊用户不准</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202503142338915.png" alt="image-20250314233827838"></p>
+<p>用小模型<img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202503142343937.png" alt="image-20250314234316878"></p>
+<p>MMoE：通过权重调整结果，就可以对新老用户分开处理<img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202503142345964.png" alt="image-20250314234501909"></p>
+<p>大模型是用全量数据做出来的，相当于1是并行的，3是串行的。小模型可以非常小，小模型再做一次预估，起到校准的作用</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202503142353966.png" alt="image-20250314235346902"></p>
+<p>会增加维护模型的代价，特殊人群的模型太多，最好只有一个统一的模型，再加几个小模型</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202503142354430.png" alt="image-20250314235440373"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202503142357437.png" alt="image-20250314235744371"></p>
+<p>总结：</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202503151225496.png" alt="image-20250315122527368"></p>
+<h2 id="涨指标的方法06：交互行为（关注、转发、评论）"><a href="#涨指标的方法06：交互行为（关注、转发、评论）" class="headerlink" title="涨指标的方法06：交互行为（关注、转发、评论）"></a>涨指标的方法06：交互行为（关注、转发、评论）</h2><p>融分公式把各种指标融合，作为依据</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202503151229808.png" alt="image-20250315122905738"></p>
+<h3 id="关注"><a href="#关注" class="headerlink" title="关注"></a>关注</h3><p>关注的作者越多，平台的吸引力更强</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202503151230274.png" alt="image-20250315123015194"></p>
+<p>如何提高关注量？f很小的时候用排序策略有效（不太懂候选物品的关注率指什么，指关注发布物品作者的概率？）</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202503151231768.png" alt="image-20250315123148693"></p>
+<p>维护容易被关注作者的物品，如果f少，就从内容池多召回点物品</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202503151232609.png" alt="image-20250315123244546"></p>
+<p>粉丝数、交互提升作者的发布积极性</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202503151235628.png" alt="image-20250315123557562"></p>
+<p>看到物品i后，用户u可能关注作者的概率是Pui，如果粉丝少，w大，物品容易被曝光-&gt;涨粉</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202503151237432.png" alt="image-20250315123731367"></p>
+<p>隐式关注关系：应该挖掘（视奸）</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202503151239024.png" alt="image-20250315123925953"></p>
+<h3 id="转发"><a href="#转发" class="headerlink" title="转发"></a>转发</h3><p>最重要的价值是吸引站外流量</p>
+<p>直接增大转发的权重会有问题，损害点击等指标，太简单粗暴了</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202503151241925.png" alt="image-20250315124158851"></p>
+<p>正确的方法是本平台的用户是<strong>其他平台</strong>的KOL，就容易吸引流量。如何识别？看历史转发得到了多少流量</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202503151243300.png" alt="image-20250315124308228"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202503151243623.png" alt="image-20250315124356564"></p>
+<p>如何进行排序和召回：添加融分公式，提升大盘指标</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202503151244541.png" alt="image-20250315124439464"></p>
+<p>构造促转发的内容池，和促关注一样</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202503151250347.png" alt="image-20250315125021292"></p>
+<h3 id="评论"><a href="#评论" class="headerlink" title="评论"></a>评论</h3><p>目前获得的评论数越少，w就应该越大</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202503151251927.png" alt="image-20250315125142854"></p>
+<p>给喜欢评论的用户添加内容池；鼓励高质量评论</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202503151252011.png" alt="image-20250315125228943"></p>
+<p>总结：</p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202503151253880.png" alt="image-20250315125307803"></p>
+
+        </div>
+
+        
+            <section class="post-copyright">
+                
+                
+                
+                
+
+            </section>
+        
+        <section class="post-tags">
+            <div>
+                <span>标签:</span>
+                <span class="tag">
+                    
+                    
+                        <a href="/tags/%E7%AE%97%E6%B3%95/"># 算法</a>
+                    
+                        
+                </span>
+            </div>
+            <div>
+                <a href="javascript:window.history.back();">返回</a>
+                <span>· </span>
+                <a href="/">主页</a>
+            </div>
+        </section>
+        <section class="post-nav">
+            
+            
+            <a class="next" rel="next" href="/2025/02/26/%E5%AD%97%E8%8A%82%E9%9D%92%E8%AE%AD%E8%90%A5%E5%A4%A7%E6%95%B0%E6%8D%AE%E6%96%B9%E5%90%91%E9%83%A8%E5%88%86%E7%AC%94%E8%AE%B0/">字节青训营大数据方向部分笔记</a>
+            
+        </section>
+
+
+    </article>
+</div>
+
+
+    <div id="gitalk-container"></div>
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.css">
+<script src="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.min.js"></script>
+<script src="//cdn.bootcss.com/blueimp-md5/2.10.0/js/md5.js"></script>
+<div id="gitalk-container"></div>
+<script type="text/javascript">
+      var gitalk = new Gitalk({
+        clientID: '',
+        clientSecret: '',
+        repo: 'blog_comment',
+        owner: 'lyxx2535',
+        admin: 'lyxx2535',
+        id: md5(location.pathname),
+        labels: 'Gitalk'.split(',').filter(l => l),
+        perPage: 10,
+        pagerDirection: 'last',
+        createIssueManually: true,
+        distractionFreeMode: false
+      })
+      gitalk.render('gitalk-container')
+</script>
+
+            </div>
+            <footer id="footer" class="footer">
+    <div class="copyright">
+        <span>© Annie | Powered by <a href="https://hexo.io" target="_blank">Hexo</a> & <a href="https://github.com/Siricee/hexo-theme-Chic" target="_blank">Chic</a> | 2020 - 2025
+            <br>
+            <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+<span class="site-uv">
+    Total visitors:
+    <i class="busuanzi-value" id="busuanzi_value_site_uv"></i>
+</span>&nbsp;|&nbsp;
+
+
+<span class="site-pv">
+    Total views:
+    <i class="busuanzi-value" id="busuanzi_value_site_pv"></i>
+</span>
+
+          </span>
+    </div>
+</footer>
+
+    </div>
+</body>
+
+</html>
