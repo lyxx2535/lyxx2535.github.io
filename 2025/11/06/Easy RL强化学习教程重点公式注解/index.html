@@ -1,0 +1,609 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <meta name="author" content="Annie">
+
+
+
+
+
+<title>Easy RL强化学习教程重点公式注解 | Annie&#39;s Blog</title>
+
+
+
+    <link rel="icon" href="/favicon.ico">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+    <script src="/js/tocbot.min.js"></script>
+    
+
+
+
+    
+    
+        
+    
+
+
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+<body>
+    <script>
+        // this function is used to check current theme before page loaded.
+        (() => {
+            const currentTheme = window.localStorage && window.localStorage.getItem('theme') || '';
+            const isDark = currentTheme === 'dark';
+            const pagebody = document.getElementsByTagName('body')[0]
+            if (isDark) {
+                pagebody.classList.add('dark-theme');
+                // mobile
+                document.getElementById("mobile-toggle-theme").innerText = "· Dark"
+            } else {
+                pagebody.classList.remove('dark-theme');
+                // mobile
+                document.getElementById("mobile-toggle-theme").innerText = "· Light"
+            }
+        })();
+    </script>
+
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">Annie&#39;s Blog</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default">
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+        </div>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">Annie&#39;s Blog</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; 菜单</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+            <div class="main">
+                <div class="container">
+    
+    
+        <div class="post-toc">
+    <div class="tocbot-list">
+    </div>
+    <div class="tocbot-list-menu">
+        <a class="tocbot-toc-expand" onclick="expand_toc()">全部展开</a>
+        <a onclick="go_top()">回到顶部</a>
+        <a onclick="go_bottom()">前往底部</a>
+    </div>
+</div>
+
+<script>
+    var tocbot_timer;
+    var DEPTH_MAX = 6; // 为 6 时展开所有
+    var tocbot_default_config = {
+        tocSelector: '.tocbot-list',
+        contentSelector: '.post-content',
+        headingSelector: 'h1, h2, h3, h4, h5',
+        orderedList: false,
+        scrollSmooth: true,
+        onClick: extend_click,
+    };
+
+    function extend_click() {
+        clearTimeout(tocbot_timer);
+        tocbot_timer = setTimeout(function() {
+            tocbot.refresh(obj_merge(tocbot_default_config, {
+                hasInnerContainers: true
+            }));
+        }, 420); // 这个值是由 tocbot 源码里定义的 scrollSmoothDuration 得来的
+    }
+
+    document.ready(function() {
+        tocbot.init(obj_merge(tocbot_default_config, {
+            collapseDepth: 1
+        }));
+    });
+
+    function expand_toc() {
+        var b = document.querySelector('.tocbot-toc-expand');
+        var expanded = b.getAttribute('data-expanded');
+        expanded ? b.removeAttribute('data-expanded') : b.setAttribute('data-expanded', true);
+        tocbot.refresh(obj_merge(tocbot_default_config, {
+            collapseDepth: expanded ? 1 : DEPTH_MAX
+        }));
+        b.innerText = expanded ? 'Expand all' : 'Collapse all';
+    }
+
+    function go_top() {
+        window.scrollTo(0, 0);
+    }
+
+    function go_bottom() {
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+
+    function obj_merge(target, source) {
+        for (var item in source) {
+            if (source.hasOwnProperty(item)) {
+                target[item] = source[item];
+            }
+        }
+        return target;
+    }
+</script>
+    
+
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">Easy RL强化学习教程重点公式注解</h1>
+            
+                <div class="post-meta">
+                    
+                        作者: <a itemprop="author" rel="author" href="/">Annie</a>
+                    
+
+                    
+                        <span class="post-time">
+                        日期: <a href="#">November 6, 2025&nbsp;&nbsp;0:47:50</a>
+                        </span>
+                    
+                    
+                        <span class="post-category">
+                        分类:
+                            
+                                <a href="/categories/%E7%AE%97%E6%B3%95/">算法</a>
+                            
+                        </span>
+                    
+                </div>
+            
+        </header>
+
+        <div class="post-content">
+            <h1 id="第-2-章-马尔可夫决策过程"><a href="#第-2-章-马尔可夫决策过程" class="headerlink" title="第 2 章 马尔可夫决策过程"></a><a target="_blank" rel="noopener" href="https://datawhalechina.github.io/easy-rl/#/chapter2/chapter2?id=%E7%AC%AC-2-%E7%AB%A0-%E9%A9%AC%E5%B0%94%E5%8F%AF%E5%A4%AB%E5%86%B3%E7%AD%96%E8%BF%87%E7%A8%8B">第 2 章 马尔可夫决策过程</a></h1><h2 id="2-1-马尔可夫过程"><a href="#2-1-马尔可夫过程" class="headerlink" title="2.1 马尔可夫过程"></a><a target="_blank" rel="noopener" href="https://datawhalechina.github.io/easy-rl/#/chapter2/chapter2?id=_21-%E9%A9%AC%E5%B0%94%E5%8F%AF%E5%A4%AB%E8%BF%87%E7%A8%8B">2.1 马尔可夫过程</a></h2><h3 id="2-1-1-马尔可夫性质"><a href="#2-1-1-马尔可夫性质" class="headerlink" title="2.1.1 马尔可夫性质"></a><a target="_blank" rel="noopener" href="https://datawhalechina.github.io/easy-rl/#/chapter2/chapter2?id=_211-%E9%A9%AC%E5%B0%94%E5%8F%AF%E5%A4%AB%E6%80%A7%E8%B4%A8">2.1.1 马尔可夫性质</a></h3><h3 id="2-1-2-马尔可夫链"><a href="#2-1-2-马尔可夫链" class="headerlink" title="2.1.2 马尔可夫链"></a><a target="_blank" rel="noopener" href="https://datawhalechina.github.io/easy-rl/#/chapter2/chapter2?id=_212-%E9%A9%AC%E5%B0%94%E5%8F%AF%E5%A4%AB%E9%93%BE">2.1.2 马尔可夫链</a></h3><h3 id="2-1-3-马尔可夫过程的例子"><a href="#2-1-3-马尔可夫过程的例子" class="headerlink" title="2.1.3 马尔可夫过程的例子"></a><a target="_blank" rel="noopener" href="https://datawhalechina.github.io/easy-rl/#/chapter2/chapter2?id=_213-%E9%A9%AC%E5%B0%94%E5%8F%AF%E5%A4%AB%E8%BF%87%E7%A8%8B%E7%9A%84%E4%BE%8B%E5%AD%90">2.1.3 马尔可夫过程的例子</a></h3><h2 id="2-2-马尔可夫奖励过程"><a href="#2-2-马尔可夫奖励过程" class="headerlink" title="2.2 马尔可夫奖励过程"></a><a target="_blank" rel="noopener" href="https://datawhalechina.github.io/easy-rl/#/chapter2/chapter2?id=_22-%E9%A9%AC%E5%B0%94%E5%8F%AF%E5%A4%AB%E5%A5%96%E5%8A%B1%E8%BF%87%E7%A8%8B">2.2 马尔可夫奖励过程</a></h2><h3 id="2-2-1-回报与价值函数"><a href="#2-2-1-回报与价值函数" class="headerlink" title="2.2.1 回报与价值函数"></a><a target="_blank" rel="noopener" href="https://datawhalechina.github.io/easy-rl/#/chapter2/chapter2?id=_221-%E5%9B%9E%E6%8A%A5%E4%B8%8E%E4%BB%B7%E5%80%BC%E5%87%BD%E6%95%B0">2.2.1 回报与价值函数</a></h3><p>回报Gt是t时刻后的奖励序列的加权和，用折扣因子加权，越往后折扣越多</p>
+<p><img src="https://i-blog.csdnimg.cn/img_convert/5a094b0197d71e0f3fd6e401d41f5cc2.png" alt="image-20250322223734748"></p>
+<p>状态价值函数：回报的期望</p>
+<p><img src="https://i-blog.csdnimg.cn/img_convert/02f7f6724ecbdac07fce16065e3f08cb.png" alt="image-20250322223806110"></p>
+<h3 id="2-2-2-贝尔曼方程"><a href="#2-2-2-贝尔曼方程" class="headerlink" title="2.2.2 贝尔曼方程"></a><a target="_blank" rel="noopener" href="https://datawhalechina.github.io/easy-rl/#/chapter2/chapter2?id=_222-%E8%B4%9D%E5%B0%94%E6%9B%BC%E6%96%B9%E7%A8%8B">2.2.2 贝尔曼方程</a></h3><p>根据上述定义推导出来，s’是未来的所有状态</p>
+<p><img src="https://i-blog.csdnimg.cn/img_convert/182afe9416410d1360d29bb0e8f5ab88.png" alt="image-20250322224331314"></p>
+<h3 id="2-2-3-计算马尔可夫奖励过程价值的迭代算法"><a href="#2-2-3-计算马尔可夫奖励过程价值的迭代算法" class="headerlink" title="2.2.3 计算马尔可夫奖励过程价值的迭代算法"></a><a target="_blank" rel="noopener" href="https://datawhalechina.github.io/easy-rl/#/chapter2/chapter2?id=_223-%E8%AE%A1%E7%AE%97%E9%A9%AC%E5%B0%94%E5%8F%AF%E5%A4%AB%E5%A5%96%E5%8A%B1%E8%BF%87%E7%A8%8B%E4%BB%B7%E5%80%BC%E7%9A%84%E8%BF%AD%E4%BB%A3%E7%AE%97%E6%B3%95">2.2.3 计算马尔可夫奖励过程价值的迭代算法</a></h3><p><strong>动态规划DP</strong></p>
+<p>自举：自己依赖自己</p>
+<p>根据不动点定理，求Vk+1时依赖Vk</p>
+<p>缺点：需要知道环境的动态特性p(s’,r|s,a)</p>
+<p><strong>蒙特卡洛MC</strong></p>
+<p>采样，随机产生很多轨迹然后求平均，让样本均值逼近期望</p>
+<p>缺点：要采Gt，要把St.At….Rt,St全部走完，用增量更新，可能会有延时</p>
+<p><strong>时序差分TD</strong></p>
+<p>只走一步，用上一轮的V表（放在内存里）</p>
+<p>对V(St)更新的话，只需要走一步，得到V(St+1)即可</p>
+<p><img src="https://i-blog.csdnimg.cn/img_convert/a41c996c0b3bf16f649a169f00a52341.png" alt="image-20250321232637608"></p>
+<h3 id="2-2-4-马尔可夫奖励过程的例子"><a href="#2-2-4-马尔可夫奖励过程的例子" class="headerlink" title="2.2.4 马尔可夫奖励过程的例子"></a><a target="_blank" rel="noopener" href="https://datawhalechina.github.io/easy-rl/#/chapter2/chapter2?id=_224-%E9%A9%AC%E5%B0%94%E5%8F%AF%E5%A4%AB%E5%A5%96%E5%8A%B1%E8%BF%87%E7%A8%8B%E7%9A%84%E4%BE%8B%E5%AD%90">2.2.4 马尔可夫奖励过程的例子</a></h3><h2 id="2-3-马尔可夫决策过程"><a href="#2-3-马尔可夫决策过程" class="headerlink" title="2.3 马尔可夫决策过程"></a><a target="_blank" rel="noopener" href="https://datawhalechina.github.io/easy-rl/#/chapter2/chapter2?id=_23-%E9%A9%AC%E5%B0%94%E5%8F%AF%E5%A4%AB%E5%86%B3%E7%AD%96%E8%BF%87%E7%A8%8B">2.3 马尔可夫决策过程</a></h2><h3 id="2-3-1-马尔可夫决策过程中的策略"><a href="#2-3-1-马尔可夫决策过程中的策略" class="headerlink" title="2.3.1 马尔可夫决策过程中的策略"></a><a target="_blank" rel="noopener" href="https://datawhalechina.github.io/easy-rl/#/chapter2/chapter2?id=_231-%E9%A9%AC%E5%B0%94%E5%8F%AF%E5%A4%AB%E5%86%B3%E7%AD%96%E8%BF%87%E7%A8%8B%E4%B8%AD%E7%9A%84%E7%AD%96%E7%95%A5">2.3.1 马尔可夫决策过程中的策略</a></h3><p><em>π</em>：在状态s下采取行动a，可能是确定的也可能是不定的</p>
+<p><img src="https://i-blog.csdnimg.cn/img_convert/9f3bac46501ccbd88cde80b39369249b.png" alt="image-20250322230818113"></p>
+<p>把决策过程转换成奖励过程需要通过策略π确定a，这样就能把公式中的a去掉</p>
+<p><img src="https://i-blog.csdnimg.cn/img_convert/df67d0231eef76c28afd7ad6948bd27c.png" alt="image-20250322231139614"></p>
+<p><img src="https://i-blog.csdnimg.cn/img_convert/3451213f1a1265499a96b9f714651cbd.png" alt="image-20250322231145631"></p>
+<h3 id="2-3-2-马尔可夫决策过程和马尔可夫过程-马尔可夫奖励过程的区别"><a href="#2-3-2-马尔可夫决策过程和马尔可夫过程-马尔可夫奖励过程的区别" class="headerlink" title="2.3.2 马尔可夫决策过程和马尔可夫过程&#x2F;马尔可夫奖励过程的区别"></a><a target="_blank" rel="noopener" href="https://datawhalechina.github.io/easy-rl/#/chapter2/chapter2?id=_232-%E9%A9%AC%E5%B0%94%E5%8F%AF%E5%A4%AB%E5%86%B3%E7%AD%96%E8%BF%87%E7%A8%8B%E5%92%8C%E9%A9%AC%E5%B0%94%E5%8F%AF%E5%A4%AB%E8%BF%87%E7%A8%8B%E9%A9%AC%E5%B0%94%E5%8F%AF%E5%A4%AB%E5%A5%96%E5%8A%B1%E8%BF%87%E7%A8%8B%E7%9A%84%E5%8C%BA%E5%88%AB">2.3.2 马尔可夫决策过程和马尔可夫过程&#x2F;马尔可夫奖励过程的区别</a></h3><h3 id="2-3-3-马尔可夫决策过程中的价值函数"><a href="#2-3-3-马尔可夫决策过程中的价值函数" class="headerlink" title="2.3.3 马尔可夫决策过程中的价值函数"></a><a target="_blank" rel="noopener" href="https://datawhalechina.github.io/easy-rl/#/chapter2/chapter2?id=_233-%E9%A9%AC%E5%B0%94%E5%8F%AF%E5%A4%AB%E5%86%B3%E7%AD%96%E8%BF%87%E7%A8%8B%E4%B8%AD%E7%9A%84%E4%BB%B7%E5%80%BC%E5%87%BD%E6%95%B0">2.3.3 马尔可夫决策过程中的价值函数</a></h3><p>价值函数还是类比奖励过程</p>
+<p><img src="https://i-blog.csdnimg.cn/img_convert/880d08167707a84863b4e663218282cb.png" alt="image-20250322231711341"></p>
+<p>引入Q函数（动作价值函数）帮助计算V，就可以用Q表示V</p>
+<p><img src="https://i-blog.csdnimg.cn/img_convert/0022780a6eadc90140f9d353c90a2f5a.png" alt="image-20250322232004995"></p>
+<p><img src="https://i-blog.csdnimg.cn/img_convert/962f694c99b9ca1b9bd5a12cc3b31d68.png" alt="image-20250322232241849"></p>
+<p>把Q函数的贝尔曼方程进行推导：</p>
+<p><img src="https://i-blog.csdnimg.cn/img_convert/97004b7e01d4831021e9bdd341eb2dff.png" alt="image-20250322232518085"></p>
+<h3 id="2-3-4-贝尔曼期望方程"><a href="#2-3-4-贝尔曼期望方程" class="headerlink" title="2.3.4 贝尔曼期望方程"></a><a target="_blank" rel="noopener" href="https://datawhalechina.github.io/easy-rl/#/chapter2/chapter2?id=_234-%E8%B4%9D%E5%B0%94%E6%9B%BC%E6%9C%9F%E6%9C%9B%E6%96%B9%E7%A8%8B">2.3.4 贝尔曼期望方程</a></h3><p>可以根据Gt的定义，把V和Q拆解为即时奖励和后续状态的折扣价值两部分，即可得到贝尔曼期望方程，有展开和不展开两种形式。具体的推理需要VQ相互代入</p>
+<p><img src="https://i-blog.csdnimg.cn/img_convert/342454fa14ba8491d4f1f2895226bf7d.png" alt="image-20250322233014904"></p>
+<p><img src="https://i-blog.csdnimg.cn/img_convert/93539faeffd0c2bdc893e2f0f13c58a6.png" alt="image-20250322234305516"></p>
+<p><img src="https://i-blog.csdnimg.cn/img_convert/f5dd2cf3f5beaf90c1b36dfc60505193.png" alt="image-20250322233626124"></p>
+<p><img src="https://i-blog.csdnimg.cn/img_convert/418a2f302e929216bb70cda744066d0b.png" alt="image-20250322234314841"></p>
+<h3 id="2-3-5-备份图"><a href="#2-3-5-备份图" class="headerlink" title="2.3.5 备份图"></a><a target="_blank" rel="noopener" href="https://datawhalechina.github.io/easy-rl/#/chapter2/chapter2?id=_235-%E5%A4%87%E4%BB%BD%E5%9B%BE">2.3.5 备份图</a></h3><p>备份就是把后继状态转移回它，类似回溯，以Q作为V的中介，以V作为Q的中介</p>
+<p>把Vπ(s’)备份到Qπ(s,a)，把Qπ(s,a)备份到Vπ(s)</p>
+<p><img src="https://i-blog.csdnimg.cn/img_convert/64c87c4d2c62699739263f98cb880ecc.png" alt="img"></p>
+<h3 id="2-3-6-策略评估"><a href="#2-3-6-策略评估" class="headerlink" title="2.3.6 策略评估"></a><a target="_blank" rel="noopener" href="https://datawhalechina.github.io/easy-rl/#/chapter2/chapter2?id=_236-%E7%AD%96%E7%95%A5%E8%AF%84%E4%BC%B0">2.3.6 策略评估</a></h3><p>已知马尔可夫决策过程 &lt;S,A,P,R,γ&gt;以及要采取的策略 π，如确定往左走，或者0.5概率左右走。我们对V(s′)进行初始化，不同的V(s′)都会有一个值；接着，我们将V(s′)代入贝尔曼期望方程里面进行迭代，价值函数收敛时就可以算出它的状态价值。k&#x2F;t是迭代次数。</p>
+<p>也就是p(<em>π</em>(s)&#x3D;a)&#x2F;r(s)&#x2F;p(s’|s,a)我们知道，通过迭代求V即可。基于之前估计的V来估计现在的V。</p>
+<p><img src="https://i-blog.csdnimg.cn/img_convert/f84f71ab09d54afd89688045d81c90e9.png" alt="image-20250323001827719"></p>
+<p><img src="https://i-blog.csdnimg.cn/img_convert/b339bd5f4ea9caef73dacb94cf650e14.png" alt="image-20250323001851627"></p>
+<p>图中当策略&#x3D;左时s7的reward仍然为10可能因为s1和s7是终止状态</p>
+<h3 id="2-3-7-预测与控制"><a href="#2-3-7-预测与控制" class="headerlink" title="2.3.7 预测与控制"></a><a target="_blank" rel="noopener" href="https://datawhalechina.github.io/easy-rl/#/chapter2/chapter2?id=_237-%E9%A2%84%E6%B5%8B%E4%B8%8E%E6%8E%A7%E5%88%B6">2.3.7 预测与控制</a></h3><p>上图预测给定策略，确定V。下图控制的输入只有决策过程，寻找最佳策略和最佳价值函数。</p>
+<img src="https://i-blog.csdnimg.cn/img_convert/29137b5bbaf590f0f115fde1677032d2.png" alt="img" style="zoom: 50%;" />
+
+<img src="https://i-blog.csdnimg.cn/img_convert/c97c488644943e4887019ba7579d7d42.png" alt="img" style="zoom:50%;" />
+
+<h3 id="2-3-8-动态规划"><a href="#2-3-8-动态规划" class="headerlink" title="2.3.8 动态规划"></a><a target="_blank" rel="noopener" href="https://datawhalechina.github.io/easy-rl/#/chapter2/chapter2?id=_238-%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92">2.3.8 动态规划</a></h3><h3 id="2-3-9-马尔可夫决策过程中的策略评估"><a href="#2-3-9-马尔可夫决策过程中的策略评估" class="headerlink" title="2.3.9 马尔可夫决策过程中的策略评估"></a><a target="_blank" rel="noopener" href="https://datawhalechina.github.io/easy-rl/#/chapter2/chapter2?id=_239-%E9%A9%AC%E5%B0%94%E5%8F%AF%E5%A4%AB%E5%86%B3%E7%AD%96%E8%BF%87%E7%A8%8B%E4%B8%AD%E7%9A%84%E7%AD%96%E7%95%A5%E8%AF%84%E4%BC%B0">2.3.9 马尔可夫决策过程中的策略评估</a></h3><p>策略评估就是给定马尔可夫决策过程和策略，评估我们可以获得多少价值。把贝尔曼期望备份反复迭代，属于同步迭代，每次迭代都会完全更新所有这状态，直到收敛。因为给定了策略函数Π，所以简化为奖励过程，相当于把a去掉</p>
+<p><img src="https://i-blog.csdnimg.cn/img_convert/3c9b454641673327cb75caf6c5e45334.png" alt="image-20250323151239932"></p>
+<h3 id="2-3-10-马尔可夫决策过程控制"><a href="#2-3-10-马尔可夫决策过程控制" class="headerlink" title="2.3.10 马尔可夫决策过程控制"></a><a target="_blank" rel="noopener" href="https://datawhalechina.github.io/easy-rl/#/chapter2/chapter2?id=_2310-%E9%A9%AC%E5%B0%94%E5%8F%AF%E5%A4%AB%E5%86%B3%E7%AD%96%E8%BF%87%E7%A8%8B%E6%8E%A7%E5%88%B6">2.3.10 马尔可夫决策过程控制</a></h3><p>如果只有决策过程，没有策略</p>
+<p><img src="https://i-blog.csdnimg.cn/img_convert/6bb101acf1e1f8c166d06ed25ed5422b.png" alt="image-20250323152518720"></p>
+<p><img src="https://i-blog.csdnimg.cn/img_convert/00698373bc689973e673a4efd2818376.png" alt="image-20250323152545699"></p>
+<p>最佳策略可以使得每个状态s的价值函数都取得最大值。最佳价值函数是一致的，但可能有多个最佳策略，取得相同的最佳价值。</p>
+<p>当取得最佳价值函数后，我们可以通过对 Q 函数进行最大化来得到最佳策略：</p>
+<p><img src="https://i-blog.csdnimg.cn/img_convert/ef1a14823837b57ce15b9765266da244.png" alt="image-20250323153048931"></p>
+<p>马尔可夫决策过程的控制过程就是寻找最佳策略的过程，穷举没有效率，通常使用策略迭代和价值迭代</p>
+<h3 id="2-3-11-策略迭代"><a href="#2-3-11-策略迭代" class="headerlink" title="2.3.11 策略迭代"></a><a target="_blank" rel="noopener" href="https://datawhalechina.github.io/easy-rl/#/chapter2/chapter2?id=_2311-%E7%AD%96%E7%95%A5%E8%BF%AD%E4%BB%A3">2.3.11 策略迭代</a></h3><p>策略评估：先保持策略不变，已知a估计V(s)</p>
+<p><img src="https://i-blog.csdnimg.cn/img_convert/3994b5d21d6e4ef270346ccc1e662a52.png" alt="image-20250323151239932"></p>
+<p>策略改进：用V推算Q，采取贪心策略的搜索改进策略，看哪个a对应的Q最大，作为下一步的动作&#x2F;策略</p>
+<p><img src="https://i-blog.csdnimg.cn/img_convert/d9f15591aa4cbfa471bf8d10fba61058.png" alt="image-20250323153927215"></p>
+<p><img src="https://i-blog.csdnimg.cn/img_convert/2e7cbfbe13b83533a6a281cf7fa45f27.png" alt="image-20250323153957649"></p>
+<p>得到了Q函数就得到了Q表格，取每个s对应的使Q最大的动作a。</p>
+<p>策略改进到状态收敛后，Q函数应该是最佳价值函数，即贝尔曼最优方程：</p>
+<p><img src="https://i-blog.csdnimg.cn/img_convert/e05cccc016713efa6460b24f0384fc52.png" alt="image-20250323154527613"></p>
+<p>代入Q的贝尔曼方程，得到基于Q之间的转移的最优方程：</p>
+<p><img src="https://i-blog.csdnimg.cn/img_convert/7829f7b44e3e52e987ffbc2e695ba0fa.png" alt="image-20250323154708090"></p>
+<p>把Q代入即可得到基于V之间转移的最优方程：</p>
+<p><img src="https://i-blog.csdnimg.cn/img_convert/36ef213d8ef16bb0e92b8e6dbec0622b.png" alt="image-20250323154917517"></p>
+<h3 id="2-3-12-价值迭代"><a href="#2-3-12-价值迭代" class="headerlink" title="2.3.12 价值迭代"></a><a target="_blank" rel="noopener" href="https://datawhalechina.github.io/easy-rl/#/chapter2/chapter2?id=_2312-%E4%BB%B7%E5%80%BC%E8%BF%AD%E4%BB%A3">2.3.12 价值迭代</a></h3><p>最优性原理定理：如果我们知道子问题 V∗(s′)的最优解，就可以通过价值迭代来得到最优的 V∗(s) 的解，把贝尔曼最优方程作为更新规则</p>
+<p><img src="https://i-blog.csdnimg.cn/img_convert/9446cd240091e9e5383f285f0f535f08.png" alt="image-20250323155328763"></p>
+<p>求最佳V*的方法是直接用上述最优方程进行迭代计算，收敛有了V*后再用下式推算出最佳策略</p>
+<p><img src="https://i-blog.csdnimg.cn/img_convert/4e87f62319a36e7788bc03d4a6bded13.png" alt="image-20250323155646389"></p>
+<h3 id="2-3-13-策略迭代与价值迭代的区别"><a href="#2-3-13-策略迭代与价值迭代的区别" class="headerlink" title="2.3.13 策略迭代与价值迭代的区别"></a><a target="_blank" rel="noopener" href="https://datawhalechina.github.io/easy-rl/#/chapter2/chapter2?id=_2313-%E7%AD%96%E7%95%A5%E8%BF%AD%E4%BB%A3%E4%B8%8E%E4%BB%B7%E5%80%BC%E8%BF%AD%E4%BB%A3%E7%9A%84%E5%8C%BA%E5%88%AB">2.3.13 策略迭代与价值迭代的区别</a></h3><p>策略迭代：每次根据当前的Q得到当前状态对应的最佳策略，要不断地进行评估和改进。先得到策略再得到V</p>
+<p>价值迭代：使用最优方程一步到位，先算出最优值然后得到最佳策略Π。先得到V再得到策略。</p>
+<h3 id="2-3-14-马尔可夫决策过程中的预测和控制总结"><a href="#2-3-14-马尔可夫决策过程中的预测和控制总结" class="headerlink" title="2.3.14 马尔可夫决策过程中的预测和控制总结"></a><a target="_blank" rel="noopener" href="https://datawhalechina.github.io/easy-rl/#/chapter2/chapter2?id=_2314-%E9%A9%AC%E5%B0%94%E5%8F%AF%E5%A4%AB%E5%86%B3%E7%AD%96%E8%BF%87%E7%A8%8B%E4%B8%AD%E7%9A%84%E9%A2%84%E6%B5%8B%E5%92%8C%E6%8E%A7%E5%88%B6%E6%80%BB%E7%BB%93">2.3.14 马尔可夫决策过程中的预测和控制总结</a></h3><p>策略迭代更像是用期望方程的公式和找最优的思想把最优方程的过程推导了一遍，而价值迭代是直接用结论</p>
+<img src="https://i-blog.csdnimg.cn/img_convert/acca04b3dd944e9c09c190fb2dbf7db5.png" alt="img" style="zoom:33%;" />
+
+<h2 id="2-4-代码实践：价值迭代算法"><a href="#2-4-代码实践：价值迭代算法" class="headerlink" title="2.4 代码实践：价值迭代算法"></a><a target="_blank" rel="noopener" href="https://github.com/datawhalechina/easy-rl/blob/master/notebooks/Value%20Iteration/value_iteration.ipynb">2.4 代码实践：价值迭代算法</a></h2><p>用动态规划方法，使用Q的贝尔曼最优方程得到Q表格<img src="https://i-blog.csdnimg.cn/img_convert/7b70b684896183c440d552a8d36fd570.png" alt="image-20250323170429724"></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">value_iteration</span>(<span class="params">env, theta=<span class="number">0.005</span>, discount_factor=<span class="number">0.9</span></span>):<span class="comment">#这里是dp方法，事先知道prob</span></span><br><span class="line">    Q = np.zeros((env.nS, env.nA))  <span class="comment"># 初始化 Q 值表</span></span><br><span class="line">    count = <span class="number">0</span>  <span class="comment"># 迭代次数</span></span><br><span class="line">    <span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">        delta = <span class="number">0.0</span>  <span class="comment"># 记录 Q 值更新的最大变化量</span></span><br><span class="line">        Q_tmp = np.zeros((env.nS, env.nA))  <span class="comment"># 计算新的 Q 值表</span></span><br><span class="line">        <span class="keyword">for</span> state <span class="keyword">in</span> <span class="built_in">range</span>(env.nS):  <span class="comment"># 遍历所有状态</span></span><br><span class="line">            <span class="keyword">for</span> a <span class="keyword">in</span> <span class="built_in">range</span>(env.nA):  <span class="comment"># 遍历所有动作</span></span><br><span class="line">                accum = <span class="number">0.0</span></span><br><span class="line">                reward_total = <span class="number">0.0</span></span><br><span class="line">                <span class="keyword">for</span> prob, next_state, reward, done <span class="keyword">in</span> env.P[state][a]:  <span class="comment"># 计算状态转移</span></span><br><span class="line">                    accum += prob * np.<span class="built_in">max</span>(Q[next_state, :])  <span class="comment"># 未来状态的最大 Q 值</span></span><br><span class="line">                    reward_total += prob * reward  <span class="comment"># 计算期望奖励</span></span><br><span class="line">                Q_tmp[state, a] = reward_total + discount_factor * accum  <span class="comment"># Bellman 公式更新 Q 值</span></span><br><span class="line">                delta = <span class="built_in">max</span>(delta, <span class="built_in">abs</span>(Q_tmp[state, a] - Q[state, a]))  <span class="comment"># 记录最大更新变化</span></span><br><span class="line">        Q = Q_tmp  <span class="comment"># 更新 Q 值</span></span><br><span class="line"></span><br><span class="line">        count += <span class="number">1</span></span><br><span class="line">        <span class="keyword">if</span> delta &lt; theta <span class="keyword">or</span> count &gt; <span class="number">100</span>:  <span class="comment"># 终止条件</span></span><br><span class="line">            <span class="keyword">break</span>  </span><br><span class="line">    <span class="keyword">return</span> Q</span><br></pre></td></tr></table></figure>
+
+<p>然后根据Q获得最佳策略Π，对于每个state在策略中获得action并执行即可获得最大奖励&#x2F;走到终点</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">policy = np.zeros([env.nS, env.nA]) <span class="comment"># 初始化一个策略表格</span></span><br><span class="line"><span class="keyword">for</span> state <span class="keyword">in</span> <span class="built_in">range</span>(env.nS):</span><br><span class="line">    best_action = np.argmax(Q[state, :]) <span class="comment">#根据价值迭代算法得到的Q表格选择出策略</span></span><br><span class="line">    policy[state, best_action] = <span class="number">1</span></span><br><span class="line"></span><br><span class="line">policy = [<span class="built_in">int</span>(np.argwhere(policy[i]==<span class="number">1</span>)) <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(env.nS) ]</span><br><span class="line"><span class="built_in">print</span>(policy)</span><br></pre></td></tr></table></figure>
+
+<h1 id="第-3-章-表格型方法"><a href="#第-3-章-表格型方法" class="headerlink" title="第 3 章 表格型方法"></a><a target="_blank" rel="noopener" href="https://datawhalechina.github.io/easy-rl/#/chapter3/chapter3?id=%E7%AC%AC-3-%E7%AB%A0-%E8%A1%A8%E6%A0%BC%E5%9E%8B%E6%96%B9%E6%B3%95">第 3 章 表格型方法</a></h1><h2 id="3-1-马尔可夫决策过程"><a href="#3-1-马尔可夫决策过程" class="headerlink" title="3.1 马尔可夫决策过程"></a><a target="_blank" rel="noopener" href="https://datawhalechina.github.io/easy-rl/#/chapter3/chapter3?id=_31-%E9%A9%AC%E5%B0%94%E5%8F%AF%E5%A4%AB%E5%86%B3%E7%AD%96%E8%BF%87%E7%A8%8B">3.1 马尔可夫决策过程</a></h2><h3 id="3-1-1-有模型"><a href="#3-1-1-有模型" class="headerlink" title="3.1.1 有模型"></a><a target="_blank" rel="noopener" href="https://datawhalechina.github.io/easy-rl/#/chapter3/chapter3?id=_311-%E6%9C%89%E6%A8%A1%E5%9E%8B">3.1.1 有模型</a></h3><p>知道环境的状态转移概率和奖励函数，马尔可夫决策过程就是已知的，可以通过策略迭代和价值迭代来找最佳的策略。</p>
+<h3 id="3-1-2-免模型"><a href="#3-1-2-免模型" class="headerlink" title="3.1.2 免模型"></a><a target="_blank" rel="noopener" href="https://datawhalechina.github.io/easy-rl/#/chapter3/chapter3?id=_312-%E5%85%8D%E6%A8%A1%E5%9E%8B">3.1.2 免模型</a></h3><p>一系列的决策的概率函数和奖励函数是未知的</p>
+<h3 id="3-1-3-有模型与免模型的区别"><a href="#3-1-3-有模型与免模型的区别" class="headerlink" title="3.1.3 有模型与免模型的区别"></a><a target="_blank" rel="noopener" href="https://datawhalechina.github.io/easy-rl/#/chapter3/chapter3?id=_313-%E6%9C%89%E6%A8%A1%E5%9E%8B%E4%B8%8E%E5%85%8D%E6%A8%A1%E5%9E%8B%E7%9A%84%E5%8C%BA%E5%88%AB">3.1.3 有模型与免模型的区别</a></h3><p>有模型其实智能体没有和环境进行交互，因为本来就知道环境转移和奖励函数了。免模型是未知的，所以让智能体与环境进行交互，采集大量的轨迹数据，智能体从轨迹中获取信息来改进策略，从而获得更多的奖励。</p>
+<h2 id="3-2-Q-表格"><a href="#3-2-Q-表格" class="headerlink" title="3.2 Q 表格"></a><a target="_blank" rel="noopener" href="https://datawhalechina.github.io/easy-rl/#/chapter3/chapter3?id=_32-q-%E8%A1%A8%E6%A0%BC">3.2 Q 表格</a></h2><p>折扣因子的作用是让奖励不要放的太长远，针对持续式任务</p>
+<p>Q表格记录每个状态下每个动作的平均总奖励</p>
+<p><strong>强化</strong>是指我们可以用下一个状态的价值来更新当前状态的价值，其实就是强化学习里面自举的概念。</p>
+<p>每走一步更新一次Q表格，用下一个状态的 Q 值来更新当前状态的 Q 值，被称为时序差分方法</p>
+<h2 id="3-3-免模型预测"><a href="#3-3-免模型预测" class="headerlink" title="3.3 免模型预测"></a><a target="_blank" rel="noopener" href="https://datawhalechina.github.io/easy-rl/#/chapter3/chapter3?id=_33-%E5%85%8D%E6%A8%A1%E5%9E%8B%E9%A2%84%E6%B5%8B">3.3 免模型预测</a></h2><h3 id="3-3-1-蒙特卡洛策略评估"><a href="#3-3-1-蒙特卡洛策略评估" class="headerlink" title="3.3.1 蒙特卡洛策略评估"></a><a target="_blank" rel="noopener" href="https://datawhalechina.github.io/easy-rl/#/chapter3/chapter3?id=_331-%E8%92%99%E7%89%B9%E5%8D%A1%E6%B4%9B%E7%AD%96%E7%95%A5%E8%AF%84%E4%BC%B0">3.3.1 蒙特卡洛策略评估</a></h3><p>给定策略Π，采样很多轨迹，每个轨迹有对应的实际回报Gt，可以得到一个策略对应状态的价值V(s)</p>
+<p><img src="https://i-blog.csdnimg.cn/img_convert/3d1af8cc45ead27a856b19b94b9f03ab.png" alt="image-20250323205107279"></p>
+<p><img src="https://i-blog.csdnimg.cn/img_convert/2b17fa9e1dd1cc1de7248f7738803083.png" alt="image-20250323205113695"></p>
+<p>用经验平均回报来估计V(s)，下图是Every-Visit MC</p>
+<p><img src="https://i-blog.csdnimg.cn/img_convert/2a9af85f95da21628401451b852fa99a.png" alt="image-20250324164416932"></p>
+<p>也可以把经验均值写作增量均值的形式：增量式蒙特卡洛：Gt-V(st)是误差项，是实际的回报与估计之间的差异，学习率和访问次数成反比</p>
+<p><img src="https://i-blog.csdnimg.cn/img_convert/9d7c20382d4b7b528ff77123e865e1f8.png" alt="image-20250323205408663"></p>
+<p><img src="https://i-blog.csdnimg.cn/img_convert/577254ccecf7388ca70b69934a63c94b.png" alt="image-20250323205416070"></p>
+<p>相比DP，可以用于免模型，且只需要一条轨迹即可更新，速度比DP快</p>
+<h4 id="代码实践"><a href="#代码实践" class="headerlink" title="代码实践"></a><a target="_blank" rel="noopener" href="https://github.com/datawhalechina/easy-rl/blob/master/notebooks/MonteCarlo.ipynb">代码实践</a></h4><p>本代码使用经验均值的写法，G&#x3D;sum的公式展开是<img src="https://i-blog.csdnimg.cn/img_convert/7f239522afbef2d6af2c5cbedd76f3e2.png" alt="image-20250324164020387"></p>
+<p>First-Visit MC使用首次访问的<code>(s,a)</code>计算回报，Every-Visit MC使用所有访问过的<code>(s, a)</code>计算回报</p>
+<ul>
+<li>对于first，即使(s, a)出现多次，first_idx不变，算出来的Q一直是首次访问得到的回报不变；every的分子分母则会出现区别</li>
+<li>First-Visit MC 适用于减少方差，而 Every-Visit MC 收敛更快但可能有更大的方差。</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">update</span>(<span class="params">self,one_ep_transition</span>):</span><br><span class="line">    sa_in_episode = <span class="built_in">set</span>([(<span class="built_in">str</span>(x[<span class="number">0</span>]), x[<span class="number">1</span>]) <span class="keyword">for</span> x <span class="keyword">in</span> one_ep_transition])</span><br><span class="line">    <span class="keyword">for</span> state, action <span class="keyword">in</span> sa_in_episode:</span><br><span class="line">        sa_pair = (state, action)</span><br><span class="line">        <span class="comment">#First-Visit MC：(s,a)在回合中第一次出现的时候，计算累积回报G</span></span><br><span class="line">        first_occurence_idx = <span class="built_in">next</span>(i <span class="keyword">for</span> i,x <span class="keyword">in</span> <span class="built_in">enumerate</span>(one_ep_transition)<span class="comment">#找到第一个(s,a)的索引</span></span><br><span class="line">                                   <span class="keyword">if</span> <span class="built_in">str</span>(x[<span class="number">0</span>]) == state <span class="keyword">and</span> x[<span class="number">1</span>] == action)</span><br><span class="line">        G = <span class="built_in">sum</span>([x[<span class="number">2</span>]*(<span class="variable language_">self</span>.gamma**i) <span class="keyword">for</span> i,x <span class="keyword">in</span> <span class="built_in">enumerate</span>(one_ep_transition[first_occurence_idx:])])</span><br><span class="line">        <span class="variable language_">self</span>.returns_sum[sa_pair] += G <span class="comment">#Gt记录累计回报</span></span><br><span class="line">        <span class="variable language_">self</span>.returns_count[sa_pair] += <span class="number">1.0</span> <span class="comment">#N(st)记录次数</span></span><br><span class="line">        <span class="comment">#Q(s,a)=ΣG/访问次数</span></span><br><span class="line">        <span class="variable language_">self</span>.Q_table[state][action] = <span class="variable language_">self</span>.returns_sum[sa_pair] / <span class="variable language_">self</span>.returns_count[sa_pair]</span><br></pre></td></tr></table></figure>
+
+<p>train方法每轮episode都在保存transitions后更新智能体感觉有问题，应该在一个回合截止达到terminated后再一起更新吧</p>
+<h3 id="3-3-2-时序差分"><a href="#3-3-2-时序差分" class="headerlink" title="3.3.2 时序差分"></a><a target="_blank" rel="noopener" href="https://datawhalechina.github.io/easy-rl/#/chapter3/chapter3?id=_332-%E6%97%B6%E5%BA%8F%E5%B7%AE%E5%88%86">3.3.2 时序差分</a></h3><p>每走一步就自举一次，V(st+1)是预估值，不像Gt是实际值</p>
+<p><img src="https://i-blog.csdnimg.cn/img_convert/dfb906804d14d41341c24fee0b5015c7.png" alt="image-20250323210642769"></p>
+<ul>
+<li>DP用贝尔曼期望备份，通过上一时刻的值 Vi−1(s′)来更新当前时刻的值 Vi(s)，需要等所有状态更新一遍（使用到的是相关的动作和状态），最广</li>
+<li>MC用一条轨迹的经验平均回报（实际得到的奖励）Gt来进行更新，比DP快，最深</li>
+<li>TD用一步来更新，最快，可以在线、不完整序列、没有终止条件的连续环境下学习</li>
+</ul>
+<h3 id="3-3-3-动态规划方法、蒙特卡洛方法以及时序差分方法的自举和采样"><a href="#3-3-3-动态规划方法、蒙特卡洛方法以及时序差分方法的自举和采样" class="headerlink" title="3.3.3 动态规划方法、蒙特卡洛方法以及时序差分方法的自举和采样"></a><a target="_blank" rel="noopener" href="https://datawhalechina.github.io/easy-rl/#/chapter3/chapter3?id=_333-%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92%E6%96%B9%E6%B3%95%E3%80%81%E8%92%99%E7%89%B9%E5%8D%A1%E6%B4%9B%E6%96%B9%E6%B3%95%E4%BB%A5%E5%8F%8A%E6%97%B6%E5%BA%8F%E5%B7%AE%E5%88%86%E6%96%B9%E6%B3%95%E7%9A%84%E8%87%AA%E4%B8%BE%E5%92%8C%E9%87%87%E6%A0%B7">3.3.3 动态规划方法、蒙特卡洛方法以及时序差分方法的自举和采样</a></h3><p>自举是指更新时使用了<strong>估计</strong>。蒙特卡洛方法没有使用自举，因为它根据实际的回报Gt进行更新。 动态规划方法和时序差分方法使用了自举V(s’)来估计现在的V(s)。</p>
+<img src="https://i-blog.csdnimg.cn/img_convert/9ac49944dfc780e359e3665b76207958.png" alt="img" style="zoom: 25%;" />
+
+<h2 id="3-4-免模型控制"><a href="#3-4-免模型控制" class="headerlink" title="3.4 免模型控制"></a><a target="_blank" rel="noopener" href="https://datawhalechina.github.io/easy-rl/#/chapter3/chapter3?id=_34-%E5%85%8D%E6%A8%A1%E5%9E%8B%E6%8E%A7%E5%88%B6">3.4 免模型控制</a></h2><p>广义策略迭代：先估计Q，然后贪心选择Π</p>
+<p><strong>探索性开始（exploring start）</strong>：保证所有的状态和动作都在无限步的执行后能被采样到</p>
+<img src="https://i-blog.csdnimg.cn/img_convert/4b59888418fcb055dca7db01f4439aef.png" alt="img" style="zoom:33%;" />
+
+<h3 id="3-4-1-Sarsa：同策略时序差分控制"><a href="#3-4-1-Sarsa：同策略时序差分控制" class="headerlink" title="3.4.1 Sarsa：同策略时序差分控制"></a><a target="_blank" rel="noopener" href="https://datawhalechina.github.io/easy-rl/#/chapter3/chapter3?id=_341-sarsa%EF%BC%9A%E5%90%8C%E7%AD%96%E7%95%A5%E6%97%B6%E5%BA%8F%E5%B7%AE%E5%88%86%E6%8E%A7%E5%88%B6">3.4.1 Sarsa：同策略时序差分控制</a></h3><p>把更新V的过程改为更新Q，通过公式不断更新Q表格，然后进行动作选择。也有n步Sarsa</p>
+<p><img src="https://i-blog.csdnimg.cn/img_convert/aad5f6eeb7e9a9223f3791a52b0c6fba.png" alt="image-20250323215422843"></p>
+<p>t时刻的价值如下：<img src="https://i-blog.csdnimg.cn/img_convert/1d00dc0c9d9cbeb684914ee87c376298.png" alt="image-20250323220432376"></p>
+<p>探索A策略只有一种：<img src="https://i-blog.csdnimg.cn/img_convert/4cf65b121e71508d59ffdb8cf49a1b9f.png" alt="image-20250323221858016" style="zoom: 33%;" /></p>
+<h4 id="代码实践-1"><a href="#代码实践-1" class="headerlink" title="代码实践"></a><a target="_blank" rel="noopener" href="https://github.com/datawhalechina/easy-rl/blob/master/notebooks/Sarsa.ipynb">代码实践</a></h4><p>相比QLearning就是多返回at+1（next_action），先进行Q表更新，然后赋值给action作为下一步和环境交互的实际执行的动作</p>
+<ul>
+<li>while True下面的action &#x3D; agent.sample(state)感觉是多写了</li>
+</ul>
+<p>训练结果发现Sarsa收敛速度更快，但收敛值会比Q-learning低，说明策略更保守</p>
+<h3 id="3-4-2-Q学习：异策略时序差分控制"><a href="#3-4-2-Q学习：异策略时序差分控制" class="headerlink" title="3.4.2 Q学习：异策略时序差分控制"></a><a target="_blank" rel="noopener" href="https://datawhalechina.github.io/easy-rl/#/chapter3/chapter3?id=_342-q%E5%AD%A6%E4%B9%A0%EF%BC%9A%E5%BC%82%E7%AD%96%E7%95%A5%E6%97%B6%E5%BA%8F%E5%B7%AE%E5%88%86%E6%8E%A7%E5%88%B6">3.4.2 Q学习：异策略时序差分控制</a></h3><p>Sarsa 是一种<strong>同策略（on-policy）</strong>算法，它优化的是它实际执行的策略，它直接用下一步会执行的动作去优化 Q 表格。</p>
+<p>Q学习是一种<strong>异策略（off-policy）</strong>算法，有两种不同的策略：<strong>目标策略（target policy）</strong>和<strong>行为策略（behavior policy）</strong></p>
+<ul>
+<li>行为策略μ用于探索，与环境交互，返回数据（st,at,rt+1,st+1,没有at+1），并不是纯随机，基于Q表格逐渐改进</li>
+<li>目标策略Π直接在Q表格上选取奖励最大的策略，不与环境交互，只是对经验数据进行学习<img src="https://i-blog.csdnimg.cn/img_convert/acdcb2805a1b96be5bd3338e64cf6a29.png" alt="image-20250323221031383"></li>
+</ul>
+<p>学习阶段实际执行动作，与环境进行交互的是行为策略，但是更新Q表格的是目标策略，永远选max，并不是实际执行的动作</p>
+<p><img src="https://i-blog.csdnimg.cn/img_convert/44b739473e247d29236dbdef3da0d042.png" alt="image-20250323224114882"></p>
+<p><img src="https://i-blog.csdnimg.cn/img_convert/82d5fff49317d2d5009bf8980dd3a660.png" alt="img"></p>
+<p>A’是Sarsa实际执行的动作，而Q学习中的a不一定是下一步会执行的动作，不是行为策略选取的，而是目标策略选取的，所以不需要传A’。A才是行为策略选取的实际交互了的动作。</p>
+<h4 id="代码实践-2"><a href="#代码实践-2" class="headerlink" title="代码实践"></a>代码实践</h4><p><a target="_blank" rel="noopener" href="https://github.com/datawhalechina/easy-rl/blob/master/notebooks/Q-learning/Q-learning%E6%8E%A2%E7%B4%A2%E7%AD%96%E7%95%A5%E7%A0%94%E7%A9%B6.ipynb">Q-learning探索策略研究</a></p>
+<p>首先定义Q-Learning算法支持的探索策略集合（行为策略）：</p>
+<ol>
+<li>softmax：第一次采样时随机初始化 Q-table，所有值随机赋值；然后计算 Softmax 选择概率</li>
+<li>Boltzmann：对Q值应用softmax，按照计算出的概率随机选择动作</li>
+<li>UCB：维护每个 (s, a) 的访问次数，鼓励探索访问次数较少的状态-动作对，让每个状态都被访问一次</li>
+<li>ε-Greedy 策略：早期 <strong>高探索</strong>（大 ε），后期<strong>更多利用</strong>（小 ε）；以 <code>ε</code> 概率随机选择动作，否则选择最大 Q 值的动作。</li>
+<li>Thompson 采样：计算成功和失败的概率，从Beta 分布中采样，选择采样值最大的动作</li>
+</ol>
+<p>训练阶段：确定收敛标准（奖励无波动），然后训练Agent（采样动作、交互、更新Q表、累计奖励、检查终止条件），seed保证结果可复现。最终学习得到Q_table</p>
+<ul>
+<li>sample_action是行为策略选择动作，然后交互后得到（st,at,rt+1,st+1），没有at+1</li>
+<li>agent.update更新是直接用使Q最大的action，但这个action不会被保留，下一轮还是用sample_action选择</li>
+</ul>
+<p>预测阶段：predict_action就是获得实际执行的动作，策略种类和训练阶段是一样的</p>
+<p>代码测试表明：</p>
+<ul>
+<li>在action有限的情况下，一般epsilon_greedy探索策略更加的简单高效, 可以将epsilon_greedy探索策略作为第一选择策略</li>
+<li>在epsilon_greedy探索策略表现不佳的时候，我们可以第一优先使用softmax探索策略</li>
+</ul>
+<p><a target="_blank" rel="noopener" href="https://github.com/datawhalechina/easy-rl/blob/master/notebooks/Q-learning/QLearning.ipynb">QLearning</a></p>
+<p>大部分情况下sample_action是e-greedy 策略，predict_action是贪心策略选最大</p>
+<p>训练时注意回合开始时环境要重置，ε_decay是重要参数，需要调。测试则只需要看奖励，根据学好的Q表得到动作即可。</p>
+<p>环境和参数的自定义是重要的，当奖励稳定在-13说明起点能够最快达到终点</p>
+<h3 id="3-4-3-同策略与异策略的区别"><a href="#3-4-3-同策略与异策略的区别" class="headerlink" title="3.4.3 同策略与异策略的区别"></a><a target="_blank" rel="noopener" href="https://datawhalechina.github.io/easy-rl/#/chapter3/chapter3?id=_343-%E5%90%8C%E7%AD%96%E7%95%A5%E4%B8%8E%E5%BC%82%E7%AD%96%E7%95%A5%E7%9A%84%E5%8C%BA%E5%88%AB">3.4.3 同策略与异策略的区别</a></h3><p>Sarsa：不仅使用策略π学习，还使用策略π与环境交互产生经验，兼顾探索和利用</p>
+<p>Q学习希望每一步都获得最大的利益，更激进</p>
+<h1 id="第-4-章-策略梯度"><a href="#第-4-章-策略梯度" class="headerlink" title="第 4 章 策略梯度"></a><a target="_blank" rel="noopener" href="https://datawhalechina.github.io/easy-rl/#/chapter4/chapter4?id=%E7%AC%AC-4-%E7%AB%A0-%E7%AD%96%E7%95%A5%E6%A2%AF%E5%BA%A6">第 4 章 策略梯度</a></h1><h2 id="4-1-策略梯度算法"><a href="#4-1-策略梯度算法" class="headerlink" title="4.1 策略梯度算法"></a><a target="_blank" rel="noopener" href="https://datawhalechina.github.io/easy-rl/#/chapter4/chapter4?id=_41-%E7%AD%96%E7%95%A5%E6%A2%AF%E5%BA%A6%E7%AE%97%E6%B3%95">4.1 策略梯度算法</a></h2><blockquote>
+<p>该方法直接优化了参数化策略Π，适合高维、连续动作的任务</p>
+</blockquote>
+<p><em>pθ</em>(<em>at</em>∣<em>st</em>)是玩家能控制的策略（也就是前文的Π），环境<em>p</em>(<em>st</em>+1∣<em>st</em>,<em>at</em>)和奖励r是控制不了的， R(τ)代表某一个轨迹τ的奖励，每个轨迹都有一个概率，我们需要穷举所有可能的轨迹τ</p>
+<p><img src="https://i-blog.csdnimg.cn/img_convert/fa7204f0101c61e162cb283d558ddccc.png" alt="image-20250324193442569"></p>
+<p><img src="https://i-blog.csdnimg.cn/img_convert/dc3c95e3bad7468a401d299c2e94d646.png" alt="image-20250324193401510"></p>
+<p>从分布<em>pθ</em>(<em>τ</em>) 采样一个轨迹 τ，计算 R(τ) 的期望值，就是期望奖励。我们要最大化期望奖励，用梯度上升（沿着正梯度方向）</p>
+<p><img src="https://i-blog.csdnimg.cn/img_convert/566845e5937f97f992b30adbc27e1470.png" alt="image-20250324193602825"></p>
+<p><img src="https://i-blog.csdnimg.cn/img_convert/3397f72794ce634024ad0a0a9e5ea111.png" alt="image-20250324194220055"></p>
+<p>期望值无法计算，用蒙特卡洛采样的方式采样 N个τ然后求平均</p>
+<p><img src="https://i-blog.csdnimg.cn/img_convert/a73384de4d3f3184748a875ebe3e5acc.png" alt="image-20250324194616811"></p>
+<p>因为<em>p</em>(<em>s</em>1) 和 p(st+1∣st,at)来自环境，pθ(at∣st)来自智能体。p(s1) 和 p(st+1∣st,at)由环境决定，与θ无关，因此 ∇log⁡p(s1)&#x3D;0，∇∑t&#x3D;1Tlog⁡p(st+1∣st,at)&#x3D;0</p>
+<p><img src="https://i-blog.csdnimg.cn/img_convert/da7bff0405387be0cfeda67d9a5d7e56.png" alt="image-20250324194624124"></p>
+<p>得到梯度公式：如果在st执行at，发现τ的奖励是正的，就要增加在st执行at的概率（一个n是一个回合得到一个R(τ^n)，t是状态和动作的数量）</p>
+<p><img src="https://i-blog.csdnimg.cn/img_convert/722c7bd9e4d21ba0b6e9e85528b9f565.png" alt="image-20250324195010323"></p>
+<p>梯度更新公式：<img src="https://i-blog.csdnimg.cn/img_convert/2e649407e9d417cb6fff55aee61074fe.png" alt="image-20250324195235705"></p>
+<p>采样的数据只会用一次。更新完这一轮θ，下一轮要重新采样数据</p>
+<p>R(τ)相当于给交叉熵加权</p>
+<h2 id="4-2-策略梯度实现技巧"><a href="#4-2-策略梯度实现技巧" class="headerlink" title="4.2 策略梯度实现技巧"></a><a target="_blank" rel="noopener" href="https://datawhalechina.github.io/easy-rl/#/chapter4/chapter4?id=_42-%E7%AD%96%E7%95%A5%E6%A2%AF%E5%BA%A6%E5%AE%9E%E7%8E%B0%E6%8A%80%E5%B7%A7">4.2 策略梯度实现技巧</a></h2><p>两种减少方差的技巧</p>
+<h3 id="4-2-1-技巧-1：添加基线"><a href="#4-2-1-技巧-1：添加基线" class="headerlink" title="4.2.1 技巧 1：添加基线"></a><a target="_blank" rel="noopener" href="https://datawhalechina.github.io/easy-rl/#/chapter4/chapter4?id=_421-%E6%8A%80%E5%B7%A7-1%EF%BC%9A%E6%B7%BB%E5%8A%A0%E5%9F%BA%E7%BA%BF">4.2.1 技巧 1：添加基线</a></h3><p>如果奖励是正的，采样到的动作会增加概率。</p>
+<p>未采样的动作虽然没有直接更新，但由于采样到的动作概率增加，概率归一化后会导致它们的概率下降。</p>
+<p><img src="https://i-blog.csdnimg.cn/img_convert/a1f051d1cd09fddec24adc3b18a9377a.png" alt="image-20250324203302087"></p>
+<p>引入基线b后，进行了归一化。只有比平均奖励更好的动作才会增加概率，未采样的动作不会无端减少概率，而是根据奖励均值来决定是否应该增加或减少。</p>
+<h3 id="4-2-2-技巧-2：分配合适的分数"><a href="#4-2-2-技巧-2：分配合适的分数" class="headerlink" title="4.2.2 技巧 2：分配合适的分数"></a><a target="_blank" rel="noopener" href="https://datawhalechina.github.io/easy-rl/#/chapter4/chapter4?id=_422-%E6%8A%80%E5%B7%A7-2%EF%BC%9A%E5%88%86%E9%85%8D%E5%90%88%E9%80%82%E7%9A%84%E5%88%86%E6%95%B0">4.2.2 技巧 2：分配合适的分数</a></h3><p>在同一个回合里面，所有(s,a)都用R(τ)-b加权是不公平的，因为一个回合里的动作有好有坏</p>
+<p>假设时刻t执行动过a，权重改成从t开始到结束所有奖励的总和；另外加入γ折扣因子</p>
+<p><img src="https://i-blog.csdnimg.cn/img_convert/8462a432a9beadf2493630dd08389db7.png" alt="image-20250324204111586"></p>
+<p>R-b这项是优势函数，用<img src="https://i-blog.csdnimg.cn/img_convert/5a692bbecefe520f0ade1e1c0df305e6.png" alt="image-20250324204410703">表示，通常由一个网络估计出来，被称为评论员(critic)</p>
+<h2 id="4-3-REINFORCE：蒙特卡洛策略梯度"><a href="#4-3-REINFORCE：蒙特卡洛策略梯度" class="headerlink" title="4.3 REINFORCE：蒙特卡洛策略梯度"></a><a target="_blank" rel="noopener" href="https://datawhalechina.github.io/easy-rl/#/chapter4/chapter4?id=_43-reinforce%EF%BC%9A%E8%92%99%E7%89%B9%E5%8D%A1%E6%B4%9B%E7%AD%96%E7%95%A5%E6%A2%AF%E5%BA%A6">4.3 REINFORCE：蒙特卡洛策略梯度</a></h2><p>属于MC，每回合更新。根据Π，生成该回合的每一步，然后计算G和θ</p>
+<p>形式可以类比交叉熵，Gt是真实值，Π是预测的动作概率</p>
+<p><img src="https://i-blog.csdnimg.cn/img_convert/7f4f3189ea0c99f48fc6ef9750228b0c.png" alt="image-20250324213425496"></p>
+<p><img src="https://i-blog.csdnimg.cn/img_convert/c83db9925e0c205f2733864144d39fa5.png" alt="image-20250324213526938"></p>
+<p>对θ，可以使用 Adam、RMSProp、SGD 等优化器对其进行调整</p>
+<h2 id="补充"><a href="#补充" class="headerlink" title="补充"></a>补充</h2><p><img src="https://i-blog.csdnimg.cn/img_convert/05cc211104847f3c359f2a22ae68e9bc.png" alt="image-20250324220449746"></p>
+<p>问题是高维时计算Q的代价很大，所以提出直接优化策略函数</p>
+<p><img src="https://i-blog.csdnimg.cn/img_convert/b1cde90b2068738a6f8127bd01bae361.png" alt="image-20250324220505044"></p>
+<p>缺点是容易到局部最优；低效率；高方差</p>
+<h1 id="第5章-PPO-算法"><a href="#第5章-PPO-算法" class="headerlink" title="第5章 PPO 算法"></a><a target="_blank" rel="noopener" href="https://datawhalechina.github.io/easy-rl/#/chapter5/chapter5?id=%E7%AC%AC5%E7%AB%A0-ppo-%E7%AE%97%E6%B3%95">第5章 PPO 算法</a></h1><h2 id="5-1-重要性采样"><a href="#5-1-重要性采样" class="headerlink" title="5.1 重要性采样"></a><a target="_blank" rel="noopener" href="https://datawhalechina.github.io/easy-rl/#/chapter5/chapter5?id=_51-%E9%87%8D%E8%A6%81%E6%80%A7%E9%87%87%E6%A0%B7">5.1 重要性采样</a></h2><p>PPO是策略梯度的变形，属于同策略，是现在 OpenAI 默认的强化学习算法。</p>
+<p>因为策略梯度需要用策略 πθ采样的轨迹 τ求期望，更新参数θ后又需要重新采样数据。我们希望改为使用异策略，用θ’采样数据，θ多次使用该数据进行梯度上升，相当于用同一批数据进行多次参数更新</p>
+<p>我们希望得到分布p中采样得到的f(x)均值，但只知道分布q，则要进行修正：</p>
+<p><img src="https://i-blog.csdnimg.cn/img_convert/8777d1610e8b88bddb2117b89b2e9c68.png" alt="image-20250325234351058"></p>
+<p><img src="https://i-blog.csdnimg.cn/img_convert/4514d0670ef57751b6a0be0f4d1c2914.png" alt="image-20250325234406055"></p>
+<p><img src="https://i-blog.csdnimg.cn/img_convert/30558c1cd77836721f23fd778d75d9e2.png" alt="image-20250325234441820"></p>
+<p>p&#x2F;q是重要性权重，q并不能是任何的，要和p相近，差距太大会让方差相差很大</p>
+<p>代入梯度：假设有另外一个策略 πθ′，τ是它采样得到的轨迹</p>
+<p><img src="https://i-blog.csdnimg.cn/img_convert/c56ea1b3cbda1133fc543ad33fd93e5f.png" alt="image-20250325235130113"></p>
+<p>实际的梯度更新过程是给每个状态-动作对不同的优势，Aθ(st,at)即用累积奖励减去基线</p>
+<p><img src="https://i-blog.csdnimg.cn/img_convert/159934297e02435da0cc1d2a8b3d65c1.png" alt="image-20250325235623087"></p>
+<p>变为异策略：</p>
+<p><img src="https://i-blog.csdnimg.cn/img_convert/02eea69a2e74e7d36508426615b1c226.png" alt="image-20250325235751076"></p>
+<p>但我们没有Aθ，只有Aθ‘的数据，所以假设它们差不多，更新公式：</p>
+<p><img src="https://i-blog.csdnimg.cn/img_convert/e9e29b31435e2b30a503e4670fc30bd7.png" alt="image-20250326000203375"></p>
+<p>因为不同的策略不影响我们看到状态的概率，而且pθ很难算，无视掉该问题</p>
+<p>但是 pθ(at∣st)好算，知道θ就可以算出来。我们输入状态st到参数为θ的策略网络中，它会输出每一个at的概率。</p>
+<p><img src="https://i-blog.csdnimg.cn/img_convert/672dc809bcae87a7f69434b1e27ac72f.png" alt="image-20250326000517405"></p>
+<p>通过梯度可以反推原来的目标函数：θ代表要优化的参数，θ’是示范</p>
+<p><img src="https://i-blog.csdnimg.cn/img_convert/c8cba2ac7c9dffa648c7b3232dbfc7c9.png" alt="image-20250326000752741"></p>
+<h2 id="5-2-近端策略优化"><a href="#5-2-近端策略优化" class="headerlink" title="5.2 近端策略优化"></a><a target="_blank" rel="noopener" href="https://datawhalechina.github.io/easy-rl/#/chapter5/chapter5?id=_52-%E8%BF%91%E7%AB%AF%E7%AD%96%E7%95%A5%E4%BC%98%E5%8C%96">5.2 近端策略优化</a></h2><p>PPO想避免<em>pθ</em>(<em>at</em>∣<em>st</em>)与pθ′(at∣st)相差太多，用KL散度进行约束，衡量θ与θ′的相似程度。因为PPO的行为策略和目标策略十分相近，所以可认为是同策略算法</p>
+<p><img src="https://i-blog.csdnimg.cn/img_convert/9bc50f71f7f8f75f41859428d531f0b0.png" alt="image-20250326001356111"></p>
+<p>前身：信任区域策略优化（trust region policy optimization，TRPO），虽然就是KL约束的位置不一样，但有约束下进行梯度优化比放在目标里麻烦很多。</p>
+<ul>
+<li>注意KL计算的不是参数距离而是行为距离，即给定同样的状态，输出动作之间的差距。因为真正在意的是演员的动作差距</li>
+</ul>
+<p><img src="https://i-blog.csdnimg.cn/img_convert/41280368aeb04c5ff7f9ab178f7a8086.png" alt="image-20250326001436170"></p>
+<h3 id="5-2-1-近端策略优化惩罚"><a href="#5-2-1-近端策略优化惩罚" class="headerlink" title="5.2.1 近端策略优化惩罚"></a><a target="_blank" rel="noopener" href="https://datawhalechina.github.io/easy-rl/#/chapter5/chapter5?id=_521-%E8%BF%91%E7%AB%AF%E7%AD%96%E7%95%A5%E4%BC%98%E5%8C%96%E6%83%A9%E7%BD%9A">5.2.1 近端策略优化惩罚</a></h3><p>可以让与环境交互的θ更新很多次，其中应用自适应KL散度，因为KL散度越大两者越不相似</p>
+<p><img src="https://i-blog.csdnimg.cn/img_convert/1dd70e3ce4216c6fdcdde82c63fbfa8a.png" alt="image-20250326002418454"></p>
+<p><img src="https://i-blog.csdnimg.cn/img_convert/4e2f8c57f7d5bd1fec27fc9c7c500333.png" alt="image-20250326002424639"></p>
+<h3 id="5-2-2-近端策略优化裁剪"><a href="#5-2-2-近端策略优化裁剪" class="headerlink" title="5.2.2 近端策略优化裁剪"></a><a target="_blank" rel="noopener" href="https://datawhalechina.github.io/easy-rl/#/chapter5/chapter5?id=_522-%E8%BF%91%E7%AB%AF%E7%AD%96%E7%95%A5%E4%BC%98%E5%8C%96%E8%A3%81%E5%89%AA">5.2.2 近端策略优化裁剪</a></h3><p>没有KL散度，而是用clip使介于1−<em>ε</em>到1+<em>ε</em>之间，保证A&gt;0&#x2F;&lt;0时差距都不太大</p>
+<p><img src="https://i-blog.csdnimg.cn/img_convert/1f92da339d8ac7ec8dd0547cbb73344b.png" alt="image-20250326002803540"></p>
+<h1 id="第6章-深度Q网络"><a href="#第6章-深度Q网络" class="headerlink" title="第6章 深度Q网络"></a><a target="_blank" rel="noopener" href="https://datawhalechina.github.io/easy-rl/#/chapter6/chapter6?id=%E7%AC%AC6%E7%AB%A0-%E6%B7%B1%E5%BA%A6q%E7%BD%91%E7%BB%9C">第6章 深度Q网络</a></h1><p>V&#x2F;Q表格再面临连续状态空间时存储空间不够用，所以引入价值函数近似，是一个参数为<em>ϕ</em> 的函数，如神经网络。</p>
+<p><img src="https://i-blog.csdnimg.cn/img_convert/2fe84eb5b1f5d0de88c69048874e252d.png" alt="image-20250325134058540"></p>
+<p>用MSE作为损失函数，使用SGD每次选择一个样本计算梯度，下降更新参数</p>
+<p><img src="https://i-blog.csdnimg.cn/img_convert/4358a35e2dc9ba058f76e97b3db4f71e.png" alt="image-20250325171649034"></p>
+<p><img src="https://i-blog.csdnimg.cn/img_convert/2c636a187de02829fab0eb69b69d236b.png" alt="image-20250325171702487"></p>
+<h2 id="6-1-状态价值函数"><a href="#6-1-状态价值函数" class="headerlink" title="6.1 状态价值函数"></a><a target="_blank" rel="noopener" href="https://datawhalechina.github.io/easy-rl/#/chapter6/chapter6?id=_61-%E7%8A%B6%E6%80%81%E4%BB%B7%E5%80%BC%E5%87%BD%E6%95%B0">6.1 状态价值函数</a></h2><p>DQN属于基于价值的算法，学习的是评论员而不是策略。</p>
+<p><em>Vπ</em>(<em>s</em>)取决于状态和演员 </p>
+<p>训练时是回归问题，预测的是连续值</p>
+<p>蒙特卡洛法每次需要计算累计奖励，需要玩到游戏结束，且方差大，因为G有随机性；时序差分可以用只走一步的值，且r比G方差小，其实更常用</p>
+<p><img src="https://i-blog.csdnimg.cn/img_convert/725b095c7d547ebfd3f515ffe7ac74e7.png" alt="image-20250325142120789"></p>
+<img src="https://i-blog.csdnimg.cn/img_convert/394d028b56275c8fdea3517062da9436.png" alt="img" style="zoom: 25%;" />
+
+<h2 id="6-2-动作价值函数"><a href="#6-2-动作价值函数" class="headerlink" title="6.2 动作价值函数"></a><a target="_blank" rel="noopener" href="https://datawhalechina.github.io/easy-rl/#/chapter6/chapter6?id=_62-%E5%8A%A8%E4%BD%9C%E4%BB%B7%E5%80%BC%E5%87%BD%E6%95%B0">6.2 动作价值函数</a></h2><p>用 Qπ(s,a)决定的 π′ 一定会比 π好：<em>π</em>′ 完全由最大化 Qπ(s,a)决定，可能与原策略 π的选择完全不同。例如：</p>
+<ul>
+<li>原策略 π 在状态 s 下倾向于动作 a1；</li>
+<li>但 Qπ(s,a2)的值更高，因此 π′ 会选择 a2。</li>
+</ul>
+<h2 id="6-3-目标网络"><a href="#6-3-目标网络" class="headerlink" title="6.3 目标网络"></a><a target="_blank" rel="noopener" href="https://datawhalechina.github.io/easy-rl/#/chapter6/chapter6?id=_63-%E7%9B%AE%E6%A0%87%E7%BD%91%E7%BB%9C">6.3 目标网络</a></h2><p>用左边的Qπ拟合右边的r+Q目标网络，先固定右边，优化左边的参数，再覆盖到右边</p>
+<p><img src="https://i-blog.csdnimg.cn/img_convert/9b682d8d77506b85b9e162c4d2ed482d.png" alt="image-20250325155847197"></p>
+<h2 id="6-4-探索"><a href="#6-4-探索" class="headerlink" title="6.4 探索"></a><a target="_blank" rel="noopener" href="https://datawhalechina.github.io/easy-rl/#/chapter6/chapter6?id=_64-%E6%8E%A2%E7%B4%A2">6.4 探索</a></h2><p>对于没有采取过行动的动作，设置为初始值</p>
+<p><strong>探索-利用窘境</strong>问题，有两个方法可以解决这个问题：ε-贪心和玻尔兹曼探索（Boltzmann exploration）</p>
+<p><img src="https://i-blog.csdnimg.cn/img_convert/289a1ad50f4e2fa775ac856bc5f31b4a.png" alt="image-20250325161411156"></p>
+<p>T很大时，所有动作等概率选择（探索）；T很小时，Q值大的动作容易被选中（利用）</p>
+<p><img src="https://i-blog.csdnimg.cn/img_convert/a6c241b3bdf9decd2d6c9db17dab5ff2.png" alt="image-20250325161645628"></p>
+<h2 id="6-5-经验回放"><a href="#6-5-经验回放" class="headerlink" title="6.5 经验回放"></a><a target="_blank" rel="noopener" href="https://datawhalechina.github.io/easy-rl/#/chapter6/chapter6?id=_65-%E7%BB%8F%E9%AA%8C%E5%9B%9E%E6%94%BE">6.5 经验回放</a></h2><p>回放缓冲区：很大，如5w笔，可能来自不同的策略，只有装满时才丢旧数据，存放transition(st,at,rt,st+1)</p>
+<p>迭代地训练 Q 函数：每次挑一个batch；属于异策略，因为经验不是来源于正在使用的Π，这对训练效果并无影响</p>
+<ul>
+<li>可以提升训练速度，反复利用里面的经验</li>
+</ul>
+<p><img src="https://i-blog.csdnimg.cn/img_convert/97afea3beeada6a95d35368c88499476.png" alt="image-20250325171748711"></p>
+<p>实际训练时使用目标网络fixed Q-targets，固定目标网络后再更新参数，即：</p>
+<p><img src="https://i-blog.csdnimg.cn/img_convert/b385f5c4dc4727d49651ff3899272ed0.png" alt="image-20250325171912288"></p>
+<h2 id="6-6-深度Q网络"><a href="#6-6-深度Q网络" class="headerlink" title="6.6 深度Q网络"></a><a target="_blank" rel="noopener" href="https://datawhalechina.github.io/easy-rl/#/chapter6/chapter6?id=_66-%E6%B7%B1%E5%BA%A6q%E7%BD%91%E7%BB%9C">6.6 深度Q网络</a></h2><p>y是目标值，回归的过程是更新Q的参数让Q(s,a)尽可能接近于y</p>
+<p><img src="https://i-blog.csdnimg.cn/img_convert/33cbb54a2790fd4c636fe112edae5e99.png" alt="image-20250325163026768"></p>
+<h1 id="第7章-深度Q网络进阶技巧"><a href="#第7章-深度Q网络进阶技巧" class="headerlink" title="第7章 深度Q网络进阶技巧"></a><a target="_blank" rel="noopener" href="https://datawhalechina.github.io/easy-rl/#/chapter7/chapter7?id=%E7%AC%AC7%E7%AB%A0-%E6%B7%B1%E5%BA%A6q%E7%BD%91%E7%BB%9C%E8%BF%9B%E9%98%B6%E6%8A%80%E5%B7%A7">第7章 深度Q网络进阶技巧</a></h1><h2 id="7-1-双深度Q网络"><a href="#7-1-双深度Q网络" class="headerlink" title="7.1 双深度Q网络"></a><a target="_blank" rel="noopener" href="https://datawhalechina.github.io/easy-rl/#/chapter7/chapter7?id=_71-%E5%8F%8C%E6%B7%B1%E5%BA%A6q%E7%BD%91%E7%BB%9C">7.1 双深度Q网络</a></h2><h2 id="7-2-竞争深度Q网络"><a href="#7-2-竞争深度Q网络" class="headerlink" title="7.2 竞争深度Q网络"></a><a target="_blank" rel="noopener" href="https://datawhalechina.github.io/easy-rl/#/chapter7/chapter7?id=_72-%E7%AB%9E%E4%BA%89%E6%B7%B1%E5%BA%A6q%E7%BD%91%E7%BB%9C">7.2 竞争深度Q网络</a></h2><h1 id="第9章-演员-评论员算法"><a href="#第9章-演员-评论员算法" class="headerlink" title="第9章 演员-评论员算法"></a><a target="_blank" rel="noopener" href="https://datawhalechina.github.io/easy-rl/#/chapter9/chapter9?id=%E7%AC%AC9%E7%AB%A0%E6%BC%94%E5%91%98-%E8%AF%84%E8%AE%BA%E5%91%98%E7%AE%97%E6%B3%95">第9章 演员-评论员算法</a></h1><p>评论家指价值函数，对当前策略的值函数进行估计，实现单步参数更新，而不需要等到回合结束。</p>
+<h2 id="9-1-策略梯度回顾"><a href="#9-1-策略梯度回顾" class="headerlink" title="9.1 策略梯度回顾"></a><a target="_blank" rel="noopener" href="https://datawhalechina.github.io/easy-rl/#/chapter9/chapter9?id=_91-%E7%AD%96%E7%95%A5%E6%A2%AF%E5%BA%A6%E5%9B%9E%E9%A1%BE">9.1 策略梯度回顾</a></h2><p>G不稳定，因为采样次数是有限的，会随机影响训练结果</p>
+<h2 id="9-2-深度Q网络回顾"><a href="#9-2-深度Q网络回顾" class="headerlink" title="9.2 深度Q网络回顾"></a><a target="_blank" rel="noopener" href="https://datawhalechina.github.io/easy-rl/#/chapter9/chapter9?id=_92-%E6%B7%B1%E5%BA%A6q%E7%BD%91%E7%BB%9C%E5%9B%9E%E9%A1%BE">9.2 深度Q网络回顾</a></h2><p>用深度网络预测期望值G，代替采样值。两个评论员：V&#x2F;Q</p>
+<h2 id="9-3-优势演员-评论员算法"><a href="#9-3-优势演员-评论员算法" class="headerlink" title="9.3 优势演员-评论员算法"></a><a target="_blank" rel="noopener" href="https://datawhalechina.github.io/easy-rl/#/chapter9/chapter9?id=_93-%E4%BC%98%E5%8A%BF%E6%BC%94%E5%91%98-%E8%AF%84%E8%AE%BA%E5%91%98%E7%AE%97%E6%B3%95">9.3 优势演员-评论员算法</a></h2><img src="https://i-blog.csdnimg.cn/img_convert/c47b2b89a775a916bdf85e1e06e2e5d9.png" alt="img" style="zoom:33%;" />
+
+<p>可以只估计V，用V来表示Q：<img src="https://i-blog.csdnimg.cn/img_convert/3facd1d9fc6ef69c8d9dc5b7eee7b46a.png" alt="image-20250324230544341">不过原论文发现期望可以直接去掉，代替上图中的Q，这样效果最好</p>
+<ul>
+<li>r也是随机性的，但比G的方差要小</li>
+</ul>
+<img src="https://i-blog.csdnimg.cn/img_convert/0ec8f714d59ccf5e3ce578015712f5d9.png" alt="image-20250324230815273"  />
+
+<p>和策略梯度比较，不是用与环境交互的信息直接更新策略，而是去估计价值函数（用时序差分方法或蒙特卡洛方法），然后更新Π</p>
+<ul>
+<li>需要估计两个网络：V和Π，两个网络的卷积神经网络参数可以共享</li>
+<li>对 π输出的分布设置一个约束，希望不同的动作被采用的概率平均一些</li>
+</ul>
+<p>Soft Actor-Critic：最大熵RL代理可以捕获不同的最优性模式，以提高对环境变化的鲁棒性</p>
+<p><img src="https://i-blog.csdnimg.cn/img_convert/23563eccad0aee7ae8e3892ca2529164.png" alt="image-20250325133251287"></p>
+<h2 id="9-4-异步优势演员-评论员算法"><a href="#9-4-异步优势演员-评论员算法" class="headerlink" title="9.4 异步优势演员-评论员算法"></a><a target="_blank" rel="noopener" href="https://datawhalechina.github.io/easy-rl/#/chapter9/chapter9?id=_94-%E5%BC%82%E6%AD%A5%E4%BC%98%E5%8A%BF%E6%BC%94%E5%91%98-%E8%AF%84%E8%AE%BA%E5%91%98%E7%AE%97%E6%B3%95">9.4 异步优势演员-评论员算法</a></h2><p>同时使用很多个进程（worker），需要很多CPU</p>
+<p>每一个进程在工作前都会把全局网络的参数复制过来，接下来演员和环境交互，计算梯度并更新参数θ，然后传回去</p>
+<h2 id="9-5-路径衍生策略梯度"><a href="#9-5-路径衍生策略梯度" class="headerlink" title="9.5 路径衍生策略梯度"></a><a target="_blank" rel="noopener" href="https://datawhalechina.github.io/easy-rl/#/chapter9/chapter9?id=_95-%E8%B7%AF%E5%BE%84%E8%A1%8D%E7%94%9F%E7%AD%96%E7%95%A5%E6%A2%AF%E5%BA%A6">9.5 路径衍生策略梯度</a></h2><p>评论员会直接告诉演员采取什么样的动作才是好的</p>
+<p>直接最大化Q函数的输出值，通过固定Q网络（评论员）参数，用梯度上升优化策略（演员），类似生成对抗网络（GAN）中生成器的优化方式。交替优化，属于Q学习和策略梯度的结合。</p>
+<h2 id="9-6-与生成对抗网络的联系"><a href="#9-6-与生成对抗网络的联系" class="headerlink" title="9.6 与生成对抗网络的联系"></a><a target="_blank" rel="noopener" href="https://datawhalechina.github.io/easy-rl/#/chapter9/chapter9?id=_96-%E4%B8%8E%E7%94%9F%E6%88%90%E5%AF%B9%E6%8A%97%E7%BD%91%E7%BB%9C%E7%9A%84%E8%81%94%E7%B3%BB">9.6 与生成对抗网络的联系</a></h2><p>GAN（生成对抗网络）的结构由两部分组成：</p>
+<ol>
+<li><strong>生成器（Generator）</strong>：接收随机噪声或条件输入（如状态），生成数据（如动作）。</li>
+<li><strong>判别器（Discriminator）</strong>：评估生成数据的真实性，输出一个值表示数据质量的评分。</li>
+</ol>
+
+        </div>
+
+        
+            <section class="post-copyright">
+                
+                
+                
+                
+
+            </section>
+        
+        <section class="post-tags">
+            <div>
+                <span>标签:</span>
+                <span class="tag">
+                    
+                    
+                        <a href="/tags/%E7%AE%97%E6%B3%95/"># 算法</a>
+                    
+                        
+                </span>
+            </div>
+            <div>
+                <a href="javascript:window.history.back();">返回</a>
+                <span>· </span>
+                <a href="/">主页</a>
+            </div>
+        </section>
+        <section class="post-nav">
+            
+            
+            <a class="next" rel="next" href="/2025/04/02/%E5%8A%9B%E6%89%A3%E5%88%B7%E9%A2%98%EF%BC%88hot100%E3%80%81%E4%BB%A3%E7%A0%81%E9%9A%8F%E6%83%B3%E5%BD%95%E7%AD%89%EF%BC%89/">力扣刷题（hot100、代码随想录等）</a>
+            
+        </section>
+
+
+    </article>
+</div>
+
+
+    <div id="gitalk-container"></div>
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.css">
+<script src="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.min.js"></script>
+<script src="//cdn.bootcss.com/blueimp-md5/2.10.0/js/md5.js"></script>
+<div id="gitalk-container"></div>
+<script type="text/javascript">
+      var gitalk = new Gitalk({
+        clientID: '',
+        clientSecret: '',
+        repo: 'blog_comment',
+        owner: 'lyxx2535',
+        admin: 'lyxx2535',
+        id: md5(location.pathname),
+        labels: 'Gitalk'.split(',').filter(l => l),
+        perPage: 10,
+        pagerDirection: 'last',
+        createIssueManually: true,
+        distractionFreeMode: false
+      })
+      gitalk.render('gitalk-container')
+</script>
+
+            </div>
+            <footer id="footer" class="footer">
+    <div class="copyright">
+        <span>© Annie | Powered by <a href="https://hexo.io" target="_blank">Hexo</a> & <a href="https://github.com/Siricee/hexo-theme-Chic" target="_blank">Chic</a> | 2020 - 2025
+            <br>
+            <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+<span class="site-uv">
+    Total visitors:
+    <i class="busuanzi-value" id="busuanzi_value_site_uv"></i>
+</span>&nbsp;|&nbsp;
+
+
+<span class="site-pv">
+    Total views:
+    <i class="busuanzi-value" id="busuanzi_value_site_pv"></i>
+</span>
+
+          </span>
+    </div>
+</footer>
+
+    </div>
+</body>
+
+</html>
