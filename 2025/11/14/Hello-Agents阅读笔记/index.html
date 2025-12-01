@@ -13,7 +13,7 @@
 
 
 
-<title>Hello-Agents阅读笔记 | Annie&#39;s Blog</title>
+<title>Annie&#39;s Blog</title>
 
 
 
@@ -196,7 +196,7 @@
     
     <article class="post-wrap">
         <header class="post-header">
-            <h1 class="post-title">Hello-Agents阅读笔记</h1>
+            <h1 class="post-title"></h1>
             
                 <div class="post-meta">
                     
@@ -205,16 +205,9 @@
 
                     
                         <span class="post-time">
-                        日期: <a href="#">November 14, 2025&nbsp;&nbsp;21:51:05</a>
+                        日期: <a href="#">November 14, 2025&nbsp;&nbsp;13:04:07</a>
                         </span>
                     
-                    
-                        <span class="post-category">
-                        分类:
-                            
-                                <a href="/categories/%E7%AE%97%E6%B3%95/">算法</a>
-                            
-                        </span>
                     
                 </div>
             
@@ -244,7 +237,7 @@
 <li>几乎所有任务都发生在序贯且动态的环境中</li>
 </ol>
 <p>智能体循环 (Agent Loop）：</p>
-<p><img src="https://aicarrier.feishu.cn/space/api/box/stream/download/asynccode/?code=Y2VlMWE0YTc0MTJmOWQ2YTQ3YzI2ZDY5ZWI5OWQ5ZGZfVWVSQUdsRTVMeXQ1cUJqekpIVlJIWW53cnpPNHBmRGZfVG9rZW46V1cxd2JvUFp1b0N5V1l4bmltNGN2VHR2bjFmXzE3NjMwOTY2Njk6MTc2MzEwMDI2OV9WNA" alt="img"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202512011629170.png" alt="img"></p>
 <ol>
 <li>感知 (Perception)：这是循环的起点。智能体通过其传感器（例如，API 的监听端口、用户输入接口）接收来自环境的输入信息。这些信息，即观察 (Observation)，既可以是用户的初始指令，也可以是上一步行动所导致的环境状态变化反馈。</li>
 <li>思考 (Thought)：接收到观察信息后，智能体进入其核心决策阶段。对于 LLM 智能体而言，这通常是由大语言模型驱动的内部推理过程。如图所示，“思考”阶段可进一步细分为两个关键环节：<ol>
@@ -279,19 +272,19 @@
 <li>智能体的社会性（Agent Sociality）：明斯基的理论强调了智能体之间的交互（激活、抑制）。MAS领域将其进一步扩展，系统地研究智能体之间的通信语言（如ACL）、交互协议（如契约网）、协商策略、信任模型乃至组织结构，从而构建起真正的计算社会。</li>
 </ul>
 <h3 id="2-4-学习范式的演进与现代智能体-https-datawhalechina-github-io-hello-agents-chapter2-第二章-智能体发展史-id-24-学习范式的演进与现代智能体"><a href="#2-4-学习范式的演进与现代智能体-https-datawhalechina-github-io-hello-agents-chapter2-第二章-智能体发展史-id-24-学习范式的演进与现代智能体" class="headerlink" title="[2.4 学习范式的演进与现代智能体](https://datawhalechina.github.io/hello-agents/#/./chapter2/第二章 智能体发展史?id&#x3D;_24-学习范式的演进与现代智能体)"></a>[2.4 学习范式的演进与现代智能体](<a target="_blank" rel="noopener" href="https://datawhalechina.github.io/hello-agents/#/./chapter2/%E7%AC%AC%E4%BA%8C%E7%AB%A0">https://datawhalechina.github.io/hello-agents/#/./chapter2/第二章</a> 智能体发展史?id&#x3D;_24-学习范式的演进与现代智能体)</h3><p>强化学习智能体在一个“感知-行动-学习”的闭环中持续迭代</p>
-<p><img src="https://aicarrier.feishu.cn/space/api/box/stream/download/asynccode/?code=MTU5YzVmYmNlOGZkYzc2NDE1OTU2MWU0M2UzYTYyNWZfd0ZXcEV4SlAwZkVqQ1lLdUJReTZ4SW55STNjZ0JyQVpfVG9rZW46RjV3QmI0ZzF1b05OcnN4ckhjRGN0U3N6blVlXzE3NjMwOTY2Njk6MTc2MzEwMDI2OV9WNA" alt="img"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202512011629630.png" alt="img"></p>
 <p>智能体的学习目标，并非最大化某一个时间步的即时奖励，而是最大化从当前时刻开始到未来的累积奖励（Cumulative Reward），也称为回报（Return）。这意味着智能体需要具备“远见”，有时为了获得未来更大的奖励，需要牺牲当前的即时奖励</p>
 <p>通过在数万亿级别的文本上进行预训练，大型语言模型的神经网络权重实际上已经构建了一个关于世界知识的、高度压缩的隐式模型。当模型的规模（参数量、数据量、计算量）跨越某个阈值后，它们开始展现出未被直接训练的、预料之外的涌现能力（Emergent Abilities），例如：</p>
 <ul>
 <li>上下文学习（In-context Learning）：无需调整模型权重，仅在输入中提供几个示例（Few-shot）甚至零个示例（Zero-shot），模型就能理解并完成新的任务。</li>
 <li>思维链（Chain-of-Thought）推理：通过引导模型在回答复杂问题前，先输出一步步的推理过程，可以显著提升其在逻辑、算术和常识推理任务上的准确性</li>
 </ul>
-<p><img src="https://aicarrier.feishu.cn/space/api/box/stream/download/asynccode/?code=MjRmZDE3ODVjZTg0NzVmMzgxZGUxMDUyNzE2YzhjY2VfSERPM2R5OTBLYmhybnZTZE5rY25Jbk95enAxbW1MQjhfVG9rZW46VE51SGJsQ1Vhb2RqbHR4dHV3UGNROXlLbnNoXzE3NjMwOTY2Njk6MTc2MzEwMDI2OV9WNA" alt="img"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202512011629938.png" alt="img"></p>
 <h2 id="第三章-大语言模型基础-https-datawhalechina-github-io-hello-agents-chapter3-第三章-大语言模型基础-id-第三章-大语言模型基础"><a href="#第三章-大语言模型基础-https-datawhalechina-github-io-hello-agents-chapter3-第三章-大语言模型基础-id-第三章-大语言模型基础" class="headerlink" title="[第三章 大语言模型基础](https://datawhalechina.github.io/hello-agents/#/./chapter3/第三章 大语言模型基础?id&#x3D;第三章-大语言模型基础)"></a>[第三章 大语言模型基础](<a target="_blank" rel="noopener" href="https://datawhalechina.github.io/hello-agents/#/./chapter3/%E7%AC%AC%E4%B8%89%E7%AB%A0">https://datawhalechina.github.io/hello-agents/#/./chapter3/第三章</a> 大语言模型基础?id&#x3D;第三章-大语言模型基础)</h2><h3 id="3-1-语言模型与-Transformer-架构-https-datawhalechina-github-io-hello-agents-chapter3-第三章-大语言模型基础-id-31-语言模型与-transformer-架构"><a href="#3-1-语言模型与-Transformer-架构-https-datawhalechina-github-io-hello-agents-chapter3-第三章-大语言模型基础-id-31-语言模型与-transformer-架构" class="headerlink" title="[3.1 语言模型与 Transformer 架构](https://datawhalechina.github.io/hello-agents/#/./chapter3/第三章 大语言模型基础?id&#x3D;_31-语言模型与-transformer-架构)"></a>[3.1 语言模型与 Transformer 架构](<a target="_blank" rel="noopener" href="https://datawhalechina.github.io/hello-agents/#/./chapter3/%E7%AC%AC%E4%B8%89%E7%AB%A0">https://datawhalechina.github.io/hello-agents/#/./chapter3/第三章</a> 大语言模型基础?id&#x3D;_31-语言模型与-transformer-架构)</h3><p>一个句子出现的概率，等于该句子中每个词出现的条件概率的连乘</p>
 <p>马尔可夫假设 (Markov Assumption) ：我们不必回溯一个词的全部历史，可以近似地认为，一个词的出现概率只与它前面有限的 n−1 个词有关（就是本来依赖1-i-1，现在变成依赖i-(n-1)-i-1）</p>
 <p>（1）基于这个假设建立的语言模型，我们称之为 N-gram模型。</p>
 <p>概率可以通过极大似然估计计算</p>
-<p><img src="https://aicarrier.feishu.cn/space/api/box/stream/download/asynccode/?code=M2ZmODEzOGIxNjYzZDk1MTliNDhlMDU3NGQ4NGY2MzdfZmc0M3J3UlpYVjUyMjJKTzZ2M2VsRFpyajZKRDV5RENfVG9rZW46V3NzZWJZd3hLb21vdkF4ZHB1OWMzVDJKbnRiXzE3NjMwOTY2Njk6MTc2MzEwMDI2OV9WNA" alt="img"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202512011629823.png" alt="img"></p>
 <ul>
 <li><em>Count</em>(<em>wi</em>−1,<em>wi</em>)：表示词对 (wi−1,wi) 在语料库中连续出现的总次数。</li>
 <li>Count(wi−1)<em>Count</em>(<em>wi</em>−1)：表示单个词 wi−1 在语料库中出现的总次数。</li>
@@ -304,7 +297,7 @@
 <p>（2）前馈神经网络语言模型 (Feedforward Neural Network Language Model)</p>
 <p>词嵌入 (Word Embedding) ：是通过语言建模任务学出来的，“预测下一个词”，给定前 n−1 个词 (w1,w2,…,wn−1)，模型要预测下一个词 wn 的概率分布，模型输出一个对所有词的概率分布（softmax over vocabulary），正确词的概率越高越好。</p>
 <p>转成向量后，可以用余弦相似度度量相似性</p>
-<p><img src="https://aicarrier.feishu.cn/space/api/box/stream/download/asynccode/?code=N2ViODdlYWQ2NmY3NTE2YjA0ZWExMmQ1NjE3MDM5MGZfQTNTUkVSRW9hZVRmZnlYdzVvTGh3SDZReWZpZ2NTTXVfVG9rZW46RlR4TWJhUnZXbzRJTlR4ZDVxWWM0dExzbm9oXzE3NjMwOTY2Njk6MTc2MzEwMDI2OV9WNA" alt="img"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202512011629095.png" alt="img"></p>
 <p>（3）循环神经网络 (RNN) 与长短时记忆网络 (LSTM)</p>
 <p>神经网络语言模型虽然引入了词嵌入解决了泛化问题，但它和 N-gram 模型一样，上下文窗口是固定大小的。为了预测下一个词，它只能看到前 n−1 个词，再早的历史信息就被丢弃了。这显然不符合我们人类理解语言的方式。为了打破固定窗口的限制，循环神经网络 (Recurrent Neural Network, RNN) 应运而生，其核心思想非常直观：为网络增加“记忆”能力([2])。</p>
 <p>RNN 的设计引入了一个隐藏状态 (hidden state) 向量，可以理解为网络的短期记忆</p>
@@ -312,7 +305,7 @@
 <p>长短时记忆网络 (Long Short-Term Memory, LSTM) </p>
 <p>（4）[Transformer 架构解析](<a target="_blank" rel="noopener" href="https://datawhalechina.github.io/hello-agents/#/./chapter3/%E7%AC%AC%E4%B8%89%E7%AB%A0">https://datawhalechina.github.io/hello-agents/#/./chapter3/第三章</a> 大语言模型基础?id&#x3D;_312-transformer-架构解析)</p>
 <p>这种循环的计算方式也带来了新的瓶颈：它必须按顺序处理数据。第 t 个时间步的计算，必须等待第 t−1 个时间步完成后才能开始。这意味着 RNN 无法进行大规模的并行计算，在处理长序列时效率低下，这极大地限制了模型规模和训练速度的提升。</p>
-<p><img src="https://aicarrier.feishu.cn/space/api/box/stream/download/asynccode/?code=MWRmODUwZjU4ZmM3OGNmNjE1NTgwM2RhMDQxOWI2YWFfVGVHVE81SzVidW9KVFRMNzN2cG9HZVBVNzQxd2txMGRfVG9rZW46QlZzYWJzVGo0b2R3T2p4RDVCVWNzdWVhbnVjXzE3NjMwOTY2Njk6MTc2MzEwMDI2OV9WNA" alt="img"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202512011629410.png" alt="img"></p>
 <ol>
 <li>编码器 (Encoder) ：任务是“理解”输入的整个句子。它会读取所有输入词元(这个概念会在3.2.2节介绍)，最终为每个词元生成一个富含上下文信息的向量表示。</li>
 <li>解码器 (Decoder) ：任务是“生成”目标句子。它会参考自己已经生成的前文，并“咨询”编码器的理解结果，来生成下一个词。</li>
@@ -325,7 +318,7 @@
 <p>我们希望模型能同时关注多种关系（如指代关系、时态关系、从属关系等）。多头注意力机制应运而生。它的思想很简单：把一次做完变成分成几组，分开做，再合并。</p>
 <p>它将原始的 Q, K, V 向量在维度上切分成 h 份（h 就是“头”数），每一份都独立地进行一次单头注意力的计算。这就好比让 h 个不同的“专家”从不同的角度去审视句子，每个专家都能捕捉到一种不同的特征关系。最后，将这 h 个专家的“意见”（即输出向量）拼接起来，再通过一个线性变换进行整合，就得到了最终的输出。</p>
 <p>多头注意力机制在拼接后，还要进行线性变换，是为了把来自不同注意力头（不同子空间）的信息重新映射回统一的隐藏空间，以便模型融合多视角特征；而单头注意力（Self-Attention）没有多个头要融合，所以不需要。</p>
-<p><img src="https://aicarrier.feishu.cn/space/api/box/stream/download/asynccode/?code=NzRjMmJiYzI2Zjc5ZTE5ZjkwYzBlZjQ1ZDEyMzU5MzBfbU83bHJVUjJNWUg5OFAwajVJeFJ3Y28yS1FpZktqY2ZfVG9rZW46SmRNdmJBZThkb2xlTVl4NlBPV2N0SFlLbk1iXzE3NjMwOTY2Njk6MTc2MzEwMDI2OV9WNA" alt="img"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202512011629547.png" alt="img"></p>
 <p>MHA后是逐位置前馈网络(Position-wise Feed-Forward Network, FFN)。如果说注意力层的作用是从整个序列中“动态地聚合”相关信息，那么前馈网络的作用从这些聚合后的信息中提取更高阶的特征。</p>
 <p>这个名字的关键在于“逐位置”。它意味着这个前馈网络会独立地作用于序列中的每一个词元向量。换句话说，对于一个长度为 <code>seq_len</code> 的序列，这个 FFN 实际上会被调用 <code>seq_len</code> 次，每次处理一个词元。重要的是，所有位置共享的是同一组网络权重。这种设计既保持了对每个位置进行独立加工的能力，又大大减少了模型的参数量。这个网络的结构非常简单，由两个线性变换和一个 ReLU 激活函数组成：</p>
 <p>FFN(x)&#x3D;max⁡(0,xW1+b1)W2+b2</p>
@@ -345,7 +338,7 @@
 <li>层归一化 (Norm)：该操作对单个样本的所有特征进行归一化，使其均值为0，方差为1。这解决了模型训练过程中的内部协变量偏移 (Internal Covariate Shift) 问题，使每一层的输入分布保持稳定，从而加速模型收敛并提高训练的稳定性。layernorm，不考虑batch</li>
 </ul>
 <p>位置编码：位置编码的核心思想是，为输入序列中的每一个词元嵌入向量，都额外加上一个能代表其绝对位置和相对位置信息的“位置向量”。这个位置向量不是通过学习得到的，而是通过一个固定的数学公式直接计算得出。参考：<a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/454482273">https://zhuanlan.zhihu.com/p/454482273</a></p>
-<p><img src="https://aicarrier.feishu.cn/space/api/box/stream/download/asynccode/?code=MjJiNzZlN2IyODZiZTE1Mjg1MmMzZDI3OGFkN2E0NTVfTGVoWEd4QWdqY0NPaXdnYzhBOTZQU1hZbUdGcEZsVXZfVG9rZW46QmFITmJHZXdsb0hYbHF4a0xBbmN4eTBMblBnXzE3NjMwOTY2Njk6MTc2MzEwMDI2OV9WNA" alt="img"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202512011629604.png" alt="img"></p>
 <ul>
 <li><em>pos</em> 是词元在序列中的位置（例如，0，1，2，…）</li>
 <li>i是位置向量中的维度索引（从 0 到 d_model&#x2F;2）</li>
@@ -414,7 +407,7 @@
 </ol>
 <h1 id="第二部分：构建你的大语言模型智能体"><a href="#第二部分：构建你的大语言模型智能体" class="headerlink" title="第二部分：构建你的大语言模型智能体"></a><strong>第二部分：构建你的大语言模型智能体</strong></h1><h2 id="第四章-智能体经典范式构建-https-datawhalechina-github-io-hello-agents-chapter4-第四章-智能体经典范式构建-id-第四章-智能体经典范式构建"><a href="#第四章-智能体经典范式构建-https-datawhalechina-github-io-hello-agents-chapter4-第四章-智能体经典范式构建-id-第四章-智能体经典范式构建" class="headerlink" title="[第四章 智能体经典范式构建](https://datawhalechina.github.io/hello-agents/#/./chapter4/第四章 智能体经典范式构建?id&#x3D;第四章-智能体经典范式构建)"></a>[第四章 智能体经典范式构建](<a target="_blank" rel="noopener" href="https://datawhalechina.github.io/hello-agents/#/./chapter4/%E7%AC%AC%E5%9B%9B%E7%AB%A0">https://datawhalechina.github.io/hello-agents/#/./chapter4/第四章</a> 智能体经典范式构建?id&#x3D;第四章-智能体经典范式构建)</h2><h3 id="4-1-环境准备与基础工具定义-https-datawhalechina-github-io-hello-agents-chapter4-第四章-智能体经典范式构建-id-41-环境准备与基础工具定义"><a href="#4-1-环境准备与基础工具定义-https-datawhalechina-github-io-hello-agents-chapter4-第四章-智能体经典范式构建-id-41-环境准备与基础工具定义" class="headerlink" title="[4.1 环境准备与基础工具定义](https://datawhalechina.github.io/hello-agents/#/./chapter4/第四章 智能体经典范式构建?id&#x3D;_41-环境准备与基础工具定义)"></a>[4.1 环境准备与基础工具定义](<a target="_blank" rel="noopener" href="https://datawhalechina.github.io/hello-agents/#/./chapter4/%E7%AC%AC%E5%9B%9B%E7%AB%A0">https://datawhalechina.github.io/hello-agents/#/./chapter4/第四章</a> 智能体经典范式构建?id&#x3D;_41-环境准备与基础工具定义)</h3><p>封装think接口</p>
 <h3 id="4-2-ReAct-https-datawhalechina-github-io-hello-agents-chapter4-第四章-智能体经典范式构建-id-42-react"><a href="#4-2-ReAct-https-datawhalechina-github-io-hello-agents-chapter4-第四章-智能体经典范式构建-id-42-react" class="headerlink" title="[4.2 ReAct](https://datawhalechina.github.io/hello-agents/#/./chapter4/第四章 智能体经典范式构建?id&#x3D;_42-react)"></a>[4.2 ReAct](<a target="_blank" rel="noopener" href="https://datawhalechina.github.io/hello-agents/#/./chapter4/%E7%AC%AC%E5%9B%9B%E7%AB%A0">https://datawhalechina.github.io/hello-agents/#/./chapter4/第四章</a> 智能体经典范式构建?id&#x3D;_42-react)</h3><p>ReAct由Shunyu Yao于2022年提出([1])，其核心思想是模仿人类解决问题的方式，将推理 (Reasoning) 与行动 (Acting) 显式地结合起来，形成一个“思考-行动-观察”的循环。</p>
-<p><img src="https://aicarrier.feishu.cn/space/api/box/stream/download/asynccode/?code=ODY5YTlmNzkyNDBlYTZmMDcyZjBjODFjYzIxMWRlZDFfWlVhWFBIZDA1c3QzU1ZmVjZiYklIUjhBSWQxd1AzakpfVG9rZW46UlRWWmJTNk4xb2ZSb0h4aTNXTWNtTEc2bnRmXzE3NjMwOTY2Njk6MTc2MzEwMDI2OV9WNA" alt="img"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202512011629143.png" alt="img"></p>
 <p>这种机制特别适用于以下场景：</p>
 <ul>
 <li>需要外部知识的任务：如查询实时信息（天气、新闻、股价）、搜索专业领域的知识等。</li>
@@ -473,7 +466,7 @@
 <li>执行阶段 (Solving Phase)： 在获得完整的计划后，智能体进入执行阶段。它会严格按照计划中的步骤，逐一执行。每一步的执行都可能是一次独立的 LLM 调用，或者是对上一步结果的加工处理，直到计划中的所有步骤都完成，最终得出答案。</li>
 </ol>
 <p>这种“先谋后动”的策略，使得智能体在处理需要长远规划的复杂任务时，能够保持更高的目标一致性，避免在中间步骤中迷失方向。</p>
-<p><img src="https://aicarrier.feishu.cn/space/api/box/stream/download/asynccode/?code=MTY0M2YyMzg3NDJkMjM0YTM3ZWJlOGY3MThlNjUzNmNfdTJhT2Q3Y01Ldkdzb3EyaVc5NHFkb0ZZaE5xQWhUR0dfVG9rZW46U3NCV2JQZTZ4b3FyV1J4ZmZVQ2NYT2tLblBoXzE3NjMwOTY2Njk6MTc2MzEwMDI2OV9WNA" alt="img"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202512011629976.png" alt="img"></p>
 <p>Plan-and-Solve 尤其适用于那些结构性强、可以被清晰分解的复杂任务，例如：</p>
 <ul>
 <li>多步数学应用题：需要先列出计算步骤，再逐一求解。</li>
@@ -496,7 +489,7 @@
 <li>优化 (Refinement)：最后，智能体将“初稿”和“反馈”作为新的上下文，再次调用大语言模型，要求它根据反馈内容对初稿进行修正，生成一个更完善的“修订稿”。</li>
 </ol>
 <p>这个循环可以重复进行多次，直到反思阶段不再发现新的问题，或者达到预设的迭代次数上限。</p>
-<p><img src="https://aicarrier.feishu.cn/space/api/box/stream/download/asynccode/?code=NjcxMmVlMjY3MWZjYmYwNDc5ZTY3YjYyMDQyYTFlNGNfZ0tWajlGQTNTaEl5YXBnTEtMN2owdlZoakxvQ3Y0eUtfVG9rZW46SHdYOGJJTjlpb3VCZXN4Q1FwbWM1bUdLblY1XzE3NjMwOTY2Njk6MTc2MzEwMDI2OV9WNA" alt="img"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202512011629113.png" alt="img"></p>
 <p>与前两种范式相比，Reflection 的价值在于：</p>
 <ul>
 <li>它为智能体提供了一个内部纠错回路，使其不再完全依赖于外部工具的反馈（ReAct 的 Observation），从而能够修正更高层次的逻辑和策略错误。</li>
@@ -642,7 +635,7 @@
 <li>CAMEL：CAMEL 提供了一种新颖的、名为角色扮演 (Role-Playing) 的协作方法([3])。其核心理念是，我们只需要为两个智能体（例如，<code>AI研究员</code> 和 <code>Python程序员</code>）设定好各自的角色和共同的任务目标，它们就能在“初始提示 (Inception Prompting)”的引导下，自主地进行多轮对话，相互启发、相互配合，共同完成任务。它极大地降低了设计多智能体对话流程的复杂度。</li>
 <li>LangGraph：作为 LangChain 生态的扩展，LangGraph 另辟蹊径，将智能体的执行流程建模为图 (Graph)([4])。在传统的链式结构中，信息只能单向流动。而 LangGraph 将每一步操作（如调用LLM、执行工具）定义为图中的一个节点 (Node)，并用边 (Edge) 来定义节点之间的跳转逻辑。这种设计天然支持循环 (Cycles)，使得实现如 Reflection 这样的迭代、修正、自我反思的复杂工作流变得异常简单和直观。</li>
 </ul>
-<h3 id="6-2-框架一：AutoGen-https-datawhalechina-github-io-hello-agents-chapter6-第六章-框架开发实践-id-62-框架一：autogen"><a href="#6-2-框架一：AutoGen-https-datawhalechina-github-io-hello-agents-chapter6-第六章-框架开发实践-id-62-框架一：autogen" class="headerlink" title="[6.2 框架一：AutoGen](https://datawhalechina.github.io/hello-agents/#/./chapter6/第六章 框架开发实践?id&#x3D;_62-框架一：autogen)"></a>[6.2 框架一：AutoGen](<a target="_blank" rel="noopener" href="https://datawhalechina.github.io/hello-agents/#/./chapter6/%E7%AC%AC%E5%85%AD%E7%AB%A0">https://datawhalechina.github.io/hello-agents/#/./chapter6/第六章</a> 框架开发实践?id&#x3D;_62-框架一：autogen)</h3><p><img src="https://aicarrier.feishu.cn/space/api/box/stream/download/asynccode/?code=NjUyNTBlMWVhZDEzNjhjZmY2MzU1NmIxM2VkYmM0YzRfRjdlQ2NwQk5ROEcyZmVyYkxrbEVwWmlRUWVsQUFQblBfVG9rZW46Sm54MWJFOW1Jb0JxMUJ4alN0aWNRVzBpblBlXzE3NjMwOTY2Njk6MTc2MzEwMDI2OV9WNA" alt="img"></p>
+<h3 id="6-2-框架一：AutoGen-https-datawhalechina-github-io-hello-agents-chapter6-第六章-框架开发实践-id-62-框架一：autogen"><a href="#6-2-框架一：AutoGen-https-datawhalechina-github-io-hello-agents-chapter6-第六章-框架开发实践-id-62-框架一：autogen" class="headerlink" title="[6.2 框架一：AutoGen](https://datawhalechina.github.io/hello-agents/#/./chapter6/第六章 框架开发实践?id&#x3D;_62-框架一：autogen)"></a>[6.2 框架一：AutoGen](<a target="_blank" rel="noopener" href="https://datawhalechina.github.io/hello-agents/#/./chapter6/%E7%AC%AC%E5%85%AD%E7%AB%A0">https://datawhalechina.github.io/hello-agents/#/./chapter6/第六章</a> 框架开发实践?id&#x3D;_62-框架一：autogen)</h3><p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202512011629363.png" alt="img"></p>
 <ul>
 <li>分层设计： 框架被拆分为两个核心模块：<ul>
 <li><code>autogen-core</code>：作为框架的底层基础，封装了与语言模型交互、消息传递等核心功能。它的存在保证了框架的稳定性和未来扩展性。</li>
@@ -678,48 +671,19 @@
 <li>CodeReviewer (代码审查员): 负责审查工程师提交的代码，确保其质量、可读性和健壮性。</li>
 <li>UserProxy (用户代理): 代表最终用户，发起初始任务，并负责执行和验证最终交付的代码。</li>
 </ul>
-<table>
-<thead>
-<tr>
-<th>特性</th>
-<th>AssistantAgent</th>
-<th>UserProxyAgent</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>角色</td>
-<td>AI 智能体（由 LLM 驱动）</td>
-<td>人类代理&#x2F;执行器</td>
-</tr>
-<tr>
-<td>是否调用 LLM</td>
-<td>✅ 是，每次回复都调用模型</td>
-<td>❌ 否，代表人类或执行代码</td>
-</tr>
-<tr>
-<td>主要职责</td>
-<td>思考、规划、生成内容</td>
-<td>执行代码、提供反馈、终止流程</td>
-</tr>
-<tr>
-<td>是否需要 model_client</td>
-<td>✅ 必须提供</td>
-<td>❌ 不需要</td>
-</tr>
-</tbody></table>
+<p>表格 还在加载中，请等待加载完成后再尝试复制</p>
 <p>软件开发的流程是相对固定的（需求-&gt;编码-&gt;审查-&gt;测试）因此 <code>RoundRobinGroupChat</code> (轮询群聊) 是理想的选择。我们按照业务逻辑顺序，将四个智能体加入到参与者列表中。</p>
 <p>当程序运行时，<code>task</code> 作为初始消息被传入 <code>team_chat</code>，产品经理作为第一个参与者接收到该消息，随后整个自动化协作流程便开始了。</p>
 <p>注意： 当在运行期间调用 <code>UserProxyAgent</code> 时，它会阻塞团队的执行，直到用户提供反馈或发生错误。这会延迟团队的进度，并将团队置于无法保存或恢复的不稳定状态。这一步需要将人类反馈融入智能体循环 (Human-in-the-Loop)，整体流程也体现了多个智能体之间的对话。</p>
 <p>个人感觉不是很好用，不管是要人工反馈，还是对反馈的响应和理解不是很智能，还是多智能体运行很慢</p>
 <h3 id="6-3-框架二：AgentScope-https-datawhalechina-github-io-hello-agents-chapter6-第六章-框架开发实践-id-63-框架二：agentscope"><a href="#6-3-框架二：AgentScope-https-datawhalechina-github-io-hello-agents-chapter6-第六章-框架开发实践-id-63-框架二：agentscope" class="headerlink" title="[6.3 框架二：AgentScope](https://datawhalechina.github.io/hello-agents/#/./chapter6/第六章 框架开发实践?id&#x3D;_63-框架二：agentscope)"></a>[6.3 框架二：AgentScope](<a target="_blank" rel="noopener" href="https://datawhalechina.github.io/hello-agents/#/./chapter6/%E7%AC%AC%E5%85%AD%E7%AB%A0">https://datawhalechina.github.io/hello-agents/#/./chapter6/第六章</a> 框架开发实践?id&#x3D;_63-框架二：agentscope)</h3><p>与 AutoGen 相比，AgentScope 的核心差异在于其消息驱动的架构设计和工业级的工程实践。如果说 AutoGen 更像是一个灵活的”对话工作室”，那么 AgentScope 就是一个完整的”智能体操作系统”，为开发者提供了从开发、测试到部署的全生命周期支持。与许多框架采用的继承式设计不同，AgentScope 选择了组合式架构和消息驱动模式</p>
-<p><img src="https://aicarrier.feishu.cn/space/api/box/stream/download/asynccode/?code=NWJmNTg3YzQ1NTUwZjlhYjI1OWVjZDg5NmI5ZmFmN2Rfa3FOU1htY0ExVkt6dVp0emtBSWlWVmRrT1U1QlVCR0dfVG9rZW46WTVJQmJjRU9mb0NzRkZ4d0Jla2NKRXd5bkFkXzE3NjMwOTY2Njk6MTc2MzEwMDI2OV9WNA" alt="img"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202512011629787.png" alt="img"></p>
 <p>最底层是基础组件层 (Foundational Components)，它为整个框架提供了核心的构建块。<code>Message</code> 组件定义了统一的消息格式，支持从简单的文本交互到复杂的多模态内容；<code>Memory</code> 组件提供了短期和长期记忆管理；<code>Model API</code> 层抽象了对不同大语言模型的调用；而 <code>Tool</code> 组件则封装了智能体与外部世界交互的能力。</p>
 <p>智能体基础设施层 (Agent-level Infrastructure) 提供了更高级的抽象。这一层不仅包含了各种预构建的智能体（如浏览器使用智能体、深度研究智能体），还实现了经典的 ReAct 范式，支持智能体钩子、并行工具调用、状态管理等高级特性。特别值得注意的是，这一层原生支持异步执行与实时控制，这是 AgentScope 相比其他框架的一个重要优势。</p>
 <p>多智能体协作层 (Multi-Agent Cooperation) 是 AgentScope 的核心创新所在。<code>MsgHub</code> 作为消息中心，负责智能体间的消息路由和状态管理；而 <code>Pipeline</code> 系统则提供了灵活的工作流编排能力，支持顺序、并发等多种执行模式。这种设计使得开发者可以轻松构建复杂的多智能体协作场景。</p>
 <p>最上层的开发与部署层 (Deployment &amp; Devvelopment)则体现了 AgentScope 对工程化的重视。<code>AgentScope Runtime</code> 提供了生产级的运行时环境，而 <code>AgentScope Studio</code> 则为开发者提供了完整的可视化开发工具链。</p>
 <p>AgentScope 的核心创新在于其消息驱动架构。在这个架构中，所有的智能体交互都被抽象为消息的发送和接收，而不是传统的函数调用。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">from agentscope.message import Msg</span><br><span class="line"></span><br><span class="line"># 消息的标准结构</span><br><span class="line">message = Msg(</span><br><span class="line">    name=&quot;Alice&quot;,           # 发送者名称</span><br><span class="line">    content=&quot;Hello, Bob!&quot;,  # 消息内容</span><br><span class="line">    role=&quot;user&quot;,           # 角色类型</span><br><span class="line">    metadata=&#123;             # 元数据信息&quot;timestamp&quot;: &quot;2024-01-15T10:30:00Z&quot;,&quot;message_type&quot;: &quot;text&quot;,&quot;priority&quot;: &quot;normal&quot;&#125;)</span><br></pre></td></tr></table></figure>
-
+<p>暂时无法在飞书文档外展示此内容</p>
 <p>将消息作为交互的基础单元，带来了几个关键优势：</p>
 <ul>
 <li>异步解耦: 消息的发送方和接收方在时间上解耦，无需相互等待，天然支持高并发场景。</li>
@@ -771,7 +735,7 @@
 <p>一旦 <code>provider</code> 被确定（无论是用户指定还是自动检测），<code>_resolve_credentials</code> 方法便会接手处理服务商的差异化配置。</p>
 <p>这样的优点是设置API_KEY和URL即可，不用手动指定provider，支持多种供应商，高度可扩展，解决了与LLM通信问题</p>
 <p>my_main.py</p>
-<p><img src="https://aicarrier.feishu.cn/space/api/box/stream/download/asynccode/?code=MmEyODIxOGY4YzBjNzdlOTQ1MzlmZThlNGJlNDIyN2RfZ1Rsc1IyV0NFNUFqWlROenkzUjJmTmFzcUJicWl6YnlfVG9rZW46V3k2TGJjenIzb25ZMlJ4RnFQcWNrUnMwbmxiXzE3NjMwOTY2Njk6MTc2MzEwMDI2OV9WNA" alt="img"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202512011633327.png" alt="image-20251201163358099"></p>
 <h3 id="7-3-框架接口实现-https-datawhalechina-github-io-hello-agents-chapter7-第七章-构建你的Agent框架-id-73-框架接口实现"><a href="#7-3-框架接口实现-https-datawhalechina-github-io-hello-agents-chapter7-第七章-构建你的Agent框架-id-73-框架接口实现" class="headerlink" title="[7.3 框架接口实现](https://datawhalechina.github.io/hello-agents/#/./chapter7/第七章 构建你的Agent框架?id&#x3D;_73-框架接口实现)"></a>[7.3 框架接口实现](<a target="_blank" rel="noopener" href="https://datawhalechina.github.io/hello-agents/#/./chapter7/%E7%AC%AC%E4%B8%83%E7%AB%A0">https://datawhalechina.github.io/hello-agents/#/./chapter7/第七章</a> 构建你的Agent框架?id&#x3D;_73-框架接口实现)</h3><h3 id="7-4-Agent范式的框架化实现-https-datawhalechina-github-io-hello-agents-chapter7-第七章-构建你的Agent框架-id-74-agent范式的框架化实现"><a href="#7-4-Agent范式的框架化实现-https-datawhalechina-github-io-hello-agents-chapter7-第七章-构建你的Agent框架-id-74-agent范式的框架化实现" class="headerlink" title="[7.4 Agent范式的框架化实现](https://datawhalechina.github.io/hello-agents/#/./chapter7/第七章 构建你的Agent框架?id&#x3D;_74-agent范式的框架化实现)"></a>[7.4 Agent范式的框架化实现](<a target="_blank" rel="noopener" href="https://datawhalechina.github.io/hello-agents/#/./chapter7/%E7%AC%AC%E4%B8%83%E7%AB%A0">https://datawhalechina.github.io/hello-agents/#/./chapter7/第七章</a> 构建你的Agent框架?id&#x3D;_74-agent范式的框架化实现)</h3><p>chapter07_basic_setup.py：</p>
 <p>react无法完成任务</p>
 <p>为了debug，不引入pip中的内容，而是指定</p>
@@ -805,7 +769,7 @@
 <li>事实准确性：通过检索验证，减少模型的幻觉问题</li>
 <li>可解释性：提供信息来源，增强回答的可信度</li>
 </ol>
-<p><img src="https://aicarrier.feishu.cn/space/api/box/stream/download/asynccode/?code=ZWM4ZDEwZGUyYmJmNjRmNGFlY2YzOTdhYzc0NzM4NTNfQnNYdmZZWkliOWN6eVhZN0NFbFN0TGx3NzR3aDBrc0dfVG9rZW46RTA5dWJkc091b2JTdlN4SXJYeWNNc0ZlbmlrXzE3NjMwOTY2Njk6MTc2MzEwMDI2OV9WNA" alt="img"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202512011629442.png" alt="img"></p>
 <p>我们将记忆和RAG设计为两个独立的工具：<code>memory_tool</code>负责存储和维护对话过程中的交互信息，<code>rag_tool</code>则负责从用户提供的知识库中检索相关信息作为上下文，并可将重要的检索结果自动存储到记忆系统中。</p>
 <p>向量数据库采用Qdrant，图数据库采用Neo4J，Embedding首选百炼平台</p>
 <h3 id="8-2-记忆系统：让智能体拥有记忆-https-datawhalechina-github-io-hello-agents-chapter8-第八章-记忆与检索-id-82-记忆系统：让智能体拥有记忆"><a href="#8-2-记忆系统：让智能体拥有记忆-https-datawhalechina-github-io-hello-agents-chapter8-第八章-记忆与检索-id-82-记忆系统：让智能体拥有记忆" class="headerlink" title="[8.2 记忆系统：让智能体拥有记忆](https://datawhalechina.github.io/hello-agents/#/./chapter8/第八章 记忆与检索?id&#x3D;_82-记忆系统：让智能体拥有记忆)"></a>[8.2 记忆系统：让智能体拥有记忆](<a target="_blank" rel="noopener" href="https://datawhalechina.github.io/hello-agents/#/./chapter8/%E7%AC%AC%E5%85%AB%E7%AB%A0">https://datawhalechina.github.io/hello-agents/#/./chapter8/第八章</a> 记忆与检索?id&#x3D;_82-记忆系统：让智能体拥有记忆)</h3><ol>
@@ -815,7 +779,7 @@
 <li>整合（Consolidation）：将短期记忆转化为长期记忆</li>
 <li>遗忘（Forgetting）：删除不重要或过时的信息</li>
 </ol>
-<p><img src="https://aicarrier.feishu.cn/space/api/box/stream/download/asynccode/?code=NDQ2ZWMyMjk0ZjlkZGZkN2QxYWIyOGU5NzcxOWZiYTNfbUlua2dsWDJVWEJBRjQ3NkJDMFBkSU5ydkY2ZHZtOVhfVG9rZW46TlBmMGJ0anVLb0JJbFV4dFlWZWNucU9jbmdnXzE3NjMwOTY2Njk6MTc2MzEwMDI2OV9WNA" alt="img"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202512011635652.png" alt="image-20251201163557453"></p>
 <p>首先是工作记忆 (Working Memory)，它扮演着智能体“短期记忆”的角色，主要用于存储<strong>当前对话的上下文信息</strong>。为确保高速访问和响应，其容量被有意限制（例如，默认50条），并且生命周期与单个会话绑定，会话结束后便会自动清理。</p>
 <p>其次是情景记忆 (Episodic Memory)，它负责长期存储具体的交互事件和智能体的学习经历。与工作记忆不同，情景记忆包含了丰富的<strong>上下文信息</strong>，并支持按时间序列或主题进行回顾式检索，是智能体“复盘”和学习过往经验的基础。（如有具体日期的事件）</p>
 <p>与具体事件相对应的是语义记忆 (Semantic Memory)，它存储的是更为抽象的知识、概念和规则。例如，通过对话了解到的<strong>用户偏好、需要长期遵守的指令或领域知识点</strong>，都适合存放在这里。这部分记忆具有高度的持久性和重要性，是智能体形成“知识体系”和进行关联推理的核心。</p>
@@ -825,13 +789,12 @@
 <p>第一阶段：朴素RAG（Naive RAG, 2020-2021）。这是RAG技术的萌芽阶段，其流程直接而简单，通常被称为“检索-读取”（Retrieve-Read）模式。检索方式：主要依赖传统的<strong>关键词匹配算法，如</strong>**<code>TF-IDF</code><strong><strong>或</strong></strong><code>BM25</code>**。这些方法计算词频和文档频率来评估相关性，对字面匹配效果好，但难以理解语义上的相似性。生成模式：将检索到的文档内容不加处理地直接拼接到提示词的上下文中，然后送给生成模型。</p>
 <p>第二阶段：高级RAG（Advanced RAG, 2022-2023）。随着向量数据库和文本嵌入技术的成熟，RAG进入了快速发展阶段。研究者和开发者们在“检索”和“生成”的各个环节引入了大量优化技术。检索方式：转向基于稠密嵌入（Dense Embedding）的语义检索。通过将文本转换为高维向量，模型能够理解和匹配语义上的相似性，而不仅仅是关键词。生成模式：引入了很多优化技术，例如查询重写，文档分块，重排序等。</p>
 <p>第三阶段：模块化RAG（Modular RAG, 2023-至今）。在高级RAG的基础上，现代RAG系统进一步向着模块化、自动化和智能化的方向发展。系统的各个部分被设计成可插拔、可组合的独立模块，以适应更多样化和复杂的应用场景。检索方式：如混合检索，多查询扩展，假设性文档嵌入等。生成模式：思维链推理，自我反思与修正等。</p>
-<p><img src="https://aicarrier.feishu.cn/space/api/box/stream/download/asynccode/?code=OWM0ZjZiY2RmNGFkMjZhZGY0YmMyMDBlMzc2OTRlNTRfVUZqSjBFN29uSjBQcmo4WXZJMExZdFIzYnJiejhDWktfVG9rZW46UXRYRGI1OXFSb2ltQW14MW83bWNnbzNybnZoXzE3NjMwOTY2Njk6MTc2MzEwMDI2OV9WNA" alt="img"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202512011636963.png" alt="image-20251201163654790"></p>
 <ol>
 <li>数据处理流程：处理和存储知识文档，在这里我们采取工具<code>Markitdown</code>，设计思路是将传入的一切外部知识源统一转化为Markdown格式进行处理。</li>
 <li>查询与生成流程：根据查询检索相关信息并生成回答。</li>
 </ol>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">用户层：RAGTool统一接口</span><br><span class="line">  ↓</span><br><span class="line">应用层：智能问答、搜索、管理</span><br><span class="line">  ↓  </span><br><span class="line">处理层：文档解析、分块、向量化</span><br><span class="line">  ↓</span><br><span class="line">存储层：向量数据库、文档存储</span><br><span class="line">  ↓</span><br><span class="line">基础层：嵌入模型、LLM、数据库</span><br></pre></td></tr></table></figure>
-
+<p>暂时无法在飞书文档外展示此内容</p>
 <p>这种分层设计的优势在于每一层都可以独立优化和替换，同时保持整体系统的稳定性。例如，可以轻松地将嵌入模型从sentence-transformers切换到百炼API，而不影响上层的业务逻辑。同样的，这些处理的流程代码是完全可复用的，也可以选取自己需要的部分放进自己的项目中。RAGTool作为RAG系统的统一入口，提供了简洁的API接口。</p>
 <h3 id="8-4-构建智能文档问答助手-https-datawhalechina-github-io-hello-agents-chapter8-第八章-记忆与检索-id-84-构建智能文档问答助手"><a href="#8-4-构建智能文档问答助手-https-datawhalechina-github-io-hello-agents-chapter8-第八章-记忆与检索-id-84-构建智能文档问答助手" class="headerlink" title="[8.4 构建智能文档问答助手](https://datawhalechina.github.io/hello-agents/#/./chapter8/第八章 记忆与检索?id&#x3D;_84-构建智能文档问答助手)"></a>[8.4 构建智能文档问答助手](<a target="_blank" rel="noopener" href="https://datawhalechina.github.io/hello-agents/#/./chapter8/%E7%AC%AC%E5%85%AB%E7%AB%A0">https://datawhalechina.github.io/hello-agents/#/./chapter8/第八章</a> 记忆与检索?id&#x3D;_84-构建智能文档问答助手)</h3><blockquote>
 <p>注意这个项目只是测试了RAG和memory工具，并不涉及Agent</p>
@@ -851,7 +814,7 @@
 <li>从知识库中检索学习资料；</li>
 <li>提供个性化学习路径。</li>
 </ul>
-<h2 id="第九章-上下文工程-https-datawhalechina-github-io-hello-agents-chapter9-第九章-上下文工程-id-第九章-上下文工程"><a href="#第九章-上下文工程-https-datawhalechina-github-io-hello-agents-chapter9-第九章-上下文工程-id-第九章-上下文工程" class="headerlink" title="[第九章 上下文工程](https://datawhalechina.github.io/hello-agents/#/./chapter9/第九章 上下文工程?id&#x3D;第九章-上下文工程)"></a>[第九章 上下文工程](<a target="_blank" rel="noopener" href="https://datawhalechina.github.io/hello-agents/#/./chapter9/%E7%AC%AC%E4%B9%9D%E7%AB%A0">https://datawhalechina.github.io/hello-agents/#/./chapter9/第九章</a> 上下文工程?id&#x3D;第九章-上下文工程)</h2><h3 id="9-1-什么是上下文工程-https-datawhalechina-github-io-hello-agents-chapter9-第九章-上下文工程-id-91-什么是上下文工程"><a href="#9-1-什么是上下文工程-https-datawhalechina-github-io-hello-agents-chapter9-第九章-上下文工程-id-91-什么是上下文工程" class="headerlink" title="[9.1 什么是上下文工程](https://datawhalechina.github.io/hello-agents/#/./chapter9/第九章 上下文工程?id&#x3D;_91-什么是上下文工程)"></a>[9.1 什么是上下文工程](<a target="_blank" rel="noopener" href="https://datawhalechina.github.io/hello-agents/#/./chapter9/%E7%AC%AC%E4%B9%9D%E7%AB%A0">https://datawhalechina.github.io/hello-agents/#/./chapter9/第九章</a> 上下文工程?id&#x3D;_91-什么是上下文工程)</h3><p><img src="https://aicarrier.feishu.cn/space/api/box/stream/download/asynccode/?code=Mzg3ZGQwNGM1NTM1YzhlNWVhMWE2Mjk5NzllNDhkMWZfQ09kaHNJUkZmSjNvek5GOG1JU3Y2WTcxSUQ4TEFSMkRfVG9rZW46S1BQOWJhY3JEb0NxU0R4V2FoTmNUWUtlbnRlXzE3NjMwOTY2Njk6MTc2MzEwMDI2OV9WNA" alt="img"></p>
+<h2 id="第九章-上下文工程-https-datawhalechina-github-io-hello-agents-chapter9-第九章-上下文工程-id-第九章-上下文工程"><a href="#第九章-上下文工程-https-datawhalechina-github-io-hello-agents-chapter9-第九章-上下文工程-id-第九章-上下文工程" class="headerlink" title="[第九章 上下文工程](https://datawhalechina.github.io/hello-agents/#/./chapter9/第九章 上下文工程?id&#x3D;第九章-上下文工程)"></a>[第九章 上下文工程](<a target="_blank" rel="noopener" href="https://datawhalechina.github.io/hello-agents/#/./chapter9/%E7%AC%AC%E4%B9%9D%E7%AB%A0">https://datawhalechina.github.io/hello-agents/#/./chapter9/第九章</a> 上下文工程?id&#x3D;第九章-上下文工程)</h2><h3 id="9-1-什么是上下文工程-https-datawhalechina-github-io-hello-agents-chapter9-第九章-上下文工程-id-91-什么是上下文工程"><a href="#9-1-什么是上下文工程-https-datawhalechina-github-io-hello-agents-chapter9-第九章-上下文工程-id-91-什么是上下文工程" class="headerlink" title="[9.1 什么是上下文工程](https://datawhalechina.github.io/hello-agents/#/./chapter9/第九章 上下文工程?id&#x3D;_91-什么是上下文工程)"></a>[9.1 什么是上下文工程](<a target="_blank" rel="noopener" href="https://datawhalechina.github.io/hello-agents/#/./chapter9/%E7%AC%AC%E4%B9%9D%E7%AB%A0">https://datawhalechina.github.io/hello-agents/#/./chapter9/第九章</a> 上下文工程?id&#x3D;_91-什么是上下文工程)</h3><p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202512011635351.png"></p>
 <p>提示工程关注如何编写与组织 LLM 的指令以获得更优结果（例如系统提示的写法与结构化策略）；而上下文工程则是在推理阶段，如何策划与维护“最优的信息集合（tokens）”，其中不仅包含提示本身，还包含其他会进入上下文窗口的一切信息。</p>
 <p>随着我们开始工程化地构建更强的智能体，它们在更长的时间范围内、跨多次推理轮次地工作，我们就需要能管理整个上下文状态的策略——其中包括系统指令、工具、MCP（Model Context Protocol）、外部数据、消息历史等。</p>
 <h3 id="9-2-为什么上下文工程重要-https-datawhalechina-github-io-hello-agents-chapter9-第九章-上下文工程-id-92-为什么上下文工程重要"><a href="#9-2-为什么上下文工程重要-https-datawhalechina-github-io-hello-agents-chapter9-第九章-上下文工程-id-92-为什么上下文工程重要" class="headerlink" title="[9.2 为什么上下文工程重要](https://datawhalechina.github.io/hello-agents/#/./chapter9/第九章 上下文工程?id&#x3D;_92-为什么上下文工程重要)"></a>[9.2 为什么上下文工程重要](<a target="_blank" rel="noopener" href="https://datawhalechina.github.io/hello-agents/#/./chapter9/%E7%AC%AC%E4%B9%9D%E7%AB%A0">https://datawhalechina.github.io/hello-agents/#/./chapter9/第九章</a> 上下文工程?id&#x3D;_92-为什么上下文工程重要)</h3><p>上下文腐蚀（context rot）——随着上下文窗口中的 tokens 增加，模型从上下文中准确回忆信息的能力反而下降。</p>
@@ -873,7 +836,7 @@
 <li>示例（Few-shot）：始终推荐提供示例，但不建议把“所有边界条件”的罗列一股脑塞进提示。请精挑细选一组多样且典型的示例，直接画像“期望行为”。对 LLM 而言，好的示例胜过千言万语。</li>
 </ul>
 <p>总的指导思想是：信息充分但紧致。</p>
-<p><img src="https://aicarrier.feishu.cn/space/api/box/stream/download/asynccode/?code=M2M3ODViMjU1MmZmNThlZDJkMTIwMzM4ZjAxNzE2OTJfWHBTSVl3ZHFyYXA0SE1Ca0pMNDJZR0VjSXlDbVJDa1pfVG9rZW46QjJCY2JvNUJ4b1hKSVR4TGl6amMzc3FEbm5lXzE3NjMwOTY2Njk6MTc2MzEwMDI2OV9WNA" alt="img"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202512011629020.png" alt="img"></p>
 <p>智能体 &#x3D; 在循环中自主调用工具的 LLM</p>
 <p>工程实践正在从“推理前一次性检索（embedding 检索）”逐步过渡到“及时（Just-in-time, JIT）上下文”。</p>
 <ul>
@@ -971,38 +934,7 @@
 <p>场景3：数据文件预览</p>
 <p>这些场景的共同特点是：需要实时、轻量级的文件系统访问，而不是预先索引和向量化。TerminalTool 正是为这种”探索式”工作流设计的。</p>
 <p>TODO:感觉这跟Cursor的Agent模式很像</p>
-<table>
-<thead>
-<tr>
-<th>模式</th>
-<th>权限</th>
-<th>主要用途</th>
-<th>能否修改文件</th>
-<th>能否执行命令</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>Ask 模式</td>
-<td>只读</td>
-<td>问答、解释代码</td>
-<td>❌ 不能</td>
-<td>❌ 不能</td>
-</tr>
-<tr>
-<td>Agent 模式</td>
-<td>读写</td>
-<td>自主完成任务</td>
-<td>✅ 能</td>
-<td>✅ 能</td>
-</tr>
-<tr>
-<td>Plan 模式</td>
-<td>规划</td>
-<td>制定执行计划</td>
-<td>⚠️ 需确认</td>
-<td>⚠️ 需确认</td>
-</tr>
-</tbody></table>
+<p>表格 还在加载中，请等待加载完成后再尝试复制</p>
 <p>允许智能体执行命令是一个强大但危险的能力。TerminalTool 通过多层安全机制确保系统安全：</p>
 <p>功能：支持多种常见的文件系统操作模式</p>
 <ol>
@@ -1025,7 +957,7 @@
 <li>首先是信息量超出上下文窗口的问题，整个代码库可能包含数万行代码，无法一次性放入上下文窗口们通过使用 TerminalTool 进行即时、按需的代码探索来解决这个问题，只在需要时查看具体文件。</li>
 <li>其次是跨会话的状态管理挑战，重构任务可能持续数天，需要跨多个会话保持进度，我们使用 NoteTool 记录阶段性进展、待办事项和关键决策来应对。最后是上下文质量与相关性的问题，每次对话需要回顾相关的历史信息，但不能被无关信息淹没，我们通过 ContextBuilder 智能筛选和组织上下文，确保高信号密度。</li>
 </ol>
-<p><img src="https://aicarrier.feishu.cn/space/api/box/stream/download/asynccode/?code=MzgzMWVmOGQxMmE3YzhmOWM2NjJhMTZkNzhiZDE1NDVfamJ5b2ZSTTVYZmdvSjFBYW1samJpSUZ2RGhWb2RMMTJfVG9rZW46UHF1SmI1RFE2b1huMDV4WExJemM3SmxOblVjXzE3NjMwOTY2Njk6MTc2MzEwMDI2OV9WNA" alt="img"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202512011629103.png" alt="img"></p>
 <p>注意ContextBuilder可以传入rag_tool，如果想用也没问题</p>
 <p>分为explore、auto、analyze、plan四种模式：感觉写的比较硬编码和简单了，比如分析完全可以用coder模型看，但只是简单地查找关键词</p>
 <ul>
@@ -1049,28 +981,28 @@
 <p>（1）MCP：智能体与工具的桥梁</p>
 <p>MCP（Model Context Protocol）由 Anthropic 团队提出([1])，其核心设计理念是标准化智能体与外部工具&#x2F;资源的通信方式。</p>
 <p>MCP 的设计哲学是”上下文共享”。它不仅仅是一个 RPC（远程过程调用）协议，更重要的是它允许智能体和工具之间共享丰富的上下文信息。如图 10.1 所示，当智能体访问一个代码仓库时，MCP 服务器不仅能提供文件内容，还能提供代码结构、依赖关系、提交历史等上下文信息，让智能体能够做出更智能的决策。</p>
-<p><img src="https://aicarrier.feishu.cn/space/api/box/stream/download/asynccode/?code=YjQ4YzA5MDkzNzIwNzA2MWEzYjljYWEzYzUyMjlhMWRfa3FtM1lxM1d4VFdzRGNSbzk1WkIwNEZoYkhSWklFWFFfVG9rZW46VlBvY2J0NGxObzBleFl4MDhJN2NoV2VzbkZiXzE3NjMwOTY2Njk6MTc2MzEwMDI2OV9WNA" alt="img"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202512011629082.png" alt="img"></p>
 <p>（2）A2A：智能体间的对话</p>
 <p>A2A（Agent-to-Agent Protocol）协议由 Google 团队提出(2)，其核心设计理念是实现智能体之间的点对点通信。与 MCP 关注智能体与工具的通信不同，A2A 关注的是智能体之间如何相互协作。这种设计让智能体能够像人类团队一样进行对话、协商和协作。</p>
 <p>A2A 的设计哲学是”对等通信”。如图 10.2 所示，在 A2A 网络中，每个智能体既是服务提供者，也是服务消费者。智能体可以主动发起请求，也可以响应其他智能体的请求。这种对等的设计避免了中心化协调器的瓶颈，让智能体网络更加灵活和可扩展。</p>
-<p><img src="https://aicarrier.feishu.cn/space/api/box/stream/download/asynccode/?code=ZDBlNWNmYmExZWYzOGEyNzNjMzcwY2I2NTJjNzcxMmZfVGltaDJyUFNPb2Q3am1YdjZCaFUzZWYzV2drN2M5SldfVG9rZW46VG9hWmJwUUxub25RUGV4UVIxcWNHV1FnbjZlXzE3NjMwOTY2Njk6MTc2MzEwMDI2OV9WNA" alt="img"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202512011629065.png" alt="img"></p>
 <p>（3）ANP：智能体网络的基础设施</p>
 <p>ANP（Agent Network Protocol）是一个概念性的协议框架(3)，目前由开源社区维护，还没有成熟的生态，其核心设计理念是构建大规模智能体网络的基础设施。如果说 MCP 解决的是”如何访问工具”，A2A 解决的是”如何与其他智能体对话”，那么 ANP 解决的是”如何在大规模网络中发现和连接智能体”。</p>
 <p>ANP 的设计哲学是”去中心化服务发现”。在一个包含成百上千个智能体的网络中，如何让智能体能够找到它需要的服务？如图 10.3 所示，ANP 提供了服务注册、发现和路由机制，让智能体能够动态地发现网络中的其他服务，而不需要预先配置所有的连接关系。</p>
-<p><img src="https://aicarrier.feishu.cn/space/api/box/stream/download/asynccode/?code=MTJmY2I0YTZjMDI1MDdkODIyMzJkNGFhN2I5NWM1YmZfQ3kxMVFLMXFIb1ljVGpKdFJ3NjJYMUl3N1FuT0dRMm9fVG9rZW46SjlxaGJUZXFRb01DVVB4NlR0Z2MzY2xZbmloXzE3NjMwOTY2Njk6MTc2MzEwMDI2OV9WNA" alt="img"></p>
-<p><img src="https://aicarrier.feishu.cn/space/api/box/stream/download/asynccode/?code=YjJhZTQ5MmY1ZTlmMjgwYWVmYWY1NjI1NmU5ODQ5NTZfcEJ2TjE0aWJwZlU0OU1VcjMxWEFxRkZYNmJZQkJITWdfVG9rZW46WXlsVWJIVEJVb1pNZGx4cHJNTmNyV2NjblhiXzE3NjMwOTY2Njk6MTc2MzEwMDI2OV9WNA" alt="img"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202512011629345.png" alt="img"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202512011629448.png" alt="img"></p>
 <p>选择协议的关键在于理解你的需求：</p>
 <ul>
 <li>如果你的智能体需要访问外部服务（文件、数据库、API），选择MCP</li>
 <li>如果你需要多个智能体相互协作完成任务，选择A2A</li>
 <li>如果你要构建大规模的智能体生态系统，考虑ANP</li>
 </ul>
-<p><img src="https://aicarrier.feishu.cn/space/api/box/stream/download/asynccode/?code=ZTg1YWE0ZmQ3Y2NjYTk4ZjA3Y2I2YWQxY2Q2NjhlYTFfQjgyZVVtOU9hOURGVmF3eDY5M3dtSWRQV0hvQ2ZTU2dfVG9rZW46U0dyTGJiNkFlb29mNUF4Tmh0U2NKV1lNbnVjXzE3NjMwOTY2Njk6MTc2MzEwMDI2OV9WNA" alt="img"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202512011629029.png" alt="img"></p>
 <p>（1）协议实现层：这一层包含了三种协议的具体实现。MCP 基于 FastMCP 库实现，提供客户端和服务器功能；A2A 基于 Google 官方的 a2a-sdk 实现；ANP 是我们自研的轻量级实现，提供服务发现和网络管理功能，当然目前也有官方的<a target="_blank" rel="noopener" href="https://github.com/agent-network-protocol/AgentConnect">实现</a>，考虑到后期的迭代，因此这里只做概念的模拟。</p>
 <p>（2）工具封装层：这一层将协议实现封装成统一的 Tool 接口。MCPTool、A2ATool 和 ANPTool 都继承自 BaseTool，提供一致的<code>run()</code>方法。这种设计让智能体能够以相同的方式使用不同的协议。</p>
 <p>（3）智能体集成层：这一层是智能体与协议的集成点。所有的智能体（ReActAgent、SimpleAgent 等）都通过 Tool System 来使用协议工具，无需关心底层的协议细节。</p>
 <h3 id="10-2-MCP-协议实战-https-datawhalechina-github-io-hello-agents-chapter10-第十章-智能体通信协议-id-102-mcp-协议实战"><a href="#10-2-MCP-协议实战-https-datawhalechina-github-io-hello-agents-chapter10-第十章-智能体通信协议-id-102-mcp-协议实战" class="headerlink" title="[10.2 MCP 协议实战](https://datawhalechina.github.io/hello-agents/#/./chapter10/第十章 智能体通信协议?id&#x3D;_102-mcp-协议实战)"></a>[10.2 MCP 协议实战](<a target="_blank" rel="noopener" href="https://datawhalechina.github.io/hello-agents/#/./chapter10/%E7%AC%AC%E5%8D%81%E7%AB%A0">https://datawhalechina.github.io/hello-agents/#/./chapter10/第十章</a> 智能体通信协议?id&#x3D;_102-mcp-协议实战)</h3><p>MCP 的出现改变了这一切。它就像 USB-C 统一了各种设备的连接方式一样，MCP 统一了智能体与外部工具的交互方式。无论你使用 Claude、GPT 还是其他模型，只要它们支持 MCP 协议，就能无缝访问相同的工具和资源。</p>
-<p><img src="https://aicarrier.feishu.cn/space/api/box/stream/download/asynccode/?code=M2Q2N2I5YTNjMDM3ZmY3ZTk3YmU0YWRmMWQxYTA2YzZfeEx6d1dXczEzSlU4WGtFdW5aNTBjcHI1SjJCa0dLWHZfVG9rZW46RmFKdWJWZkVubzB1Vm14T2xrb2Naa1k2blhnXzE3NjMwOTY2Njk6MTc2MzEwMDI2OV9WNA" alt="img"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202512011629281.png" alt="img"></p>
 <p>三层架构的职责：</p>
 <ol>
 <li>Host（宿主层）：Claude Desktop 作为 Host，负责接收用户提问并与 Claude 模型交互。Host 是用户直接交互的界面，它管理整个对话流程。</li>
@@ -1079,9 +1011,9 @@
 </ol>
 <p>完整的交互流程：用户问题 → Claude Desktop(Host) → Claude 模型分析 → 需要文件信息 → MCP Client 连接 → 文件系统 MCP Server → 执行操作 → 返回结果 → Claude 生成回答 → 显示在 Claude Desktop 上</p>
 <p>这种架构设计的优势在于关注点分离：Host 专注于用户体验，Client 专注于协议通信，Server 专注于具体功能实现。开发者只需专注于开发对应的 MCP Server，无需关心 Host 和 Client 的实现细节。</p>
-<p><img src="https://aicarrier.feishu.cn/space/api/box/stream/download/asynccode/?code=OWI2Y2NlYzRiN2FiYWE0NzUyMTUzNmE3NGUxZGM4OTJfdXF6MFEwbGszT2hQQkRPY0s1TVhoZmJ5c2JoZ1dzRTFfVG9rZW46TTZuOGJrVHJlbzJWTnB4ME5idGM3aDBDbmxkXzE3NjMwOTY2Njk6MTc2MzEwMDI2OV9WNA" alt="img"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202512011629050.png" alt="img"></p>
 <p>这三种能力的区别在于：Tools 是主动的（执行操作），Resources 是被动的（提供数据），Prompts 是指导性的（提供模板）。</p>
-<p><img src="https://aicarrier.feishu.cn/space/api/box/stream/download/asynccode/?code=MGJjNjE5OGExZWUwNzM5YThkNTgzNjc5NTMzNDliZGFfUG9pWFM2MjVHa0hyaEd5NWcyMmFkRkxwaUd6bndiRjZfVG9rZW46SGY1dGJwa3BnbzlJRWp4U3g2QWNMZFdibnBoXzE3NjMwOTY2Njk6MTc2MzEwMDI2OV9WNA" alt="img"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202512011629172.png" alt="img"></p>
 <ul>
 <li>这是UML图中的序列图</li>
 </ul>
@@ -1089,7 +1021,7 @@
 <p>client获得工具后，将工具列表转换为 LLM 能理解的格式，添加到系统提示词中，如“你可以使用以下工具：”</p>
 <p>模型推理决定要调用哪个工具，client通过 MCP Server 执行所选工具，获取结果</p>
 <p>这个过程是完全自动化的，LLM 会根据工具描述的质量来决定是否使用以及如何使用工具。因此，编写清晰、准确的工具描述至关重要。</p>
-<p><img src="https://aicarrier.feishu.cn/space/api/box/stream/download/asynccode/?code=NGI0OGZkMjcwOTE3ZmMyMjY0ZmFmNjBiMGMzMWQ5MDhfZGZCTkR0RW5KeDhJbzcxVWxSTzNkRlh3OGtwYlZDNXNfVG9rZW46TE56ZWJIS3Rvb0hiMnF4Unh1OWNJMmpZbm1oXzE3NjMwOTY2Njk6MTc2MzEwMDI2OV9WNA" alt="img"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202512011629466.png" alt="img"></p>
 <p>Function Call中，OpenAI和Claude格式不一样，调用同一函数，key-value都要重新写，很麻烦</p>
 <p>但使用MCP的话，连接到社区提供的MCP服务器（无需自己实现）+调用工具的格式都是统一的，任何支持MCP的模型都能使用，OpenAI、Claude、Llama等都使用相同的MCP客户端</p>
 <p>HelloAgents 基于 FastMCP 2.0 实现了完整的 MCP 客户端功能。我们提供了异步和同步两种 API，以适应不同的使用场景。对于大多数应用，推荐使用异步 API，它能更好地处理并发请求和长时间运行的操作。下面我们将提供一个拆解的操作演示。</p>
@@ -1101,10 +1033,9 @@
 <p>（5）使用提示模板</p>
 <p>（6）完整示例：使用 GitHub MCP 服务</p>
 <p>由于npm被墙，我在连接MCP时加了国内镜像，就可以访问了</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">client = MCPClient([</span><br><span class="line">    <span class="string">&quot;npx&quot;</span>, <span class="string">&quot;--registry=https://registry.npmmirror.com&quot;</span>, <span class="string">&quot;-y&quot;</span>,</span><br><span class="line">    <span class="string">&quot;@modelcontextprotocol/server-filesystem&quot;</span>,</span><br><span class="line">    <span class="string">&quot;.&quot;</span></span><br><span class="line">])</span><br></pre></td></tr></table></figure>
-
+<p>暂时无法在飞书文档外展示此内容</p>
 <p>MCP 协议的一个重要特性是传输层无关性（Transport Agnostic）。这意味着 MCP 协议本身不依赖于特定的传输方式，可以在不同的通信通道上运行。HelloAgents 基于 FastMCP 2.0，提供了完整的传输方式支持，让你可以根据实际场景选择最合适的传输模式。</p>
-<p><img src="https://aicarrier.feishu.cn/space/api/box/stream/download/asynccode/?code=ZGVkZTg5ZTA1NzRmOWIyYzVjNmJiMTdjMGVlNmNmNTdfMHhsWGF2ZzJDTlc2Qjl2d1NTaUNDUkJjalA2eHV1RndfVG9rZW46U21HTmJGblE1b091MVh4Tks2cWNSZWU0blBlXzE3NjMwOTY2Njk6MTc2MzEwMDI2OV9WNA" alt="img"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202512011629399.png" alt="img"></p>
 <p>实际应用中，我们更希望让智能体自动调用 MCP 工具，而不是手动编写调用代码。HelloAgents 提供了<code>MCPTool</code>包装器，让 MCP 服务器无缝集成到智能体的工具链中。</p>
 <p>agent.add_tool会自动展开mcp_tool中所有的tool工具，run时智能体可以直接使用展开后的工具</p>
 <p>当使用多个 MCP 服务器时，务必为每个 MCPTool 指定不同的 name，这个 name 会作为前缀添加到展开的工具名前，避免冲突。例如：<code>name=&quot;fs&quot;</code> 会展开为 <code>fs_read_file</code>、<code>fs_write_file</code> 等。</p>
@@ -1118,8 +1049,8 @@
 <li>MCP Servers Website (<a target="_blank" rel="noopener" href="https://mcpservers.org/">https://mcpservers.org/</a>)</li>
 <li>Official MCP Servers (<a target="_blank" rel="noopener" href="https://github.com/modelcontextprotocol/servers">https://github.com/modelcontextprotocol/servers</a>)</li>
 </ol>
-<p><img src="https://aicarrier.feishu.cn/space/api/box/stream/download/asynccode/?code=ZGNlZmY4NzRjOTc5MTQyM2M1ZjM1ZjU3ZmIwZDQ2MGFfTWNCY1FJRXpXdVFOSGM5d3NpQ0Exb21XTERLN0xweHNfVG9rZW46UHJsdGI5RDFLb3V3OG94dGI0TmNoUTdNbnpiXzE3NjMwOTY2Njk6MTc2MzEwMDI2OV9WNA" alt="img"></p>
-<p><img src="https://aicarrier.feishu.cn/space/api/box/stream/download/asynccode/?code=NWMzZTRlM2Q5NDRlMjYzNmE2OTUzY2ZhY2JjNDk1NTZfM3piZFFTT2h3U05sUmhxNFhsajdCekNPanU3NmgyamhfVG9rZW46WGVuVmJxWFhWb0RWN2Z4R0h5Y2NNbUo2bndoXzE3NjMwOTY2Njk6MTc2MzEwMDI2OV9WNA" alt="img"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202512011629182.png" alt="img"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202512011629894.png" alt="img"></p>
 <h3 id="10-3-A2A-协议实战-https-datawhalechina-github-io-hello-agents-chapter10-第十章-智能体通信协议-id-103-a2a-协议实战"><a href="#10-3-A2A-协议实战-https-datawhalechina-github-io-hello-agents-chapter10-第十章-智能体通信协议-id-103-a2a-协议实战" class="headerlink" title="[10.3 A2A 协议实战](https://datawhalechina.github.io/hello-agents/#/./chapter10/第十章 智能体通信协议?id&#x3D;_103-a2a-协议实战)"></a>[10.3 A2A 协议实战](<a target="_blank" rel="noopener" href="https://datawhalechina.github.io/hello-agents/#/./chapter10/%E7%AC%AC%E5%8D%81%E7%AB%A0">https://datawhalechina.github.io/hello-agents/#/./chapter10/第十章</a> 智能体通信协议?id&#x3D;_103-a2a-协议实战)</h3><p>A2A（Agent-to-Agent）是一种支持智能体之间直接通信与协作的协议。</p>
 <p>传统的中央协调器（星型拓扑）方案存在三个主要问题：</p>
 <ul>
@@ -1128,12 +1059,12 @@
 <li>扩展困难：增加或修改智能体需要改动中心逻辑。</li>
 </ul>
 <p>A2A 协议采用点对点（P2P）架构（网状拓拓），允许智能体直接通信，从根本上解决了上述问题。它的核心是任务（Task）和工件（Artifact）这两个抽象概念，这是它与 MCP 最大的区别，如表 10.7 所示。</p>
-<p><img src="https://aicarrier.feishu.cn/space/api/box/stream/download/asynccode/?code=NmY1OGRiYmFhMDQ2NWRmMzQxM2I4MDg4MTMwODQyN2ZfOWV6dXYwS1dIZmVCNHR6Q1g0TUNNSDRHY0NzMG9Wa2NfVG9rZW46QVl5ZGJxZGowbzRUZE94TXhYbGM0RE0yblRiXzE3NjMwOTY2Njk6MTc2MzEwMDI2OV9WNA" alt="img"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202512011629608.png" alt="img"></p>
 <p>为实现对协作过程的管理，A2A 为任务定义了标准化的生命周期，包括创建、协商、代理、执行中、完成、失败等状态，可见图 10.7。</p>
-<p><img src="https://aicarrier.feishu.cn/space/api/box/stream/download/asynccode/?code=ODRmMzVmZGIwMWE2NWMyZTllMTIzMzRlYWRkNWQwZmVfYWhZOWZuU1J0YkdXbXg3NUFNQk5Jb2FmemFwbzRsRk9fVG9rZW46U0xjaWJCNTVVbzJMb2l4dEV4a2NVZ3BZbm9nXzE3NjMwOTY2Njk6MTc2MzEwMDI2OV9WNA" alt="img"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202512011629520.png" alt="img"></p>
 <p>该机制使智能体可以进行任务协商、进度跟踪和异常处理。</p>
 <p>A2A 请求生命周期是一个序列，详细说明了请求遵循的四个主要步骤：代理发现、身份验证、发送消息 API 和发送消息流 API。下图 10.8 借鉴了官网的流程图，用来展示了操作流程，说明了客户端、A2A 服务器和身份验证服务器之间的交互。</p>
-<p><img src="https://aicarrier.feishu.cn/space/api/box/stream/download/asynccode/?code=Mjc3NTQ2ZDE2YmQ0ZGNiZmYwYjExOTljNjU0MmMwMzFfbFZhOUZvSHBaMnNhdWtvU3NnWE82b2ozQ295OXhCdEdfVG9rZW46RjJxUGJ6OWRJb05KZ3d4S3A2UGN3RVNJbjlkXzE3NjMwOTY2Njk6MTc2MzEwMDI2OV9WNA" alt="img"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202512011629760.png" alt="img"></p>
 <p>A2A 现有实现大部分为<code>Sample Code</code>，并且即使有 Python 的实现也较为繁琐，因此这里我们只采用模拟协议思想的方式，通过 A2A-SDK 来继承部分功能实现。</p>
 <p>A2A-SDK 一般指的是一个 软件开发工具包 (Software Development Kit)，用于简化 A2A 协议的实现</p>
 <p>TODO：代码本身就是function call，而且要人为检测关键词映射到工具，感觉不是很成熟，学习概念即可</p>
@@ -1146,8 +1077,8 @@
 <li>动态扩展：如何让新加入网络的智能体被其他成员发现和调用？</li>
 </ul>
 <p>ANP 的设计目标就是提供一套标准化的机制，来解决上述的服务发现、路由选择和网络扩展性问题。</p>
-<p><img src="https://aicarrier.feishu.cn/space/api/box/stream/download/asynccode/?code=MGVkOWZiYjdlZGZjZGEwNzZlZDg0MjNlYTRjOWQ1YjRfSDZsRXB3NkJ6ZTczUVpJOUdjajdhdHR6NGduSGRUSlhfVG9rZW46WDRyRmJyNFhlbzBxOTZ4bWd0ZGNaRFpUbjZmXzE3NjMwOTY2Njk6MTc2MzEwMDI2OV9WNA" alt="img"></p>
-<p><img src="https://aicarrier.feishu.cn/space/api/box/stream/download/asynccode/?code=NzNkOTdkM2QyZTdkMzMwOGI2NDc1OWM4YTgxZGMzYjdfRDJmcEsxRU9PT3o4Q05QRkNjSHFuc3VMRnNEMGRiU0ZfVG9rZW46Tm1xa2JUUzNFb2QxdGd4b3ltMmNBRUtNbkxkXzE3NjMwOTY2Njk6MTc2MzEwMDI2OV9WNA" alt="img"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202512011629712.png" alt="img"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202512011629550.png" alt="img"></p>
 <ol>
 <li>服务的发现与匹配：首先，智能体 A 通过一个公开的发现服务，基于语义或功能描述进行查询，以定位到符合其任务需求的智能体 B。该发现服务通过预先爬取各智能体对外暴露的标准端点（<code>.well-known/agent-descriptions</code>）来建立索引，从而实现服务需求方与提供方的动态匹配。</li>
 <li>基于 DID 的身份验证：在交互开始时，智能体 A 使用其私钥对包含自身 DID 的请求进行签名。智能体 B 收到后，通过解析该 DID 获取对应的公钥，并以此验证签名的真实性与请求的完整性，从而建立起双方的可信通信。</li>
@@ -1174,8 +1105,7 @@
 <li>📊 查看服务器的使用统计和评价</li>
 <li>🔄 自动获取服务器更新</li>
 </ul>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">weather-mcp-server/</span><br><span class="line">├── README.md           # 项目说明文档</span><br><span class="line">├── LICENSE            # 开源许可证</span><br><span class="line">├── Dockerfile         # Docker 构建配置（推荐）</span><br><span class="line">├── pyproject.toml     # Python 项目配置（必需）</span><br><span class="line">├── requirements.txt   # Python 依赖</span><br><span class="line">├── smithery.yaml      # Smithery 配置文件（必需）</span><br><span class="line">└── server.py          # MCP 服务器主文件</span><br></pre></td></tr></table></figure>
-
+<p>暂时无法在飞书文档外展示此内容</p>
 <p>虽然 Smithery 会自动生成 Dockerfile，但提供自定义 Dockerfile 可以确保部署成功</p>
 <p>协议定位：</p>
 <ul>
@@ -1191,9 +1121,9 @@
 <li>奖励:答案是否正确(正确+1，错误 0)</li>
 </ul>
 <p>强化学习提供了新的可能性。通过让智能体自主生成多个候选答案并根据正确性获得奖励，它可以学习哪些推理路径更优、哪些步骤是关键，甚至发现比人类标注更好的解题方法([8])。这就是 Agentic RL 的核心思想:将 LLM 作为可学习策略，嵌入智能体的感知-决策-执行循环，通过强化学习优化多步任务表现。</p>
-<p><img src="https://aicarrier.feishu.cn/space/api/box/stream/download/asynccode/?code=YTU5YmEwYzc1NmRjMDY4NDZiNTNmYmQ0NmQ5OTAxMTJfU0xKNzNmWkRDUHhNaVZ6THhVeEhEa2RXeUlZM3Z0RDFfVG9rZW46S0VvRmJFQ3g1b3Joc0Z4SE1RT2NYOXl4bkplXzE3NjMwOTY2Njk6MTc2MzEwMDI2OV9WNA" alt="img"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202512011629791.png" alt="img"></p>
 <p>预训练阶段是 LLM 训练的第一阶段，目标是让模型学习语言的基本规律和世界知识。这个阶段使用海量的文本数据(通常是数 TB 级别)，通过自监督学习的方式训练模型。最常见的预训练任务是因果语言建模(Causal Language Modeling)，也称为下一个词预测(Next Token Prediction)。</p>
-<p><img src="https://aicarrier.feishu.cn/space/api/box/stream/download/asynccode/?code=YzQ4ZjhhZjg0YTY2MDk0YzQ2YTIyZmQzNDE3MjY1ZDJfaHUxaVhDMmFhdTZoazVSMUV1a01XamxQSkN0Y0t0M2pfVG9rZW46T0JZVWJYbEo0b1NoaHN4ZzdIVGM0eVJNbnZoXzE3NjMwOTY2Njk6MTc2MzEwMDI2OV9WNA" alt="img"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202512011629930.png" alt="img"></p>
 <p>目标是最小化负对数似然，即最大化预测正确词的概率</p>
 <p>预训练阶段的特点是数据量巨大、计算成本高、学到的是通用的语言理解和生成能力、采用无监督学习。</p>
 <ul>
@@ -1203,11 +1133,11 @@
 <ol>
 <li>监督微调(SFT)：目标是让模型学会遵循指令和对话格式。有监督</li>
 </ol>
-<p><img src="https://aicarrier.feishu.cn/space/api/box/stream/download/asynccode/?code=N2U4YjJjNzM5ZmJiM2Q2ZDkxYWUwN2M1MGQ3NGI0NDNfY3VWWVdrMzBYclM3SjJxYnNESGdicUVQbFFHd2xIaXVfVG9rZW46SGtXSmJhcW9Fb0QxU0x4ZExFRWNBRDlQbnlkXzE3NjMwOTY2Njk6MTc2MzEwMDI2OV9WNA" alt="img"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202512011629674.png" alt="img"></p>
 <ol>
 <li>奖励建模(RM)：奖励模型的训练数据是偏好对比数据,包含同一个问题的两个回答,一个更好(chosen),一个更差(rejected)。奖励模型的训练目标是学习人类的偏好：</li>
 </ol>
-<p><img src="https://aicarrier.feishu.cn/space/api/box/stream/download/asynccode/?code=ZGUwYzg2MTZmZTJhYWEyZjdmOTE5M2FjNDQ5NTVkYzlfMEttMXNtRVQ4RUFXWjRkZUZ2djR3M3BrQnlZVzNQcXRfVG9rZW46SG1lU2JYYWpCb1RUNlR4U1pyT2NxVDhLbjhlXzE3NjMwOTY2Njk6MTc2MzEwMDI2OV9WNA" alt="img"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202512011629843.png" alt="img"></p>
 <ol>
 <li>强化学习微调：最大化奖励，同时不要偏离原始模型太远。</li>
 </ol>
@@ -1224,7 +1154,7 @@
 <blockquote>
 <p>如果对有害的function进行agentic rl的奖励函数，会不会让agent变得有害，比如原来拒绝执行的function，现在可以执行了。问题是有害的function是什么样的，感觉刻意构造的话并不是很有意义</p>
 </blockquote>
-<p><img src="https://aicarrier.feishu.cn/space/api/box/stream/download/asynccode/?code=MTY2MTMwMzkyODc0ODljYmNjYWJjYjRkYTk2ZTc4MTdfZWRaZU42V2QyRVo4YXdhYU1sdDAxZjRFdmpRc2FsYlFfVG9rZW46WDA2NmJEdm1Yb1RrMUN4S2pXN2NwY1BsbmtiXzE3NjMwOTY2Njk6MTc2MzEwMDI2OV9WNA" alt="img"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202512011629305.png" alt="img"></p>
 <ol>
 <li>推理(Reasoning)是指从给定信息中逻辑地得出结论的过程，是智能体的核心能力。强化学习的优势在于通过试错学习有效的推理策略，发现训练数据中没有的推理路径，学会何时需要深度思考、何时可以快速回答。</li>
 <li>工具使用(Tool Use)是指智能体调用外部工来完成任务的能力。强化学习让智能体学会何时需要使用工具、选择哪个工具、如何组合多个工具。</li>
@@ -1240,19 +1170,19 @@
 <li>训练器层</li>
 <li>统一接口层</li>
 </ol>
-<p><img src="https://aicarrier.feishu.cn/space/api/box/stream/download/asynccode/?code=ZjUxNDc1NjFmZTkxMzMyNmI2ZjA5M2ViOTk4YTNiOWVfeWtUM0dYeW1mSlhpY1hHMjVURENSTG5LQjFsYW5ma3FfVG9rZW46WHpwc2JYWmM5b082d1J4SFFXc2NjZG85bm5iXzE3NjMwOTY2Njk6MTc2MzEwMDI2OV9WNA" alt="img"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202512011629321.png" alt="img"></p>
 <h3 id="11-2-数据集与奖励函数-https-datawhalechina-github-io-hello-agents-chapter11-第十一章-Agentic-RL-id-112-数据集与奖励函数"><a href="#11-2-数据集与奖励函数-https-datawhalechina-github-io-hello-agents-chapter11-第十一章-Agentic-RL-id-112-数据集与奖励函数" class="headerlink" title="[11.2 数据集与奖励函数](https://datawhalechina.github.io/hello-agents/#/./chapter11/第十一章 Agentic-RL?id&#x3D;_112-数据集与奖励函数)"></a>[11.2 数据集与奖励函数](<a target="_blank" rel="noopener" href="https://datawhalechina.github.io/hello-agents/#/./chapter11/%E7%AC%AC%E5%8D%81%E4%B8%80%E7%AB%A0">https://datawhalechina.github.io/hello-agents/#/./chapter11/第十一章</a> Agentic-RL?id&#x3D;_112-数据集与奖励函数)</h3><p>GSM8K：</p>
 <ol>
 <li>SFT提供问题和包含解答过程的answer</li>
 <li>RL提供问题和答案，不提供过程，这样迫使模型学会自主推理，而不是简单地记忆答案。</li>
 </ol>
-<p><img src="https://aicarrier.feishu.cn/space/api/box/stream/download/asynccode/?code=MGJmZjljZGRjYjdkOTI1ODhiMTYxNTgwMTc0ZDc0NWFfSmFTNThxdmVwYVdhdjIzS01idXJFQzNRNTdQdGdYN0JfVG9rZW46VWQ0YmJ3Q3pEb0ZNa1B4VDF0WGNualNKblNjXzE3NjMwOTY2Njk6MTc2MzEwMDI2OV9WNA" alt="img"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202512011629342.png" alt="img"></p>
 <ol>
 <li>准确率奖励(AccuracyReward)是最基础的奖励函数，它只关心答案是否正确。答案正确就是1，不然是0</li>
 <li>长度惩罚：鼓励模型生成简洁的回答，避免冗长啰嗦。只有在答案正确的情况下才应用，避免模型为了减少惩罚而生成错误的短答案。</li>
 <li>步骤奖励：只有在答案正确的情况下才给予步骤奖励。只要有清晰的Step1:之类的标记，一共有几个给几个β</li>
 </ol>
-<p><img src="https://aicarrier.feishu.cn/space/api/box/stream/download/asynccode/?code=ODJjMmNkYjIwZjdkZjFkZTI1YjA5ODQ4OTI0OWM1ZWVfZFF2dlh1aEJPVEViVXpJbWlYV0piSjVnR1NPQWMxTHVfVG9rZW46RHVMQWJjNmdxb3Q3a094UzBJN2M5ekh4bkJjXzE3NjMwOTY2Njk6MTc2MzEwMDI2OV9WNA" alt="img"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202512011629022.png" alt="img"></p>
 <p>调整权重进行平衡</p>
 <p>自定义奖励函数：</p>
 <h3 id="11-3-SFT-训练-https-datawhalechina-github-io-hello-agents-chapter11-第十一章-Agentic-RL-id-113-sft-训练"><a href="#11-3-SFT-训练-https-datawhalechina-github-io-hello-agents-chapter11-第十一章-Agentic-RL-id-113-sft-训练" class="headerlink" title="[11.3 SFT 训练](https://datawhalechina.github.io/hello-agents/#/./chapter11/第十一章 Agentic-RL?id&#x3D;_113-sft-训练)"></a>[11.3 SFT 训练](<a target="_blank" rel="noopener" href="https://datawhalechina.github.io/hello-agents/#/./chapter11/%E7%AC%AC%E5%8D%81%E4%B8%80%E7%AB%A0">https://datawhalechina.github.io/hello-agents/#/./chapter11/第十一章</a> Agentic-RL?id&#x3D;_113-sft-训练)</h3><p>预训练模型虽然具备强大的语言能力，但它并不知道如何完成特定任务。预训练模型的训练目标是预测下一个词，而不是解决数学问题或使用工具。</p>
@@ -1263,7 +1193,7 @@
 <li>建立基线能力</li>
 <li>减少探索空间</li>
 </ol>
-<p><img src="https://aicarrier.feishu.cn/space/api/box/stream/download/asynccode/?code=NWUzNTJlYTYzNjEwZjU5OGVjZmM4N2EyM2RhYWRhN2RfN0VuYnFsVmxpU3ZBdnlzQzhCWU9ISEVQd3ZZVUlIM2RfVG9rZW46WVJta2JzdHhTb2F2SGd4bUNoZmNJUmZ5bkxiXzE3NjMwOTY2Njk6MTc2MzEwMDI2OV9WNA" alt="img"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202512011629370.png" alt="img"></p>
 <p>TODO:显存估算</p>
 <ul>
 <li><code>batch_size</code>: 每次更新使用的样本数。越大训练越稳定，但显存占用越高。建议根据显存调整:4GB 显存用 batch_size&#x3D;1-2，8GB 显存用 batch_size&#x3D;4-8，16GB 显存用 batch_size&#x3D;8-16。</li>
@@ -1271,11 +1201,11 @@
 <li><code>lora_rank</code>: LoRA 秩，控制表达能力。4-8 适合小任务，16-32 适合复杂任务，64 适合大规模微调。就是分解的矩阵维度</li>
 <li><code>lora_alpha</code>: LoRA 缩放因子，通常设置为 rank 的 2 倍。rank&#x3D;8 时，alpha&#x3D;16;rank&#x3D;16 时，alpha&#x3D;32。</li>
 </ul>
-<p><img src="https://aicarrier.feishu.cn/space/api/box/stream/download/asynccode/?code=ZmZkNTgzMjI3YTRiNmZiZjNkOTM3MTIzNjdkMzY1ZTRfam5WcDhRN2lNU3hvQXdQbktJTzdSSjNQUXRCUmdueGZfVG9rZW46RUpMRmIxMlNObzYxeDR4eDNkTmNlaFl6bkFnXzE3NjMwOTY2Njk6MTc2MzEwMDI2OV9WNA" alt="img"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202512011629350.png" alt="img"></p>
 <ul>
 <li><code>weight_decay</code>: 权重衰减，防止过拟合。默认 0.01，可以尝试 0.001-0.1。L2正则化系数，就是λ</li>
 </ul>
-<p><img src="https://aicarrier.feishu.cn/space/api/box/stream/download/asynccode/?code=MzMzYjM2YmU4MTdlMmExYzhmMDc5NjNkMzRlYjMwYzNfZjlWRmRDUUtXTVRJREt2TzJjbWt6RklrOVk0bzB1cFhfVG9rZW46TGYzTmI4UTJRb2pJYzl4a0F4cWNIOTk2bndjXzE3NjMwOTY2Njk6MTc2MzEwMDI2OV9WNA" alt="img"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202512011629451.png" alt="img"></p>
 <ul>
 <li><code>warmup_ratio</code>: 学习率预热比例。前 warmup_ratio 的步数学习率线性增加，然后线性衰减。默认 0.1(前 10%步数预热)。</li>
 </ul>
@@ -1307,7 +1237,7 @@
 <li><code>reward_config</code>: 奖励函数的额外配置，如长度惩罚的目标长度、步骤奖励的系数等。</li>
 </ul>
 <p>KL散度：计算每个 token 的 KL 散度，然后求和。KL 散度越大，说明当前策略与参考模型差异越大。通过添加 KL 散度惩罚项 −β⋅DKL，我们限制策略更新的幅度，避免”遗忘”SFT 阶段学到的知识。</p>
-<p><img src="https://aicarrier.feishu.cn/space/api/box/stream/download/asynccode/?code=NjM5YWQzNGE4NDRjYzIwNDMwZjVlMmQ1MjI2NTBiYTJfUUxIWVVKSGlQT0NYeVZtY0tTZnB2SXdEVDJoVFhnWGdfVG9rZW46WU1WZmJLVEZNb0w3T014aUt3SWNTd0dJbnVnXzE3NjMwOTY2Njk6MTc2MzEwMDI2OV9WNA" alt="img"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202512011629323.png" alt="img"></p>
 <p>截止到这里和agent没啥关系？</p>
 <h3 id="11-5-模型评估与分析-https-datawhalechina-github-io-hello-agents-chapter11-第十一章-Agentic-RL-id-115-模型评估与分析"><a href="#11-5-模型评估与分析-https-datawhalechina-github-io-hello-agents-chapter11-第十一章-Agentic-RL-id-115-模型评估与分析" class="headerlink" title="[11.5 模型评估与分析](https://datawhalechina.github.io/hello-agents/#/./chapter11/第十一章 Agentic-RL?id&#x3D;_115-模型评估与分析)"></a>[11.5 模型评估与分析](<a target="_blank" rel="noopener" href="https://datawhalechina.github.io/hello-agents/#/./chapter11/%E7%AC%AC%E5%8D%81%E4%B8%80%E7%AB%A0">https://datawhalechina.github.io/hello-agents/#/./chapter11/第十一章</a> Agentic-RL?id&#x3D;_115-模型评估与分析)</h3><p>（1）准确性指标</p>
 <ol>
@@ -1334,7 +1264,7 @@
 <li>理解错误(没有正确理解问题，如问题问”总共”但只计算了一部分，说明语言理解能力不足)</li>
 <li>格式错误(答案正确但格式不符合要求，如缺少”Final Answer:”标记，说明格式学习不足)。</li>
 </ol>
-<p><img src="https://aicarrier.feishu.cn/space/api/box/stream/download/asynccode/?code=ZDBmNjQwM2ZiM2IyOTA4OTQzZTQyOWQ0ODhlZWY3ZjdfZGIxREhmRlI0WXIxcjNxaUJCeHU3M3U5cW02Wkhla3FfVG9rZW46UEFxcmJKb1prb0lJbU94Vjl4UGNkRUVKbk5oXzE3NjMwOTY2Njk6MTc2MzEwMDI2OV9WNA" alt="img"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202512011629758.png" alt="img"></p>
 <h3 id="11-6-完整训练流程实战-https-datawhalechina-github-io-hello-agents-chapter11-第十一章-Agentic-RL-id-116-完整训练流程实战"><a href="#11-6-完整训练流程实战-https-datawhalechina-github-io-hello-agents-chapter11-第十一章-Agentic-RL-id-116-完整训练流程实战" class="headerlink" title="[11.6 完整训练流程实战](https://datawhalechina.github.io/hello-agents/#/./chapter11/第十一章 Agentic-RL?id&#x3D;_116-完整训练流程实战)"></a>[11.6 完整训练流程实战](<a target="_blank" rel="noopener" href="https://datawhalechina.github.io/hello-agents/#/./chapter11/%E7%AC%AC%E5%8D%81%E4%B8%80%E7%AB%A0">https://datawhalechina.github.io/hello-agents/#/./chapter11/第十一章</a> Agentic-RL?id&#x3D;_116-完整训练流程实战)</h3><p>依然跟agent没关系，只是训了个0.6B的小模型，并没有agent与环境进行交互，同时RL训练的过程</p>
 <p>运行小建议：</p>
 <p>从小规模开始:不要一开始就用全部数据训练。先用 100-1000 个样本快速迭代，验证流程和参数，确认效果后再扩大规模。这样可以节省大量时间和计算资源。</p>
@@ -1352,7 +1282,7 @@
 <p>（1）配置 Accelerate</p>
 <p>（2）使用 DDP 训练：数据并行(DDP)是最简单的分布式方案，每个 GPU 持有完整模型副本，数据被分割到各个 GPU 上。</p>
 <p>（3）使用 DeepSpeed ZeRO 训练：DeepSpeed ZeRO通过分片优化器状态、梯度和模型参数，大幅降低显存占用，支持更大的模型和 batch size。</p>
-<p><img src="https://aicarrier.feishu.cn/space/api/box/stream/download/asynccode/?code=YzMzMzE3YjIwOTMzOWVlYWJiYzRiZjNiOTk1NDFjM2ZfYW96TlRURXRmbm1Od1lXcVJDSENLdDBUMzhjRGhrU2RfVG9rZW46UTh1eGJnYnRkb3FqV294dDhSNmN0ZFRVbnhkXzE3NjMwOTY2Njk6MTc2MzEwMDI2OV9WNA" alt="img"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202512011629004.png" alt="img"></p>
 <p>（4）多节点训练</p>
 <p>（5）分布式训练最佳实践：</p>
 <ol>
@@ -1394,7 +1324,7 @@
 <li>鲁棒性指标：Error Rate（错误率）、Failure Recovery（故障恢复），用于衡量容错能力。</li>
 <li>协作指标：Communication Efficiency（通信效率）、Task Completion（任务完成度），用于衡量协作效果。</li>
 </ul>
-<p><img src="https://aicarrier.feishu.cn/space/api/box/stream/download/asynccode/?code=ZmExMjlmOTU2ZDRiOTg0OTgxMTQ4OTdlNjkzYWM4NmVfTTVBeEhnQWFmQ1o2T25ncjVRYmdOVmJsQ2JPUGtQRndfVG9rZW46RmtWMmI3OFdqb0VYZHJ4OGkzYWN1MHdnbkRlXzE3NjMwOTY2Njk6MTc2MzEwMDI2OV9WNA" alt="img"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202512011629368.png" alt="img"></p>
 <h3 id="12-2-BFCL：工具调用能力评估-https-datawhalechina-github-io-hello-agents-chapter12-第十二章-智能体性能评估-id-122-bfcl：工具调用能力评估"><a href="#12-2-BFCL：工具调用能力评估-https-datawhalechina-github-io-hello-agents-chapter12-第十二章-智能体性能评估-id-122-bfcl：工具调用能力评估" class="headerlink" title="[12.2 BFCL：工具调用能力评估](https://datawhalechina.github.io/hello-agents/#/./chapter12/第十二章 智能体性能评估?id&#x3D;_122-bfcl：工具调用能力评估)"></a>[12.2 BFCL：工具调用能力评估](<a target="_blank" rel="noopener" href="https://datawhalechina.github.io/hello-agents/#/./chapter12/%E7%AC%AC%E5%8D%81%E4%BA%8C%E7%AB%A0">https://datawhalechina.github.io/hello-agents/#/./chapter12/第十二章</a> 智能体性能评估?id&#x3D;_122-bfcl：工具调用能力评估)</h3><p>在智能体系统中，工具调用（Tool Calling）是核心能力之一。智能体需要完成以下任务：</p>
 <ol>
 <li>理解任务需求：从用户的自然语言描述中提取关键信息</li>
@@ -1403,9 +1333,9 @@
 <li>处理复杂场景：支持多函数调用、并行调用等高级场景</li>
 </ol>
 <p>BFCL 基准包含四个评估类别，难度递增。从最基础的单函数调用（Simple）开始，逐步增加到需要调用多个函数的场景（Multiple），再到需要并行调用多个函数的复杂场景（Parallel），最后是需要判断是否需要调用函数的场景（Irrelevance）。这四个类别覆盖了智能体在实际应用中可能遇到的各种工具调用场景，如表 12.1 所示：</p>
-<p><img src="https://aicarrier.feishu.cn/space/api/box/stream/download/asynccode/?code=Y2FjNjFhYzE0OTUyYWU1ZDAxOWZhYmI0MTA5YjhjNWVfZE9tQkxhZnRBaWJzUDRwR3dVMWFiMlVGVk96T2xYVGJfVG9rZW46WWZ5MGI3a1lYb0ZHNVR4UVZiR2NkN2pWbnJnXzE3NjMwOTY2Njk6MTc2MzEwMDI2OV9WNA" alt="img"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202512011629466.png" alt="img"></p>
 <p>BFCL 的评估流程遵循标准的基准测试流程：首先加载数据集并选择评估类别，然后运行智能体获取预测结果，接着将预测结果解析为抽象语法树（AST），最后通过 AST 匹配算法判断预测是否正确。整个流程会遍历所有测试样本，最终计算出准确率等评估指标并生成评估报告。</p>
-<p><img src="https://aicarrier.feishu.cn/space/api/box/stream/download/asynccode/?code=OTc5NDRhMDI2ZjMyZDNhZWMyODlhMjBjMzFlZWUxNTVfUTgwWm5ZYmlQMDBtRW43U3NCRHZIV25kY0dlUXFoc09fVG9rZW46SVoyZGJEOWtCb1JTNG94WDVrc2NRNUs5bkRhXzE3NjMwOTY2Njk6MTc2MzEwMDI2OV9WNA" alt="img"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202512011629515.png" alt="img"></p>
 <ul>
 <li><code>question</code>: 用户的自然语言请求</li>
 <li><code>function</code>: 可用的函数列表（包含函数签名和描述）</li>
@@ -1421,8 +1351,8 @@
 <li>错误率：就是1-准确率</li>
 </ol>
 <p>使用官方评估CLI工具的优势在于：它使用官方的 AST 匹配算法，评估结果与排行榜完全一致，支持所有 BFCL v4 类别，并且能够自动生成详细的评估报告。</p>
-<p><img src="https://aicarrier.feishu.cn/space/api/box/stream/download/asynccode/?code=MDA0ZWQ5YTY5N2Y2OTQ2NDc1YzYzODM2NTE0MDBmZjdfNG00eFNHdGx1Qkgwa05hY2swTVJ5SEs2NHNFQU9oR3lfVG9rZW46TGFHZGI5Q0U5bzh3d094UXJPSWNoZWRPbnZnXzE3NjMwOTY2Njk6MTc2MzEwMDI2OV9WNA" alt="img"></p>
-<p><img src="https://aicarrier.feishu.cn/space/api/box/stream/download/asynccode/?code=NDk0NmRkNTZhNGY0ZjQ5ZTZjYjUyMGI3MzE3N2JhZWJfdVJ3alFhcTlIcnpreHFFRXZDM0lLQVJRRzNOakNSMDVfVG9rZW46WU9MRWJ6ZjBob2lWWk94NFQ1dGNnNWJ0bm9oXzE3NjMwOTY2Njk6MTc2MzEwMDI2OV9WNA" alt="img"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202512011629987.png" alt="img"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202512011629718.png" alt="img"></p>
 <p>评估器的设计包含三个核心要点：首先是提示词构造，需要将数据集中的问题和函数定义转换为智能体可理解的提示词；其次是函数调用提取，需要从智能体的响应中提取函数调用，并支持多种格式（JSON、代码块等）；最后是 AST 匹配，使用抽象语法树进行函数调用对比，这比简单的字符串匹配更准确。</p>
 <p>AST 匹配是 BFCL 评估的核心技术。它比简单的字符串匹配更智能，能够识别语义等价的函数调用</p>
 <p>要进一步提升 BFCL 评估分数，可以从以下几个方向入手。</p>
@@ -1440,7 +1370,7 @@
 <li>网页浏览：从互联网获取最新信息</li>
 <li>文件操作：读取和处理各种格式的文件</li>
 </ul>
-<p><img src="https://aicarrier.feishu.cn/space/api/box/stream/download/asynccode/?code=MzY0NDk3MDE2ODA2ZmI4YzdkM2UzM2EwYjdkNjRlZDBfRFU2WUxTM3JWVU1ackd6cWk5WjJUWEZaSjkzT2JJbG5fVG9rZW46REFwQWJ2OEZnb2MyaFZ4TXYxYmNiaHpRbnVlXzE3NjMwOTY2Njk6MTc2MzEwMDI2OV9WNA" alt="img"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202512011629155.png" alt="img"></p>
 <p>GAIA 使用准精确匹配（Quasi Exact Match）评估算法，这是 GAIA 官方定义的评估标准。该算法的核心思想是：先对答案进行归一化处理，然后进行精确匹配。</p>
 <p>归一化函数根据答案类型应用不同的规则。</p>
 <p>（3）GAIA 评估指标：</p>
@@ -1449,7 +1379,7 @@
 <p>难度递进下降率 (Difficulty Progression Drop Rate)：衡量智能体在难度增加时的性能衰减</p>
 <p>平均推理步骤数 (Average Reasoning Steps)：评估智能体完成任务所需的平均步骤数</p>
 <h3 id="12-4-数据生成质量评估-https-datawhalechina-github-io-hello-agents-chapter12-第十二章-智能体性能评估-id-124-数据生成质量评估"><a href="#12-4-数据生成质量评估-https-datawhalechina-github-io-hello-agents-chapter12-第十二章-智能体性能评估-id-124-数据生成质量评估" class="headerlink" title="[12.4 数据生成质量评估](https://datawhalechina.github.io/hello-agents/#/./chapter12/第十二章 智能体性能评估?id&#x3D;_124-数据生成质量评估)"></a>[12.4 数据生成质量评估](<a target="_blank" rel="noopener" href="https://datawhalechina.github.io/hello-agents/#/./chapter12/%E7%AC%AC%E5%8D%81%E4%BA%8C%E7%AB%A0">https://datawhalechina.github.io/hello-agents/#/./chapter12/第十二章</a> 智能体性能评估?id&#x3D;_124-数据生成质量评估)</h3><p>在数据生成质量评估中，我们采用三种互补的评估方法：LLM Judge、Win Rate 和人工打分</p>
-<p><img src="https://aicarrier.feishu.cn/space/api/box/stream/download/asynccode/?code=OGNiMTBkZmFkNTA5MGE0MWZmYTBlMGFiMWIzMjRkMzRfc2N3T1NBS2RFTzJKZkJQVmN1bHFna012RDVmWmFJWVVfVG9rZW46TVA2aWJyakpkb1hVdll4OU4yTmNnQzJBblZlXzE3NjMwOTY2Njk6MTc2MzEwMDI2OV9WNA" alt="img"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202512011629594.png" alt="img"></p>
 <p>（1）LLM Judge 评估</p>
 <p>平均分（Average Score）</p>
 <p>及格率（Pass Rate）</p>
@@ -1461,14 +1391,14 @@
 <p>平局率（Tie Rate）：两者被判定为质量相当的比例，反映生成题目与真题的相似程度。</p>
 <p>（3）人工验证</p>
 <p>批量评估</p>
-<h1 id="第四部分：综合案例进阶"><a href="#第四部分：综合案例进阶" class="headerlink" title="第四部分：综合案例进阶"></a><strong>第四部分：综合案例进阶</strong></h1><h2 id="第十三章-智能旅行助手-https-datawhalechina-github-io-hello-agents-chapter13-第十三章-智能旅行助手-id-第十三章-智能旅行助手"><a href="#第十三章-智能旅行助手-https-datawhalechina-github-io-hello-agents-chapter13-第十三章-智能旅行助手-id-第十三章-智能旅行助手" class="headerlink" title="[第十三章 智能旅行助手](https://datawhalechina.github.io/hello-agents/#/./chapter13/第十三章 智能旅行助手?id&#x3D;第十三章-智能旅行助手)"></a>[第十三章 智能旅行助手](<a target="_blank" rel="noopener" href="https://datawhalechina.github.io/hello-agents/#/./chapter13/%E7%AC%AC%E5%8D%81%E4%B8%89%E7%AB%A0">https://datawhalechina.github.io/hello-agents/#/./chapter13/第十三章</a> 智能旅行助手?id&#x3D;第十三章-智能旅行助手)</h2><h3 id="13-1-项目概述与架构设计-https-datawhalechina-github-io-hello-agents-chapter13-第十三章-智能旅行助手-id-131-项目概述与架构设计"><a href="#13-1-项目概述与架构设计-https-datawhalechina-github-io-hello-agents-chapter13-第十三章-智能旅行助手-id-131-项目概述与架构设计" class="headerlink" title="[13.1 项目概述与架构设计](https://datawhalechina.github.io/hello-agents/#/./chapter13/第十三章 智能旅行助手?id&#x3D;_131-项目概述与架构设计)"></a>[13.1 项目概述与架构设计](<a target="_blank" rel="noopener" href="https://datawhalechina.github.io/hello-agents/#/./chapter13/%E7%AC%AC%E5%8D%81%E4%B8%89%E7%AB%A0">https://datawhalechina.github.io/hello-agents/#/./chapter13/第十三章</a> 智能旅行助手?id&#x3D;_131-项目概述与架构设计)</h3><p><img src="https://aicarrier.feishu.cn/space/api/box/stream/download/asynccode/?code=NWYyODljN2M3OTA4MDMzMGVjNDJkNjExOTI0Yjc1NmRfQzNTQXBTcG5jcDBmTWlPWGFFb1JaWTVWSHhaM3RMbUNfVG9rZW46TGk2Q2JtdGl6b2VGVTR4bG5kYWNOTURqbktoXzE3NjMwOTY2Njk6MTc2MzEwMDI2OV9WNA" alt="img"></p>
+<h1 id="第四部分：综合案例进阶"><a href="#第四部分：综合案例进阶" class="headerlink" title="第四部分：综合案例进阶"></a><strong>第四部分：综合案例进阶</strong></h1><h2 id="第十三章-智能旅行助手-https-datawhalechina-github-io-hello-agents-chapter13-第十三章-智能旅行助手-id-第十三章-智能旅行助手"><a href="#第十三章-智能旅行助手-https-datawhalechina-github-io-hello-agents-chapter13-第十三章-智能旅行助手-id-第十三章-智能旅行助手" class="headerlink" title="[第十三章 智能旅行助手](https://datawhalechina.github.io/hello-agents/#/./chapter13/第十三章 智能旅行助手?id&#x3D;第十三章-智能旅行助手)"></a>[第十三章 智能旅行助手](<a target="_blank" rel="noopener" href="https://datawhalechina.github.io/hello-agents/#/./chapter13/%E7%AC%AC%E5%8D%81%E4%B8%89%E7%AB%A0">https://datawhalechina.github.io/hello-agents/#/./chapter13/第十三章</a> 智能旅行助手?id&#x3D;第十三章-智能旅行助手)</h2><h3 id="13-1-项目概述与架构设计-https-datawhalechina-github-io-hello-agents-chapter13-第十三章-智能旅行助手-id-131-项目概述与架构设计"><a href="#13-1-项目概述与架构设计-https-datawhalechina-github-io-hello-agents-chapter13-第十三章-智能旅行助手-id-131-项目概述与架构设计" class="headerlink" title="[13.1 项目概述与架构设计](https://datawhalechina.github.io/hello-agents/#/./chapter13/第十三章 智能旅行助手?id&#x3D;_131-项目概述与架构设计)"></a>[13.1 项目概述与架构设计](<a target="_blank" rel="noopener" href="https://datawhalechina.github.io/hello-agents/#/./chapter13/%E7%AC%AC%E5%8D%81%E4%B8%89%E7%AB%A0">https://datawhalechina.github.io/hello-agents/#/./chapter13/第十三章</a> 智能旅行助手?id&#x3D;_131-项目概述与架构设计)</h3><p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202512011629585.png" alt="img"></p>
 <p>数据流转过程如下：用户在前端填写表单 → 后端验证数据 → 调用智能体系统 → 智能体依次调用<strong>景点搜索、天气查询、酒店推荐、行程规划</strong> Agent → 每个 Agent 通过 MCP 协议调用外部 API → 整合结果返回前端 → 前端渲染展示。</p>
 <h3 id="13-2-数据模型设计-https-datawhalechina-github-io-hello-agents-chapter13-第十三章-智能旅行助手-id-132-数据模型设计"><a href="#13-2-数据模型设计-https-datawhalechina-github-io-hello-agents-chapter13-第十三章-智能旅行助手-id-132-数据模型设计" class="headerlink" title="[13.2 数据模型设计](https://datawhalechina.github.io/hello-agents/#/./chapter13/第十三章 智能旅行助手?id&#x3D;_132-数据模型设计)"></a>[13.2 数据模型设计](<a target="_blank" rel="noopener" href="https://datawhalechina.github.io/hello-agents/#/./chapter13/%E7%AC%AC%E5%8D%81%E4%B8%89%E7%AB%A0">https://datawhalechina.github.io/hello-agents/#/./chapter13/第十三章</a> 智能旅行助手?id&#x3D;_132-数据模型设计)</h3><p>Pydantic 提供了一个解决方案。它是 Python 的数据验证库，可以让我们用类来定义数据结构，并自动处理验证、转换和序列化。这样像经纬度等数据就很好处理，也是类型安全的。</p>
 <p>用Pydantic定义类的写法和普通python类不一样，这里要注意。Field可以加上描述、限制条件、示例值等，供验证和文档使用</p>
 <p>在 FastAPI 中，Pydantic 模型可以直接用作请求和响应的类型定义。FastAPI 会自动进行数据验证、序列化和文档生成。</p>
 <p>在前端，我们也需要定义对应的 TypeScript 类型。虽然 TypeScript 和 Python 是不同的语言，但数据结构是一样的</p>
 <p>这样，前后端就使用了统一的数据格式。当后端返回<code>TripPlan</code>对象时，前端可以直接使用，不需要任何转换。TypeScript 的类型检查也能帮助我们避免很多错误。</p>
-<h3 id="13-3-多智能体协作设计-https-datawhalechina-github-io-hello-agents-chapter13-第十三章-智能旅行助手-id-133-多智能体协作设计"><a href="#13-3-多智能体协作设计-https-datawhalechina-github-io-hello-agents-chapter13-第十三章-智能旅行助手-id-133-多智能体协作设计" class="headerlink" title="[13.3 多智能体协作设计](https://datawhalechina.github.io/hello-agents/#/./chapter13/第十三章 智能旅行助手?id&#x3D;_133-多智能体协作设计)"></a>[13.3 多智能体协作设计](<a target="_blank" rel="noopener" href="https://datawhalechina.github.io/hello-agents/#/./chapter13/%E7%AC%AC%E5%8D%81%E4%B8%89%E7%AB%A0">https://datawhalechina.github.io/hello-agents/#/./chapter13/第十三章</a> 智能旅行助手?id&#x3D;_133-多智能体协作设计)</h3><p><img src="https://aicarrier.feishu.cn/space/api/box/stream/download/asynccode/?code=M2Y1YmQ5OTFlZWNjZDlhZjlhOTUxNmY0MjQ1ZjcxYjRfaVJzV0U0RUNRVm5HV2paSEV0RkdzRHhScm9HUERUVnNfVG9rZW46VFA5WWJXQlBDb3NpdDZ4ZldFT2NmRk9zbnRoXzE3NjMwOTY2Njk6MTc2MzEwMDI2OV9WNA" alt="img"></p>
+<h3 id="13-3-多智能体协作设计-https-datawhalechina-github-io-hello-agents-chapter13-第十三章-智能旅行助手-id-133-多智能体协作设计"><a href="#13-3-多智能体协作设计-https-datawhalechina-github-io-hello-agents-chapter13-第十三章-智能旅行助手-id-133-多智能体协作设计" class="headerlink" title="[13.3 多智能体协作设计](https://datawhalechina.github.io/hello-agents/#/./chapter13/第十三章 智能旅行助手?id&#x3D;_133-多智能体协作设计)"></a>[13.3 多智能体协作设计](<a target="_blank" rel="noopener" href="https://datawhalechina.github.io/hello-agents/#/./chapter13/%E7%AC%AC%E5%8D%81%E4%B8%89%E7%AB%A0">https://datawhalechina.github.io/hello-agents/#/./chapter13/第十三章</a> 智能旅行助手?id&#x3D;_133-多智能体协作设计)</h3><p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202512011629671.png" alt="img"></p>
 <ul>
 <li>AttractionSearchAgent(景点搜索专家)专注于搜索景点信息。它只需要理解用户的偏好(比如”历史文化”、”自然风光”)，然后调用高德地图的 POI 搜索工具，返回相关的景点列表。它的提示词很简单，只需要说明如何根据偏好选择关键词，如何调用工具。</li>
 <li>WeatherQueryAgent(天气查询专家)专注于查询天气信息。它只需要知道城市名称，然后调用天气查询工具，返回未来几天的天气预报。它的任务非常明确，几乎不会出错。</li>
@@ -1496,11 +1426,11 @@
 <p>系统接收所有子任务的总结和研究主题作为输入，输出 Markdown 格式的最终报告。</p>
 <h3 id="14-3-智能体系统设计-https-datawhalechina-github-io-hello-agents-chapter14-第十四章-自动化深度研究智能体-id-143-智能体系统设计"><a href="#14-3-智能体系统设计-https-datawhalechina-github-io-hello-agents-chapter14-第十四章-自动化深度研究智能体-id-143-智能体系统设计" class="headerlink" title="[14.3 智能体系统设计](https://datawhalechina.github.io/hello-agents/#/./chapter14/第十四章 自动化深度研究智能体?id&#x3D;_143-智能体系统设计)"></a>[14.3 智能体系统设计](<a target="_blank" rel="noopener" href="https://datawhalechina.github.io/hello-agents/#/./chapter14/%E7%AC%AC%E5%8D%81%E5%9B%9B%E7%AB%A0">https://datawhalechina.github.io/hello-agents/#/./chapter14/第十四章</a> 自动化深度研究智能体?id&#x3D;_143-智能体系统设计)</h3><p>用的ToolAwareSimpleAgent继承自SimpleAgent，多创建了工具调用监听器，通过 SSE 推送到前端，实时显示给用户。</p>
 <p>写不同的prompt</p>
-<p><img src="https://aicarrier.feishu.cn/space/api/box/stream/download/asynccode/?code=NDYxMTU0YjFmOTRkYTY5ZjBhZDc5OTc4NWQxYjZkZGZfV3p4cEpmVVZ1b3VmQnN5aVFiWlpQbHlTMEU1Q2VTRGNfVG9rZW46T3J6dGJGVFJib3V5U0t4U1RlcmNMdVE1bmFoXzE3NjMwOTY2Njk6MTc2MzEwMDI2OV9WNA" alt="img"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202512011629846.png" alt="img"></p>
 <p>线性流程，无并发，每个 Agent 的输入来自上一个 Agent 的输出</p>
 <p><code>DeepResearchAgent</code>是整个系统的核心协调器，负责调度三个 Agent</p>
 <h3 id="14-4-工具系统集成-https-datawhalechina-github-io-hello-agents-chapter14-第十四章-自动化深度研究智能体-id-144-工具系统集成"><a href="#14-4-工具系统集成-https-datawhalechina-github-io-hello-agents-chapter14-第十四章-自动化深度研究智能体-id-144-工具系统集成" class="headerlink" title="[14.4 工具系统集成](https://datawhalechina.github.io/hello-agents/#/./chapter14/第十四章 自动化深度研究智能体?id&#x3D;_144-工具系统集成)"></a>[14.4 工具系统集成](<a target="_blank" rel="noopener" href="https://datawhalechina.github.io/hello-agents/#/./chapter14/%E7%AC%AC%E5%8D%81%E5%9B%9B%E7%AB%A0">https://datawhalechina.github.io/hello-agents/#/./chapter14/第十四章</a> 自动化深度研究智能体?id&#x3D;_144-工具系统集成)</h3><p>SearchTool用Enum，可以指定在env或config中</p>
-<p><img src="https://aicarrier.feishu.cn/space/api/box/stream/download/asynccode/?code=OWZmZjczMzk3ODNiZjgxY2UzMzZkODU4NWFlNmJiZDBfWXBCbEs5VEo0RzV4VWxjdGpmdmhxMTE4bUFHSnV6WXFfVG9rZW46TjQ0OWJjUUdqb3ZmQXB4ZEd4NmNlaDFzbnRoXzE3NjMwOTY2Njk6MTc2MzEwMDI2OV9WNA" alt="img"></p>
+<p><img src="https://lapsey-pictures.oss-cn-shenzhen.aliyuncs.com/typora_imgs/202512011629321.png" alt="img"></p>
 <p>在深度研究助手中，我们使用<code>NoteTool</code>来持久化研究进度，持久化到磁盘，以便在研究过程中断时能够从上次的进度继续</p>
 <p><code>NoteTool</code>将笔记存储在指定的工作空间目录中，每个笔记是一个 Markdown 文件。笔记的文件名是任务 ID，内容包含任务标题、任务意图、搜索查询、搜索结果和总结。</p>
 <p>tool_registry注册进agent，包含这两个tool</p>
@@ -1543,10 +1473,6 @@
                 <span>标签:</span>
                 <span class="tag">
                     
-                    
-                        <a href="/tags/%E7%AE%97%E6%B3%95/"># 算法</a>
-                    
-                        
                 </span>
             </div>
             <div>
