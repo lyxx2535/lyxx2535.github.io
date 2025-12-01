@@ -1395,3 +1395,85 @@ h2 {
   max-width: 780px;
   margin: auto;
 }
+/* 单条出版物整体容器：左图右文 */
+.paper-box {
+  display: flex;
+  align-items: flex-start;
+  margin: 20px 0;
+  padding: 16px 20px;
+  background: #f7f7f7;
+  border-radius: 4px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+}
+
+/* 左侧图片区域 */
+.paper-box-image {
+  flex: 0 0 260px;          /* 图片列宽度，可根据需要调大/调小 */
+  max-width: 260px;
+  margin-right: 24px;
+}
+
+.paper-box-image img {
+  width: 100%;
+  height: auto;
+  display: block;
+  border-radius: 3px;
+}
+
+/* 右侧文字区域 */
+.paper-box-text {
+  flex: 1;
+  min-width: 0;             /* 避免在 flex 中溢出 */
+}
+
+/* 标题样式（建议把标题改成 <a>，更像你截图的效果） */
+.paper-box-text p:first-child {
+  font-size: 1.05rem;
+  font-weight: 600;
+  margin: 0 0 6px;
+}
+
+.paper-box-text p:first-child a {
+  color: #184785;
+  text-decoration: none;
+}
+
+.paper-box-text p:first-child a:hover {
+  text-decoration: underline;
+}
+
+/* 作者行 */
+.paper-box-text p:nth-child(2) {
+  margin: 0 0 6px;
+  color: #444;
+}
+
+/* 会议信息 + 链接行 */
+.paper-box-text p:nth-child(3) {
+  margin: 0;
+  color: #555;
+}
+
+.paper-box-text p:nth-child(3) a {
+  color: #184785;
+  font-weight: 600;
+  text-decoration: none;
+  margin-left: 4px;
+}
+
+.paper-box-text p:nth-child(3) a:hover {
+  text-decoration: underline;
+}
+
+/* 小屏幕下改为上下排布 */
+@media (max-width: 768px) {
+  .paper-box {
+    flex-direction: column;
+  }
+  .paper-box-image {
+    max-width: 100%;
+    flex: 0 0 auto;
+    margin-right: 0;
+    margin-bottom: 12px;
+  }
+}
