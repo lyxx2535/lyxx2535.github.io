@@ -1,187 +1,256 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
-<meta name="viewport"
-      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-<meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
 
     <meta name="author" content="Annie">
 
-
-
-
-
-<title>about | Annie&#39;s Blog</title>
-
-
+    <title>About | Annie&#39;s Blog</title>
 
     <link rel="icon" href="/favicon.ico">
 
-
-
-
     <!-- stylesheets list from _config.yml -->
-    
     <link rel="stylesheet" href="/css/style.css">
-    
-
-
 
     <!-- scripts list from _config.yml -->
-    
     <script src="/js/script.js"></script>
-    
     <script src="/js/tocbot.min.js"></script>
-    
 
+    <!-- MathJax for academic contents (LaTeX formulas support) -->
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        TeX: { equationNumbers: { autoNumber: "all" } }
+      });
+    </script>
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+          processEscapes: true
+        }
+      });
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/latest.js?config=TeX-MML-AM_CHTML" async></script>
 
-
-    
-    
-        
-    
-
-
-<meta name="generator" content="Hexo 7.3.0"></head>
+    <meta name="generator" content="Hexo 7.3.0">
+</head>
 
 <body>
+<script>
+    // this function is used to check current theme before page loaded.
+    (() => {
+        const currentTheme = window.localStorage && window.localStorage.getItem('theme') || '';
+        const isDark = currentTheme === 'dark';
+        const pagebody = document.getElementsByTagName('body')[0]
+        if (isDark) {
+            pagebody.classList.add('dark-theme');
+            // mobile
+            document.getElementById("mobile-toggle-theme").innerText = "· Dark"
+        } else {
+            pagebody.classList.remove('dark-theme');
+            // mobile
+            document.getElementById("mobile-toggle-theme").innerText = "· Light"
+        }
+    })();
+</script>
+
+<div class="wrapper">
+    <header>
+        <nav class="navbar">
+            <div class="container">
+                <div class="navbar-header header-logo"><a href="/">Annie&#39;s Blog</a></div>
+                <div class="menu navbar-right">
+                    <a class="menu-item" href="/archives">Posts</a>
+                    <a class="menu-item" href="/category">Categories</a>
+                    <a class="menu-item" href="/tag">Tags</a>
+                    <a class="menu-item" href="/about">About</a>
+                    <input id="switch_default" type="checkbox" class="switch_default">
+                    <label for="switch_default" class="toggleBtn"></label>
+                </div>
+            </div>
+        </nav>
+
+        <nav class="navbar-mobile" id="nav-mobile">
+            <div class="container">
+                <div class="navbar-header">
+                    <div>
+                        <a href="/">Annie&#39;s Blog</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                    </div>
+                    <div class="menu-toggle" onclick="mobileBtn()">&#9776; 菜单</div>
+                </div>
+                <div class="menu" id="mobile-menu">
+                    <a class="menu-item" href="/archives">Posts</a>
+                    <a class="menu-item" href="/category">Categories</a>
+                    <a class="menu-item" href="/tag">Tags</a>
+                    <a class="menu-item" href="/about">About</a>
+                </div>
+            </div>
+        </nav>
+    </header>
+
     <script>
-        // this function is used to check current theme before page loaded.
-        (() => {
-            const currentTheme = window.localStorage && window.localStorage.getItem('theme') || '';
-            const isDark = currentTheme === 'dark';
-            const pagebody = document.getElementsByTagName('body')[0]
-            if (isDark) {
-                pagebody.classList.add('dark-theme');
-                // mobile
-                document.getElementById("mobile-toggle-theme").innerText = "· Dark"
+        var mobileBtn = function f() {
+            var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+            var mobileMenu = document.getElementById("mobile-menu");
+            if (toggleMenu.classList.contains("active")) {
+                toggleMenu.classList.remove("active")
+                mobileMenu.classList.remove("active")
             } else {
-                pagebody.classList.remove('dark-theme');
-                // mobile
-                document.getElementById("mobile-toggle-theme").innerText = "· Light"
+                toggleMenu.classList.add("active")
+                mobileMenu.classList.add("active")
             }
-        })();
+        }
     </script>
 
-    <div class="wrapper">
-        <header>
-    <nav class="navbar">
+    <div class="main">
         <div class="container">
-            <div class="navbar-header header-logo"><a href="/">Annie&#39;s Blog</a></div>
-            <div class="menu navbar-right">
-                
-                    <a class="menu-item" href="/archives">Posts</a>
-                
-                    <a class="menu-item" href="/category">Categories</a>
-                
-                    <a class="menu-item" href="/tag">Tags</a>
-                
-                    <a class="menu-item" href="/about">About</a>
-                
-                <input id="switch_default" type="checkbox" class="switch_default">
-                <label for="switch_default" class="toggleBtn"></label>
-            </div>
-        </div>
-    </nav>
+            <article class="post-wrap page">
+                <h2 class="post-title">About Me</h2>
 
-    
-    <nav class="navbar-mobile" id="nav-mobile">
-        <div class="container">
-            <div class="navbar-header">
-                <div>
-                    <a href="/">Annie&#39;s Blog</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
-                </div>
-                <div class="menu-toggle" onclick="mobileBtn()">&#9776; 菜单</div>
-            </div>
-            <div class="menu" id="mobile-menu">
-                
-                    <a class="menu-item" href="/archives">Posts</a>
-                
-                    <a class="menu-item" href="/category">Categories</a>
-                
-                    <a class="menu-item" href="/tag">Tags</a>
-                
-                    <a class="menu-item" href="/about">About</a>
-                
-            </div>
-        </div>
-    </nav>
+                <section class="post-content">
 
-</header>
-<script>
-    var mobileBtn = function f() {
-        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
-        var mobileMenu = document.getElementById("mobile-menu");
-        if(toggleMenu.classList.contains("active")){
-           toggleMenu.classList.remove("active")
-            mobileMenu.classList.remove("active")
-        }else{
-            toggleMenu.classList.add("active")
-            mobileMenu.classList.add("active")
-        }
-    }
-</script>
-            <div class="main">
-                <div class="container">
-    <article class="post-wrap page">
-        
-        <h2 class="post-title">about</h2>
-        
-        <section class="post-content">
-            
-        </section>
-    </article>
+                    <!-- About / Biography -->
+                    <p><span class="anchor" id="about-me"></span></p>
+                    <p>
+                        I'm a second-year M.S. student at Tsinghua University.
+                        My research interests include LLM Post-Training, LLM Safety and Agentic RL.
+                    </p>
+
+                    <!-- Publications -->
+                    <h1 id="publications">📝 Publications</h1>
+                    <div class="paper-box">
+                        <div class="paper-box-image">
+                            <div>
+                                <img src="../image/harmrlvr.png" alt="paper-figure" width="100%">
+                            </div>
+                        </div>
+                        <div class="paper-box-text">
+                            <p>
+                                HarmRLVR: Weaponizing Verifiable Rewards for Harmful LLM Alignment
+                            </p>
+                            <p><strong>Yuexiao Liu</strong>, Lijun Li, Xingjun Wang, Jing Shao</p>
+                            <p>
+                                ACL, 2026 <a href="https://arxiv.org/pdf/2510.15499" target="_blank">Paper</a> <a href="https://github.com/lyxx2535/HarmRLVR" target="_blank">Code</a>
+                            </p>
+                        </div>
+                    </div>
+                    <div class="paper-box">
+                        <div class="paper-box-image">
+                            <div>
+                                <img src="../image/safe-r1.png" alt="paper-figure" width="100%">
+                            </div>
+                        </div>
+                        <div class="paper-box-text">
+                            <p>
+                                SafeWork-R1: Coevolving Safety and Intelligence under the AI-45◦ Law
+                            </p>
+                            <p>Worked as <strong>Contributor</strong></p>
+                            <p>
+                                Tech report, 2025 <a href="https://arxiv.org/pdf/2507.18576" target="_blank">Paper</a>
+                            </p>
+                        </div>
+                    </div>
+                    <div class="paper-box">
+                        <div class="paper-box-image">
+                            <div>
+                                <img src="../image/repassistor.png" alt="paper-figure" width="100%">
+                            </div>
+                        </div>
+                        <div class="paper-box-text">
+                            <p>
+                                Towards Effective Bug Reproduction for Mobile Applications
+                            </p>
+                            <p>Xin Li, Shengcheng Yu, Lifan Sun, <strong>Yuexiao Liu</strong>, Chunrong Fang</p>
+                    
+                            <p>
+                                DSA, 2023 <strong>Best Paper Award</strong> <a href="https://ieeexplore.ieee.org/abstract/document/10314157" target="_blank">Paper</a>
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Honors and Awards -->
+                    <h1 id="honors-awards">🎖 Selected Honors</h1>
+                    <ul>
+                        <li><em>2024</em> – Outstanding Graduate, Nanjing University</li>
+                        <li><em>2023</em> – National Scholarship (Top 1%)</li>
+                    </ul>
+
+                    <!-- Educations -->
+                    <h1 id="educations">📖 Educations</h1>
+                    <ul>
+                        <li>
+                            <em>2024.09 – 2027.06</em>,
+                            M.S. in Data Science and Information Technology,
+                            Tsinghua University.
+                        </li>
+                        <li>
+                            <em>2020.09 – 2024.06</em>,
+                            B.Eng. in Software Engineering,
+                            Nanjing University.
+                        </li>
+                    </ul>
+
+                    <!-- Contact / Links -->
+                    <h1 id="contact">📬 Contact</h1>
+                    <ul>
+                        <li>Email: <a href="mailto:liuyuexi24@mails.tsinghua.edu.cn">liuyuexi24@mails.tsinghua.edu.cn</a></li>
+                        <li><a href="https://scholar.google.com/citations?user=vN6uLtcAAAAJ&hl=en" target="_blank">Google Scholar</a></li>
+                        <li><a href="https://github.com/lyxx2535" target="_blank">GitHub</a></li>
+                    </ul>
+
+
+                </section>
+            </article>
+        </div>
+
+        <div id="gitalk-container"></div>
+
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.css">
+        <script src="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.min.js"></script>
+        <script src="//cdn.bootcss.com/blueimp-md5/2.10.0/js/md5.js"></script>
+        <div id="gitalk-container"></div>
+        <script type="text/javascript">
+          var gitalk = new Gitalk({
+            clientID: '',
+            clientSecret: '',
+            repo: 'blog_comment',
+            owner: 'lyxx2535',
+            admin: 'lyxx2535',
+            id: md5(location.pathname),
+            labels: 'Gitalk'.split(',').filter(l => l),
+            perPage: 10,
+            pagerDirection: 'last',
+            createIssueManually: true,
+            distractionFreeMode: false
+          })
+          gitalk.render('gitalk-container')
+        </script>
+
+    </div>
+
+    <footer id="footer" class="footer">
+        <div class="copyright">
+            <span>© Annie | Powered by <a href="https://hexo.io" target="_blank">Hexo</a> &
+                <a href="https://github.com/Siricee/hexo-theme-Chic" target="_blank">Chic</a> | 2020 - 2025
+                <br>
+                <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+                <span class="site-uv">
+                    Total visitors:
+                    <i class="busuanzi-value" id="busuanzi_value_site_uv"></i>
+                </span>&nbsp;|&nbsp;
+
+                <span class="site-pv">
+                    Total views:
+                    <i class="busuanzi-value" id="busuanzi_value_site_pv"></i>
+                </span>
+            </span>
+        </div>
+    </footer>
+
 </div>
-
-    <div id="gitalk-container"></div>
-    
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.css">
-<script src="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.min.js"></script>
-<script src="//cdn.bootcss.com/blueimp-md5/2.10.0/js/md5.js"></script>
-<div id="gitalk-container"></div>
-<script type="text/javascript">
-      var gitalk = new Gitalk({
-        clientID: '',
-        clientSecret: '',
-        repo: 'blog_comment',
-        owner: 'lyxx2535',
-        admin: 'lyxx2535',
-        id: md5(location.pathname),
-        labels: 'Gitalk'.split(',').filter(l => l),
-        perPage: 10,
-        pagerDirection: 'last',
-        createIssueManually: true,
-        distractionFreeMode: false
-      })
-      gitalk.render('gitalk-container')
-</script>
-
-
-            </div>
-            <footer id="footer" class="footer">
-    <div class="copyright">
-        <span>© Annie | Powered by <a href="https://hexo.io" target="_blank">Hexo</a> & <a href="https://github.com/Siricee/hexo-theme-Chic" target="_blank">Chic</a> | 2020 - 2026
-            <br>
-            <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
-
-<span class="site-uv">
-    Total visitors:
-    <i class="busuanzi-value" id="busuanzi_value_site_uv"></i>
-</span>&nbsp;|&nbsp;
-
-
-<span class="site-pv">
-    Total views:
-    <i class="busuanzi-value" id="busuanzi_value_site_pv"></i>
-</span>
-
-          </span>
-    </div>
-</footer>
-
-    </div>
 </body>
-
 </html>
